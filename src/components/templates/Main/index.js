@@ -112,37 +112,6 @@ export default({
         return (
             <TouchableOpacity onPress={()=>onPressCard(data.id)} >
                 <Card 
-                    key={data.id} 
-                    style={ index === 0 ? styles.firstCardStyle : styles.cardStyle}
-                >
-                    <CardSection  style={styles.cardSection}>
-                        <Image source={data.type === "Casual" ? casualImage : luxuryImage} style={styles.imageMap} />
-                        <View style = {styles.textHolderStyle}>
-                            {data.joined == 1 &&
-                                <View style={styles.iconStyle}>
-                                    <FontAwesome
-                                        name='circle'
-                                        color='#65FF03'
-                                        size={10}
-                                    />
-                                </View>
-                            }
-                            <Text style={[styles.cardTitle, {marginBottom: 0}]}>{data.title}</Text>
-                            <Text style={styles.cardTitle}>({data.type})</Text>
-                            <Text style={styles.cardContent}>{label1}{data.totalMission}</Text>
-                            <Text style={styles.cardContent}>{label2}</Text>
-                            <Text style={styles.cardContent}>{moment(data.startTime).format("D MMM YYYY")} - {moment(data.endTime).format("D MMM YYYY")}</Text>
-                        </View>
-                    </CardSection>
-                </Card>
-            </TouchableOpacity>
-        );
-    }
-
-    const ChallengesCardList = ({index, data}) => {
-        return (
-            <TouchableOpacity onPress={()=>onPressCard(data.id)} >
-                <Card 
                     key = {data.id} 
                     style={ index === 0 ? styles.firstCardStyle : styles.cardStyle}
                 >
@@ -157,7 +126,6 @@ export default({
                             <Text style={styles.routeType}>{data.type}</Text>
                         </View>
                         </ImageBackground>
-                        <Text style={styles.bottomTextStyle} >· · · {sectionTitle3} · · ·</Text>
                     </CardSection>
                 </Card>
             </TouchableOpacity>
@@ -219,7 +187,7 @@ export default({
                                 <Text style={styles.sectionTitle}>{sectionTitle1}</Text>
                             </View>
                             <FlatList 
-                                horizontal
+                                vertical
                                 showsHorizontalScrollIndicator = {false}
                                 data = {dataSource2}
                                 keyExtractor={item => item.id}
@@ -229,54 +197,6 @@ export default({
                         </View>
                     :
                         <View style={styles.subContainer2}></View>
-                }
-
-                {readLoadingRouteTicket ? 
-                    null
-                :
-                    dataSource.length != 0 ?
-                        <View style={styles.subContainer4}>
-                            <FlatList 
-                                horizontal
-                                showsHorizontalScrollIndicator = {false}
-                                data = {dataSource}
-                                keyExtractor={item => item.id}
-                                renderItem={({ item, index }) => <ChallengesCardList data={item} index={index}/> }
-                                scrollEnabled = { dataSource.length>1 ? true : false}
-                            />
-                        </View>
-                    :
-                        <View style={styles.subContainer4}></View>
-                }
-
-                
-                {readLoadingAdvertisement?
-                    <View style={styles.subContainer3}>
-                        <View>
-                            <Text style={styles.sectionTitle}>{sectionTitle2}</Text>
-                        </View>
-                        <VirtualizedList 
-                            horizontal
-                            showsHorizontalScrollIndicator = {false}
-                            data={DATA2}
-                            renderItem={({index}) => <LatestNewsLoading index={index}/>}
-                            keyExtractor={item => item.key}
-                            getItemCount={() => {return 3}}
-                            getItem={getItem2}
-                        />
-                    </View>
-                :
-                    advertisements.length==0? 
-                        <View style={styles.subContainer3}></View>
-                    :
-                        <SmallCardList 
-                            title = {sectionTitle2}
-                            dataSource = {advertisements}
-                            onPress = {onPressAdvertisement}
-                            noImage = {noImageAdvertisement}
-                            readLoading = {readLoadingAdvertisement}
-                            style={styles}
-                        />
                 }
             </View>
         </ScrollView>

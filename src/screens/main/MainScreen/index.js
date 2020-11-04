@@ -113,6 +113,7 @@ class index extends Component {
     const luxuryImage = require("../../../assets/gogogain/Mascot-L.png")
 
     return (
+      console.log(advertisements.coverPic),
         <MainTemplete
           readFail={readFail}
           slider={headerImages}
@@ -121,7 +122,7 @@ class index extends Component {
           routeTickets={routeTickets}
           casualImage={casualImage}
           luxuryImage={luxuryImage}
-          sectionTitle1="Join Now"
+          sectionTitle1="Category"
           sectionTitle2="Latest News"
           sectionTitle3="Your Challenges"
           label1="Total Mission : "

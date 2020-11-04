@@ -8,7 +8,7 @@ console.log(Platform.isPad)
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "white"
+        backgroundColor: "black"
     },
     title: {
         textAlign: "left",

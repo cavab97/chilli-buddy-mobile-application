@@ -58,6 +58,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Stack
             hideNavBar={true}
             initial={isLoggedIn && isBooted && !forceUpdate}
+
         >
             <Stack
                 key="main"
@@ -72,6 +73,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
                     title="Main"
                     titleStyle={styles.title}
                     initial={true}
+                    headerStyle={{ backgroundColor: 'black' }}
                     icon={icons.announce}
                     hideNavBar={true}
                 />
