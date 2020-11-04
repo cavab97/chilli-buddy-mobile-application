@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "431448808009",
-    "firebase_url": "https://gogogain-gogogain.firebaseio.com",
-    "project_id": "gogogain-gogogain",
-    "storage_bucket": "gogogain-gogogain.appspot.com"
+    "project_number": "473612187597",
+    "firebase_url": "https://gogogain-dev.firebaseio.com",
+    "project_id": "gogogain-dev",
+    "storage_bucket": "gogogain-dev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:431448808009:android:9ece249bef6c26404c7d98",
+        "mobilesdk_app_id": "1:473612187597:android:045eafd0c847d08e96b684",
         "android_client_info": {
-          "package_name": "com.Infobay.GogogainMerchant"
+          "package_name": "com.Infobay.gogogainmerchant"
         }
       },
       "oauth_client": [
         {
-          "client_id": "431448808009-gn43oettepgpbkrvaeihim298i98es5p.apps.googleusercontent.com",
+          "client_id": "473612187597-g7ig9g40bn8ml3nb0oop5pe9mo63nigm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD-Mi7J9fcC-EnR0NH_LqAoydzWoNEkiuw"
+          "current_key": "AIzaSyAbVbq0Q2ab1FVD9x9VfojO_C4pPj_4Apo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "431448808009-gn43oettepgpbkrvaeihim298i98es5p.apps.googleusercontent.com",
+              "client_id": "473612187597-g7ig9g40bn8ml3nb0oop5pe9mo63nigm.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "431448808009-pn51lrou0gpvcie3j5nih7k4bdp4k8hs.apps.googleusercontent.com",
+              "client_id": "473612187597-s50qf4k7h7i2j7demsbhldhik17febgu.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.Infobay.GogogainMerchant"
+                "bundle_id": "com.infobay.gogogainmerchant"
               }
             }
           ]
@@ -44,42 +44,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:431448808009:android:e7695d1ed365da7f4c7d98",
+        "mobilesdk_app_id": "1:473612187597:android:e4f349c35fc9387a96b684",
         "android_client_info": {
           "package_name": "com.infobay.gogogain"
         }
       },
       "oauth_client": [
         {
-          "client_id": "431448808009-ht81nmtfnkqmq28h28kvmgj0vr98ggpv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.infobay.gogogain",
-            "certificate_hash": "144a05f93c6ed0a9bb937487dac9a1e40a918cc8"
-          }
-        },
-        {
-          "client_id": "431448808009-gn43oettepgpbkrvaeihim298i98es5p.apps.googleusercontent.com",
+          "client_id": "473612187597-g7ig9g40bn8ml3nb0oop5pe9mo63nigm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD-Mi7J9fcC-EnR0NH_LqAoydzWoNEkiuw"
+          "current_key": "AIzaSyAbVbq0Q2ab1FVD9x9VfojO_C4pPj_4Apo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "431448808009-gn43oettepgpbkrvaeihim298i98es5p.apps.googleusercontent.com",
+              "client_id": "473612187597-g7ig9g40bn8ml3nb0oop5pe9mo63nigm.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "431448808009-pn51lrou0gpvcie3j5nih7k4bdp4k8hs.apps.googleusercontent.com",
+              "client_id": "473612187597-s50qf4k7h7i2j7demsbhldhik17febgu.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.Infobay.GogogainMerchant"
+                "bundle_id": "com.infobay.gogogainmerchant"
               }
             }
           ]

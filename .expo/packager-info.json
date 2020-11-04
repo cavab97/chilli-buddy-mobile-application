@@ -1,10 +1,10 @@
 {
-  "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "packagerPort": null,
-  "packagerPid": null,
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://2b-kbf.xavierdev.chillibuddyuser.exp.direct",
+  "packagerNgrokUrl": "https://packager.2b-kbf.xavierdev.chillibuddyuser.exp.direct",
+  "ngrokPid": 12108,
+  "packagerPort": 19001,
+  "packagerPid": 18612,
   "webpackServerPort": null,
   "devToolsPort": 19002
 }

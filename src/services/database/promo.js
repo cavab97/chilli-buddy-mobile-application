@@ -6,7 +6,7 @@ const objectName = "promotion";
 export function geoReadObjects({l, radius, limit, selectedCategory, selectedTag}) {
   return new Promise((resolve, reject) => {
     let databaseRef = database.geoReadTable({ref: `${objectName}Packaging0`})
-
+    
     if(selectedCategory)
       databaseRef = databaseRef.where("shop.categories", "array-contains-any", [selectedCategory])
 
