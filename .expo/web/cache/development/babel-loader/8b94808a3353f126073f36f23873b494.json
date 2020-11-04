@@ -1,0 +1,1 @@
+{"ast":null,"code":"export * from \"./requiredPermissions\";","map":{"version":3,"sources":["C:/Users/User/Desktop/ZuMei/gogogainUser/src/marslab-library-react-native/settings/permissions/index.js"],"names":[],"mappings":"AAAA","sourcesContent":["export * from \"./requiredPermissions\""]},"metadata":{},"sourceType":"module"}

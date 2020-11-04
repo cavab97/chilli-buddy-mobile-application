@@ -1,0 +1,83 @@
+{
+  "expo": {
+    "name": "GoGoGain",
+    "slug": "GoGoGain-User",
+    "privacy": "public",
+    "sdkVersion": "36.0.0",
+    "owner": "calvinmars",
+    "platforms": ["ios", "android"],
+    "version": "2.4.3",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f18a21"
+    },
+    "notification": {
+      "icon": "./assets/notificationIcon.png",
+      "color": "#F18A22",
+      "iosDisplayInForeground": true
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "bundleIdentifier": "com.infobay.gogogainuser",
+      "supportsTablet": true,
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Allow GoGoGain to use your location, so that we can show you the nearest shop to you.",
+        "NSLocationAlwaysUsageDescription": "Allow GoGoGain to use your location, so that we can show you the nearest shop to you.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow GoGoGain to use your location, so that we can show you the nearest shop to you.",
+        "NSCameraUsageDescription": "Allow GoGoGain to use your camera to take photo of receipt or profile picture.",
+        "NSPhotoLibraryUsageDescription": "Allow GoGoGain to access your photo library for you to choose your profile picture."
+      },
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.431448808009-8bqpj6drcnesq7timfdpp1ub3a2duquu"
+        }
+      }
+    },
+    "android": {
+      "package": "com.infobay.gogogain", 
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 21,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA",
+        "MANAGE_DOCUMENTS",
+        "READ_CONTACTS",
+        "READ_CALENDAR",
+        "WRITE_CALENDAR",
+        "CHANGE_WIFI_STATE",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "READ_EXTERNAL_STORAGE",
+        "READ_PHONE_STATE",
+        "RECORD_AUDIO",
+        "USE_FINGERPRINT",
+        "VIBRATE",
+        "WAKE_LOCK",
+        "WRITE_EXTERNAL_STORAGE",
+        "com.anddoes.launcher.permission.UPDATE_COUNT",
+        "com.android.launcher.permission.INSTALL_SHORTCUT",
+        "com.google.android.c2dm.permission.RECEIVE",
+        "com.google.android.gms.permission.ACTIVITY_RECOGNITION",
+        "com.google.android.providers.gsf.permission.READ_GSERVICES",
+        "com.htc.launcher.permission.READ_SETTINGS",
+        "com.htc.launcher.permission.UPDATE_SHORTCUT",
+        "com.majeur.launcher.permission.UPDATE_BADGE",
+        "com.sec.android.provider.badge.permission.READ",
+        "com.sec.android.provider.badge.permission.WRITE",
+        "com.sonyericsson.home.permission.BROADCAST_BADGE"
+      ]
+    },
+    "facebookScheme": "fb440875199903483",
+    "facebookAppId": "440875199903483",
+    "facebookDisplayName": "GoGoGain",
+    "description": "GoGoGain User Application"
+  }
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1042206429903-2g1g6sc5tr42vqvqi1nes0la2ae9f04j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1042206429903-2g1g6sc5tr42vqvqi1nes0la2ae9f04j</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBArLtMDE-S0r6e_7eW5iEyL7z3S2c5lAQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1042206429903</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.infobay.gogogainuser</string>
+	<key>PROJECT_ID</key>
+	<string>gogogain-stanging</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gogogain-stanging.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1042206429903:ios:be32064b3f1ed729965dba</string>
+	<key>DATABASE_URL</key>
+	<string>https://gogogain-stanging.firebaseio.com</string>
+		<key>CFBundleURLTypes</key>
+	<array>
+	<dict>
+	<key>CFBundleURLSchemes</key>
+	<array>
+		<string>fb440875199903483</string>
+	</array>
+	</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>440875199903483</string>
+	<key>FacebookDisplayName</key>
+	<string>GoGoGain</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
+</dict>
+</plist>

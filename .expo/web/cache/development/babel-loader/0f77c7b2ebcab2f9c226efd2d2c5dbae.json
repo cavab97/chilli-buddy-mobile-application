@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default importedFonts = [];","map":{"version":3,"sources":["C:/Gogogain/Gogogain - User/src/settings/assets/typography/index.js"],"names":["importedFonts"],"mappings":"AAAA,eAAeA,aAAa,GAAC,EAA7B","sourcesContent":["export default importedFonts=[\r\n]"]},"metadata":{},"sourceType":"module"}

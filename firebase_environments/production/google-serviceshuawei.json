@@ -1,0 +1,183 @@
+{
+  "project_info": {
+    "project_number": "431448808009",
+    "firebase_url": "https://gogogain-gogogain.firebaseio.com",
+    "project_id": "gogogain-gogogain",
+    "storage_bucket": "gogogain-gogogain.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431448808009:android:9ece249bef6c26404c7d98",
+        "android_client_info": {
+          "package_name": "com.Infobay.GogogainMerchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431448808009-gn43oettepgpbkrvaeihim298i98es5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Mi7J9fcC-EnR0NH_LqAoydzWoNEkiuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431448808009-gn43oettepgpbkrvaeihim298i98es5p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "431448808009-8bqpj6drcnesq7timfdpp1ub3a2duquu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.infobay.gogogainuser"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431448808009:android:e7695d1ed365da7f4c7d98",
+        "android_client_info": {
+          "package_name": "com.infobay.gogogain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431448808009-25e2936bs11okk3mslknd4mk5smbcflf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infobay.gogogain",
+            "certificate_hash": "27a1192cc86e65c3f641d1f18034e7b0bc516025"
+          }
+        },
+        {
+          "client_id": "431448808009-ori4dqj83q4npf79b62lf3749dp0r52p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infobay.gogogain",
+            "certificate_hash": "4075dfa92dfa7748e66917b2beeb7c0cf4cbc9ba"
+          }
+        },
+        {
+          "client_id": "431448808009-0qkolfjp294cri38htath5csffhne9uk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infobay.gogogain",
+            "certificate_hash": "d58a6000509c0bedbcfce21c8b4bd7c225979e2f"
+          }
+        },
+        {
+          "client_id": "431448808009-0s59qckm5corpsvdq3jn78noomp9h96d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infobay.gogogain",
+            "certificate_hash": "abd0e6b81bc540bb89b626d3e5fa9d912236c3d6"
+          }
+        },
+        {
+          "client_id": "431448808009-qgn5kqev9ep6lt4hhs6hbq4mm54tok5s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infobay.gogogain",
+            "certificate_hash": "ab818f8ce9a8350b43abe23396211e1563cf622f"
+          }
+        },
+        {
+          "client_id": "431448808009-t5uuvcmigtno5r8j7duqudkqq8b31fec.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infobay.gogogain",
+            "certificate_hash": "bb01e288cb2936499fc09b905438cd2c75cbdaf0"
+          }
+        },
+        {
+          "client_id": "431448808009-lfsgu6lhdr66q6ugjp1h99ed0mlit1b6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infobay.gogogain",
+            "certificate_hash": "9a069190e6e12aab35a8e1f7535ccaec18f49be5"
+          }
+        },
+        {
+          "client_id": "431448808009-ht81nmtfnkqmq28h28kvmgj0vr98ggpv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infobay.gogogain",
+            "certificate_hash": "144a05f93c6ed0a9bb937487dac9a1e40a918cc8"
+          }
+        },
+        {
+          "client_id": "431448808009-gn43oettepgpbkrvaeihim298i98es5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Mi7J9fcC-EnR0NH_LqAoydzWoNEkiuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431448808009-gn43oettepgpbkrvaeihim298i98es5p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "431448808009-8bqpj6drcnesq7timfdpp1ub3a2duquu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.infobay.gogogainuser"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431448808009:android:f3ee90339528fcf44c7d98",
+        "android_client_info": {
+          "package_name": "com.infobay.gogogain.huawei"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431448808009-gn43oettepgpbkrvaeihim298i98es5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Mi7J9fcC-EnR0NH_LqAoydzWoNEkiuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431448808009-gn43oettepgpbkrvaeihim298i98es5p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "431448808009-8bqpj6drcnesq7timfdpp1ub3a2duquu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.infobay.gogogainuser"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

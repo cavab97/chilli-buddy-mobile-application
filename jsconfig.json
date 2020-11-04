@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "baseUrl": "./",
+        "paths": {
+            "@components/*": [
+                "./src/components/*"
+            ],
+            "@assets/*": [
+                "./src/assets/*"
+            ],
+            "@redux/*": [
+                "./src/redux/*"
+            ],
+            "@routes/*": [
+                "./src/routes/*"
+            ],
+            "@screens/*": [
+                "./src/screens/*"
+            ],
+            "@services/*": [
+                "./src/services/*"
+            ],
+            "@settings/*": [
+                "./src/settings/*"
+            ]
+        }
+    }
+}

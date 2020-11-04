@@ -1,0 +1,1 @@
+{"ast":null,"code":"import App from \"./marslab-library-react-native\";\nexport default App;","map":{"version":3,"sources":["C:/Gogogain/Gogogain - User/src/index.js"],"names":["App"],"mappings":"AAAA,OAAOA,GAAP;AAEA,eAAgBA,GAAhB","sourcesContent":["import App from './marslab-library-react-native'\r\n\r\nexport default (App);\r\n"]},"metadata":{},"sourceType":"module"}
