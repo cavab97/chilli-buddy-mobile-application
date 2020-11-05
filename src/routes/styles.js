@@ -3,8 +3,6 @@ import { StyleSheet } from "react-native";
 import { Colors } from "../settings/styles/theme";
 import { Platform } from "react-native";
 
-console.log(Platform.OS)
-console.log(Platform.isPad)
 
 const styles = StyleSheet.create({
     container: {
@@ -21,10 +19,20 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         position: "absolute",
-        top: -25,
-        right: Platform.OS === 'ios' && Platform.isPad === true ? 10 : 0
-
+        borderColor: "#FFFFFF"
     },
+    // promoButtonView: {
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     width: 72,
+    //     height: 72,
+    //     //borderColor: "#FFFFFF",
+    //     backgroundColor: Colors.PRIMARY,
+    //     borderRadius: 36,
+    //     borderWidth: 3,
+    //     top: -30,
+    //     position: "absolute",
+    // }
 });
 
 

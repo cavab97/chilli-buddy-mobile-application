@@ -55,6 +55,12 @@ class index extends Component {
 
     let dataSource = [];
     let dataSource2 = [];
+    let adCoverPic = []
+
+    //Push object into array
+    advertisements.filter((advertisement)=> {adCoverPic.push(advertisement.coverPic)});
+    //Filter empty data from array
+    var filteredAdPic = adCoverPic.filter(value => Object.keys(value).length !== 0);
 
     let { routeTickets } = clone(this.props);
 
@@ -113,10 +119,9 @@ class index extends Component {
     const luxuryImage = require("../../../assets/gogogain/Mascot-L.png")
 
     return (
-      console.log(advertisements.coverPic),
         <MainTemplete
           readFail={readFail}
-          slider={headerImages}
+          slider={filteredAdPic}
           dataSource={dataSource}
           dataSource2={dataSource2}
           routeTickets={routeTickets}

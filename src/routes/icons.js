@@ -11,20 +11,20 @@ const iconProfile = () => (
     <Icon name="md-people" color="#c83528" size={24} />
 );
 
-const announce = () => (
-    <CustomIcon name="announce" color={Colors.PRIMARY} size={20} />
+const announce = (focused) => (
+    <CustomIcon name="mainmenu" color={focused.focused ? Colors.SECONDARY : Colors.WHITE} size={20} />
 );
 
 const merchant = () => (
     <CustomIcon name="merchant" color={Colors.PRIMARY} size={20} />
 );
 
-const profile = () => (
-    <CustomIcon name="user" color={Colors.PRIMARY} size={20} />
+const profile = (focused) => (
+    <CustomIcon name="userprofile" color={focused.focused ? Colors.SECONDARY : Colors.WHITE} size={20} />
 );
 
-const promo = () => (
-    <View style={{width:48, height:48}}><FontAwesome5 name="fire" style={styles.promoButton} color={Colors.PRIMARY} size={60} /></View>
+const promo = (focused) => (
+    <View style={{ alignItems: "center", justifyContent: "center",  width: 72, height: 72, borderColor: focused.focused ? Colors.SECONDARY : Colors.WHITE, backgroundColor: Colors.PRIMARY, borderRadius: 36, borderWidth: 3, top: -30, position: "absolute",}}><CustomIcon name="promo" style={styles.promoButton} color={focused.focused ? Colors.SECONDARY : Colors.WHITE} size={50} /></View>
 );
 
 const award = () => (

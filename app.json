@@ -12,11 +12,11 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#f18a21"
+      "backgroundColor": "#D60000"
     },
     "notification": {
       "icon": "./assets/notificationIcon.png",
-      "color": "#F18A22",
+      "color": "#D60000",
       "iosDisplayInForeground": true
     },
     "updates": {

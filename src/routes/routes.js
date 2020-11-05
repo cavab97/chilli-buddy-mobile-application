@@ -58,6 +58,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Stack
             hideNavBar={true}
             initial={isLoggedIn && isBooted && !forceUpdate}
+            tabBarStyle={{ backgroundColor: Colors.PRIMARY }}
 
         >
             <Stack
@@ -65,7 +66,8 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
                 hideNavBar={true}
                 tabs={true}
                 initial={true}
-                activeTintColor={Colors.PRIMARY}
+                activeTintColor={Colors.SECONDARY}
+                showLabel={false}
             >
                 <Scene
                     key="mainscreen"
@@ -73,18 +75,17 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
                     title="Main"
                     titleStyle={styles.title}
                     initial={true}
-                    headerStyle={{ backgroundColor: 'black' }}
                     icon={icons.announce}
                     hideNavBar={true}
                 />
-                <Scene
+                {/* <Scene
                     key="Shops"
                     component={Shops}
                     title="Shops"
                     titleStyle={styles.title}
                     initial={false}
                     icon={icons.merchant}
-                />
+                /> */}
                 <Scene
                     key="Promo"
                     component={Promo}
@@ -93,14 +94,14 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
                     initial={false}
                     icon={icons.promo}
                 />
-                <Scene
+                {/* <Scene
                     key="RouteGroups"
                     component={RouteGroups}
                     title="Event"
                     titleStyle={styles.title}
                     initial={false}
                     icon={icons.award}
-                />
+                /> */}
                 <Scene
                     key="Profile"
                     component={Profile}
