@@ -5,6 +5,7 @@ import { Actions } from "react-native-router-flux";
 import { readAllFromDatabase as readAllRoute } from "@redux/route/action";
 import { readFromDatabase as readAdvertisements } from "@redux/advertisement/action";
 import { readInfo as readSettingInfo } from "@redux/settings/action";
+import { verifyPermission, loadShops } from "@redux/shops/action";
 import {
   listenFromDatabase as listenToRouteTickets,
   removeListenerFromDatabase as removeListenerFromRouteTickets,
@@ -15,6 +16,12 @@ import clone from "clone"
 class index extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      tags: props.tags,
+      categories: props.categories,
+      selectedCategory: {},
+      selectedTag: "All"
+    }
   }
 
   componentDidMount() {
@@ -28,13 +35,13 @@ class index extends Component {
     this.props.removeListenerFromRouteTickets();
   }
 
-  onPressCardChallenge(id) {
-    Actions.Route({ routeId: id });
-  }
+  // onPressCardChallenge(id) {
+  //   Actions.Route({ routeId: id });
+  // }
 
-  onPressAdvertisement(id) {
-    Actions.Advertisement({ AdvertisementId: id })
-  }
+  // onPressAdvertisement(id) {
+  //   Actions.Advertisement({ AdvertisementId: id })
+  // }
 
   render() {
     const {
@@ -43,7 +50,6 @@ class index extends Component {
       readLoadingRouteTicket,
       readLoadingRoute,
       readLoadingAdvertisement,
-      headerImages,
       readLoadingHeaderImages,
       readErrorRoute,
       readErrorRouteTicket,
@@ -55,63 +61,29 @@ class index extends Component {
 
     let dataSource = [];
     let dataSource2 = [];
-    let adCoverPic = []
+    let dataSource3 = [];
+    let adCoverPic = [];
+    let categoryImage = [];
+    let categoriesImage = [{image: require("../../../assets/chillibuddy/category1.png")},{image: require("../../../assets/chillibuddy/category2.png")},{image: require("../../../assets/chillibuddy/category3.png")},{image: require("../../../assets/chillibuddy/category4.png")},{image: require("../../../assets/chillibuddy/category5.png")}];
 
     //Push object into array
     advertisements.filter((advertisement)=> {adCoverPic.push(advertisement.coverPic)});
+    categoriesImage.filter((images)=> {categoryImage.push(images.image)});
     //Filter empty data from array
     var filteredAdPic = adCoverPic.filter(value => Object.keys(value).length !== 0);
-
-    let { routeTickets } = clone(this.props);
-
-    routeTickets = routeTickets.filter((routeTicket)=> routeTicket.route.ended.boolean === false && routeTicket.route.terminated.at === null)
-
-    if (routeTickets.length > 0) {
-      dataSource = routeTickets.map(({ route }) => {
-        return {
-          key: route.id,
-          id: route.id,
-          type: route.type,
-          title: route.title,
-          image: require("../../../assets/gogogain/RouteMap_FA_Challenge.png"),
-        };
-      });
-    }
-
+    
+    //Pass category
     let size = 10;
-    dataSource2 = allRoutes.slice(0, size).map((route) => {
-      let seatLeft = null;
-      let joined = 0;
-      if (route.minimumUser - route.currentUser <= 0) {
-        seatLeft = "0";
-      } else {
-        seatLeft = route.minimumUser - route.currentUser;
-      }
+    dataSource2 = this.state.categories.slice(0, size).map((category) => {
 
       return {
-        key: route.id,
-        id: route.id,
-        totalMission: route.totalMissions,
-        title: route.title,
-        type: route.type,
-        seatLeft: seatLeft,
-        startTime: route.startTime,
-        endTime: route.endTime,
-        image: require("../../../assets/gogogain/RouteMap_FA_JoinUs.jpg"),
-        joined: joined,
+        key: category.id,
+        id: category.id,
+        title: category.title,
+        image: require("../../../assets/chillibuddy/category1.png"),
+        //image: categoryImage,
       };
     });
- 
-    for(let x=0; x < dataSource2.length; x++){
-      for(let y=0; y < dataSource.length; y++){
-        if(dataSource2[x].id === dataSource[y].id)
-          dataSource2[x].joined++;
-      }
-    }
-
-    dataSource2 = dataSource2.sort((a, b) => {
-      return (a.joined) - (b.joined);
-    }); 
 
     const noImageHeaderSlider = require("../../../assets/gogogain/top_image.jpg")
     const noImageAdvertisement = require("../../../assets/gogogain/pinpng.com-camera-drawing-png-1886718.png")
@@ -124,7 +96,8 @@ class index extends Component {
           slider={filteredAdPic}
           dataSource={dataSource}
           dataSource2={dataSource2}
-          routeTickets={routeTickets}
+          backgroundImage={categoryImage}
+          //routeTickets={routeTickets}
           casualImage={casualImage}
           luxuryImage={luxuryImage}
           sectionTitle1="Category"
@@ -133,9 +106,9 @@ class index extends Component {
           label1="Total Mission : "
           label2="Period : "
           unit=" pax"
-          onPressCard={this.onPressCardChallenge.bind(this)}
+          //onPressCard={this.onPressCardChallenge.bind(this)}
           advertisements = {advertisements}
-          onPressAdvertisement = {this.onPressAdvertisement.bind(this)}
+          //onPressAdvertisement = {this.onPressAdvertisement.bind(this)}
           noImageAdvertisement= {noImageAdvertisement}
           noImageHeaderSlider = {noImageHeaderSlider}
           readLoadingAdvertisement = {readLoadingAdvertisement}
@@ -151,7 +124,7 @@ const mapStateToProps = (state) => {
   const routeTickets = state.RouteTicket.userRouteTickets;
   const { allRoutes } = state.Route;
   const { advertisements } = state.Advertisement;
-  const { headerImages } = state.Settings.info
+  const { categories, tags } = state.Settings
 
   const readLoadingRouteTicket = state.RouteTicket.readLoading;
   const readLoadingRoute = state.Route.readLoading;
@@ -164,10 +137,11 @@ const mapStateToProps = (state) => {
   const readErrorHeaderImages = state.Settings.readError;
 
   return {
+    categories, 
+    tags,
     routeTickets,
     allRoutes,
     advertisements,
-    headerImages,
     readLoadingHeaderImages,
     readLoadingRouteTicket,
     readLoadingRoute,
@@ -184,5 +158,7 @@ export default connect(mapStateToProps, {
   removeListenerFromRouteTickets,
   readAllRoute,
   readAdvertisements,
+  verifyPermission,
+  loadShops,
   readSettingInfo
 })(index);

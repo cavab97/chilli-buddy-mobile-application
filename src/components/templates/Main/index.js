@@ -37,6 +37,7 @@ export default({
     slider,
     dataSource,
     dataSource2,
+    backgroundImage,
     casualImage,
     luxuryImage,
     sectionTitle1,
@@ -55,6 +56,7 @@ export default({
     readLoadingRouteTicket,
     readLoadingHeaderImages,
 })=> {
+
     const DATA = []
     const DATA2 = []; 
 
@@ -108,7 +110,7 @@ export default({
         );
     }
 
-    const JoinNowList = ({index, data}) => {
+    const CategoriesList = ({index, data}) => {
         return (
             <TouchableOpacity onPress={()=>onPressCard(data.id)} >
                 <Card 
@@ -123,7 +125,6 @@ export default({
                         >
                         <View style = {styles.textHolderStyle2}>
                             <Text style={styles.cardTitle2}>{data.title}</Text>
-                            <Text style={styles.routeType}>{data.type}</Text>
                         </View>
                         </ImageBackground>
                     </CardSection>
@@ -171,7 +172,7 @@ export default({
                             <Text style={styles.sectionTitle}>{sectionTitle1}</Text>
                         </View>
                         <VirtualizedList 
-                            horizontal
+                            vertical
                             showsHorizontalScrollIndicator = {false}
                             data={DATA}
                             renderItem={({index}) => <CardListLoading index={index}/>}
@@ -191,7 +192,7 @@ export default({
                                 showsHorizontalScrollIndicator = {false}
                                 data = {dataSource2}
                                 keyExtractor={item => item.id}
-                                renderItem={({ item, index }) => <JoinNowList data={item} index={index}/> }
+                                renderItem={({ item, index}) => <CategoriesList data={item} index={index}/> }
                                 scrollEnabled = { dataSource2.length>1 ? true : false}
                             />
                         </View>

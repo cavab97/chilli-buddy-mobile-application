@@ -112,7 +112,14 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
                     hideNavBar={true}
                 />
             </Stack>
-
+            <Stack>
+                <Scene
+                    key="Shops"
+                    component={Shops}
+                    title="Shops"
+                    titleStyle={styles.title}
+                />
+            </Stack>
             <Stack key="SingleMerchant" back>
                 <Scene
                     key="SingleMerchant"

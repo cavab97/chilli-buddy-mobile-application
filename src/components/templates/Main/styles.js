@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
         maxHeight: Platform.OS === 'ios' && Platform.isPad === true ? 700 : 250,
     },
     subContainer2: {
+        alignItems: "center",
         flex: 1,
     },
     subContainer3: {
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 2,
         marginTop: "5%",
-        marginLeft: 20,
+        //marginLeft: 20,
         fontFamily: "RobotoBold",
         color: Colors.PRIMARY,
     },
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     cardStyle: {
         width: 332, 
         borderRadius: 20,
-        marginRight: 20,
+        //marginRight: 20,
         marginLeft: 0,
         shadowColor: "#000",
         shadowOffset: {	width: 0, height: 0,},
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
         alignItems: "center", 
         alignContent: "center",
         justifyContent: "center",
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+        //backgroundColor: 'rgba(0, 0, 0, 0.5)', 
         borderTopLeftRadius: 19,
         borderTopRightRadius: 19,
     },
