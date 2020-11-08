@@ -43,7 +43,6 @@ class index extends Component {
 
   // old ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidMount = async () => {
-    console.log(this.props);
     this.props.verifyPermission().then((permissions) => {
       if (permissions.location !== "granted") {
         alert("Permission to access location is necessary");
@@ -63,9 +62,12 @@ class index extends Component {
           radius: radius * i,
           latitude: location.coords.latitude,
           longtitude: location.coords.longitude,
-          selectedCategory: this.state.selectedCategory.id
-            ? this.state.selectedCategory.id
+          selectedCategory: this.props.selectedCategory
+            ? this.props.selectedCategory
             : null,
+          // selectedCategory: this.state.selectedCategory.id
+          //   ? this.state.selectedCategory.id
+          //   : null,
         })
         .then((Data) => {
           this.setState({ dataSource: Data, page: 0, data: [] });
