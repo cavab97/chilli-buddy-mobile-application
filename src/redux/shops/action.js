@@ -82,9 +82,7 @@ export function loadShops({ radius, latitude, longtitude, selectedCategory }) {
             let Data = [];
 
             snapshot.forEach(function (doc) {
-              
-              if(doc.data().deleted.at === null)
-              {
+              if (doc.data().deleted.at === null) {
                 Data.push({ ...doc, id: doc.id });
               }
             });
@@ -96,7 +94,6 @@ export function loadShops({ radius, latitude, longtitude, selectedCategory }) {
             });
             resolve(Data);
             dispatch({ type: actions.READ_FROM_DATABASE_SUCCESS });
-            
           })
           .catch((error) => {
             console.log(error);
@@ -119,9 +116,9 @@ export function loadShops({ radius, latitude, longtitude, selectedCategory }) {
 
             snapshot.forEach(function (doc) {
               //console.log(doc.data().displayName, doc.data().deleted_at)
-            //   if (doc.data().deleted.at === null) {
-                Data.push({ ...doc, id: doc.id });
-            //   }
+              //   if (doc.data().deleted.at === null) {
+              Data.push({ ...doc, id: doc.id });
+              //   }
             });
 
             Data.sort((a, b) => a.distance - b.distance);
@@ -129,9 +126,8 @@ export function loadShops({ radius, latitude, longtitude, selectedCategory }) {
             Data = Data.map((item) => {
               return { ...item.data(), distance: item.distance, id: item.id };
             });
-            resolve(Data)
+            resolve(Data);
             dispatch({ type: actions.READ_FROM_DATABASE_SUCCESS });
-            
           })
           .catch((error) => {
             console.log(error);
@@ -145,7 +141,6 @@ export function loadShops({ radius, latitude, longtitude, selectedCategory }) {
 
 export function readFromDatabase(groupId) {
   return (dispatch) => {
-
     dispatch({ type: actions.READ_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
       try {
@@ -170,7 +165,7 @@ export function readFromDatabase(groupId) {
 export function listenToRecord({ shopId = null }) {
   return (dispatch) => {
     dispatch({ type: actions.READ_RECORD });
-    console.log(`Start listen to shop : ${shopId} `)
+    console.log(`Start listen to shop : ${shopId} `);
     try {
       objectDataServices.listenObject({
         objectId: shopId,
@@ -193,9 +188,9 @@ export function listenToRecord({ shopId = null }) {
 
 export function removeListenerToRecord() {
   return (dispatch) => {
-    console.log("Removed shop listener")
+    console.log("Removed shop listener");
     objectDataServices.removeListenerToRecord();
-  }
+  };
 }
 
 export default actions;

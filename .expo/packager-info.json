@@ -1,10 +1,10 @@
 {
-  "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "packagerPort": null,
-  "packagerPid": null,
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://rr-rqh.anonymous.chilibuddyuser.exp.direct",
+  "packagerNgrokUrl": "https://packager.rr-rqh.anonymous.chilibuddyuser.exp.direct",
+  "ngrokPid": 6116,
+  "packagerPort": 19001,
+  "packagerPid": 8916,
   "webpackServerPort": null,
   "devToolsPort": 19002
 }

@@ -11,7 +11,7 @@ import {
   removeListenerFromDatabase as removeListenerFromRouteTickets,
 } from "@redux/routeTicket/action";
 
-import clone from "clone"
+import clone from "clone";
 
 class index extends Component {
   constructor(props) {
@@ -20,8 +20,8 @@ class index extends Component {
       tags: props.tags,
       categories: props.categories,
       selectedCategory: {},
-      selectedTag: "All"
-    }
+      selectedTag: "All",
+    };
   }
 
   componentDidMount() {
@@ -39,9 +39,9 @@ class index extends Component {
   //   Actions.Route({ routeId: id });
   // }
 
-  // onPressAdvertisement(id) {
-  //   Actions.Advertisement({ AdvertisementId: id })
-  // }
+  onPressCategory(id) {
+    Actions.Shops({ selectedCategory: id });
+  }
 
   render() {
     const {
@@ -54,68 +54,88 @@ class index extends Component {
       readErrorRoute,
       readErrorRouteTicket,
       readErrorAdvertisement,
-      readErrorHeaderImages
+      readErrorHeaderImages,
     } = this.props;
 
-    const readFail = readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
+    const readFail =
+      readErrorRoute ||
+      readErrorRouteTicket ||
+      readErrorAdvertisement ||
+      readErrorHeaderImages;
 
     let dataSource = [];
     let dataSource2 = [];
     let dataSource3 = [];
     let adCoverPic = [];
-    let categoryImage = [];
-    let categoriesImage = [{image: require("../../../assets/chillibuddy/category1.png")},{image: require("../../../assets/chillibuddy/category2.png")},{image: require("../../../assets/chillibuddy/category3.png")},{image: require("../../../assets/chillibuddy/category4.png")},{image: require("../../../assets/chillibuddy/category5.png")}];
+    let categoriesImage = [
+      require("../../../assets/chillibuddy/category1.png"),
+      require("../../../assets/chillibuddy/category2.png"),
+      require("../../../assets/chillibuddy/category3.png"),
+      require("../../../assets/chillibuddy/category4.png"),
+      require("../../../assets/chillibuddy/category5.png"),
+    ];
 
     //Push object into array
-    advertisements.filter((advertisement)=> {adCoverPic.push(advertisement.coverPic)});
-    categoriesImage.filter((images)=> {categoryImage.push(images.image)});
+    advertisements.filter((advertisement) => {
+      adCoverPic.push(advertisement.coverPic);
+    });
+
     //Filter empty data from array
-    var filteredAdPic = adCoverPic.filter(value => Object.keys(value).length !== 0);
-    
+    var filteredAdPic = adCoverPic.filter(
+      (value) => Object.keys(value).length !== 0
+    );
+
     //Pass category
     let size = 10;
     dataSource2 = this.state.categories.slice(0, size).map((category) => {
-
       return {
         key: category.id,
         id: category.id,
         title: category.title,
-        image: require("../../../assets/chillibuddy/category1.png"),
-        //image: categoryImage,
+        //image: require("../../../assets/chillibuddy/category1.png"),
       };
     });
 
-    const noImageHeaderSlider = require("../../../assets/gogogain/top_image.jpg")
-    const noImageAdvertisement = require("../../../assets/gogogain/pinpng.com-camera-drawing-png-1886718.png")
-    const casualImage = require("../../../assets/gogogain/Mascot-C.png")
-    const luxuryImage = require("../../../assets/gogogain/Mascot-L.png")
+    //Assigning background pictures
+    dataSource2.forEach((element) => {
+      //element.image = backgroundImage;
+      for (var i = 0; i < dataSource2.length; i++) {
+        for (var j = 0; j < 5; j++) {
+          element.image = categoriesImage[j];
+        }
+      }
+    });
+
+    const noImageHeaderSlider = require("../../../assets/gogogain/top_image.jpg");
+    const noImageAdvertisement = require("../../../assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
+    const casualImage = require("../../../assets/gogogain/Mascot-C.png");
+    const luxuryImage = require("../../../assets/gogogain/Mascot-L.png");
 
     return (
-        <MainTemplete
-          readFail={readFail}
-          slider={filteredAdPic}
-          dataSource={dataSource}
-          dataSource2={dataSource2}
-          backgroundImage={categoryImage}
-          //routeTickets={routeTickets}
-          casualImage={casualImage}
-          luxuryImage={luxuryImage}
-          sectionTitle1="Category"
-          sectionTitle2="Latest News"
-          sectionTitle3="Your Challenges"
-          label1="Total Mission : "
-          label2="Period : "
-          unit=" pax"
-          //onPressCard={this.onPressCardChallenge.bind(this)}
-          advertisements = {advertisements}
-          //onPressAdvertisement = {this.onPressAdvertisement.bind(this)}
-          noImageAdvertisement= {noImageAdvertisement}
-          noImageHeaderSlider = {noImageHeaderSlider}
-          readLoadingAdvertisement = {readLoadingAdvertisement}
-          readLoadingRoute = {readLoadingRoute}
-          readLoadingRouteTicket = {readLoadingRouteTicket}
-          readLoadingHeaderImages ={readLoadingHeaderImages}
-        />
+      <MainTemplete
+        readFail={readFail}
+        slider={filteredAdPic}
+        dataSource={dataSource}
+        dataSource2={dataSource2}
+        //routeTickets={routeTickets}
+        casualImage={casualImage}
+        luxuryImage={luxuryImage}
+        sectionTitle1="Category"
+        sectionTitle2="Latest News"
+        sectionTitle3="Your Challenges"
+        label1="Total Mission : "
+        label2="Period : "
+        unit=" pax"
+        onPressCard={this.onPressCategory.bind(this)}
+        advertisements={advertisements}
+        //onPressAdvertisement = {this.onPressAdvertisement.bind(this)}
+        noImageAdvertisement={noImageAdvertisement}
+        noImageHeaderSlider={noImageHeaderSlider}
+        readLoadingAdvertisement={readLoadingAdvertisement}
+        readLoadingRoute={readLoadingRoute}
+        readLoadingRouteTicket={readLoadingRouteTicket}
+        readLoadingHeaderImages={readLoadingHeaderImages}
+      />
     );
   }
 }
@@ -124,7 +144,7 @@ const mapStateToProps = (state) => {
   const routeTickets = state.RouteTicket.userRouteTickets;
   const { allRoutes } = state.Route;
   const { advertisements } = state.Advertisement;
-  const { categories, tags } = state.Settings
+  const { categories, tags } = state.Settings;
 
   const readLoadingRouteTicket = state.RouteTicket.readLoading;
   const readLoadingRoute = state.Route.readLoading;
@@ -137,7 +157,7 @@ const mapStateToProps = (state) => {
   const readErrorHeaderImages = state.Settings.readError;
 
   return {
-    categories, 
+    categories,
     tags,
     routeTickets,
     allRoutes,
@@ -149,7 +169,7 @@ const mapStateToProps = (state) => {
     readErrorRoute,
     readErrorRouteTicket,
     readErrorAdvertisement,
-    readErrorHeaderImages
+    readErrorHeaderImages,
   };
 };
 
@@ -160,5 +180,5 @@ export default connect(mapStateToProps, {
   readAdvertisements,
   verifyPermission,
   loadShops,
-  readSettingInfo
+  readSettingInfo,
 })(index);

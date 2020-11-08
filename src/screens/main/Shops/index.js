@@ -6,23 +6,15 @@ import * as Location from "expo-location";
 import { verifyPermission, loadShops } from "@redux/shops/action";
 
 import styles from "./styles";
-import clone from "clone"
+import clone from "clone";
 
-import {
-  Text,
-  View,
-} from "@components/atoms";
+import { Text, View } from "@components/atoms";
 
-import {
-  Card,
-  CardSection
-} from "@components/molecules";
+import { Card, CardSection } from "@components/molecules";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-import {
-  ShopList
-} from "@components/templates";
+import { ShopList } from "@components/templates";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -40,7 +32,7 @@ class index extends Component {
       tags: props.tags,
       categories: props.categories,
       selectedCategory: {},
-      selectedTag: "All" //default all tag selected
+      selectedTag: "All", //default all tag selected
     };
     this.onSubscribePressed = this.onSubscribePressed.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
@@ -51,7 +43,8 @@ class index extends Component {
 
   // old ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidMount = async () => {
-    this.props.verifyPermission().then(permissions => {
+    console.log(this.props);
+    this.props.verifyPermission().then((permissions) => {
       if (permissions.location !== "granted") {
         alert("Permission to access location is necessary");
       } else this.handleRefresh();
@@ -72,19 +65,19 @@ class index extends Component {
           longtitude: location.coords.longitude,
           selectedCategory: this.state.selectedCategory.id
             ? this.state.selectedCategory.id
-            : null
+            : null,
         })
-        .then(Data => {
+        .then((Data) => {
           this.setState({ dataSource: Data, page: 0, data: [] });
           Data.length !== 0 && this.filterData();
         })
-        .catch(error => {
+        .catch((error) => {
           alert(error);
         });
       i = i * 3;
     } while (this.state.dataSource.length === 0 && radius * i < 1000);
     this.setState({
-      isRefreshing: false
+      isRefreshing: false,
       //isLoading:false
     });
     i = 1;
@@ -104,18 +97,18 @@ class index extends Component {
   filterData() {
     const filteredData =
       this.state.selectedTag !== "All"
-        ? this.state.dataSource.filter(item => {
+        ? this.state.dataSource.filter((item) => {
             return item.tags
-              .map(tag => {
+              .map((tag) => {
                 return tag;
               })
               .includes(this.state.selectedTag);
           })
         : this.state.dataSource;
     const dataDisplay = [];
-    filteredData.map(data => {
+    filteredData.map((data) => {
       dataDisplay.push({
-        ...data
+        ...data,
         //subscribed: this.props.subscribedList.includes(data.id)
       });
     });
@@ -123,8 +116,8 @@ class index extends Component {
     this.handleLoadMore();
   }
 
-  renderFooter({empty}) {
-    if(empty){
+  renderFooter({ empty }) {
+    if (empty) {
       return (
         // this.state.isLoading?
         // <View style={styles.loader}>
@@ -141,13 +134,13 @@ class index extends Component {
           <Card style={{ backgroundColor: "transparent", elevation: 0 }}>
             <CardSection style={[styles.emptySection, { elevation: 0 }]}>
               <Icon name="inbox" size={64} style={styles.emptyIcon} />
-              <Text style={styles.emptyText}>NO MERCHANT FOUND</Text> 
+              <Text style={styles.emptyText}>NO MERCHANT FOUND</Text>
             </CardSection>
           </Card>
         )
       );
-    }else{
-      return <View style={{marginBottom: 10}} />
+    } else {
+      return <View style={{ marginBottom: 10 }} />;
     }
   }
 
@@ -172,11 +165,11 @@ class index extends Component {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
           Accept: "application/json",
-          Authorization: "Bearer" + this.props.idToken
+          Authorization: "Bearer" + this.props.idToken,
         },
-        body: JSON.stringify({ shopID })
+        body: JSON.stringify({ shopID }),
       })
-        .then(async response => {
+        .then(async (response) => {
           const responseJson = await response.json();
 
           if (response.status === 200) {
@@ -184,11 +177,11 @@ class index extends Component {
             console.log("Subscribe error :" + JSON.stringify(responseJson));
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     } else {
-      subscribedList = subscribedList.filter(item => item !== shopID);
+      subscribedList = subscribedList.filter((item) => item !== shopID);
       this.props.updateSubscribeList({ subscribedList });
       data[index].subscribed = false;
       this.setState({ data: data });
@@ -199,11 +192,11 @@ class index extends Component {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
           Accept: "application/json",
-          Authorization: "Bearer" + this.props.idToken
+          Authorization: "Bearer" + this.props.idToken,
         },
-        body: JSON.stringify({ shopID })
+        body: JSON.stringify({ shopID }),
       })
-        .then(async response => {
+        .then(async (response) => {
           const responseJson = await response.json();
 
           if (response.status === 200) {
@@ -211,7 +204,7 @@ class index extends Component {
             console.log("unSubscribe error :" + JSON.stringify(responseJson));
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     }
@@ -220,16 +213,15 @@ class index extends Component {
   onCategoryChange = (value) => {
     this.setState({ selectedCategory: value, selectedTag: "All" });
     this.handleRefresh();
-  }
+  };
 
   onTagChange = (value) => {
     this.setState({ selectedTag: value });
     this.handleRefresh();
     this.filterData();
-  }
+  };
 
   render() {
-
     return (
       <ShopList
         handleRefresh={this.handleRefresh.bind(this)}
@@ -246,11 +238,11 @@ class index extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { categories, tags } = state.Settings;
   const { uid } = state.Auth.user;
   const { subscribedList, idToken } = state.Auth;
-  const { shops } = state.Shops
+  const { shops } = state.Shops;
 
   return { categories, tags, uid, idToken, subscribedList, shops };
 };
