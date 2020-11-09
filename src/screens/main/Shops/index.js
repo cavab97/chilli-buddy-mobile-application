@@ -62,12 +62,8 @@ class index extends Component {
           radius: radius * i,
           latitude: location.coords.latitude,
           longtitude: location.coords.longitude,
-          selectedCategory: this.props.selectedCategory
-            ? this.props.selectedCategory
-            : null,
-          // selectedCategory: this.state.selectedCategory.id
-          //   ? this.state.selectedCategory.id
-          //   : null,
+          selectedCategory: this.props.selectedCategory ? this.props.selectedCategory : null,
+          //selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
         })
         .then((Data) => {
           this.setState({ dataSource: Data, page: 0, data: [] });
