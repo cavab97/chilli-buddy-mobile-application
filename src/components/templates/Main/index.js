@@ -23,6 +23,7 @@ import { ImageSwiper } from "../../organisms/ImageSwiper";
 import moment from "moment";
 import ContentLoader, { Rect } from "react-content-loader/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { CustomIcon } from "@components/atoms/index";
 
 export default ({
   readFail,
@@ -68,12 +69,7 @@ export default ({
         key={"cardLoading" + index}
         style={index === 0 ? styles.firstCardStyle : styles.cardStyle}
       >
-        <ContentLoader
-          speed={1}
-          width={400}
-          height={130}
-          backgroundColor="#d9d9d9"
-        >
+        <ContentLoader speed={1} width={400} height={130} backgroundColor="#d9d9d9">
           <Rect x="0" y="0" rx="19" ry="19" width="332" height="130" />
         </ContentLoader>
       </Card>
@@ -83,10 +79,7 @@ export default ({
   const CategoriesList = ({ index, data }) => {
     return (
       <TouchableOpacity onPress={() => onPressCard(data.id)}>
-        <Card
-          key={data.id}
-          style={index === 0 ? styles.firstCardStyle : styles.cardStyle}
-        >
+        <Card key={data.id} style={index === 0 ? styles.firstCardStyle : styles.cardStyle}>
           <CardSection style={styles.cardSection2}>
             <ImageBackground
               source={data.image}
@@ -94,6 +87,7 @@ export default ({
               style={styles.imageBackgroundStyle}
             >
               <View style={styles.textHolderStyle2}>
+                <CustomIcon name="userprofile" size={30} style={styles.categoryIcon} />
                 <Text style={styles.cardTitle2}>{data.title}</Text>
               </View>
             </ImageBackground>
@@ -159,9 +153,7 @@ export default ({
               showsHorizontalScrollIndicator={false}
               data={dataSource2}
               keyExtractor={(item) => item.id}
-              renderItem={({ item, index }) => (
-                <CategoriesList data={item} index={index} />
-              )}
+              renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
               scrollEnabled={dataSource2.length > 1 ? true : false}
             />
           </View>

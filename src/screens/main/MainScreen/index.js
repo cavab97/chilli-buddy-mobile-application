@@ -58,10 +58,7 @@ class index extends Component {
     } = this.props;
 
     const readFail =
-      readErrorRoute ||
-      readErrorRouteTicket ||
-      readErrorAdvertisement ||
-      readErrorHeaderImages;
+      readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
 
     let dataSource = [];
     let dataSource2 = [];
@@ -81,13 +78,11 @@ class index extends Component {
     });
 
     //Filter empty data from array
-    var filteredAdPic = adCoverPic.filter(
-      (value) => Object.keys(value).length !== 0
-    );
+    var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
 
     //Pass category
     let size = 10;
-    dataSource2 = this.state.categories.slice(0, size).map((category) => {
+    dataSource2 = this.state.categories.slice(1, size).map((category) => {
       return {
         key: category.id,
         id: category.id,
@@ -97,13 +92,15 @@ class index extends Component {
     });
 
     //Assigning background pictures
-    dataSource2.forEach((element) => {
-      //element.image = backgroundImage;
-      for (var i = 0; i < dataSource2.length; i++) {
-        for (var j = 0; j < 5; j++) {
-          element.image = categoriesImage[j];
-        }
-      }
+    dataSource2.forEach((element, index) => {
+      element.image = categoriesImage[index % 5];
+
+      // //element.image = backgroundImage;
+      // for (var i = 0; i < dataSource2.length; i++) {
+      //   for (var j = 0; j < 5; j++) {
+      //     element.image = categoriesImage[j];
+      //   }
+      // }
     });
 
     const noImageHeaderSlider = require("../../../assets/gogogain/top_image.jpg");
