@@ -39,8 +39,8 @@ class index extends Component {
   //   Actions.Route({ routeId: id });
   // }
 
-  onPressCategory(id) {
-    Actions.Shops({ selectedCategory: id });
+  onPressCategory(id, no) {
+    Actions.Shops({ selectedCategory: id, number: no });
   }
 
   render() {
@@ -62,7 +62,6 @@ class index extends Component {
 
     let dataSource = [];
     let dataSource2 = [];
-    let dataSource3 = [];
     let adCoverPic = [];
     let categoriesImage = [
       require("../../../assets/chillibuddy/category1.png"),
@@ -71,7 +70,6 @@ class index extends Component {
       require("../../../assets/chillibuddy/category4.png"),
       require("../../../assets/chillibuddy/category5.png"),
     ];
-    // let iconName = ["fnb", "heart", "screw", "star", "wifi", "house", "others"];
 
     //Push object into array
     advertisements.filter((advertisement) => {
@@ -114,7 +112,6 @@ class index extends Component {
         element.icon = "others";
       }
     });
-    console.log(dataSource2);
 
     const noImageHeaderSlider = require("../../../assets/gogogain/top_image.jpg");
     const noImageAdvertisement = require("../../../assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");

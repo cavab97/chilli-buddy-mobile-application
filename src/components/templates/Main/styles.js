@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
   },
   //--join now--------------------------------------------
   sectionTitle: {
-    fontSize: 22,
-    fontWeight: "bold",
+    fontSize: 25,
+    //fontWeight: "bold",
     marginBottom: 2,
     marginTop: "5%",
     //marginLeft: 20,
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   },
   firstCardStyle: {
     width: 332,
-    height: 80,
     borderRadius: 20,
     marginRight: 20,
     marginLeft: 20,
@@ -88,12 +87,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
-    marginBottom: 15,
+    marginBottom: 5,
   },
   cardStyle: {
     width: 332,
     borderRadius: 20,
-    height: 80,
     //marginRight: 20,
     marginLeft: 0,
     shadowColor: "#000",
@@ -101,12 +99,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
-    marginBottom: 15,
+    marginBottom: 5,
   },
   imageMap: {
     margin: 11,
     width: 131,
-    height: 100,
+    height: 1,
     borderRadius: 20,
     resizeMode: "cover",
   },
@@ -148,8 +146,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   cardTitle2: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 20,
+    //fontWeight: "bold",
     color: "#ffffff",
     textAlign: "center",
     fontFamily: "KomikaAxis",
