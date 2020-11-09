@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   imageMap: {
     margin: 11,
     width: 131,
-    height: 121,
+    height: 100,
     borderRadius: 20,
     resizeMode: "cover",
   },
