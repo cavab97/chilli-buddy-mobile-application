@@ -127,7 +127,9 @@ const styles = StyleSheet.create({
   },
   categoryIcon: {
     color: Colors.WHITE,
+    marginRight: 20,
   },
+
   //-----------your challenge----------------------------------
   imageMap2: {
     /* width: 363.2,
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
   },
   textHolderStyle2: {
     flex: 1,
+    flexDirection: "row",
     //padding: 64,
     alignItems: "center",
     alignContent: "center",

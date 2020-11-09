@@ -87,11 +87,8 @@ export default ({
               style={styles.imageBackgroundStyle}
             >
               <View style={styles.textHolderStyle2}>
-                <Text style={styles.cardTitle2}>
-                  <CustomIcon name="userprofile" size={30} style={styles.categoryIcon} />
-
-                  {data.title}
-                </Text>
+                <CustomIcon name="userprofile" size={30} style={styles.categoryIcon} />
+                <Text style={styles.cardTitle2}>{data.title}</Text>
               </View>
             </ImageBackground>
           </CardSection>
