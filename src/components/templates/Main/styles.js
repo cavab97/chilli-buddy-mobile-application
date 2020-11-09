@@ -49,12 +49,12 @@ const styles = StyleSheet.create({
   },
   //--join now--------------------------------------------
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     marginBottom: 2,
     marginTop: "5%",
     //marginLeft: 20,
-    fontFamily: "RobotoBold",
+    fontFamily: "KomikaAxis",
     color: Colors.PRIMARY,
   },
   cardSection: {
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   },
   firstCardStyle: {
     width: 332,
+    height: 80,
     borderRadius: 20,
     marginRight: 20,
     marginLeft: 20,
@@ -87,11 +88,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
-    marginBottom: 5,
+    marginBottom: 15,
   },
   cardStyle: {
     width: 332,
     borderRadius: 20,
+    height: 80,
     //marginRight: 20,
     marginLeft: 0,
     shadowColor: "#000",
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
-    marginBottom: 5,
+    marginBottom: 15,
   },
   imageMap: {
     margin: 11,
@@ -146,11 +148,11 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   cardTitle2: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#ffffff",
     textAlign: "center",
-    fontFamily: "KurriIslandItaMed",
+    fontFamily: "KomikaAxis",
   },
   textHolderStyle2: {
     flex: 1,
