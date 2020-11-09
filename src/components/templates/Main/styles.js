@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
     textAlign: "center",
-    fontFamily: "RobotoRegular",
+    fontFamily: "KurriIslandItaMed",
   },
   textHolderStyle2: {
     flex: 1,

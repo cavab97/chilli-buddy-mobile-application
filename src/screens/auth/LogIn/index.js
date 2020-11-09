@@ -4,7 +4,7 @@ import { Actions } from "react-native-router-flux";
 import { api } from "../../../settings";
 import { RecaptchaModal } from "./recaptcha";
 import { Keyboard, Alert, Platform } from "react-native";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import countryCode from "../../../assets/countryCode/countryCodes";
 const { authDomain } = api.firebaseConfig;
 
@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedBack,
   Text,
-  View
+  View,
 } from "../../../components/atoms";
 
 import {
@@ -36,7 +36,7 @@ class index extends Component {
       invalidPhoneNumber: false,
       areaCode: "+60",
       sending: false,
-      errorMessage: null
+      errorMessage: null,
     };
   }
 
@@ -70,7 +70,7 @@ class index extends Component {
         return;
       }
     }
-    
+
     this.props.modalControl();
   };
 
@@ -78,7 +78,6 @@ class index extends Component {
     this.setState({ sending: true });
     const { loginWithPhoneNumber } = this.props;
     phoneNumber = this.state.areaCode + phoneNumber;
-
 
     try {
       loginWithPhoneNumber({ phoneNumber, recaptchaToken });
@@ -92,49 +91,45 @@ class index extends Component {
     Alert.alert(
       "Network Error",
       "There might be some problem loading the content because of network unstable",
-      [
-        { text: 'OK' },
-      ],
-      { cancelable: true });
+      [{ text: "OK" }],
+      { cancelable: true }
+    );
   }
 
   onChangeAreaCode = (value) => {
-    this.setState({areaCode: value.dial_code});
-  }
+    this.setState({ areaCode: value.dial_code });
+  };
 
   render() {
     const { loginDetails, loading, modalVisible, error } = this.props;
     const { phoneNumber, recaptchaToken } = loginDetails;
 
     return (
-      <ImageBackground
-        source={require("../../../../assets/Login.jpg")}
-        style={styles.container}
-      >
-        <TouchableWithoutFeedBack  onPress={Keyboard.dismiss} accessible={false}>
+      <ImageBackground source={require("../../../../assets/Login.jpg")} style={styles.container}>
+        <TouchableWithoutFeedBack onPress={Keyboard.dismiss} accessible={false}>
           {/* <KeyboardAvoidingView
             behavior="position"
             style={{ flex: 1, justifyContent: "center" }}
             keyboardVerticalOffset={Platform.OS === "ios" ? -300 : -300}
             enabled
           > */}
-        <KeyboardAwareScrollView
-                style={{ flex: 1, width: '100%' }}
-                showsVerticalScrollIndicator = {false}
-                enableOnAndroid={true} 
-                keyboardShouldPersistTaps='handled'
-                extraScrollHeight={Platform.OS === 'ios' ? 0 : 100}
-                /*  behavior={Platform.OS === "ios" ? "padding" : "height"}
+          <KeyboardAwareScrollView
+            style={{ flex: 1, width: "100%" }}
+            showsVerticalScrollIndicator={false}
+            enableOnAndroid={true}
+            keyboardShouldPersistTaps="handled"
+            extraScrollHeight={Platform.OS === "ios" ? 0 : 100}
+            /*  behavior={Platform.OS === "ios" ? "padding" : "height"}
                 //behavior="position"
                 //behavior="padding"
                 style={{flex:1}}
                 keyboardVerticalOffset={Platform.OS === "ios" ? 100 : -700}
                 enabled */
-            >
+          >
             <View style={styles.innerContainer}>
               <View style={styles.containerpart1}>
                 <Image
-                  source={require("../../../assets/gogogain/login_logo.png")}
+                  source={require("../../../assets/gogogain/loginIcon.png")}
                   style={styles.logoImage}
                 />
               </View>
@@ -150,9 +145,7 @@ class index extends Component {
                   onChangeAreaCode={this.onChangeAreaCode.bind(this)}
                 />
                 {this.state.invalidPhoneNumber && (
-                  <Text style={styles.errorText}>
-                    * Invalid Phone format. eg: +601X XXX XXXX
-                  </Text>
+                  <Text style={styles.errorText}>* Invalid Phone format. eg: +601X XXX XXXX</Text>
                 )}
 
                 <TouchableOpacity
@@ -162,9 +155,7 @@ class index extends Component {
                     data: phoneNumber,
                   })}
                 >
-                  <ActivityIndicator
-                    animating={this.state.sending && error.message}
-                  />
+                  <ActivityIndicator animating={this.state.sending && error.message} />
                   <Text style={[styles.loginText]}>Login</Text>
                 </TouchableOpacity>
                 {error && <Text style={styles.errorText}>{error.message}</Text>}
@@ -192,7 +183,7 @@ class index extends Component {
                 onBackdropPress={this.modalHandle.bind(this, { key: "close" })}
               />
             </View>
-            </KeyboardAwareScrollView>
+          </KeyboardAwareScrollView>
         </TouchableWithoutFeedBack>
       </ImageBackground>
     );

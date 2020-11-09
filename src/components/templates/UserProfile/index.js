@@ -1,15 +1,8 @@
 import React from "react";
 
-import {
-  Icon,
-  Text,
-  TouchableOpacity,
-  View
-} from "../../atoms";
+import { Icon, Text, TouchableOpacity, View } from "../../atoms";
 
-import {
-  ImageInfo
-} from "../../molecules";
+import { ImageInfo } from "../../molecules";
 
 import { Nav, Tab } from "../../../components/molecules";
 
@@ -46,13 +39,13 @@ const UserProfile = ({
       <View style={styles.container}>
         <View style={styles.avatarContainer}>
           <ImageInfo
-            banner={photoURL ? photoURL : require('../../../assets/DefaultAvatar.jpg')}
+            banner={photoURL ? photoURL : require("../../../assets/DefaultAvatar.jpg")}
             imageContainer={styles.profileImageStyle}
             imageStyle={styles.image}
           />
         </View>
         <View>
-          {!displayName && 
+          {!displayName && (
             <View>
               <TouchableOpacity
                 style={styles.editProfileTextContainer}
@@ -60,9 +53,11 @@ const UserProfile = ({
               >
                 <Text style={styles.editProfileText}>UPDATE PROFILE NOW</Text>
               </TouchableOpacity>
-            </View>}
-          
-            {displayName && <View style={styles.textContainer1}>
+            </View>
+          )}
+
+          {displayName && (
+            <View style={styles.textContainer1}>
               <Text style={styles.userTitle}>{displayName}</Text>
               <Icon
                 size={10}
@@ -74,13 +69,13 @@ const UserProfile = ({
                 color={styles.userInfomationIcon.borderColor}
               />
 
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress={() => onEditProfilePress()}
                 style={styles.pencilIconTouchableOpacityStyle}
               >
                 <Icon
                   size={25}
-                  iconStyle={[styles.userEditIcon, { borderWidth: 0,  }]}
+                  iconStyle={[styles.userEditIcon, { borderWidth: 0 }]}
                   containerStyle={{ justifyContent: "center" }}
                   // name={isUserVerified ? "verified" : "unverified"}
                   name={"mode-edit"}
@@ -89,7 +84,7 @@ const UserProfile = ({
                 />
               </TouchableOpacity>
             </View>
-          }
+          )}
 
           <View style={styles.textContainer2}>
             <Text style={styles.userDesc}>{phoneNumber}</Text>
@@ -121,12 +116,12 @@ const UserProfile = ({
               fontStyle={styles.navFontStyle}
               style={styles.tabStyle}
             />
-            <Tab
+            {/* <Tab
               name="ranking"
               label="MY RANKING"
               fontStyle={styles.navFontStyle}
               style={styles.tabStyle}
-            />
+            /> */}
           </Nav>
         </View>
       </View>
@@ -143,13 +138,17 @@ const UserProfile = ({
             readLoading={readLoadingNotification}
           />
         ) : page === 1 ? (
-          <MyAccount onPress={onRewardPress} onSignoutPress={onSignoutPress} logOutLoading={logOutLoading} />
+          <MyAccount
+            onPress={onRewardPress}
+            onSignoutPress={onSignoutPress}
+            logOutLoading={logOutLoading}
+          />
         ) : (
-          <MyRanking 
-            dataSource={rewardDataSource} 
+          <MyRanking
+            dataSource={rewardDataSource}
             onPress={onRewardPress}
             readLoadingReward={readLoadingReward}
-           />
+          />
         )}
       </View>
     </View>

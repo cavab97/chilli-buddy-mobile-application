@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import { Keyboard, Alert, Platform } from "react-native";
 import { api } from "../../../settings";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import {
   Text,
@@ -12,12 +12,10 @@ import {
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedBack,
-  View
+  View,
 } from "../../../components/atoms";
 
-import {
-  TACTextInput,
-} from "../../../components/molecules";
+import { TACTextInput } from "../../../components/molecules";
 
 import styles from "./styles";
 //import { RecaptchaModal } from "../LogIn/recaptcha";
@@ -103,12 +101,9 @@ class index extends Component {
     const { phoneNumber, recaptchaToken, tac } = loginDetails;
 
     return (
-      <ImageBackground
-        source={require("../../../../assets/Login.jpg")}
-        style={styles.container}
-      >
+      <ImageBackground source={require("../../../../assets/Login.jpg")} style={styles.container}>
         <TouchableWithoutFeedBack onPress={Keyboard.dismiss} accessible={false}>
-         {/* < KeyboardAvoidingView
+          {/* < KeyboardAvoidingView
             //behavior={Platform.OS === "ios" ? "padding" : null}
             behavior="padding"
             style={styles.container2}
@@ -116,38 +111,37 @@ class index extends Component {
             enabled
           > */}
           <KeyboardAwareScrollView
-                style={styles.container2}
-                showsVerticalScrollIndicator = {false}
-                enableOnAndroid={true} 
-                keyboardShouldPersistTaps='handled'
-                extraScrollHeight={Platform.OS === 'ios' ? 0 : 100} 
-                /*  behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container2}
+            showsVerticalScrollIndicator={false}
+            enableOnAndroid={true}
+            keyboardShouldPersistTaps="handled"
+            extraScrollHeight={Platform.OS === "ios" ? 0 : 100}
+            /*  behavior={Platform.OS === "ios" ? "padding" : "height"}
                 //behavior="position"
                 //behavior="padding"
                 style={{flex:1}}
                 keyboardVerticalOffset={Platform.OS === "ios" ? 100 : -700}
                 enabled */
-            >
+          >
             <ScrollView
               contentContainerStyle={{ flexGrow: 1 }}
               showsVerticalScrollIndicator={false}
             >
               <View style={styles.containerpart1}>
                 <Image
-                  source={require("../../../assets/gogogain/login_logo.png")}
+                  source={require("../../../assets/gogogain/loginIcon.png")}
                   style={styles.logoImage}
                 />
               </View>
               <View style={styles.containerpart2}>
                 <Text style={styles.subTitle}>
-                  Enter the 6 digit code we sent you via phone number to
-                  continue
+                  Enter the 6 digit code we sent you via phone number to continue
                 </Text>
               </View>
               <View style={styles.containerpart3}>
                 <TACTextInput
                   value={tac}
-                  textStyle={{color: "#fff", fontSize: 25}}
+                  textStyle={{ color: "#fff", fontSize: 25 }}
                   onChange={this.onRecordChange.bind(this, "tac")}
                 />
               </View>
@@ -172,11 +166,11 @@ class index extends Component {
                   </TouchableOpacity>
                 </View>
               )} */}
-              {error && <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>
-                  {error.message}
-                </Text>
-              </View>}
+              {error && (
+                <View style={styles.errorContainer}>
+                  <Text style={styles.errorText}>{error.message}</Text>
+                </View>
+              )}
 
               <View style={styles.containerpart5}>
                 <TouchableOpacity
@@ -197,7 +191,7 @@ class index extends Component {
                 <SuccessfulModal />
               </View>
             </ScrollView>
-            </KeyboardAwareScrollView>
+          </KeyboardAwareScrollView>
         </TouchableWithoutFeedBack>
       </ImageBackground>
     );
