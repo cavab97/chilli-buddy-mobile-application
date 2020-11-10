@@ -115,6 +115,7 @@ const ShopList = ({
   onTagChange,
   state,
   isPromote,
+  displayCategory,
 }) => {
   return (
     <View style={{ height: "100%" }}>
@@ -135,6 +136,7 @@ const ShopList = ({
           optionTextStyle={styles.modalOptionTextStyle}
           keyExtractor={(item) => item.id}
           labelExtractor={(item) => item.title}
+          selectedKey={displayCategory}
         />
 
         <ModalSelector
