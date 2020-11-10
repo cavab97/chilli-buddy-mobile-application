@@ -1,3 +1,4 @@
+import { auto } from "eol";
 import { StyleSheet, Platform } from "react-native";
 
 import { Colors } from "../../../settings/styles/theme";
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   },
   categoryIcon: {
     color: Colors.WHITE,
-    marginRight: 20,
+    marginRight: 10,
   },
 
   //-----------your challenge----------------------------------

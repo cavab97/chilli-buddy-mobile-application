@@ -101,7 +101,7 @@ export default ({
             >
               <View style={styles.textHolderStyle2}>
                 <CustomIcon name={data.icon} size={30} style={styles.categoryIcon} />
-                <Text style={styles.cardTitle2}>{data.title}</Text>
+                <Text style={styles.cardTitle2}> {data.title} </Text>
               </View>
             </ImageBackground>
           </CardSection>
@@ -142,7 +142,7 @@ export default ({
         {readLoadingRoute ? (
           <View style={styles.subContainer2}>
             <View>
-              <Text style={styles.sectionTitle}>{sectionTitle1}</Text>
+              <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
             </View>
             <VirtualizedList
               vertical
@@ -159,7 +159,7 @@ export default ({
         ) : dataSource2.length != 0 ? (
           <View style={styles.subContainer2}>
             <View>
-              <Text style={styles.sectionTitle}>{sectionTitle1}</Text>
+              <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
             </View>
             <FlatList
               vertical
