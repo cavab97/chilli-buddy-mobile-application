@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>473612187597-lj81ptfgp4mdqdrqa7bcae1c95ru36tf.apps.googleusercontent.com</string>
+	<string>1042206429903-2g1g6sc5tr42vqvqi1nes0la2ae9f04j.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.473612187597-lj81ptfgp4mdqdrqa7bcae1c95ru36tf</string>
+	<string>com.googleusercontent.apps.1042206429903-2g1g6sc5tr42vqvqi1nes0la2ae9f04j</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCeeqA3MQGhzYPhMgKttnx0i2MNPSEtj2Q</string>
+	<string>AIzaSyBArLtMDE-S0r6e_7eW5iEyL7z3S2c5lAQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>473612187597</string>
+	<string>1042206429903</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.infobay.gogogainuser</string>
 	<key>PROJECT_ID</key>
-	<string>gogogain-dev</string>
+	<string>gogogain-stanging</string>
 	<key>STORAGE_BUCKET</key>
-	<string>gogogain-dev.appspot.com</string>
+	<string>gogogain-stanging.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,9 +29,9 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:473612187597:ios:c22445318501b57396b684</string>
+	<string>1:1042206429903:ios:be32064b3f1ed729965dba</string>
 	<key>DATABASE_URL</key>
-	<string>https://gogogain-dev.firebaseio.com</string>
+	<string>https://gogogain-stanging.firebaseio.com</string>
 		<key>CFBundleURLTypes</key>
 	<array>
 	<dict>

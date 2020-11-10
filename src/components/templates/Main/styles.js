@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === "ios" && Platform.isPad === true ? 40 : 22,
     marginBottom: Platform.OS === "ios" && Platform.isPad === true ? 20 : 5,
     marginTop: "5%",
-    //marginLeft: 20,
     fontFamily: "KomikaAxis",
     color: Colors.PRIMARY,
   },

@@ -139,7 +139,7 @@ class index extends Component {
         noImageAdvertisement={noImageAdvertisement}
         noImageHeaderSlider={noImageHeaderSlider}
         readLoadingAdvertisement={readLoadingAdvertisement}
-        readLoadingRoute={readLoadingRoute}
+        readLoadingCategoryList={readLoadingRoute}
         readLoadingRouteTicket={readLoadingRouteTicket}
         readLoadingHeaderImages={readLoadingHeaderImages}
       />
