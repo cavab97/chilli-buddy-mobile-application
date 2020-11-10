@@ -53,17 +53,19 @@ class index extends Component {
   handleRefresh = async () => {
     const radius = 50;
     let i = 1;
-
     this.setState({ isRefreshing: true });
     let location = await Location.getCurrentPositionAsync({});
     do {
+      console.log(this.state.selectedCategory);
       await this.props
         .loadShops({
           radius: radius * i,
           latitude: location.coords.latitude,
           longtitude: location.coords.longitude,
-          selectedCategory: this.props.selectedCategory ? this.props.selectedCategory : null,
-          //selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+          //selectedCategory: this.props.selectedCategory ? this.props.selectedCategory : null,
+          selectedCategory: this.state.selectedCategory.id
+            ? this.state.selectedCategory.id
+            : this.props.selectedCategory,
         })
         .then((Data) => {
           this.setState({ dataSource: Data, page: 0, data: [] });
@@ -231,6 +233,7 @@ class index extends Component {
         onCategoryChange={this.onCategoryChange.bind(this)}
         onTagChange={this.onTagChange.bind(this)}
         state={this.state}
+        displayCategory={this.props.selectedCategory}
       />
     );
   }

@@ -2,153 +2,152 @@ import { Colors } from "../../../settings/styles/theme";
 import { StyleSheet, Platform } from "react-native";
 
 const styles = StyleSheet.create({
-    scroll: {
-        backgroundColor: "#FFFFFF",
-        height:"100%"
-    },
-    listItemContainer: {
-        height: 55,
-        borderWidth: 0.5,
-        borderColor: "#ECECEC",
-    },
-    moreIcon: {
-        backgroundColor: "#F55C22",
-        alignItems: "center",
-        borderColor: "transparent",
-        borderRadius: 10,
-        borderWidth: 1,
-        height: 34,
-        justifyContent: "center",
-        marginLeft: 10,
-        marginRight: 18,
-        width: 34,
-    },
-    rightTitle: {
-        fontSize: 15,
-        color: "#f18a22",
-        alignSelf: "flex-end",
-    },
-    container: {
-        alignItems: "center",
-        paddingBottom: 8,
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingTop: 6,
-        borderRadius: 5,
-        borderColor: "#ddd",
-        borderBottomWidth: 1,
-    },
-    avatarContainer: {
-        //marginRight: 12,
-        marginTop: 80,
-    },
-    userTitle: {
-        justifyContent: "flex-start",
-        fontSize: 21,
-        fontFamily: "RobotoRegular",
-        color: "#000",
-        marginRight: 8,
-        marginTop: 15,
-    },
-    userDesc: {
-        fontSize: 14,
-        fontFamily: "RobotoRegular",
-        marginVertical: 2,
-        color: "#000",
-    },
-    titleButton: {
-        color: "#ffffff",
-        fontFamily: "RobotoMedium",
-        fontSize: 12,
-    },
-    editButton: {
-        padding: 1,
-        borderColor: "#F55C22",
-        backgroundColor: "#F55C22",
-        borderWidth: 1,
-    },
-    editProfileText: {
-        fontSize: 12,
-        fontFamily: "RobotoRegular",
-        color: "#FFF",
-    },
-    editProfileTextContainer: {
-        marginTop : 15,
-        padding:3,
-        borderRadius: 5,
-        backgroundColor:"#f18a22",
+  scroll: {
+    backgroundColor: "#FFFFFF",
+    height: "100%",
+  },
+  listItemContainer: {
+    height: 55,
+    borderWidth: 0.5,
+    borderColor: "#ECECEC",
+  },
+  moreIcon: {
+    backgroundColor: "#F55C22",
+    alignItems: "center",
+    borderColor: "transparent",
+    borderRadius: 10,
+    borderWidth: 1,
+    height: 34,
+    justifyContent: "center",
+    marginLeft: 10,
+    marginRight: 18,
+    width: 34,
+  },
+  rightTitle: {
+    fontSize: 15,
+    color: "#f18a22",
+    alignSelf: "flex-end",
+  },
+  container: {
+    alignItems: "center",
+    paddingBottom: 8,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 6,
+    borderRadius: 5,
+    borderColor: "#ddd",
+    borderBottomWidth: 1,
+  },
+  avatarContainer: {
+    //marginRight: 12,
+    marginTop: 80,
+  },
+  userTitle: {
+    justifyContent: "flex-start",
+    fontSize: 21,
+    fontFamily: "RobotoRegular",
+    color: "#000",
+    marginRight: 8,
+    marginTop: 15,
+  },
+  userDesc: {
+    fontSize: 14,
+    fontFamily: "RobotoRegular",
+    marginVertical: 2,
+    color: "#000",
+  },
+  titleButton: {
+    color: "#ffffff",
+    fontFamily: "RobotoMedium",
+    fontSize: 12,
+  },
+  editButton: {
+    padding: 1,
+    borderColor: "#F55C22",
+    backgroundColor: "#F55C22",
+    borderWidth: 1,
+  },
+  editProfileText: {
+    fontSize: 12,
+    fontFamily: "RobotoRegular",
+    color: "#FFF",
+  },
+  editProfileTextContainer: {
+    marginTop: 15,
+    padding: 3,
+    borderRadius: 5,
+    backgroundColor: "#D60000",
+  },
+  editButtonContainer: {
+    width: 80,
+    marginVertical: 10,
+    backgroundColor: "#F55C22",
+  },
+  textContainer1: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  textContainer2: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    marginTop: 10,
+  },
+  textContainer3: {
+    marginTop: 0,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  userInfomationIcon: {
+    textAlign: "center",
+    textAlignVertical: "center",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    borderRadius: 5,
+    borderColor: "#F55C22",
+    borderWidth: 2,
+    padding: 2,
+    position: "absolute",
+    top: 6,
+    left: -12,
+  },
+  userEditIcon: {
+    //textAlign: "center",
+    //textAlignVertical: "center",
+    //alignSelf: "center",
+    //justifyContent: "center",
+    //alignItems: "center",
+    //alignContent: "center",
+    borderRadius: 5,
+    borderColor: "#919191",
+    borderWidth: 2,
+    //marginTop: 16,
+    opacity: 0.6,
+    position: "absolute",
+  },
+  multitabContainer: {
+    marginTop: 60,
+    width: "100%",
+  },
+  navFontStyle: {
+    marginVertical: 6,
+    fontFamily: "RobotoRegular",
+  },
+  btmContainer: {
+    flex: 1,
+  },
+  pencilIconTouchableOpacityStyle: {
+    padding: 12,
+    top: 18,
+  },
 
-    },
-    editButtonContainer: {
-        width: 80,
-        marginVertical: 10,
-        backgroundColor: "#F55C22",
-    },
-    textContainer1: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "flex-start",
-    },
-    textContainer2: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        marginTop: 10,
-    },
-    textContainer3: {
-        marginTop: 0,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "flex-start",
-    },
-    userInfomationIcon: {
-        textAlign: "center",
-        textAlignVertical: "center",
-        alignSelf: "center",
-        justifyContent: "center",
-        alignItems: "center",
-        alignContent: "center",
-        borderRadius: 5,
-        borderColor: "#F55C22",
-        borderWidth: 2,
-        padding: 2,
-        position: "absolute",
-        top: 6,
-        left: -12,
-    },
-    userEditIcon: {
-        //textAlign: "center",
-        //textAlignVertical: "center",
-        //alignSelf: "center",
-        //justifyContent: "center",
-        //alignItems: "center",
-        //alignContent: "center",
-        borderRadius: 5,
-        borderColor: "#919191",
-        borderWidth: 2,
-        //marginTop: 16,
-        opacity: 0.6,
-        position: "absolute",
-    },
-    multitabContainer: {
-        marginTop: 60,
-        width: "100%",
-    },
-    navFontStyle: {
-        marginVertical: 6,
-        fontFamily: "RobotoRegular",
-    },
-    btmContainer: {
-        flex: 1,
-    },
-    pencilIconTouchableOpacityStyle:{
-        padding: 12,
-        top: 18,
-    },
-
-    //Notification Style
-    //RewardCard
-    /* cardContainer: {
+  //Notification Style
+  //RewardCard
+  /* cardContainer: {
         width: "95%",
         paddingHorizontal: 10,
         paddingBottom: 5
@@ -192,8 +191,8 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
     }, */
 
-    //Myaccount Style
-    /* accountContainer: {
+  //Myaccount Style
+  /* accountContainer: {
         flex: 1,
         paddingTop: 20,
     },
@@ -231,8 +230,8 @@ const styles = StyleSheet.create({
         // bottom: -130,
     }, */
 
-    //Myranking Style
-    /* listSectionStyle: {
+  //Myranking Style
+  /* listSectionStyle: {
         flexDirection: "row",
         justifyContent: "space-around",
         marginHorizontal: 20,
@@ -309,23 +308,23 @@ const styles = StyleSheet.create({
     rankingContainer: {
         flex:1
     }, */
-    image: {
-        flex: 1,
-        borderRadius: 60,
-        width: null
-        //resizeMode: "cover", 
-        //width: "100%", 
-        //height: null
-    },
-    profileImageStyle: {
-        backgroundColor: Colors.GRAY_DARK,
-        height: 80,
-        width: 80,
-        borderRadius: 60,
-    },
-    scrollBox: {
-        flex: 1,
-    }
+  image: {
+    flex: 1,
+    borderRadius: 60,
+    width: null,
+    //resizeMode: "cover",
+    //width: "100%",
+    //height: null
+  },
+  profileImageStyle: {
+    backgroundColor: Colors.GRAY_DARK,
+    height: 80,
+    width: 80,
+    borderRadius: 60,
+  },
+  scrollBox: {
+    flex: 1,
+  },
 });
 
 export default styles;

@@ -39,8 +39,8 @@ class index extends Component {
   //   Actions.Route({ routeId: id });
   // }
 
-  onPressCategory(id) {
-    Actions.Shops({ selectedCategory: id });
+  onPressCategory(id, no) {
+    Actions.Shops({ selectedCategory: id, number: no });
   }
 
   render() {
@@ -62,7 +62,6 @@ class index extends Component {
 
     let dataSource = [];
     let dataSource2 = [];
-    let dataSource3 = [];
     let adCoverPic = [];
     let categoriesImage = [
       require("../../../assets/chillibuddy/category1.png"),
@@ -86,6 +85,7 @@ class index extends Component {
       return {
         key: category.id,
         id: category.id,
+        no: category.no,
         title: category.title,
         //image: require("../../../assets/chillibuddy/category1.png"),
       };
@@ -94,13 +94,23 @@ class index extends Component {
     //Assigning background pictures
     dataSource2.forEach((element, index) => {
       element.image = categoriesImage[index % 5];
-
-      // //element.image = backgroundImage;
-      // for (var i = 0; i < dataSource2.length; i++) {
-      //   for (var j = 0; j < 5; j++) {
-      //     element.image = categoriesImage[j];
-      //   }
-      // }
+      if (element.no === 1) {
+        element.icon = "fnb";
+      } else if (element.no === 2) {
+        element.icon = "heart";
+      } else if (element.no === 3) {
+        element.icon = "divide";
+      } else if (element.no === 4) {
+        element.icon = "screw";
+      } else if (element.no === 5) {
+        element.icon = "star";
+      } else if (element.no === 6) {
+        element.icon = "wifi";
+      } else if (element.no === 7) {
+        element.icon = "house";
+      } else {
+        element.icon = "others";
+      }
     });
 
     const noImageHeaderSlider = require("../../../assets/gogogain/top_image.jpg");

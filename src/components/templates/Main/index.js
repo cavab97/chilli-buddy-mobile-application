@@ -91,7 +91,7 @@ export default ({
 
   const CategoriesList = ({ index, data }) => {
     return (
-      <TouchableOpacity onPress={() => onPressCard(data.id)}>
+      <TouchableOpacity onPress={() => onPressCard(data.id, data.no)}>
         <Card key={data.id} style={index === 0 ? styles.firstCardStyle : styles.cardStyle}>
           <CardSection style={styles.cardSection2}>
             <ImageBackground
@@ -100,7 +100,7 @@ export default ({
               style={styles.imageBackgroundStyle}
             >
               <View style={styles.textHolderStyle2}>
-                <CustomIcon name="userprofile" size={30} style={styles.categoryIcon} />
+                <CustomIcon name={data.icon} size={30} style={styles.categoryIcon} />
                 <Text style={styles.cardTitle2}>{data.title}</Text>
               </View>
             </ImageBackground>

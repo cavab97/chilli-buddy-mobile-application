@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
-    marginBottom: 15,
+    marginBottom: 5,
   },
   cardStyle: {
     width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 332,
@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
-    marginBottom: 15,
+    marginBottom: 5,
   },
   imageMap: {
     margin: 11,
     width: 131,
-    height: 121,
+    height: 1,
     borderRadius: 20,
     resizeMode: "cover",
   },
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     //padding: 64,
+
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
