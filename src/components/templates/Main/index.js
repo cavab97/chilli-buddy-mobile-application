@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./styles";
+import { Platform } from "react-native";
 
 import {
   FlatList,
@@ -69,8 +70,20 @@ export default ({
         key={"cardLoading" + index}
         style={index === 0 ? styles.firstCardStyle : styles.cardStyle}
       >
-        <ContentLoader speed={1} width={400} height={130} backgroundColor="#d9d9d9">
-          <Rect x="0" y="0" rx="19" ry="19" width="332" height="130" />
+        <ContentLoader
+          speed={1}
+          width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 332}
+          height={90}
+          backgroundColor="#d9d9d9"
+        >
+          <Rect
+            x="0"
+            y="0"
+            rx="19"
+            ry="19"
+            width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 332}
+            height="90"
+          />
         </ContentLoader>
       </Card>
     );
@@ -138,7 +151,7 @@ export default ({
               renderItem={({ index }) => <CardListLoading index={index} />}
               keyExtractor={(item) => item.key}
               getItemCount={() => {
-                return 3;
+                return 4;
               }}
               getItem={getItem}
             />
