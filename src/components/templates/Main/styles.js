@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   categoryIcon: {
     color: Colors.WHITE,
-    marginRight: 20,
+    marginRight: 10,
   },
 
   //-----------your challenge----------------------------------
