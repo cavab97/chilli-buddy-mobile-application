@@ -3,6 +3,7 @@ import { Dimensions } from "react-native";
 import { Colors } from "../../../settings/styles/theme";
 
 const windowWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
