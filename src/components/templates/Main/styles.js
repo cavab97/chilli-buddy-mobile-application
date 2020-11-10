@@ -49,9 +49,8 @@ const styles = StyleSheet.create({
   },
   //--join now--------------------------------------------
   sectionTitle: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 2,
+    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 40 : 22,
+    marginBottom: Platform.OS === "ios" && Platform.isPad === true ? 20 : 5,
     marginTop: "5%",
     //marginLeft: 20,
     fontFamily: "KomikaAxis",
@@ -78,8 +77,7 @@ const styles = StyleSheet.create({
     //marginBottom: 3,
   },
   firstCardStyle: {
-    width: 332,
-    height: 80,
+    width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 332,
     borderRadius: 20,
     marginRight: 20,
     marginLeft: 20,
@@ -91,9 +89,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   cardStyle: {
-    width: 332,
+    width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 332,
     borderRadius: 20,
-    height: 80,
     //marginRight: 20,
     marginLeft: 0,
     shadowColor: "#000",
@@ -148,8 +145,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   cardTitle2: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 25 : 18,
     color: "#ffffff",
     textAlign: "center",
     fontFamily: "KomikaAxis",
