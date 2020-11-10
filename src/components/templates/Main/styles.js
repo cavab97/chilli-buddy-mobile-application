@@ -1,7 +1,11 @@
 import { StyleSheet, Platform } from "react-native";
-
+import { Dimensions } from "react-native";
 import { Colors } from "../../../settings/styles/theme";
 
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+const aspectRatio = windowWidth / windowHeight;
+console.log(windowHeight);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -9,8 +13,10 @@ const styles = StyleSheet.create({
   },
   subContainer1: {
     flex: 1,
-    minHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
-    maxHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
+    //minHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
+    //maxHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
+    minHeight: (windowWidth / 800) * 500,
+    maxHeight: (windowWidth / 800) * 500,
   },
   subContainer2: {
     alignItems: "center",
