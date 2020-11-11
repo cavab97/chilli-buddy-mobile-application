@@ -73,7 +73,7 @@ export default ({
         <ContentLoader
           speed={1}
           width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 332}
-          height={90}
+          height={50}
           backgroundColor="#d9d9d9"
         >
           <Rect
@@ -82,7 +82,7 @@ export default ({
             rx="19"
             ry="19"
             width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 332}
-            height="90"
+            height="50"
           />
         </ContentLoader>
       </Card>
@@ -151,7 +151,7 @@ export default ({
               renderItem={({ index }) => <CardListLoading index={index} />}
               keyExtractor={(item) => item.key}
               getItemCount={() => {
-                return 4;
+                return 6;
               }}
               getItem={getItem}
             />
