@@ -3,9 +3,7 @@ import { Dimensions } from "react-native";
 import { Colors } from "../../../settings/styles/theme";
 
 const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-const aspectRatio = windowWidth / windowHeight;
-console.log(windowHeight);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
