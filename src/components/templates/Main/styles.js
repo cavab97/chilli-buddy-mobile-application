@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     //marginBottom: 3,
   },
   firstCardStyle: {
-    width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 332,
+    width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 250,
     borderRadius: 20,
     height: 50,
     //marginRight: 20,
@@ -93,12 +93,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cardStyle: {
-    width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 332,
+    width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 250,
     borderRadius: 20,
     height: 50,
+    //width: "99%",
     //marginRight: 20,
-    marginLeft: "auto",
-    marginRight: "auto",
+    //marginLeft: "auto",
+    //marginRight: "auto",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.22,
@@ -132,7 +133,9 @@ const styles = StyleSheet.create({
   },
   categoryIcon: {
     color: Colors.WHITE,
-    marginRight: 10,
+    //marginRight: 10,
+    marginRight: "auto",
+    paddingLeft: 10,
   },
 
   //-----------your challenge----------------------------------
@@ -153,9 +156,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   cardTitle2: {
-    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 25 : 18,
+    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 23 : 13,
     color: "#ffffff",
-    textAlign: "center",
+    marginRight: "auto",
+    //textAlign: "center",
     fontFamily: "KomikaAxis",
   },
   textHolderStyle2: {
@@ -165,7 +169,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    //backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    //backgroundColor: "rgba(0, 0, 0, 0.5)",
     borderTopLeftRadius: 19,
     borderTopRightRadius: 19,
   },
