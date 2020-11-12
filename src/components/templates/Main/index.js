@@ -72,7 +72,7 @@ export default ({
       >
         <ContentLoader
           speed={1}
-          width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 332}
+          width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 250}
           height={50}
           backgroundColor="#d9d9d9"
         >
@@ -81,7 +81,7 @@ export default ({
             y="0"
             rx="19"
             ry="19"
-            width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 332}
+            width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 250}
             height="50"
           />
         </ContentLoader>
@@ -91,7 +91,7 @@ export default ({
 
   const CategoriesList = ({ index, data }) => {
     return (
-      <TouchableOpacity onPress={() => onPressCard(data.id, data.no)}>
+      <TouchableOpacity activeOpacity={0.6} onPress={() => onPressCard(data.id, data.no)}>
         <Card key={data.id} style={index === 0 ? styles.firstCardStyle : styles.cardStyle}>
           <CardSection style={styles.cardSection2}>
             <ImageBackground
