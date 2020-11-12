@@ -91,7 +91,7 @@ export default ({
 
   const CategoriesList = ({ index, data }) => {
     return (
-      <TouchableOpacity activeOpacity={0.6} onPress={() => onPressCard(data.id, data.no)}>
+      <TouchableOpacity activeOpacity={0.6} onPress={() => onPressCard(data, data.no)}>
         <Card key={data.id} style={index === 0 ? styles.firstCardStyle : styles.cardStyle}>
           <CardSection style={styles.cardSection2}>
             <ImageBackground

@@ -87,6 +87,7 @@ class index extends Component {
         id: category.id,
         no: category.no,
         title: category.title,
+        tags: category.tags,
         //image: require("../../../assets/chillibuddy/category1.png"),
       };
     });
