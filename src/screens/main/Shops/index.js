@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
+import { Platform } from "react-native";
 
 import { verifyPermission, loadShops } from "@redux/shops/action";
 
@@ -44,9 +45,20 @@ class index extends Component {
   // old ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidMount = async () => {
     this.props.verifyPermission().then((permissions) => {
-      if (permissions.location !== "granted") {
-        alert("Permission to access location is necessary");
-      } else this.handleRefresh();
+      if (parseInt(Platform.Version) <= 28) {
+        if (permissions.location !== "granted") {
+          alert("Permission to access location is necessary");
+        } else this.handleRefresh();
+      } else if (parseInt(Platform.Version) > 28) {
+        if (
+          permissions.location !== "granted" ||
+          permissions.location.permissions.location.foregroundGranted === "undefined"
+            ? false
+            : false
+        ) {
+          alert("Permission to access location is necessary");
+        } else this.handleRefresh();
+      }
     });
   };
 
@@ -56,7 +68,6 @@ class index extends Component {
     this.setState({ isRefreshing: true });
     let location = await Location.getCurrentPositionAsync({});
     do {
-      console.log(this.state.selectedCategory);
       await this.props
         .loadShops({
           radius: radius * i,
