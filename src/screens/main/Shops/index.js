@@ -32,9 +32,10 @@ class index extends Component {
       isRefreshing: false,
       tags: props.tags,
       categories: props.categories,
-      selectedCategory: {},
+      selectedCategory: props.selectedCategory,
       selectedTag: "All", //default all tag selected
     };
+
     this.onSubscribePressed = this.onSubscribePressed.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
