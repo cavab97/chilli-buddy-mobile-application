@@ -25,7 +25,6 @@ import moment from "moment";
 import ContentLoader, { Rect } from "react-content-loader/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { CustomIcon } from "@components/atoms/index";
-import { TouchableHighlight } from "react-native-gesture-handler";
 
 export default ({
   readFail,
