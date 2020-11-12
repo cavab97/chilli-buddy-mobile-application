@@ -169,6 +169,7 @@ export default ({
               renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
               scrollEnabled={dataSource2.length > 1 ? true : false}
             />
+            <View style={{ height: 25 }} />
           </View>
         ) : (
           <View style={styles.subContainer2}></View>

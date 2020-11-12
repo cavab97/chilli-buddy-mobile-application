@@ -33,11 +33,7 @@ class index extends Component {
 
   componentDidMount = async () => {
     this.props.verifyPermission().then((permissions) => {
-      if (
-        permissions.location !== "granted" ||
-        permissions.location.permissions.location.foregroundGranted !== true
-      )
-        alert("Permission to access location is necessary");
+      if (permissions.location !== "granted") alert("Permission to access location is necessary");
       else this.handleRefresh();
     });
   };

@@ -45,20 +45,23 @@ class index extends Component {
   // old ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidMount = async () => {
     this.props.verifyPermission().then((permissions) => {
-      if (parseInt(Platform.Version) <= 28) {
-        if (permissions.location !== "granted") {
-          alert("Permission to access location is necessary");
-        } else this.handleRefresh();
-      } else if (parseInt(Platform.Version) > 28) {
-        if (
-          permissions.location !== "granted" ||
-          permissions.location.permissions.location.foregroundGranted === "undefined"
-            ? false
-            : false
-        ) {
-          alert("Permission to access location is necessary");
-        } else this.handleRefresh();
-      }
+      if (permissions.location !== "granted") {
+        alert("Permission to access location is necessary");
+      } else this.handleRefresh();
+      // if (parseInt(Platform.Version) <= 28) {
+      //   if (permissions.location !== "granted") {
+      //     alert("Permission to access location is necessary");
+      //   } else this.handleRefresh();
+      // } else if (parseInt(Platform.Version) > 28) {
+      //   if (
+      //     permissions.location !== "granted" ||
+      //     permissions.location.permissions.location.foregroundGranted === "undefined"
+      //       ? false
+      //       : false
+      //   ) {
+      //     alert("Permission to access location is necessary");
+      //   } else this.handleRefresh();
+      // }
     });
   };
 

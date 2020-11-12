@@ -93,7 +93,7 @@ function Item({
               width: 50,
               height: 50,
               borderRadius: 50,
-              backgroundColor: "#f18a22",
+              backgroundColor: "#D60000",
             }}
             source={icon}
           />
@@ -118,8 +118,6 @@ const ShopList = ({
   isPromote,
   displayCategory,
 }) => {
-  console.log(props.selectedCategory);
-
   return (
     <View style={{ height: "100%" }}>
       <View
@@ -147,7 +145,7 @@ const ShopList = ({
           data={props.selectedCategory.tags}
           keyExtractor={(item) => item}
           labelExtractor={(item) =>
-            state.tags.filter((tag) => tag.id === item).map(({ title }) => title)[0]
+            props.tags.filter((tag) => tag.id === item).map(({ title }) => title)[0]
           }
           onChange={onTagChange.bind(this)}
           selectStyle={styles.categoriesSelect}
