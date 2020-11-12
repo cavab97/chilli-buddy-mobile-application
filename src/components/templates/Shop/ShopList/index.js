@@ -118,6 +118,8 @@ const ShopList = ({
   isPromote,
   displayCategory,
 }) => {
+  console.log("prop: " + props.tags);
+  console.log("state: " + state.tags);
   return (
     <View style={{ height: "100%" }}>
       <View
@@ -141,11 +143,11 @@ const ShopList = ({
         />
 
         <ModalSelector
-          //data={state.selectedCategory.tags}
-          data={props.selectedCategory.tags}
+          data={state.selectedCategory.tags}
+          //data={props.selectedCategory.tags}
           keyExtractor={(item) => item}
           labelExtractor={(item) =>
-            props.tags.filter((tag) => tag.id === item).map(({ title }) => title)[0]
+            state.tags.filter((tag) => tag.id === item).map(({ title }) => title)[0]
           }
           onChange={onTagChange.bind(this)}
           selectStyle={styles.categoriesSelect}
