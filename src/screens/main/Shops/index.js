@@ -35,7 +35,6 @@ class index extends Component {
       selectedCategory: props.selectedCategory,
       selectedTag: "All", //default all tag selected
     };
-
     this.onSubscribePressed = this.onSubscribePressed.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
@@ -70,6 +69,7 @@ class index extends Component {
     const radius = 50;
     let i = 1;
     this.setState({ isRefreshing: true });
+    //this.setState({ selectedCategory: this.props.selectedCategory });
     let location = await Location.getCurrentPositionAsync({});
     do {
       await this.props
@@ -78,9 +78,7 @@ class index extends Component {
           latitude: location.coords.latitude,
           longtitude: location.coords.longitude,
           //selectedCategory: this.props.selectedCategory ? this.props.selectedCategory : null,
-          selectedCategory: this.state.selectedCategory.id
-            ? this.state.selectedCategory.id
-            : this.props.selectedCategory.id,
+          selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
         })
         .then((Data) => {
           this.setState({ dataSource: Data, page: 0, data: [] });
@@ -226,6 +224,7 @@ class index extends Component {
   };
 
   onCategoryChange = (value) => {
+    console.log("selected: " + value.title);
     this.setState({ selectedCategory: value, selectedTag: "All" });
     this.handleRefresh();
   };

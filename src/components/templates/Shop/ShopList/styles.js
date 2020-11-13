@@ -76,12 +76,16 @@ const styles = StyleSheet.create({
   categoriesSelect: {
     backgroundColor: Colors.WHITE,
     borderWidth: 0,
-    marginTop: 5,
+    marginTop: 3,
     borderColor: "#373737",
   },
   categoriesButton: {
-    borderWidth: 0,
+    borderWidth: 1.2,
+    borderColor: "#D60000",
+    borderRadius: 3,
     width: 200,
+    marginRight: 10,
+    marginTop: 8,
   },
   modalSelectTextStyle: {
     color: Colors.PRIMARY,
