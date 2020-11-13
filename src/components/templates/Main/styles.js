@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     //marginBottom: 3,
   },
   firstCardStyle: {
-    width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 250,
+    width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 320,
     borderRadius: 20,
     height: 50,
     //marginRight: 20,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cardStyle: {
-    width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 250,
+    width: Platform.OS === "ios" && Platform.isPad === true ? 550 : 320,
     borderRadius: 20,
     height: 50,
     //width: "99%",

@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   tagsButton: {
     marginLeft: 10,
     marginRight: 10,
-    color: Colors.PRIMARY,
+    color: Colors.WHITE,
   },
   categoriesContainer: {
     borderWidth: 0,
@@ -74,40 +74,46 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
   },
   categoriesSelect: {
-    backgroundColor: Colors.WHITE,
-    borderWidth: 0,
+    backgroundColor: Colors.PRIMARY,
+    borderWidth: 1.2,
     marginTop: 3,
-    borderColor: "#373737",
+    borderColor: Colors.PRIMARY, //"#373737",
   },
   categoriesButton: {
-    borderWidth: 1.2,
-    borderColor: Colors.PRIMARY,
+    //borderWidth: 1.2,
+    borderColor: "#D60000",
     borderRadius: 3,
     width: 200,
     marginRight: 10,
     marginTop: 8,
   },
   modalSelectTextStyle: {
-    color: Colors.PRIMARY,
-    fontWeight: "bold",
+    color: Colors.WHITE,
+    fontWeight: "500",
   },
   modalOptionTextStyle: {
     color: Colors.PRIMARY,
   },
-  promotionTag: {
-    fontSize: 13,
-    backgroundColor: "#D60000",
-    color: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    left: 0,
-    top: 10,
+
+  promotionTagView: {
+    borderWidth: 1,
+    borderRadius: 3,
+    backgroundColor: Colors.PRIMARY,
+    borderColor: Colors.PRIMARY,
+    //left: 0,
+    //top: 10,
+    right: -350,
     width: 75,
     height: 20,
-    fontWeight: "bold",
-    paddingLeft: 3,
-    paddingRight: 1,
-    borderRadius: 5,
+    position: "absolute",
+    transform: [{ rotate: "45deg" }],
+  },
+
+  promotionTag: {
+    fontSize: 13,
+    color: "white",
+    textAlign: "center",
+    fontWeight: "500",
   },
 });
 

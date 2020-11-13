@@ -44,7 +44,7 @@ class index extends Component {
 
   // old ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidMount = async () => {
-    this.handleRefresh();
+    //this.handleRefresh();
     this.props.verifyPermission().then((permissions) => {
       if (permissions.location !== "granted") {
         if (permissions.location.permissions.location.foregroundGranted === undefined) {

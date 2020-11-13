@@ -72,7 +72,7 @@ export default ({
       >
         <ContentLoader
           speed={1}
-          width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 250}
+          width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 320}
           height={50}
           backgroundColor="#d9d9d9"
         >
@@ -81,7 +81,7 @@ export default ({
             y="0"
             rx="19"
             ry="19"
-            width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 250}
+            width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 320}
             height="50"
           />
         </ContentLoader>
