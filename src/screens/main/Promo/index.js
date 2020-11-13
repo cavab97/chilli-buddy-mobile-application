@@ -24,7 +24,7 @@ class index extends Component {
       tags: props.tags,
       categories: props.categories,
       radiusAddition: 1,
-      selectedCategory: {},
+      selectedCategory: { id: "", tags: ["All"], title: "All" },
       selectedTag: "All", //default all tag selected
     };
     this.handleRefresh = this.handleRefresh.bind(this);
@@ -33,8 +33,16 @@ class index extends Component {
 
   componentDidMount = async () => {
     this.props.verifyPermission().then((permissions) => {
-      if (permissions.location !== "granted") alert("Permission to access location is necessary");
-      else this.handleRefresh();
+      this.props.verifyPermission().then((permissions) => {
+        if (permissions.location !== "granted") {
+          if (permissions.location.permissions.location.foregroundGranted === undefined) {
+            alert("Permission to access location is necessary");
+            this.handleRefresh();
+          } else if (permissions.location.permissions.location.foregroundGranted === true) {
+            this.handleRefresh();
+          }
+        } else this.handleRefresh();
+      });
     });
   };
 
