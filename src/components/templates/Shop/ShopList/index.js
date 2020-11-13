@@ -42,6 +42,7 @@ function Item({
           title="Promotion"
           color="#D60000"
           distance={70}
+          extent={0}
           style={isPromote ? { fontSize: 13 } : { display: "none" }}
         >
           <CardSection
@@ -105,11 +106,11 @@ function Item({
               }}
               source={icon}
             />
-            {isPromote === true && (
+            {/* {isPromote === true && (
               <View style={styles.promotionTagView}>
                 <Text style={styles.promotionTag}>Promotion</Text>
               </View>
-            )}
+            )} */}
           </TouchableOpacity>
         </Label>
       </Card>
