@@ -37,52 +37,52 @@ function Item({
   return (
     <TouchableOpacity onPress={onPress}>
       <Card style={{ width: "98%" }}>
-        <Label
+        {/* <Label
           orientation={Orientation.TOP_RIGHT}
           title="Promotion"
           color="#D60000"
           distance={70}
           extent={0}
           style={isPromote ? { fontSize: 13 } : { display: "none" }}
+        > */}
+        <CardSection
+          style={{
+            borderBottomWidth: 0,
+          }}
         >
-          <CardSection
-            style={{
-              borderBottomWidth: 0,
-            }}
-          >
-            <Image style={image} resizeMode="cover" source={cover} />
-          </CardSection>
-          <CardSection
-            style={{
-              paddingHorizontal: 15,
-              borderBottomWidth: 0,
-            }}
-          >
-            <Text style={title}>{name}</Text>
-          </CardSection>
-          <CardSection
-            style={{
-              paddingHorizontal: 15,
-              borderBottomWidth: 0,
-            }}
-          >
-            <MaterialCommunityIcons name="map-marker-distance" size={16} />
-            <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")} Km away</Text>
-          </CardSection>
+          <Image style={image} resizeMode="cover" source={cover} />
+        </CardSection>
+        <CardSection
+          style={{
+            paddingHorizontal: 15,
+            borderBottomWidth: 0,
+          }}
+        >
+          <Text style={title}>{name}</Text>
+        </CardSection>
+        <CardSection
+          style={{
+            paddingHorizontal: 15,
+            borderBottomWidth: 0,
+          }}
+        >
+          <MaterialCommunityIcons name="map-marker-distance" size={16} />
+          <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")} Km away</Text>
+        </CardSection>
 
-          <CardSection
-            style={{
-              paddingHorizontal: 15,
-              borderBottomWidth: 0,
-              marginBottom: 10,
-            }}
-          >
-            <Icon name="location-arrow" size={16} />
-            <Text style={detail}>
-              {address.line1} {address.line2}
-            </Text>
-          </CardSection>
-          {/* <TouchableOpacity
+        <CardSection
+          style={{
+            paddingHorizontal: 15,
+            borderBottomWidth: 0,
+            marginBottom: 10,
+          }}
+        >
+          <Icon name="location-arrow" size={16} />
+          <Text style={detail}>
+            {address.line1} {address.line2}
+          </Text>
+        </CardSection>
+        {/* <TouchableOpacity
             style={subscribe}
             onPress={() => onSubscribePress(subscribed, shopID, index)}
           >
@@ -96,23 +96,23 @@ function Item({
               {subscribed ? "Unsubscribe" : "Subscribe"}
             </Text>
           </TouchableOpacity> */}
-          <TouchableOpacity style={profile}>
-            <Image
-              style={{
-                width: 50,
-                height: 50,
-                borderRadius: 50,
-                backgroundColor: "#D60000",
-              }}
-              source={icon}
-            />
-            {/* {isPromote === true && (
-              <View style={styles.promotionTagView}>
-                <Text style={styles.promotionTag}>Promotion</Text>
-              </View>
-            )} */}
-          </TouchableOpacity>
-        </Label>
+        <TouchableOpacity style={profile}>
+          <Image
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 50,
+              backgroundColor: "#D60000",
+            }}
+            source={icon}
+          />
+          {isPromote === true && (
+            <View style={styles.promotionTagView}>
+              <Text style={styles.promotionTag}>Promotion</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+        {/* </Label> */}
       </Card>
     </TouchableOpacity>
   );
