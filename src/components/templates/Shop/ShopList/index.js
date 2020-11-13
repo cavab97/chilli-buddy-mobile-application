@@ -150,7 +150,14 @@ const ShopList = ({
           selectStyle={styles.categoriesSelect}
           selectTextStyle={styles.modalSelectTextStyle}
           optionTextStyle={styles.modalOptionTextStyle}
-          style={{ justifyContent: "center" }}
+          style={{
+            justifyContent: "center",
+            borderWidth: 1.2,
+            marginRight: 5,
+            marginTop: 8,
+            borderColor: "#D60000",
+            borderRadius: 3,
+          }}
         >
           <Icon name="filter" size={20} style={styles.tagsButton} />
         </ModalSelector>
