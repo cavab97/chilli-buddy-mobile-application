@@ -1,29 +1,17 @@
 import React from "react";
 import styles from "./styles";
 
-import {
-    FlatList,
-    Image,
-    ModalSelector,
-    TouchableOpacity,
-    View,
-} from "@components/atoms";
+import { FlatList, Image, ModalSelector, TouchableOpacity, View } from "@components/atoms";
 
-import {
-    Card,
-    CardSection
-} from "@components/molecules";
+import { Card, CardSection } from "@components/molecules";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-function Item({
-  picture=[],
-  onPress,
-}) {
+function Item({ picture = [], onPress, distance }) {
   const { image } = styles;
 
   let cover = "";
-  if (picture.length === 0 ) cover = require("@assets/images/404NotFound800x533.jpg");
+  if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
   else cover = { uri: picture[0] };
 
   return (
@@ -53,14 +41,13 @@ const PromoList = ({
   onCategoryChange,
   onTagChange,
 }) => {
-
   return (
-    <View style={{height: "100%"}}>
+    <View style={{ height: "100%" }}>
       <View
         style={{
           flexDirection: "row",
           justifyContent: "flex-end",
-          marginBottom: 8
+          marginBottom: 8,
         }}
       >
         <ModalSelector
@@ -71,17 +58,15 @@ const PromoList = ({
           selectStyle={styles.categoriesSelect}
           selectTextStyle={styles.modalSelectTextStyle}
           optionTextStyle={styles.modalOptionTextStyle}
-          keyExtractor={item => item.id}
-          labelExtractor={item => item.title}
+          keyExtractor={(item) => item.id}
+          labelExtractor={(item) => item.title}
         />
 
         <ModalSelector
           data={selectedCategory.tags}
-          keyExtractor={item => item}
-          labelExtractor={item =>
-            tags
-              .filter(tag => tag.id === item)
-              .map(({ title }) => title)[0]
+          keyExtractor={(item) => item}
+          labelExtractor={(item) =>
+            tags.filter((tag) => tag.id === item).map(({ title }) => title)[0]
           }
           onChange={onTagChange.bind(this)}
           selectStyle={styles.categoriesSelect}
@@ -105,10 +90,10 @@ const PromoList = ({
             index={index}
           />
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         onRefresh={handleRefresh}
         refreshing={loading}
-        ListFooterComponent={renderFooter({empty: (dataSource.length === 0 ? true : false)})}
+        ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
         style={styles.flatList}
       />
     </View>
