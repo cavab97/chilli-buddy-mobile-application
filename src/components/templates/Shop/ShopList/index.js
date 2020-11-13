@@ -98,6 +98,7 @@ function Item({
             source={icon}
           />
           {isPromote === true && <Text style={styles.promotionTag}> Promotion</Text>}
+          {/* {isPromote === true && <View style={[styles.triangleCorner]} />} */}
         </TouchableOpacity>
       </Card>
     </TouchableOpacity>

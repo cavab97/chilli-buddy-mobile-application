@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   categoriesButton: {
     borderWidth: 1.2,
-    borderColor: "#D60000",
+    borderColor: Colors.PRIMARY,
     borderRadius: 3,
     width: 200,
     marginRight: 10,
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   },
   modalSelectTextStyle: {
     color: Colors.PRIMARY,
+    fontWeight: "bold",
   },
   modalOptionTextStyle: {
     color: Colors.PRIMARY,

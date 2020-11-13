@@ -48,6 +48,7 @@
     "react-native-gallery-swiper": "^1.25.3",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
+    "react-native-label": "^0.0.1-alpha.1",
     "react-native-masked-text": "^1.13.0",
     "react-native-modal-selector": "^2.0.3",
     "react-native-multi-tabs": "^2.0.2",

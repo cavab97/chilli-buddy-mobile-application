@@ -24,7 +24,7 @@ class index extends Component {
       tags: props.tags,
       categories: props.categories,
       radiusAddition: 1,
-      selectedCategory: {},
+      selectedCategory: { id: "", tags: ["All"], title: "All" },
       selectedTag: "All", //default all tag selected
     };
     this.handleRefresh = this.handleRefresh.bind(this);
