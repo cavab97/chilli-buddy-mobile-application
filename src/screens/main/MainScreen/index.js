@@ -80,7 +80,7 @@ class index extends Component {
     var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
 
     //Pass category
-    let size = 10;
+    let size = 30;
     dataSource2 = this.state.categories.slice(1, size).map((category) => {
       return {
         key: category.id,
