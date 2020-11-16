@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./styles";
 import { Platform } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 import {
   FlatList,
@@ -175,6 +176,7 @@ export default ({
           <View style={styles.subContainer2}></View>
         )}
       </View>
+      <StatusBar style="dark" translucent={false} />
     </ScrollView>
   );
 };
