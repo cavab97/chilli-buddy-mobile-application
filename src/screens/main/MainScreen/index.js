@@ -71,16 +71,11 @@ class index extends Component {
       require("../../../assets/chillibuddy/category5.png"),
     ];
 
+    //Sort to show latest
+    advertisements.sort((a, b) => b.createAt - a.createAt);
+
     //Push object into array
-    // console.log(
-    //   advertisements.sort(function compare(a, b) {
-    //     var dateA = new Date(a.startDate);
-    //     var dateB = new Date(b.startDate);
-    //     return dateB - dateA;
-    //   })
-    // );
     advertisements.filter((advertisement) => {
-      console.log(advertisements);
       adCoverPic.push(advertisement.coverPic);
     });
 
