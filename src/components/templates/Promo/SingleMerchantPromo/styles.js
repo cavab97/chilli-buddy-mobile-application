@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     height: 70,
     backgroundColor: "#D60000",
     borderRadius: 100,
+    borderColor: Colors.SECONDARY,
   },
   floatingShopButtonTitle: {
     fontSize: 9,

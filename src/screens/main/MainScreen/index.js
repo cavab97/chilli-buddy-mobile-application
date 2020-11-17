@@ -98,19 +98,19 @@ class index extends Component {
     //Assigning background pictures
     dataSource2.forEach((element, index) => {
       element.image = categoriesImage[index % 5];
-      if (element.no === 2) {
+      if (element.title === "Food & Beverage") {
         element.icon = "fnb";
-      } else if (element.no === 3) {
+      } else if (element.title === "Beauty & Health") {
         element.icon = "heart";
-      } else if (element.no === 4) {
+      } else if (element.title === "Fashion") {
         element.icon = "divide";
-      } else if (element.no === 5) {
+      } else if (element.title === "Service") {
         element.icon = "screw";
-      } else if (element.no === 6) {
+      } else if (element.title === "Fun & Sports") {
         element.icon = "star";
-      } else if (element.no === 7) {
+      } else if (element.title === "Online Shop") {
         element.icon = "wifi";
-      } else if (element.no === 8) {
+      } else if (element.title === "Home & Design") {
         element.icon = "house";
       } else {
         element.icon = "others";
