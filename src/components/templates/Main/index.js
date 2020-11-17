@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./styles";
 import { Platform } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 import {
   FlatList,
@@ -72,7 +73,7 @@ export default ({
       >
         <ContentLoader
           speed={1}
-          width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 250}
+          width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 320}
           height={50}
           backgroundColor="#d9d9d9"
         >
@@ -81,7 +82,7 @@ export default ({
             y="0"
             rx="19"
             ry="19"
-            width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 250}
+            width={Platform.OS === "ios" && Platform.isPad === true ? 550 : 320}
             height="50"
           />
         </ContentLoader>
@@ -169,11 +170,13 @@ export default ({
               renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
               scrollEnabled={dataSource2.length > 1 ? true : false}
             />
+            <View style={{ height: 25 }} />
           </View>
         ) : (
           <View style={styles.subContainer2}></View>
         )}
       </View>
+      <StatusBar style="dark" translucent={false} />
     </ScrollView>
   );
 };

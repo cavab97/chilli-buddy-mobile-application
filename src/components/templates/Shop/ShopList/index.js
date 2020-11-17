@@ -7,6 +7,7 @@ import { Card, CardSection } from "@components/molecules";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/FontAwesome";
+import Label, { Orientation } from "react-native-label";
 
 function Item({
   name,
@@ -36,6 +37,14 @@ function Item({
   return (
     <TouchableOpacity onPress={onPress}>
       <Card style={{ width: "98%" }}>
+        {/* <Label
+          orientation={Orientation.TOP_RIGHT}
+          title="Promotion"
+          color="#D60000"
+          distance={70}
+          extent={0}
+          style={isPromote ? { fontSize: 13 } : { display: "none" }}
+        > */}
         <CardSection
           style={{
             borderBottomWidth: 0,
@@ -93,12 +102,17 @@ function Item({
               width: 50,
               height: 50,
               borderRadius: 50,
-              backgroundColor: "#f18a22",
+              backgroundColor: "#D60000",
             }}
             source={icon}
           />
-          {isPromote === true && <Text style={styles.promotionTag}> Promotion</Text>}
+          {isPromote === true && (
+            <View style={styles.promotionTagView}>
+              <Text style={styles.promotionTag}>Promotion</Text>
+            </View>
+          )}
         </TouchableOpacity>
+        {/* </Label> */}
       </Card>
     </TouchableOpacity>
   );
@@ -150,7 +164,15 @@ const ShopList = ({
           selectStyle={styles.categoriesSelect}
           selectTextStyle={styles.modalSelectTextStyle}
           optionTextStyle={styles.modalOptionTextStyle}
-          style={{ justifyContent: "center" }}
+          style={{
+            justifyContent: "center",
+            borderWidth: 1.2,
+            marginRight: 5,
+            marginTop: 11,
+            backgroundColor: "#D60000",
+            borderColor: "#D60000",
+            borderRadius: 3,
+          }}
         >
           <Icon name="filter" size={20} style={styles.tagsButton} />
         </ModalSelector>

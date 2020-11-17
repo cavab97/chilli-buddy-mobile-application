@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
+import { Platform } from "react-native";
 
 import { verifyPermission, loadShops } from "@redux/shops/action";
 
@@ -31,7 +32,7 @@ class index extends Component {
       isRefreshing: false,
       tags: props.tags,
       categories: props.categories,
-      selectedCategory: {},
+      selectedCategory: props.selectedCategory,
       selectedTag: "All", //default all tag selected
     };
     this.onSubscribePressed = this.onSubscribePressed.bind(this);
@@ -43,9 +44,15 @@ class index extends Component {
 
   // old ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidMount = async () => {
+    //this.handleRefresh();
     this.props.verifyPermission().then((permissions) => {
       if (permissions.location !== "granted") {
-        alert("Permission to access location is necessary");
+        if (permissions.location.permissions.location.foregroundGranted === undefined) {
+          alert("Permission to access location is necessary");
+          this.handleRefresh();
+        } else if (permissions.location.permissions.location.foregroundGranted === true) {
+          this.handleRefresh();
+        }
       } else this.handleRefresh();
     });
   };
@@ -54,6 +61,7 @@ class index extends Component {
     const radius = 50;
     let i = 1;
     this.setState({ isRefreshing: true });
+    //this.setState({ selectedCategory: this.props.selectedCategory });
     let location = await Location.getCurrentPositionAsync({});
     do {
       await this.props
@@ -62,9 +70,13 @@ class index extends Component {
           latitude: location.coords.latitude,
           longtitude: location.coords.longitude,
           //selectedCategory: this.props.selectedCategory ? this.props.selectedCategory : null,
+<<<<<<< HEAD
           selectedCategory: this.state.selectedCategory.id
             ? this.state.selectedCategory.id
             : this.props.selectedCategory.id,
+=======
+          selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+>>>>>>> updateSDK
         })
         .then((Data) => {
           this.setState({ dataSource: Data, page: 0, data: [] });

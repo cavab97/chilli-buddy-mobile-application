@@ -7,17 +7,9 @@ import { verifyPermission, loadShopsPromo } from "@redux/promo/action";
 
 import styles from "./styles";
 
-import {
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-} from "@components/atoms";
+import { Image, Text, TouchableOpacity, View } from "@components/atoms";
 
-import {
-  Card,
-  CardSection
-} from "@components/molecules";
+import { Card, CardSection } from "@components/molecules";
 
 import { PromoList } from "@components/templates";
 
@@ -32,85 +24,80 @@ class index extends Component {
       tags: props.tags,
       categories: props.categories,
       radiusAddition: 1,
-      selectedCategory: {},
-      selectedTag: "All" //default all tag selected
+      selectedCategory: { id: "", tags: ["All"], title: "All" },
+      selectedTag: "All", //default all tag selected
     };
     this.handleRefresh = this.handleRefresh.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
   }
 
   componentDidMount = async () => {
-    this.props.verifyPermission().then(permissions => {
-      if (permissions.location !== "granted")
-        alert("Permission to access location is necessary");
-      else 
-        this.handleRefresh();
+    this.props.verifyPermission().then((permissions) => {
+      this.props.verifyPermission().then((permissions) => {
+        if (permissions.location !== "granted") {
+          if (permissions.location.permissions.location.foregroundGranted === undefined) {
+            alert("Permission to access location is necessary");
+            this.handleRefresh();
+          } else if (permissions.location.permissions.location.foregroundGranted === true) {
+            this.handleRefresh();
+          }
+        } else this.handleRefresh();
+      });
     });
   };
 
-  componentDidUpdate(prevProps, prevState){
+  componentDidUpdate(prevProps, prevState) {
     const currentPromo = this.props.promotionState.promo;
     const readError = this.props.promotionState.readError;
 
     // if no promo in the radius, call handleRefresh read again by increase radiusAddition state
-    if(currentPromo.length === 0 && (RADIUS * this.state.radiusAddition) < 1000){
-      if(prevState.radiusAddition === this.state.radiusAddition){
-        this.setState({radiusAddition: this.state.radiusAddition * 3});
+    if (currentPromo.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
+      if (prevState.radiusAddition === this.state.radiusAddition) {
+        this.setState({ radiusAddition: this.state.radiusAddition * 3 });
       }
       this.handleRefresh();
     }
 
     // if get promo in the radius, reset the radiusAddition to 1 for read next time
-    if(prevProps.promotionState.promo !== currentPromo && 
-      currentPromo.length > 0
-    ){
-      this.setState({radiusAddition: 1});
+    if (prevProps.promotionState.promo !== currentPromo && currentPromo.length > 0) {
+      this.setState({ radiusAddition: 1 });
     }
 
-    if(prevProps.promotionState.readError !== readError && 
-      readError !== false
-    ){
+    if (prevProps.promotionState.readError !== readError && readError !== false) {
       alert(readError);
     }
   }
 
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
-    await this.props
-      .loadShopsPromo({
-        radius: RADIUS * this.state.radiusAddition,
-        latitude: location.coords.latitude,
-        longtitude: location.coords.longitude,
-        selectedCategory: this.state.selectedCategory.id
-          ? this.state.selectedCategory.id
-          : null,
-        selectedTag: this.state.selectedTag !== "All"
-          ? this.state.selectedTag
-          : null
-      })
+    await this.props.loadShopsPromo({
+      radius: RADIUS * this.state.radiusAddition,
+      latitude: location.coords.latitude,
+      longtitude: location.coords.longitude,
+      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+    });
   };
 
-  renderFooter({empty}) {
-    if(empty){
-      return (
-        Platform.OS === "ios" ? (
-          <Card style={{ backgroundColor: "transparent" }}>
-            <CardSection style={styles.emptySection}>
-              <Icon name="inbox" size={64} style={styles.emptyIcon} />
-              <Text style={styles.emptyText}>NO PROMOTION FOUND</Text>
-            </CardSection>
-          </Card>
-        ) : (
-          <Card style={{ backgroundColor: "transparent", elevation: 0 }}>
-            <CardSection style={[styles.emptySection, { elevation: 0 }]}>
-              <Icon name="inbox" size={64} style={styles.emptyIcon} />
-              <Text style={styles.emptyText}>NO PROMOTION FOUND</Text> 
-            </CardSection>
-          </Card>
-        )
+  renderFooter({ empty }) {
+    if (empty) {
+      return Platform.OS === "ios" ? (
+        <Card style={{ backgroundColor: "transparent" }}>
+          <CardSection style={styles.emptySection}>
+            <Icon name="inbox" size={64} style={styles.emptyIcon} />
+            <Text style={styles.emptyText}>NO PROMOTION FOUND</Text>
+          </CardSection>
+        </Card>
+      ) : (
+        <Card style={{ backgroundColor: "transparent", elevation: 0 }}>
+          <CardSection style={[styles.emptySection, { elevation: 0 }]}>
+            <Icon name="inbox" size={64} style={styles.emptyIcon} />
+            <Text style={styles.emptyText}>NO PROMOTION FOUND</Text>
+          </CardSection>
+        </Card>
       );
-    }else{
-      return <View style={{marginBottom: 10}} />
+    } else {
+      return <View style={{ marginBottom: 10 }} />;
     }
   }
 
@@ -121,21 +108,18 @@ class index extends Component {
   onCategoryChange = (value) => {
     this.setState({ selectedCategory: value, selectedTag: "All" });
     this.handleRefresh();
-  }
+  };
 
   onTagChange = (value) => {
     this.setState({ selectedTag: value });
     this.handleRefresh();
-  }
+  };
 
   render() {
-    const {
-      readLoading,
-      promo
-    } = this.props.promotionState;
+    const { readLoading, promo } = this.props.promotionState;
 
     return (
-      <PromoList 
+      <PromoList
         loading={readLoading}
         dataSource={promo}
         categories={this.state.categories}
@@ -151,7 +135,7 @@ class index extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { categories, tags } = state.Settings;
   const promotionState = state.Promotion;
 

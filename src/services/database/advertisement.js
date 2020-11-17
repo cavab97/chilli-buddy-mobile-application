@@ -1,18 +1,24 @@
 import { database } from "../../marslab-library-react-native/utils/helper";
 
+var adsBegin = new Date();
+adsBegin.setHours(0, 0, 0, 0);
+var adsEnd = new Date();
+adsEnd.setHours(23, 59, 59, 999);
+
 export function readObjects() {
   return new Promise((resolve, reject) => {
     database
       .readTable({ ref: `posts` })
       .where("deleted_at", "==", null)
+      .where("endDate", ">=", adsEnd)
       .get()
-      .then(QuerySnapshot => {
+      .then((QuerySnapshot) => {
         const result = [];
-        QuerySnapshot.forEach(snapshot => {
+        QuerySnapshot.forEach((snapshot) => {
           const data = {
             ...snapshot.data(),
             // ...snapshot.data().d,
-            id: snapshot.id
+            id: snapshot.id,
           };
           // delete data["d"];
 
@@ -28,9 +34,8 @@ export function readObjects() {
         });
         resolve(result);
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error);
       });
   });
 }
-
