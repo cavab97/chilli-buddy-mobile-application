@@ -40,7 +40,7 @@
       }
     },
     "android": {
-      "package": "com.infobay.gogogain.huawei",
+      "package": "com.infobay.gogogain",
       "googleServicesFile": "./google-services.json",
       "versionCode": 25,
       "permissions": [
