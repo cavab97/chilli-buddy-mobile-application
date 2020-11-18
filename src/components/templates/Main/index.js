@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./styles";
 import { Platform } from "react-native";
-import { StatusBar } from "expo-status-bar";
 
 import {
   FlatList,
@@ -26,6 +25,7 @@ import moment from "moment";
 import ContentLoader, { Rect } from "react-content-loader/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { CustomIcon } from "@components/atoms/index";
+import Constants from "expo-constants";
 
 export default ({
   readFail,
@@ -124,6 +124,7 @@ export default ({
           />
         )}
         <View style={styles.subContainer1}>
+          <View style={{ height: Constants.statusBarHeight }} />
           {readLoadingHeaderImages ? (
             <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
               <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
@@ -176,7 +177,6 @@ export default ({
           <View style={styles.subContainer2}></View>
         )}
       </View>
-      <StatusBar style="dark" translucent={false} />
     </ScrollView>
   );
 };
