@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./styles";
-import { Platform } from "react-native";
+import { Platform, Dimensions } from "react-native";
 
 import {
   FlatList,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
   VirtualizedList,
+  Modal,
 } from "../../atoms";
 
 import { Card, CardSection } from "../../molecules";
@@ -23,7 +24,7 @@ import { ImageSwiper } from "../../organisms/ImageSwiper";
 
 import moment from "moment";
 import ContentLoader, { Rect } from "react-content-loader/native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { CustomIcon } from "@components/atoms/index";
 import Constants from "expo-constants";
 
@@ -41,6 +42,7 @@ export default ({
   label2,
   unit,
   onPressCard,
+  onPressImage, //Constant for clicking image advertisement
   advertisements,
   onPressAdvertisement,
   noImageAdvertisement,
@@ -49,6 +51,8 @@ export default ({
   readLoadingCategoryList,
   readLoadingRouteTicket,
   readLoadingHeaderImages,
+  onCloseAdvertisementModal,
+  isAdvertisementModelShow,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -63,6 +67,30 @@ export default ({
     return {
       key: "advertisementLoading" + index,
     };
+  };
+
+  const AdvertisementPopUp = () => {
+    return (
+      <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
+        <View style={styles.modelBackground}>
+          <View style={styles.advertisementModelView}>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
+                <FontAwesome5 name="times-circle" size={40} color="#D60000" />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.adsImageContainer}>
+              <Image
+                source={require("../../../assets/gogogain/top_image.jpg")}
+                style={styles.adsImageStyle}
+                resizeMode="cover"
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+    );
   };
 
   const CardListLoading = ({ index }) => {
@@ -123,8 +151,8 @@ export default ({
             containerStyle={styles.infoContainer}
           />
         )}
+        <View style={{ height: Constants.statusBarHeight }} />
         <View style={styles.subContainer1}>
-          <View style={{ height: Constants.statusBarHeight }} />
           {readLoadingHeaderImages ? (
             <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
               <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
@@ -137,6 +165,7 @@ export default ({
               autoplay={true}
               noImageSlider={noImageHeaderSlider}
               condition={slider.length > 0}
+              onPressImage={onPressImage}
             />
           )}
         </View>
@@ -160,6 +189,7 @@ export default ({
           </View>
         ) : dataSource2.length != 0 ? (
           <View style={styles.subContainer2}>
+            <AdvertisementPopUp />
             <View>
               <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
             </View>

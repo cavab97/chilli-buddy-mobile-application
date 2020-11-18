@@ -1,9 +1,10 @@
 import { StyleSheet, Platform } from "react-native";
 import { Dimensions } from "react-native";
 import { Colors } from "../../../settings/styles/theme";
+import Constants from "expo-constants";
 
 const windowWidth = Dimensions.get("window").width;
-
+const windowHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -266,6 +267,40 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.PRIMARY,
     textAlign: "justify",
+  },
+  //----Advertisement Popup Model------------------------------------------------------
+  modelBackground: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  advertisementModelView: {
+    width: "90%",
+    height: windowHeight - 100,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderStyle: "solid",
+    backgroundColor: "white",
+    elevation: 20,
+    padding: 10,
+    borderRadius: 4,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 5,
+    right: 5,
+  },
+  adsImageStyle: {
+    width: "100%",
+    height: "100%",
+  },
+  adsImageContainer: {
+    flex: 2,
+  },
+  buttonContainer: {
+    flex: 1,
+    width: "100%",
   },
 });
 

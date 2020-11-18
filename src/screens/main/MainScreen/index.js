@@ -17,6 +17,7 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isAdvertisementModelShow: true,
       tags: props.tags,
       categories: props.categories,
       selectedCategory: {},
@@ -41,6 +42,18 @@ class index extends Component {
 
   onPressCategory(id, no) {
     Actions.Shops({ selectedCategory: id, number: no });
+  }
+
+  // View shop from clicking image swiper advertisements
+  onPressViewShop() {
+    Actions.SingleMerchant({ shopId: "UQ85HkLa5Vjx7inftvw9" });
+    console.log("Pressed View Shop");
+  }
+
+  // Close advertisement modal
+  onCloseAdvertisementModal() {
+    this.setState({ isAdvertisementModelShow: false });
+    console.log(this.state.isAdvertisementModelShow);
   }
 
   render() {
@@ -139,6 +152,9 @@ class index extends Component {
         unit=" pax"
         onPressCard={this.onPressCategory.bind(this)}
         advertisements={advertisements}
+        isAdvertisementModelShow={this.state.isAdvertisementModelShow} //Get state to show advertisement Model
+        onPressImage={this.onPressViewShop.bind(this)}
+        onCloseAdvertisementModal={this.onCloseAdvertisementModal.bind(this)}
         //onPressAdvertisement = {this.onPressAdvertisement.bind(this)}
         noImageAdvertisement={noImageAdvertisement}
         noImageHeaderSlider={noImageHeaderSlider}

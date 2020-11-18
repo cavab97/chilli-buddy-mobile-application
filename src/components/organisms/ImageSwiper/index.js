@@ -14,6 +14,7 @@ const ImageSwiper = ({
   setSwiperRef,
   nextButton,
   prevButton,
+  onPressImage,
   index = 0,
 }) => {
   return (
@@ -32,19 +33,17 @@ const ImageSwiper = ({
       {condition ? (
         slider.map((data, index) => {
           return (
-            <TouchableOpacity activeOpacity={0.6}>
-              <View key={index} style={style.subContainer1}>
-                <Image source={{ uri: data }} style={style.imageTopStyle} resizeMode={resizeMode} />
-              </View>
+            <TouchableOpacity key={index} activeOpacity={0.6} onPress={onPressImage}>
+              {/* <View key={index} style={style.subContainer1}> */}
+              <Image source={{ uri: data }} style={style.imageTopStyle} resizeMode={resizeMode} />
+              {/* </View> */}
             </TouchableOpacity>
           );
         })
       ) : (
-        <TouchableOpacity activeOpacity={0.6}>
-          <View style={style.subContainer1}>
-            <Image source={noImageSlider} style={style.imageTopStyle} resizeMode={resizeMode} />
-          </View>
-        </TouchableOpacity>
+        <View style={style.subContainer1}>
+          <Image source={noImageSlider} style={style.imageTopStyle} resizeMode={resizeMode} />
+        </View>
       )}
     </Swiper>
   );
