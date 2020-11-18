@@ -100,13 +100,10 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: Colors.PRIMARY,
     borderColor: Colors.PRIMARY,
-    //left: 0,
-    //top: 10,
-    right: -350,
+    left: 0,
+    top: 10,
     width: 75,
     height: 20,
-    position: "absolute",
-    transform: [{ rotate: "45deg" }],
   },
 
   promotionTag: {

@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     flex: 1,
     //minHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
     //maxHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
-    minHeight: (windowWidth / 800) * 500,
-    maxHeight: (windowWidth / 800) * 500,
+    minHeight: (windowWidth / 800) * 600,
+    maxHeight: (windowWidth / 800) * 600,
   },
   subContainer2: {
     alignItems: "center",
