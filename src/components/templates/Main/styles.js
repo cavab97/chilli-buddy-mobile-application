@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
     backgroundColor: "white",
-    elevation: 20,
+    elevation: 30,
     padding: 10,
     borderRadius: 4,
   },
@@ -295,9 +295,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  adsImageContainer: {
-    flex: 2,
-  },
+  adsImageContainer: {},
   buttonContainer: {
     flex: 1,
     width: "100%",

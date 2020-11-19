@@ -86,7 +86,6 @@ class index extends Component {
       //isLoading:false
     });
     i = 1;
-    //console.log(this.state.dataSource.length)
   };
 
   handleLoadMore() {

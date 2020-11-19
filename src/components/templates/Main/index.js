@@ -53,6 +53,7 @@ export default ({
   readLoadingHeaderImages,
   onCloseAdvertisementModal,
   isAdvertisementModelShow,
+  randomAdPic,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -74,20 +75,20 @@ export default ({
       <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
         <View style={styles.modelBackground}>
           <View style={styles.advertisementModelView}>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
-                <FontAwesome5 name="times-circle" size={40} color="#D60000" />
-              </TouchableOpacity>
-            </View>
+            <View style={styles.buttonContainer}></View>
 
             <View style={styles.adsImageContainer}>
               <Image
-                source={require("../../../assets/gogogain/top_image.jpg")}
+                source={{ uri: randomAdPic.length ? randomAdPic : noImageAdvertisement }}
                 style={styles.adsImageStyle}
                 resizeMode="cover"
               />
+              <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
+                <FontAwesome5 name="times-circle" size={30} color="#D60000" />
+              </TouchableOpacity>
             </View>
           </View>
+          <View></View>
         </View>
       </Modal>
     );

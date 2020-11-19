@@ -45,15 +45,13 @@ class index extends Component {
   }
 
   // View shop from clicking image swiper advertisements
-  onPressViewShop() {
-    Actions.SingleMerchant({ shopId: "UQ85HkLa5Vjx7inftvw9" });
-    console.log("Pressed View Shop");
+  onPressViewShop(shopId) {
+    Actions.SingleMerchant({ shopId: shopId });
   }
 
   // Close advertisement modal
   onCloseAdvertisementModal() {
     this.setState({ isAdvertisementModelShow: false });
-    console.log(this.state.isAdvertisementModelShow);
   }
 
   render() {
@@ -75,6 +73,7 @@ class index extends Component {
 
     let dataSource = [];
     let dataSource2 = [];
+    let dataSourceAds = []; //Testing advertisement slider click
     let adCoverPic = [];
     let categoriesImage = [
       require("../../../assets/chillibuddy/category1.png"),
@@ -87,13 +86,27 @@ class index extends Component {
     //Sort to show latest
     advertisements.sort((a, b) => b.createAt - a.createAt);
 
-    //Push object into array
-    advertisements.filter((advertisement) => {
-      adCoverPic.push(advertisement.coverPic);
+    //Map image URL and Shop ID to array
+    dataSourceAds = advertisements.map((item) => {
+      return {
+        imageUri: item.coverPic,
+        shopId: item.shopID,
+      };
     });
 
-    //Filter empty data from array
+    //Filter empty shopID and Cover pic ads
+    var filteredDatasource = dataSourceAds.filter(
+      (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
+    );
+
+    //Push ads popup cover pic into array
+    advertisements.filter((advertisement) => {
+      adCoverPic.push(advertisement.popUpImage);
+    });
+
+    //Filter empty coverpic from array
     var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
+    var randomAdPic = filteredAdPic[Math.floor(Math.random() * filteredAdPic.length)];
 
     //Pass category
     let size = 30;
@@ -138,7 +151,8 @@ class index extends Component {
     return (
       <MainTemplete
         readFail={readFail}
-        slider={filteredAdPic}
+        slider={filteredDatasource}
+        randomAdPic={randomAdPic}
         dataSource={dataSource}
         dataSource2={dataSource2}
         //routeTickets={routeTickets}
