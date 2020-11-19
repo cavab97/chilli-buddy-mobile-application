@@ -57,6 +57,12 @@ const styles = StyleSheet.create({
     borderColor: Colors.SECONDARY,
     flexDirection: "row",
   },
+  distanceIndicatorTitle: {
+    marginLeft: 10,
+    fontSize: 12,
+    color: Colors.WHITE,
+    fontFamily: "RobotoRegular",
+  },
   subContainer1: {
     flex: 1,
     height: 250,

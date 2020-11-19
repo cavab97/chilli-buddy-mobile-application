@@ -33,6 +33,7 @@ const SingleMerchantPromo = ({
   onMerchantPressed,
   onPressedSwipe,
   setSwiperRef,
+  distance,
 }) => {
   const {
     posterArea,
@@ -99,7 +100,9 @@ const SingleMerchantPromo = ({
       </View>
       <View style={styles.floatingDistanceIndicator}>
         <MaterialCommunityIcons name="map-marker-distance" color="white" size={20} />
-        <Text style={{ color: "white" }}> 5KM Away</Text>
+        <Text style={styles.distanceIndicatorTitle}>
+          {+(Math.round(distance + "e+2") + "e-2")}KM Away
+        </Text>
       </View>
       <TouchableOpacity style={styles.floatingShopButton} onPress={onMerchantPressed}>
         <CustomIcon name="merchant" size={20} color="white" />

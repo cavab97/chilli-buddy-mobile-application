@@ -102,7 +102,7 @@ class index extends Component {
   }
 
   onMerchantPressed(item) {
-    Actions.SingleMerchantPromo({ promoId: item.id });
+    Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
   }
 
   onCategoryChange = (value) => {
@@ -117,7 +117,6 @@ class index extends Component {
 
   render() {
     const { readLoading, promo } = this.props.promotionState;
-
     return (
       <PromoList
         loading={readLoading}
