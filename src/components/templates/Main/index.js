@@ -79,9 +79,9 @@ export default ({
 
             <View style={styles.adsImageContainer}>
               <Image
-                source={{ uri: randomAdPic.length ? randomAdPic : noImageAdvertisement }}
+                source={{ uri: randomAdPic }}
                 style={styles.adsImageStyle}
-                resizeMode="cover"
+                resizeMode="contain"
               />
               <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
                 <FontAwesome5 name="times-circle" size={30} color="#D60000" />

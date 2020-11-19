@@ -5,6 +5,8 @@ import Constants from "expo-constants";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+const ratio = windowWidth / 800;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -276,7 +278,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
   },
   advertisementModelView: {
-    width: "90%",
+    width: "95%",
     height: windowHeight - 100,
     borderColor: "#ccc",
     borderWidth: 1,
@@ -295,7 +297,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  adsImageContainer: {},
+  adsImageContainer: {
+    width: "100%",
+    height: "100%",
+  },
   buttonContainer: {
     flex: 1,
     width: "100%",
