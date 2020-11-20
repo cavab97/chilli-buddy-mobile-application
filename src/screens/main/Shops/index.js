@@ -149,7 +149,7 @@ class index extends Component {
   }
 
   onMerchantPressed(item) {
-    Actions.SingleMerchant({ shopId: item.id });
+    Actions.SingleMerchant({ shopId: item.id, distance: item.distance });
   }
 
   onSubscribePressed = async (status, shopID, index) => {
