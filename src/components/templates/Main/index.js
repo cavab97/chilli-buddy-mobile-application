@@ -54,6 +54,7 @@ export default ({
   onCloseAdvertisementModal,
   isAdvertisementModelShow,
   randomAdPic,
+  filteredAdPic,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -71,17 +72,22 @@ export default ({
   };
 
   const AdvertisementPopUp = () => {
+    //console.log("templateRandom: " + randomAdPic.imageUri);
+    let randomPic = randomAdPic.imageUri;
+    console.log("randomPic: " + randomPic);
     return (
       <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
-            <Image
-              source={{ uri: randomAdPic }}
-              style={styles.adsImageStyle}
-              //resizeMode="contain"
-            />
-            <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
-              <FontAwesome name="close" size={30} color="#D60000" />
+            <TouchableOpacity onPress={onPressImage}>
+              <Image
+                source={{ uri: randomPic }}
+                style={styles.adsImageStyle}
+                //resizeMode="contain"
+              />
+              <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
+                <FontAwesome name="close" size={30} color="#D60000" />
+              </TouchableOpacity>
             </TouchableOpacity>
           </View>
         </View>

@@ -76,6 +76,7 @@ class index extends Component {
     let dataSource2 = [];
     let dataSourceAds = []; //Testing advertisement slider click
     let adCoverPic = [];
+    let adCoverPic2 = [];
     let categoriesImage = [
       require("../../../assets/chillibuddy/category1.png"),
       require("../../../assets/chillibuddy/category2.png"),
@@ -101,14 +102,21 @@ class index extends Component {
     );
 
     //Push ads popup cover pic into array
-    advertisements.filter((advertisement) => {
-      adCoverPic.push(advertisement.popUpImage);
+    adCoverPic = advertisements.map((item) => {
+      return { imageUri: item.popUpImage, shopId: item.shopID };
     });
+    // advertisements.filter((advertisement) => {
+    //   adCoverPic2.push(advertisement.popUpImage);
+    // });
 
     //Filter empty coverpic from array
-    var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
+    var filteredAdPic = adCoverPic.filter(
+      (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
+    );
     var randomAdPic = filteredAdPic[Math.floor(Math.random() * filteredAdPic.length)];
-    console.log("randomAdPic: " + randomAdPic);
+
+    //console.log("randomAdPic: " + randomAdPic.imageUri);
+
     //Pass category
     let size = 30;
     dataSource2 = this.state.categories.slice(1, size).map((category) => {
@@ -154,6 +162,7 @@ class index extends Component {
         readFail={readFail}
         slider={filteredDatasource}
         randomAdPic={randomAdPic}
+        filteredAdPic={filteredAdPic}
         dataSource={dataSource}
         dataSource2={dataSource2}
         //routeTickets={routeTickets}
