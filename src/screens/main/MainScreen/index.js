@@ -51,7 +51,6 @@ class index extends Component {
 
   // Close advertisement modal
   onCloseAdvertisementModal() {
-    console.log(this.state.isAdvertisementModelShow);
     this.setState({ isAdvertisementModelShow: false });
   }
 

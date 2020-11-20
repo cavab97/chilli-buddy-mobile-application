@@ -1,12 +1,13 @@
 import React, { Component, useRef } from "react";
 import { connect } from "react-redux";
-
+import * as Location from "expo-location";
 import { View, Text } from "../../../../components/atoms";
 
 import {
   listenToRecord as listenFromDatabase,
   readFromDatabase as readPromotion,
   removeListenerToRecord as removeListenerFromDatabase,
+  verifyPermission,
 } from "@redux/shops/action";
 
 import { readFromDatabase as readShopPost } from "@redux/shopPost/action";
@@ -25,6 +26,7 @@ import moment from "moment";
 import styles from "./styles";
 import { Actions } from "react-native-router-flux";
 
+import { getDistance } from "geolib";
 class index extends Component {
   constructor(props) {
     super(props);
@@ -35,17 +37,40 @@ class index extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     const shopId = this.props.shopId;
     this.props.readPromotion(shopId);
     this.props.listenFromDatabase({ shopId });
     this.props.readShopPost(shopId);
+
+    this.props.verifyPermission().then((permissions) => {
+      if (permissions.location !== "granted") {
+        if (permissions.location.permissions.location.foregroundGranted === undefined) {
+          alert("Permission to access location is necessary");
+        } else if (permissions.location.permissions.location.foregroundGranted === true) {
+        }
+      }
+    });
+    this.calculateDistance();
     //this.props.listenPromotion(shopId);
   }
 
   componentWillUnmount() {
     this.props.removeListenerFromDatabase();
   }
+
+  //Calculate distance
+  calculateDistance = async () => {
+    var distance;
+    let location = await Location.getCurrentPositionAsync({});
+    this.props.posts.filter(
+      (item) =>
+        (distance =
+          getDistance(
+            { latitude: item.l.U, longitude: item.l.k },
+            { latitude: location.coords.latitude, longitude: location.coords.longitude }
+          ) / 1000)
+    );
+  };
 
   renderOperatingHour() {
     const { subIconDetail, operatingContainer } = styles;
@@ -162,4 +187,5 @@ export default connect(mapStateToProps, {
   readShopPost,
   readPromotion,
   listenPromotion,
+  verifyPermission,
 })(index);
