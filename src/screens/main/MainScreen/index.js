@@ -69,7 +69,10 @@ class index extends Component {
     } = this.props;
 
     const readFail =
-      readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
+      readErrorRoute ||
+      readErrorRouteTicket ||
+      readErrorAdvertisement ||
+      readErrorHeaderImages;
 
     let dataSource = [];
     let dataSource2 = [];
@@ -97,7 +100,9 @@ class index extends Component {
 
     //Filter empty shopID and Cover pic ads
     var filteredDatasource = dataSourceAds.filter(
-      (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
+      (value) =>
+        Object.keys(value.imageUri).length !== 0 &&
+        Object.keys(value.shopId).length !== 0
     );
 
     //Push ads popup cover pic into array
@@ -110,11 +115,13 @@ class index extends Component {
 
     //Filter empty coverpic from array
     var filteredAdPic = adCoverPic.filter(
-      (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
+      (value) =>
+        Object.keys(value.imageUri).length !== 0 &&
+        Object.keys(value.shopId).length !== 0
     );
-    var randomAdPic = filteredAdPic[Math.floor(Math.random() * filteredAdPic.length)];
 
-    //console.log("randomAdPic: " + randomAdPic.imageUri);
+    var randomAdPic =
+      filteredAdPic[Math.floor(Math.random() * filteredAdPic.length)];
 
     //Pass category
     let size = 30;

@@ -34,7 +34,10 @@ class index extends Component {
 
   onMerchantPressed() {
     const promo = this.props.promotion;
-    Actions.SingleMerchant({ shopId: promo.promotion.shop.id, distance: this.props.distance });
+    Actions.SingleMerchant({
+      shopId: promo.promotion.shop.id,
+      distance: this.props.distance,
+    });
     //console.log(promo.promotion.shop.id)
   }
 
@@ -56,7 +59,12 @@ class index extends Component {
 
     if (readLoading) {
       return (
-        <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
+        <ContentLoader
+          speed={1}
+          width={"100%"}
+          height={"100%"}
+          backgroundColor="#d9d9d9"
+        >
           <Rect
             x="10"
             y="20"
@@ -73,6 +81,7 @@ class index extends Component {
           dataSource={promotion}
           noImage={noImage}
           distance={this.props.distance}
+          calculatedDistance={this.props.calculatedDistance} //distance calculated from single merchant view
           onMerchantPressed={this.onMerchantPressed.bind(this)}
           onPressedSwipe={this.onPressedSwipe.bind(this)}
           setSwiperRef={this.setSwiperRef.bind(this)}
@@ -88,4 +97,7 @@ const mapStateToProps = (state) => {
   return { promotion };
 };
 
-export default connect(mapStateToProps, { listenFromDatabase, removeListenerFromDatabase })(index);
+export default connect(mapStateToProps, {
+  listenFromDatabase,
+  removeListenerFromDatabase,
+})(index);

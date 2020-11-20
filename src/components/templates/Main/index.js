@@ -73,19 +73,24 @@ export default ({
 
   const AdvertisementPopUp = () => {
     //console.log("templateRandom: " + randomAdPic.imageUri);
-    let randomPic = randomAdPic.imageUri;
-    console.log("randomPic: " + randomPic);
     return (
-      <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isAdvertisementModelShow}
+      >
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
             <TouchableOpacity onPress={onPressImage}>
               <Image
-                source={{ uri: randomPic }}
+                source={{ uri: randomAdPic.imageUri }}
                 style={styles.adsImageStyle}
                 //resizeMode="contain"
               />
-              <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={onCloseAdvertisementModal}
+              >
                 <FontAwesome name="close" size={30} color="#D60000" />
               </TouchableOpacity>
             </TouchableOpacity>
@@ -123,8 +128,14 @@ export default ({
 
   const CategoriesList = ({ index, data }) => {
     return (
-      <TouchableOpacity activeOpacity={0.6} onPress={() => onPressCard(data, data.no)}>
-        <Card key={data.id} style={index === 0 ? styles.firstCardStyle : styles.cardStyle}>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={() => onPressCard(data, data.no)}
+      >
+        <Card
+          key={data.id}
+          style={index === 0 ? styles.firstCardStyle : styles.cardStyle}
+        >
           <CardSection style={styles.cardSection2}>
             <ImageBackground
               source={data.image}
@@ -132,7 +143,11 @@ export default ({
               style={styles.imageBackgroundStyle}
             >
               <View style={styles.textHolderStyle2}>
-                <CustomIcon name={data.icon} size={30} style={styles.categoryIcon} />
+                <CustomIcon
+                  name={data.icon}
+                  size={30}
+                  style={styles.categoryIcon}
+                />
                 <Text style={styles.cardTitle2}> {data.title} </Text>
               </View>
             </ImageBackground>
@@ -192,7 +207,7 @@ export default ({
           </View>
         ) : dataSource2.length != 0 ? (
           <View style={styles.subContainer2}>
-            <AdvertisementPopUp />
+            {/* <AdvertisementPopUp /> */}
             <View>
               <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
             </View>
@@ -201,7 +216,9 @@ export default ({
               showsHorizontalScrollIndicator={false}
               data={dataSource2}
               keyExtractor={(item) => item.id}
-              renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
+              renderItem={({ item, index }) => (
+                <CategoriesList data={item} index={index} />
+              )}
               scrollEnabled={dataSource2.length > 1 ? true : false}
             />
             <View style={{ height: 25 }} />

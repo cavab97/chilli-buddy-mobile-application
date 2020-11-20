@@ -40,6 +40,7 @@ const SingleMerchant = ({
   onClickToSwip,
   viewHeight,
   distance,
+  calculatedDistance, //distance calculated from single merchant view
   find_dimensions = () => {},
 }) => {
   const {
@@ -86,7 +87,9 @@ const SingleMerchant = ({
                   <ScrollView>
                     <View style={singlePostContainer}>
                       <Text style={singlePostTitle}>{item.title}</Text>
-                      <Text style={singlePostDescription}>{item.description}</Text>
+                      <Text style={singlePostDescription}>
+                        {item.description}
+                      </Text>
                       <Text style={{ paddingTop: 5 }}>
                         {moment(item.created.at).format("DD/MM/YYYY")}
                       </Text>
@@ -106,7 +109,9 @@ const SingleMerchant = ({
             <View>
               <ScrollView>
                 <View style={singlePostContainer}>
-                  <Text style={singlePostTitle}>Currently there are no post available</Text>
+                  <Text style={singlePostTitle}>
+                    Currently there are no post available
+                  </Text>
                 </View>
               </ScrollView>
             </View>
@@ -126,9 +131,17 @@ const SingleMerchant = ({
             return (
               <View key={index} style={subContainer1}>
                 {dataSource.images.length > 0 ? (
-                  <Image source={{ uri: item }} style={imageTopStyle} resizeMode={"cover"} />
+                  <Image
+                    source={{ uri: item }}
+                    style={imageTopStyle}
+                    resizeMode={"cover"}
+                  />
                 ) : (
-                  <Image source={noImage} style={imageTopStyle} resizeMode={"cover"} />
+                  <Image
+                    source={noImage}
+                    style={imageTopStyle}
+                    resizeMode={"cover"}
+                  />
                 )}
               </View>
             );
@@ -173,9 +186,17 @@ const SingleMerchant = ({
         titleStyle={postLabel}
         rightIcon={
           !isOpenPost ? (
-            <MaterialCommunityIcons style={postIconSwap} name="menu-swap" size={30} />
+            <MaterialCommunityIcons
+              style={postIconSwap}
+              name="menu-swap"
+              size={30}
+            />
           ) : (
-            <MaterialCommunityIcons style={postIconSwap} name="close" size={30} />
+            <MaterialCommunityIcons
+              style={postIconSwap}
+              name="close"
+              size={30}
+            />
           )
         }
         animeContainerStyle={{ marginTop: 10 }}
@@ -190,7 +211,12 @@ const SingleMerchant = ({
             <Text style={title}>{dataSource.displayTitle}</Text>
             <View>
               <View style={setRow}>
-                <Ionicons style={{}} name="md-calendar" size={26} color={Colors.PRIMARY} />
+                <Ionicons
+                  style={{}}
+                  name="md-calendar"
+                  size={26}
+                  color={Colors.PRIMARY}
+                />
                 <Text
                   style={{
                     fontSize: 18,
@@ -232,11 +258,17 @@ const SingleMerchant = ({
                   color={Colors.PRIMARY}
                 />
                 <Text
-                  style={{ marginTop: 20, marginRight: "10%", fontFamily: "RobotoRegular" }}
+                  style={{
+                    marginTop: 20,
+                    marginRight: "10%",
+                    fontFamily: "RobotoRegular",
+                  }}
                   onPress={() => {
                     const latitude = dataSource.l.latitude;
                     const longitude = dataSource.l.longitude;
-                    Linking.openURL(`http://www.google.com/maps/place/${latitude},${longitude}`);
+                    Linking.openURL(
+                      `http://www.google.com/maps/place/${latitude},${longitude}`
+                    );
                   }}
                 >
                   {dataSource.address.line1} {dataSource.address.line2}{" "}
@@ -299,7 +331,8 @@ const SingleMerchant = ({
                       return Alert.alert("Sorry, we don't have instagram.");
                     }
                     Linking.openURL(
-                      "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
+                      "instagram://user?username=" +
+                        dataSource.instagramUrl.replace(/ /g, "")
                     );
                   }}
                 />
@@ -347,10 +380,19 @@ const SingleMerchant = ({
                 data={promotions}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
-                  <TouchableOpacity onPress={onPromoteClick.bind(this, item, distance)}>
+                  <TouchableOpacity
+                    onPress={onPromoteClick.bind(
+                      this,
+                      item,
+                      distance,
+                      calculatedDistance
+                    )}
+                  >
                     <Card
                       key={item.id}
-                      style={index === 0 ? firstPromoteCardStyle : promoteCardStyle}
+                      style={
+                        index === 0 ? firstPromoteCardStyle : promoteCardStyle
+                      }
                     >
                       {item.coverPhotos.length > 0 ? (
                         <Image
@@ -359,7 +401,11 @@ const SingleMerchant = ({
                           resizeMode="cover"
                         />
                       ) : (
-                        <Image source={noPromoteImage} style={promoteNoImage} resizeMode="cover" />
+                        <Image
+                          source={noPromoteImage}
+                          style={promoteNoImage}
+                          resizeMode="cover"
+                        />
                       )}
                       <Text numberOfLines={2} style={promoteTitleTextStyle}>
                         {item.title}

@@ -33,6 +33,7 @@ class index extends Component {
     this.state = {
       isOpenPost: false,
       viewHeight: 0,
+      calculatedDistance: 0,
     };
   }
 
@@ -44,9 +45,14 @@ class index extends Component {
 
     this.props.verifyPermission().then((permissions) => {
       if (permissions.location !== "granted") {
-        if (permissions.location.permissions.location.foregroundGranted === undefined) {
+        if (
+          permissions.location.permissions.location.foregroundGranted ===
+          undefined
+        ) {
           alert("Permission to access location is necessary");
-        } else if (permissions.location.permissions.location.foregroundGranted === true) {
+        } else if (
+          permissions.location.permissions.location.foregroundGranted === true
+        ) {
         }
       }
     });
@@ -58,7 +64,7 @@ class index extends Component {
     this.props.removeListenerFromDatabase();
   }
 
-  //Calculate distance
+  //Calculate distance from logitude and latitude
   calculateDistance = async () => {
     var distance;
     let location = await Location.getCurrentPositionAsync({});
@@ -67,9 +73,14 @@ class index extends Component {
         (distance =
           getDistance(
             { latitude: item.l.U, longitude: item.l.k },
-            { latitude: location.coords.latitude, longitude: location.coords.longitude }
+            {
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+            }
           ) / 1000)
     );
+    console.log(distance);
+    this.setState({ calculatedDistance: distance });
   };
 
   renderOperatingHour() {
@@ -86,7 +97,9 @@ class index extends Component {
             size={20}
             color="grey"
           />
-          <Text style={{ width: 40, fontFamily: "RobotoRegular" }}>{item.day.toUpperCase()}</Text>
+          <Text style={{ width: 40, fontFamily: "RobotoRegular" }}>
+            {item.day.toUpperCase()}
+          </Text>
           {item.operate ? (
             <Text style={{ marginLeft: 10, fontFamily: "RobotoRegular" }}>
               {moment(item.open.toString(), "Hmm").format("LT") +
@@ -94,7 +107,9 @@ class index extends Component {
                 moment(item.close.toString(), "Hmm").format("LT")}
             </Text>
           ) : (
-            <Text style={{ marginLeft: 10, fontFamily: "RobotoRegular" }}>Closed</Text>
+            <Text style={{ marginLeft: 10, fontFamily: "RobotoRegular" }}>
+              Closed
+            </Text>
           )}
         </View>
       );
@@ -105,9 +120,13 @@ class index extends Component {
     this.setState({ isOpenPost: !this.state.isOpenPost });
   };
 
-  onPromoteClick = (item, distance) => {
+  onPromoteClick = (item, distance, calculatedDistance) => {
     //const promoId = this.props.promotions[0].id;
-    Actions.SingleMerchantPromo({ promoId: item.id, distance: distance });
+    Actions.SingleMerchantPromo({
+      promoId: item.id,
+      distance: distance,
+      calculatedDistance: calculatedDistance,
+    });
   };
 
   onClickToSwip = (value) => {
@@ -128,7 +147,12 @@ class index extends Component {
   render() {
     const { shop, readLoading } = this.props.shopState;
 
-    const { posts, readPostLoading, promotions, readPromotionLoading } = this.props;
+    const {
+      posts,
+      readPostLoading,
+      promotions,
+      readPromotionLoading,
+    } = this.props;
     const noImage = require("@assets/images/404NotFound800x533.jpg");
     const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
 
@@ -138,7 +162,12 @@ class index extends Component {
 
     if (readLoading || readPostLoading || readPromotionLoading) {
       return (
-        <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
+        <ContentLoader
+          speed={1}
+          width={"100%"}
+          height={"100%"}
+          backgroundColor="#d9d9d9"
+        >
           <Rect x="0" y="0" rx="0" ry="0" width="100%" height="250" />
           <Rect x="20" y="280" rx="10" ry="10" width="250" height="35" />
           <Rect x="20" y="330" rx="10" ry="10" width="250" height="175" />
@@ -164,6 +193,7 @@ class index extends Component {
           find_dimensions={this.find_dimensions}
           viewHeight={this.state.viewHeight}
           distance={this.props.distance}
+          calculatedDistance={this.state.calculatedDistance}
         />
       );
     }
@@ -178,7 +208,14 @@ const mapStateToProps = (state) => {
   //const promotions = state.Promotion.promo;
   const promotionState = state.Promotion;
   const readPromotionLoading = state.Promotion.readLoading;
-  return { shopState, posts, readPostLoading, promotions, promotionState, readPromotionLoading };
+  return {
+    shopState,
+    posts,
+    readPostLoading,
+    promotions,
+    promotionState,
+    readPromotionLoading,
+  };
 };
 
 export default connect(mapStateToProps, {

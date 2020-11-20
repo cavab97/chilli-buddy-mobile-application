@@ -34,6 +34,7 @@ const SingleMerchantPromo = ({
   onPressedSwipe,
   setSwiperRef,
   distance,
+  calculatedDistance,
 }) => {
   const {
     posterArea,
@@ -70,7 +71,11 @@ const SingleMerchantPromo = ({
             return (
               <View key={index} style={subContainer1}>
                 {dataSource.images.length > 0 ? (
-                  <Image source={{ uri: item }} style={imageTopStyle} resizeMode={"cover"} />
+                  <Image
+                    source={{ uri: item }}
+                    style={imageTopStyle}
+                    resizeMode={"cover"}
+                  />
                 ) : (
                   <Image
                     source={noImage}
@@ -99,12 +104,24 @@ const SingleMerchantPromo = ({
         />
       </View>
       <View style={styles.floatingDistanceIndicator}>
-        <MaterialCommunityIcons name="map-marker-distance" color="white" size={20} />
+        <MaterialCommunityIcons
+          name="map-marker-distance"
+          color="white"
+          size={20}
+        />
         <Text style={styles.distanceIndicatorTitle}>
-          {+(Math.round(distance + "e+2") + "e-2")}KM Away
+          {
+            +(distance != undefined
+              ? Math.round(distance + "e+2") + "e-2"
+              : Math.round(calculatedDistance + "e+2") + "e-2")
+          }
+          KM Away
         </Text>
       </View>
-      <TouchableOpacity style={styles.floatingShopButton} onPress={onMerchantPressed}>
+      <TouchableOpacity
+        style={styles.floatingShopButton}
+        onPress={onMerchantPressed}
+      >
         <CustomIcon name="merchant" size={20} color="white" />
         <Text style={styles.floatingShopButtonTitle}>View Shop</Text>
       </TouchableOpacity>
