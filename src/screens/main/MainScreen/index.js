@@ -107,7 +107,7 @@ class index extends Component {
     //Filter empty coverpic from array
     var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
     var randomAdPic = filteredAdPic[Math.floor(Math.random() * filteredAdPic.length)];
-    console.log("randomAdPic: " + randomAdPic);
+
     //Pass category
     let size = 30;
     dataSource2 = this.state.categories.slice(1, size).map((category) => {

@@ -7,10 +7,7 @@ import {
   encodeGeohash,
 } from "geofirestore";
 
-import {
-  permissionsRegistration,
-  LOCATION,
-} from "../../marslab-library-react-native/utils/system";
+import { permissionsRegistration, LOCATION } from "../../marslab-library-react-native/utils/system";
 import { shopDataServices as objectDataServices } from "../../services/database";
 
 const type = "shop";
