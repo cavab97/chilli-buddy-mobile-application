@@ -24,7 +24,7 @@ import { ImageSwiper } from "../../organisms/ImageSwiper";
 
 import moment from "moment";
 import ContentLoader, { Rect } from "react-content-loader/native";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { CustomIcon } from "@components/atoms/index";
 import Constants from "expo-constants";
 
@@ -74,22 +74,18 @@ export default ({
     return (
       <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
         <View style={styles.modelBackground}>
-          <View style={styles.advertisementModelView}>
-            <View style={styles.buttonContainer}></View>
-
-            <View style={styles.adsImageContainer}>
-              <Image
-                source={{ uri: randomAdPic }}
-                style={styles.adsImageStyle}
-                resizeMode="contain"
-              />
-              <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
-                <FontAwesome5 name="times-circle" size={30} color="#D60000" />
-              </TouchableOpacity>
-            </View>
+          <View style={styles.adsImageContainer}>
+            <Image
+              source={{ uri: randomAdPic }}
+              style={styles.adsImageStyle}
+              //resizeMode="contain"
+            />
+            <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
+              <FontAwesome name="close" size={30} color="#D60000" />
+            </TouchableOpacity>
           </View>
-          <View></View>
         </View>
+        <View></View>
       </Modal>
     );
   };
