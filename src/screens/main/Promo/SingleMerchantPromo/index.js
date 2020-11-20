@@ -23,6 +23,7 @@ class index extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     const promoId = this.props.promoId;
     this.props.listenFromDatabase({ promoId });
   }
@@ -33,7 +34,7 @@ class index extends Component {
 
   onMerchantPressed() {
     const promo = this.props.promotion;
-    Actions.SingleMerchant({ shopId: promo.promotion.shop.id });
+    Actions.SingleMerchant({ shopId: promo.promotion.shop.id, distance: this.props.distance });
     //console.log(promo.promotion.shop.id)
   }
 
