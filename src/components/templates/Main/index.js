@@ -74,6 +74,7 @@ export default ({
   };
 
   const AdvertisementPopUp = () => {
+    console.log("randomAdPic: " + randomAdPic);
     return (
       <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
         <View style={styles.modelBackground}>
@@ -191,7 +192,7 @@ export default ({
           </View>
         ) : dataSource2.length != 0 ? (
           <View style={styles.subContainer2}>
-            <AdvertisementPopUp />
+            {randomAdPic !== undefined && <AdvertisementPopUp />}
             <View>
               <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
             </View>
