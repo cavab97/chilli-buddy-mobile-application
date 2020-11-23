@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles";
-import { Platform } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import { Platform, Dimensions } from "react-native";
+import { Actions } from "react-native-router-flux";
 
 import {
   FlatList,
@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   View,
   VirtualizedList,
+  Modal,
 } from "../../atoms";
 
 import { Card, CardSection } from "../../molecules";
@@ -26,6 +27,7 @@ import moment from "moment";
 import ContentLoader, { Rect } from "react-content-loader/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { CustomIcon } from "@components/atoms/index";
+import Constants from "expo-constants";
 
 export default ({
   readFail,
@@ -41,6 +43,7 @@ export default ({
   label2,
   unit,
   onPressCard,
+  onPressImage, //Constant for clicking image advertisement
   advertisements,
   onPressAdvertisement,
   noImageAdvertisement,
@@ -49,6 +52,11 @@ export default ({
   readLoadingCategoryList,
   readLoadingRouteTicket,
   readLoadingHeaderImages,
+  onCloseAdvertisementModal,
+  isAdvertisementModelShow,
+  randomAdPic,
+  getShopId,
+  onPressPopUp,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -63,6 +71,28 @@ export default ({
     return {
       key: "advertisementLoading" + index,
     };
+  };
+
+  const AdvertisementPopUp = () => {
+    return (
+      <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
+        <View style={styles.modelBackground}>
+          <View style={styles.adsImageContainer}>
+            <TouchableOpacity onPress={() => onPressPopUp(getShopId)}>
+              <Image
+                source={{ uri: randomAdPic }}
+                style={styles.adsImageStyle}
+                //resizeMode="contain"
+              />
+              <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
+                <FontAwesome name="close" size={30} color="#D60000" />
+              </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View></View>
+      </Modal>
+    );
   };
 
   const CardListLoading = ({ index }) => {
@@ -123,6 +153,7 @@ export default ({
             containerStyle={styles.infoContainer}
           />
         )}
+        <View style={{ height: Constants.statusBarHeight }} />
         <View style={styles.subContainer1}>
           {readLoadingHeaderImages ? (
             <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
@@ -136,6 +167,7 @@ export default ({
               autoplay={true}
               noImageSlider={noImageHeaderSlider}
               condition={slider.length > 0}
+              onPressImage={onPressImage}
             />
           )}
         </View>
@@ -159,6 +191,7 @@ export default ({
           </View>
         ) : dataSource2.length != 0 ? (
           <View style={styles.subContainer2}>
+            <AdvertisementPopUp />
             <View>
               <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
             </View>
@@ -176,7 +209,6 @@ export default ({
           <View style={styles.subContainer2}></View>
         )}
       </View>
-      <StatusBar style="dark" translucent={false} />
     </ScrollView>
   );
 };

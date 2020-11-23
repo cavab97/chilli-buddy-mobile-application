@@ -1,8 +1,11 @@
 import { StyleSheet, Platform } from "react-native";
 import { Dimensions } from "react-native";
 import { Colors } from "../../../settings/styles/theme";
+import Constants from "expo-constants";
 
 const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+const ratio = windowWidth / 800;
 
 const styles = StyleSheet.create({
   container: {
@@ -266,6 +269,32 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.PRIMARY,
     textAlign: "justify",
+  },
+  //----Advertisement Popup Model------------------------------------------------------
+  modelBackground: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+  },
+  adsImageStyle: {
+    // width: "100%",
+    // height: "100%",
+    minWidth: Platform.OS === "ios" && Platform.isPad === true ? 460 : 300, //windowWidth - 150,
+    //maxWidth: (windowWidth * 85) / 100, //windowWidth - 100,
+    height: Platform.OS === "ios" && Platform.isPad === true ? 810 : 530, //(windowHeight * 80) / 100,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+  },
+  adsImageContainer: {
+    //borderWidth: 1,
   },
 });
 

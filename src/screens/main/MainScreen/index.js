@@ -12,11 +12,13 @@ import {
 } from "@redux/routeTicket/action";
 
 import clone from "clone";
+import { lessThan } from "react-native-reanimated";
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isAdvertisementModelShow: true,
       tags: props.tags,
       categories: props.categories,
       selectedCategory: {},
@@ -43,6 +45,21 @@ class index extends Component {
     Actions.Shops({ selectedCategory: id, number: no });
   }
 
+  // View shop from clicking image swiper advertisements
+  onPressViewShop(shopId) {
+    Actions.SingleMerchant({ shopId: shopId });
+  }
+
+  onPressPopUp(getShopId) {
+    Actions.SingleMerchant({ shopId: getShopId });
+    this.setState({ isAdvertisementModelShow: false });
+  }
+
+  // Close advertisement modal
+  onCloseAdvertisementModal() {
+    this.setState({ isAdvertisementModelShow: false });
+  }
+
   render() {
     const {
       allRoutes,
@@ -62,6 +79,7 @@ class index extends Component {
 
     let dataSource = [];
     let dataSource2 = [];
+    let dataSourceAds = []; //Testing advertisement slider click
     let adCoverPic = [];
     let categoriesImage = [
       require("../../../assets/chillibuddy/category1.png"),
@@ -74,13 +92,38 @@ class index extends Component {
     //Sort to show latest
     advertisements.sort((a, b) => b.createAt - a.createAt);
 
-    //Push object into array
-    advertisements.filter((advertisement) => {
-      adCoverPic.push(advertisement.coverPic);
+    //Map image URL and Shop ID to array
+    dataSourceAds = advertisements.map((item) => {
+      return {
+        imageUri: item.coverPic,
+        shopId: item.shopID,
+      };
     });
 
-    //Filter empty data from array
+    //Filter empty shopID and Cover pic ads
+    var filteredDatasource = dataSourceAds.filter(
+      (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
+    );
+
+    //Push ads popup cover pic into array
+    advertisements.filter((advertisement) => {
+      adCoverPic.push(advertisement.popUpImage);
+    });
+
+    //Filter empty coverpic from array
     var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
+
+    var randomAdPic = filteredAdPic[Math.floor(Math.random() * filteredAdPic.length)];
+
+    //filter same pic and get shop ID
+    const getShopId = advertisements
+      .filter(function (advertisement) {
+        return advertisement.popUpImage === randomAdPic;
+      })
+      .map(function (advertisement) {
+        return advertisement.shopID;
+      })
+      .toString();
 
     //Pass category
     let size = 30;
@@ -125,7 +168,10 @@ class index extends Component {
     return (
       <MainTemplete
         readFail={readFail}
-        slider={filteredAdPic}
+        slider={filteredDatasource}
+        randomAdPic={randomAdPic}
+        filteredAdPic={filteredAdPic}
+        getShopId={getShopId}
         dataSource={dataSource}
         dataSource2={dataSource2}
         //routeTickets={routeTickets}
@@ -139,6 +185,10 @@ class index extends Component {
         unit=" pax"
         onPressCard={this.onPressCategory.bind(this)}
         advertisements={advertisements}
+        isAdvertisementModelShow={this.state.isAdvertisementModelShow} //Get state to show advertisement Model
+        onPressImage={this.onPressViewShop.bind(this)}
+        onPressPopUp={this.onPressPopUp.bind(this)}
+        onCloseAdvertisementModal={this.onCloseAdvertisementModal.bind(this)}
         //onPressAdvertisement = {this.onPressAdvertisement.bind(this)}
         noImageAdvertisement={noImageAdvertisement}
         noImageHeaderSlider={noImageHeaderSlider}

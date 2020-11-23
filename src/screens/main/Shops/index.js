@@ -86,7 +86,6 @@ class index extends Component {
       //isLoading:false
     });
     i = 1;
-    //console.log(this.state.dataSource.length)
   };
 
   handleLoadMore() {
@@ -150,7 +149,7 @@ class index extends Component {
   }
 
   onMerchantPressed(item) {
-    Actions.SingleMerchant({ shopId: item.id });
+    Actions.SingleMerchant({ shopId: item.id, distance: item.distance });
   }
 
   onSubscribePressed = async (status, shopID, index) => {
