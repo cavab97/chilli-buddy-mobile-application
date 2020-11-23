@@ -52,6 +52,7 @@ class index extends Component {
 
   onPressPopUp(getShopId) {
     Actions.SingleMerchant({ shopId: getShopId });
+    this.setState({ isAdvertisementModelShow: false });
   }
 
   // Close advertisement modal
@@ -186,7 +187,7 @@ class index extends Component {
         advertisements={advertisements}
         isAdvertisementModelShow={this.state.isAdvertisementModelShow} //Get state to show advertisement Model
         onPressImage={this.onPressViewShop.bind(this)}
-        onPressPopUp={this.onPressPopUp}
+        onPressPopUp={this.onPressPopUp.bind(this)}
         onCloseAdvertisementModal={this.onCloseAdvertisementModal.bind(this)}
         //onPressAdvertisement = {this.onPressAdvertisement.bind(this)}
         noImageAdvertisement={noImageAdvertisement}
