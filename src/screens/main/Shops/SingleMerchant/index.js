@@ -51,8 +51,12 @@ class index extends Component {
         }
       }
     });
-    this.calculateDistance();
-    //this.props.listenPromotion(shopId);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.shopState.shop.l !== this.props.shopState.shop.l && this.props.shopState.shop.l) {
+      this.calculateDistance(this.props.shopState.shop.l);
+    }
   }
 
   componentWillUnmount() {
@@ -60,22 +64,18 @@ class index extends Component {
   }
 
   //Calculate distance from logitude and latitude
-  calculateDistance = async () => {
-    console.log("posts: " + JSON.stringify(this.props.posts));
+  calculateDistance = async (destinationLocation) => {
     var distance;
     let location = await Location.getCurrentPositionAsync({});
-    this.props.posts.filter(
-      (item) =>
-        (distance =
-          getDistance(
-            { latitude: item.l.U, longitude: item.l.k },
-            {
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }
-          ) / 1000)
-    );
-    console.log("distance123: " + distance);
+
+    distance =
+      getDistance(
+        { latitude: destinationLocation.U, longitude: destinationLocation.k },
+        {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }
+      ) / 1000;
     this.setState({ calculatedDistance: distance });
   };
 
@@ -114,6 +114,7 @@ class index extends Component {
 
   onPromoteClick = (item, distance, calculatedDistance) => {
     //const promoId = this.props.promotions[0].id;
+    console.log("onPromoteClick: " + distance + calculatedDistance);
     Actions.SingleMerchantPromo({
       promoId: item.id,
       distance: distance,
