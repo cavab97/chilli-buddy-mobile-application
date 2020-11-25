@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import { Dimensions } from "react-native";
+import * as Location from "expo-location";
+import { getDistance } from "geolib";
 
 import {
   listenToRecord as listenFromDatabase,
@@ -33,13 +35,32 @@ class index extends Component {
   }
 
   onMerchantPressed() {
-    const promo = this.props.promotion;
-    Actions.SingleMerchant({
-      shopId: promo.promotion.shop.id,
-      distance: this.props.distance,
-    });
+    const location = this.props.promotion.promotion.shop.l;
+    this.calculateDistance(location);
     //console.log(promo.promotion.shop.id)
   }
+
+  calculateDistance = async (destinationLocation) => {
+    const promo = this.props.promotion;
+    console.log("get: " + destinationLocation.U + " and " + destinationLocation.k);
+    var distance;
+    let location = await Location.getCurrentPositionAsync({});
+    distance =
+      getDistance(
+        { latitude: destinationLocation.U, longitude: destinationLocation.k },
+        {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }
+      ) / 1000;
+    console.log("singleDis: " + distance);
+
+    Actions.SingleMerchant({
+      shopId: promo.promotion.shop.id,
+      distance: distance,
+      calculatedDistance: distance,
+    });
+  };
 
   onPressedSwipe = (value) => {
     if (value === "next") this.swiperRef.snapToNext();
@@ -59,12 +80,7 @@ class index extends Component {
 
     if (readLoading) {
       return (
-        <ContentLoader
-          speed={1}
-          width={"100%"}
-          height={"100%"}
-          backgroundColor="#d9d9d9"
-        >
+        <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
           <Rect
             x="10"
             y="20"

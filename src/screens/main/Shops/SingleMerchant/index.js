@@ -25,7 +25,6 @@ import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import styles from "./styles";
 import { Actions } from "react-native-router-flux";
-
 import { getDistance } from "geolib";
 class index extends Component {
   constructor(props) {
@@ -34,6 +33,7 @@ class index extends Component {
       isOpenPost: false,
       viewHeight: 0,
       calculatedDistance: 0,
+      locationLoading: false,
     };
   }
 
@@ -51,10 +51,17 @@ class index extends Component {
         }
       }
     });
+    //this.calculateDistance(this.props.shopState.shop.l);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.shopState.shop.l !== this.props.shopState.shop.l && this.props.shopState.shop.l) {
+    // this.calculateDistance(this.props.shopState.shop.l);
+    if (
+      (prevProps.shopState.shop.l.U !== this.props.shopState.shop.l.U ||
+        prevProps.shopState.shop.l.k !== this.props.shopState.shop.l.k) &&
+      this.props.shopState.shop.l.U &&
+      this.props.shopState.shop.l.k
+    ) {
       this.calculateDistance(this.props.shopState.shop.l);
     }
   }
@@ -65,18 +72,25 @@ class index extends Component {
 
   //Calculate distance from logitude and latitude
   calculateDistance = async (destinationLocation) => {
-    var distance;
-    let location = await Location.getCurrentPositionAsync({});
+    try {
+      var distance;
 
-    distance =
-      getDistance(
-        { latitude: destinationLocation.U, longitude: destinationLocation.k },
-        {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        }
-      ) / 1000;
-    this.setState({ calculatedDistance: distance });
+      this.setState({ locationLoading: true });
+      let location = await Location.getCurrentPositionAsync({});
+      this.setState({ locationLoading: false });
+
+      distance =
+        getDistance(
+          { latitude: destinationLocation.U, longitude: destinationLocation.k },
+          {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          }
+        ) / 1000;
+      this.setState({ calculatedDistance: distance });
+    } catch (e) {
+      this.setState({ locationLoading: false });
+    }
   };
 
   renderOperatingHour() {
@@ -114,7 +128,7 @@ class index extends Component {
 
   onPromoteClick = (item, distance, calculatedDistance) => {
     //const promoId = this.props.promotions[0].id;
-    console.log("onPromoteClick: " + distance + calculatedDistance);
+
     Actions.SingleMerchantPromo({
       promoId: item.id,
       distance: distance,
@@ -148,7 +162,7 @@ class index extends Component {
     if (shop.logo.length === 0) icon = require("@assets/logo.png");
     else icon = { uri: shop.logo[0] };
 
-    if (readLoading || readPostLoading || readPromotionLoading) {
+    if (readLoading || readPostLoading || readPromotionLoading || this.state.locationLoading) {
       return (
         <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
           <Rect x="0" y="0" rx="0" ry="0" width="100%" height="250" />

@@ -74,7 +74,6 @@ export default ({
   };
 
   const AdvertisementPopUp = () => {
-    console.log("randomAdPic: " + randomAdPic);
     return (
       <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
         <View style={styles.modelBackground}>

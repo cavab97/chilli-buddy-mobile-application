@@ -28,7 +28,7 @@ const actions = {
 
 const { firestore } = firebase;
 
-export const COLLECTION = "shopPackaging0";
+export const COLLECTION = "shopPrivate0";
 // Create a GeoFirestore reference
 const geoFirestore = new GeoFirestore(firestore());
 

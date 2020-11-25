@@ -7,24 +7,24 @@ let objectListener = () => {};
 
 export function listenObject({ objectId = null, updateListener = () => {} }) {
   objectListener = database
-      .readRecord({ ref: `${objectName}Packaging0/${objectId}` })
-      .onSnapshot((snapshot) => {
-        const data = {
+    .readRecord({ ref: `${objectName}Private0/${objectId}` })
+    .onSnapshot((snapshot) => {
+      const data = {
         ...snapshot.data(),
         ...snapshot.data().d,
-        id: snapshot.id
-        };
-        delete data["d"];
+        id: snapshot.id,
+      };
+      delete data["d"];
 
-        const parent = database.processData({ data });
-        const created = database.processData({ data: data.created });
-        const deleted = database.processData({ data: data.deleted });
-        const updated = database.processData({ data: data.updated });
+      const parent = database.processData({ data });
+      const created = database.processData({ data: data.created });
+      const deleted = database.processData({ data: data.deleted });
+      const updated = database.processData({ data: data.updated });
 
-        const processedData = { ...parent, created, deleted, updated };
+      const processedData = { ...parent, created, deleted, updated };
 
-        updateListener(processedData);
-      })
+      updateListener(processedData);
+    });
 }
 
 export function readObjects(groupId) {

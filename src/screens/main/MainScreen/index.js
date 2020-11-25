@@ -23,6 +23,7 @@ class index extends Component {
       categories: props.categories,
       selectedCategory: {},
       selectedTag: "All",
+      randomNumber: Math.random(),
     };
   }
 
@@ -113,7 +114,7 @@ class index extends Component {
     //Filter empty coverpic from array
     var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
 
-    var randomAdPic = filteredAdPic[Math.floor(Math.random() * filteredAdPic.length)];
+    var randomAdPic = filteredAdPic[Math.floor(this.state.randomNumber * filteredAdPic.length)];
 
     //filter same pic and get shop ID
     const getShopId = advertisements

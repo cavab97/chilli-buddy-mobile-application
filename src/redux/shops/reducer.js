@@ -1,9 +1,9 @@
 import actions from "./action";
 
 const initialState = {
-  permissionVerificationLoading : false,
+  permissionVerificationLoading: false,
   permissionVerificationError: false,
-  permissions:{},
+  permissions: {},
 
   loading: false,
   tags: {},
@@ -23,7 +23,7 @@ const initialState = {
     images: [],
     facebookUrl: null,
     instagramUrl: null,
-    whatsapp:null,
+    whatsapp: null,
     websiteUrl: null,
     phoneNumber: null,
     email: null,
@@ -32,7 +32,7 @@ const initialState = {
       line2: null,
       postcode: null,
       state: null,
-      country: null
+      country: null,
     },
     operatingHour: [
       { close: "1800", day: "mon", open: "0600", operate: false },
@@ -41,7 +41,7 @@ const initialState = {
       { close: "1800", day: "thu", open: "0600", operate: false },
       { close: "1800", day: "fri", open: "0600", operate: false },
       { close: "1800", day: "sat", open: "0600", operate: false },
-      { close: "1800", day: "sun", open: "0600", operate: false }
+      { close: "1800", day: "sun", open: "0600", operate: false },
     ],
     merchants: [],
     manager: [],
@@ -56,9 +56,8 @@ const initialState = {
     deleted: { at: null, by: null },
     updated: { at: null, by: null },
     l: { _lat: 0, _long: 0 },
-    g: null
-  }
-  ,
+    g: null,
+  },
   promotion: {
     id: null,
     coverPhotos: null,
@@ -69,11 +68,11 @@ const initialState = {
     phoneNumber: null,
     email: null,
     shop: [
-        {address: [{country: null, line1: null, line2: null, postcode: null, state: null}]},
-        {categories: []},
-        {created:[{at: null, by: null, dateJoined: null}]},
-        {displayTitle: null},
-        {images: [{isPromote: null, l: null}]}
+      { address: [{ country: null, line1: null, line2: null, postcode: null, state: null }] },
+      { categories: [] },
+      { created: [{ at: null, by: null, dateJoined: null }] },
+      { displayTitle: null },
+      { images: [{ isPromote: null, l: null }] },
     ],
     merchants: [],
     manager: [],
@@ -85,8 +84,8 @@ const initialState = {
     deleted: { at: null, by: null },
     updated: { at: null, by: null },
     l: { _lat: 0, _long: 0 },
-    g: null
-  }
+    g: null,
+  },
 };
 
 const shopsReducer = (state = initialState, { type, payload }) => {
@@ -95,10 +94,18 @@ const shopsReducer = (state = initialState, { type, payload }) => {
       return { ...state, permissionVerificationLoading: true, permissionVerificationError: false };
 
     case actions.PERMISSION_VERIFICATION_SUCCESS:
-      return { ...state, permissionVerificationLoading: false, permissions: payload.data.permissions };
+      return {
+        ...state,
+        permissionVerificationLoading: false,
+        permissions: payload.data.permissions,
+      };
 
     case actions.PERMISSION_VERIFICATION_ERROR:
-      return { ...state, permissionVerificationLoading: false, permissionVerificationError: payload.error };
+      return {
+        ...state,
+        permissionVerificationLoading: false,
+        permissionVerificationError: payload.error,
+      };
 
     case actions.READ_FROM_DATABASE:
       return { ...state, loading: true };
