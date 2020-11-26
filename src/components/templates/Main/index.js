@@ -172,6 +172,14 @@ export default ({
           )}
         </View>
 
+        {readLoadingHeaderImages ? (
+          <View />
+        ) : randomAdPic !== undefined ? (
+          <AdvertisementPopUp />
+        ) : (
+          <View />
+        )}
+
         {readLoadingCategoryList ? (
           <View style={styles.subContainer2}>
             <View>
@@ -191,7 +199,7 @@ export default ({
           </View>
         ) : dataSource2.length != 0 ? (
           <View style={styles.subContainer2}>
-            {randomAdPic !== undefined && <AdvertisementPopUp />}
+            {/* {randomAdPic !== undefined && <AdvertisementPopUp />} */}
             <View>
               <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
             </View>

@@ -170,8 +170,8 @@ class index extends Component {
       <MainTemplete
         readFail={readFail}
         slider={filteredDatasource}
-        randomAdPic={randomAdPic}
         filteredAdPic={filteredAdPic}
+        randomAdPic={randomAdPic}
         getShopId={getShopId}
         dataSource={dataSource}
         dataSource2={dataSource2}

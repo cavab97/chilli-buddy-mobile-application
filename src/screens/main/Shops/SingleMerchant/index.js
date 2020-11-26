@@ -33,7 +33,7 @@ class index extends Component {
       isOpenPost: false,
       viewHeight: 0,
       calculatedDistance: 0,
-      locationLoading: false,
+      location: null,
     };
   }
 
@@ -43,25 +43,36 @@ class index extends Component {
     this.props.listenFromDatabase({ shopId });
     this.props.readShopPost(shopId);
 
-    this.props.verifyPermission().then((permissions) => {
+    this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
         if (permissions.location.permissions.location.foregroundGranted === undefined) {
           alert("Permission to access location is necessary");
         } else if (permissions.location.permissions.location.foregroundGranted === true) {
+          this.setState({ location: await Location.getCurrentPositionAsync({}) });
         }
+      } else {
+        this.setState({ location: await Location.getCurrentPositionAsync({}) });
       }
     });
-    //this.calculateDistance(this.props.shopState.shop.l);
+    this.calculateDistance(this.props.shopState.shop.l);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     // this.calculateDistance(this.props.shopState.shop.l);
+    //console.log("componentDidUpdate");
+    //console.log(this.state.location);
     if (
-      (prevProps.shopState.shop.l.U !== this.props.shopState.shop.l.U ||
-        prevProps.shopState.shop.l.k !== this.props.shopState.shop.l.k) &&
-      this.props.shopState.shop.l.U &&
-      this.props.shopState.shop.l.k
+      //Shop location changed
+      prevProps.shopState.shop.l.U !== this.props.shopState.shop.l.U ||
+      prevProps.shopState.shop.l.k !== this.props.shopState.shop.l.k ||
+      //Current location gain
+      (!prevState.location &&
+        this.state.location &&
+        //Shop location exist
+        this.props.shopState.shop.l.U &&
+        this.props.shopState.shop.l.k)
     ) {
+      //console.log("enter if");
       this.calculateDistance(this.props.shopState.shop.l);
     }
   }
@@ -72,12 +83,14 @@ class index extends Component {
 
   //Calculate distance from logitude and latitude
   calculateDistance = async (destinationLocation) => {
+    //console.log("calculatedistance");
     try {
       var distance;
+      var location = this.state.location;
 
-      this.setState({ locationLoading: true });
-      let location = await Location.getCurrentPositionAsync({});
-      this.setState({ locationLoading: false });
+      if (location == null) {
+        return;
+      }
 
       distance =
         getDistance(
@@ -88,6 +101,8 @@ class index extends Component {
           }
         ) / 1000;
       this.setState({ calculatedDistance: distance });
+      //console.log("calculatedistance");
+      //console.log("distance1: " + this.state.calculatedDistance);
     } catch (e) {
       this.setState({ locationLoading: false });
     }
@@ -128,7 +143,7 @@ class index extends Component {
 
   onPromoteClick = (item, distance, calculatedDistance) => {
     //const promoId = this.props.promotions[0].id;
-
+    //console.log("singlemerchant: " + calculatedDistance);
     Actions.SingleMerchantPromo({
       promoId: item.id,
       distance: distance,
@@ -148,7 +163,7 @@ class index extends Component {
 
   find_dimensions = (layout) => {
     const { x, y, width, height } = layout;
-    this.setState({ viewHeight: height });
+    // this.setState({ viewHeight: height });
   };
 
   render() {
@@ -162,7 +177,7 @@ class index extends Component {
     if (shop.logo.length === 0) icon = require("@assets/logo.png");
     else icon = { uri: shop.logo[0] };
 
-    if (readLoading || readPostLoading || readPromotionLoading || this.state.locationLoading) {
+    if (readLoading || readPostLoading || readPromotionLoading) {
       return (
         <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
           <Rect x="0" y="0" rx="0" ry="0" width="100%" height="250" />
