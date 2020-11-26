@@ -60,7 +60,7 @@ export default ({
 }) => {
   const DATA = [];
   const DATA2 = [];
-
+  console.log("randomAd: " + randomAdPic);
   const getItem = (data, index) => {
     return {
       key: "routeTicketsOrRoutesLoading" + index,

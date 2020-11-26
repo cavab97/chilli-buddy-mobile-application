@@ -26,6 +26,7 @@ import moment from "moment";
 import styles from "./styles";
 import { Actions } from "react-native-router-flux";
 import { getDistance } from "geolib";
+import { Platform } from "react-native";
 class index extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +35,7 @@ class index extends Component {
       viewHeight: 0,
       calculatedDistance: 0,
       location: null,
+      getLocationLoading: true,
     };
   }
 
@@ -42,7 +44,6 @@ class index extends Component {
     this.props.readPromotion(shopId);
     this.props.listenFromDatabase({ shopId });
     this.props.readShopPost(shopId);
-
     this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
         if (permissions.location.permissions.location.foregroundGranted === undefined) {
@@ -53,8 +54,9 @@ class index extends Component {
       } else {
         this.setState({ location: await Location.getCurrentPositionAsync({}) });
       }
+      this.setState({ getLocationLoading: false });
     });
-    this.calculateDistance(this.props.shopState.shop.l);
+    // this.calculateDistance(this.props.shopState.shop.l);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -88,9 +90,9 @@ class index extends Component {
       var distance;
       var location = this.state.location;
 
-      if (location == null) {
-        return;
-      }
+      // if (location == null) {
+      //   return;
+      // }
 
       distance =
         getDistance(
@@ -177,7 +179,7 @@ class index extends Component {
     if (shop.logo.length === 0) icon = require("@assets/logo.png");
     else icon = { uri: shop.logo[0] };
 
-    if (readLoading || readPostLoading || readPromotionLoading) {
+    if (readLoading || readPostLoading || readPromotionLoading || this.state.getLocationLoading) {
       return (
         <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
           <Rect x="0" y="0" rx="0" ry="0" width="100%" height="250" />

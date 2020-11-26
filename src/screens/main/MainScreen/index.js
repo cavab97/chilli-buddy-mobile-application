@@ -81,7 +81,7 @@ class index extends Component {
     let dataSource = [];
     let dataSource2 = [];
     let dataSourceAds = []; //Testing advertisement slider click
-    let adCoverPic = [];
+    let filteredAdPic = [];
     let categoriesImage = [
       require("../../../assets/chillibuddy/category1.png"),
       require("../../../assets/chillibuddy/category2.png"),
@@ -102,18 +102,21 @@ class index extends Component {
     });
 
     //Filter empty shopID and Cover pic ads
+    console.log("dataSourceAds: " + dataSourceAds);
     var filteredDatasource = dataSourceAds.filter(
       (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
     );
 
     //Push ads popup cover pic into array
-    advertisements.filter((advertisement) => {
-      adCoverPic.push(advertisement.popUpImage);
+    advertisements.forEach((advertisement) => {
+      if (advertisement.popUpImage) {
+        filteredAdPic.push(advertisement.popUpImage);
+      }
     });
-
     //Filter empty coverpic from array
-    var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
 
+    //var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
+    console.log("filteredAdPic: " + filteredAdPic);
     var randomAdPic = filteredAdPic[Math.floor(this.state.randomNumber * filteredAdPic.length)];
 
     //filter same pic and get shop ID

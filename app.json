@@ -5,7 +5,7 @@
     "privacy": "public",
     "owner": "calvinmars",
     "platforms": ["ios", "android"],
-    "version": "2.4.12",
+    "version": "2.4.15",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -40,9 +40,9 @@
       }
     },
     "android": {
-      "package": "com.infobay.gogogain",
+      "package": "com.infobay.gogogain.huawei",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 29,
+      "versionCode": 32,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
