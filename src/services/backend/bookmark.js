@@ -14,14 +14,13 @@ export function create({ data }) {
       isBookmark,
     };
     data = backend.processData({ data });
-
     backend
       .callApi({ apiName, data })
       .then((result) => {
         resolve(result);
       })
       .catch((error) => {
-        console.log("error: " + error);
+        console.log("error: " + JSON.stringify(error));
         reject(error);
       });
   });
