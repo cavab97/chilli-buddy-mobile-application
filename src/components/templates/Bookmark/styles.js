@@ -1,5 +1,5 @@
 import { StyleSheet, ColorPropType, Platform } from "react-native";
-import { Colors, Mixins } from "../../../../settings/styles/theme";
+import { Colors, Mixins } from "../../../settings/styles/theme";
 
 const styles = StyleSheet.create({
   image: {

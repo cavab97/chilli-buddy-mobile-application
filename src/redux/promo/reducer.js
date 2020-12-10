@@ -1,9 +1,9 @@
 import actions from "./action";
 
 const initialState = {
-  permissionVerificationLoading : false,
+  permissionVerificationLoading: false,
   permissionVerificationError: false,
-  permissions:{},
+  permissions: {},
 
   loading: false,
   tags: {},
@@ -14,6 +14,7 @@ const initialState = {
   promo: [],
   promotion: {
     id: null,
+    bookmark: null,
     coverPhotos: null,
     endTime: null,
     description: null,
@@ -22,11 +23,11 @@ const initialState = {
     phoneNumber: null,
     email: null,
     shop: [
-        {address: [{country: null, line1: null, line2: null, postcode: null, state: null}]},
-        {categories: []},
-        {created:[{at: null, by: null, dateJoined: null}]},
-        {displayTitle: null},
-        {images: [{isPromote: null, l: null}]}
+      { address: [{ country: null, line1: null, line2: null, postcode: null, state: null }] },
+      { categories: [] },
+      { created: [{ at: null, by: null, dateJoined: null }] },
+      { displayTitle: null },
+      { images: [{ isPromote: null, l: null }] },
     ],
     merchants: [],
     manager: [],
@@ -38,8 +39,8 @@ const initialState = {
     deleted: { at: null, by: null },
     updated: { at: null, by: null },
     l: { _lat: 0, _long: 0 },
-    g: null
-  }
+    g: null,
+  },
 };
 
 const promoReducer = (state = initialState, { type, payload }) => {
@@ -48,10 +49,18 @@ const promoReducer = (state = initialState, { type, payload }) => {
       return { ...state, permissionVerificationLoading: true, permissionVerificationError: false };
 
     case actions.PERMISSION_VERIFICATION_SUCCESS:
-      return { ...state, permissionVerificationLoading: false, permissions: payload.data.permissions };
+      return {
+        ...state,
+        permissionVerificationLoading: false,
+        permissions: payload.data.permissions,
+      };
 
     case actions.PERMISSION_VERIFICATION_ERROR:
-      return { ...state, permissionVerificationLoading: false, permissionVerificationError: payload.error };
+      return {
+        ...state,
+        permissionVerificationLoading: false,
+        permissionVerificationError: payload.error,
+      };
 
     case actions.READ_FROM_DATABASE:
       return { ...state, readLoading: true };

@@ -25,6 +25,10 @@ export class MyAccount extends Component {
     );
   };
 
+  onBookmarkPress() {
+    Actions.Bookmark();
+  }
+
   onHelpCenterPress() {
     Actions.HelpCenter();
   }
@@ -41,6 +45,7 @@ export class MyAccount extends Component {
         <View style={styles.accountMoreContainer}>
           <Text style={styles.moreTextStyle}>More</Text>
         </View>
+        <View>{this.settingListing("Bookmark", this.onBookmarkPress.bind(this), true)}</View>
         <View>{this.settingListing("Help Center", this.onHelpCenterPress.bind(this), true)}</View>
         {/* <View>
                     {this.settingListing(
@@ -49,7 +54,7 @@ export class MyAccount extends Component {
                         true
                     )}
                 </View> */}
-        <View>{this.settingListing("Version", this.onVersionPress.bind(this), "2.4.12")}</View>
+        <View>{this.settingListing("Version", this.onVersionPress.bind(this), "2.4.16")}</View>
         <View style={styles.signoutButtonStyle}>
           <SignoutButton onPress={onSignoutPress} loading={logOutLoading}>
             Sign Out

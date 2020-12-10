@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
 
-import { verifyPermission, loadShopsPromo } from "@redux/promo/action";
+import { verifyPermission, loadBookmark } from "@redux/bookmark/action";
 import { update, submitToBackend, readFromDatabase } from "@redux/bookmark/action";
 import styles from "./styles";
 
@@ -11,7 +11,7 @@ import { Image, Text, TouchableOpacity, View } from "@components/atoms";
 
 import { Card, CardSection } from "@components/molecules";
 
-import { PromoList } from "@components/templates";
+import { BookmarkList } from "@components/templates";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -32,7 +32,6 @@ class index extends Component {
   }
 
   componentDidMount = async () => {
-    console.log("componentDidMount");
     this.props.verifyPermission().then((permissions) => {
       this.props.verifyPermission().then((permissions) => {
         if (permissions.location !== "granted") {
@@ -76,21 +75,20 @@ class index extends Component {
       //&&
       //prevProps.bookmarkState.readLoading != readLoading
     ) {
-      console.log("update");
       this.handleRefresh();
     }
   }
 
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
-    await this.props.loadShopsPromo({
+    await this.props.loadBookmark({
       radius: RADIUS * this.state.radiusAddition,
       latitude: location.coords.latitude,
       longtitude: location.coords.longitude,
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    await this.props.readFromDatabase();
+    //await this.props.readFromDatabase();
   };
 
   renderFooter({ empty }) {
@@ -116,7 +114,8 @@ class index extends Component {
   }
 
   onMerchantPressed(item) {
-    Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
+    console.log("item: " + JSON.stringify(item));
+    Actions.SingleMerchantPromo({ promoId: item.promotion.id, distance: item.distance });
   }
 
   onCategoryChange = (value) => {
@@ -174,53 +173,29 @@ class index extends Component {
     const readBookmark = this.props.bookmarkState.readLoading;
     const submitLoading = this.props.bookmarkState.submitLoading;
     const bookmarks = this.props.bookmarks;
-    let promotionInBookmark = [];
-    let promotionIds = [];
+    let isBookmark = [];
+    let activeBookmarks = [];
 
-    //push all promotion id in bookmark
-    // bookmarks.forEach((bookmark) => {
-    //   promotionInBookmark.push(bookmark.promotion.id, bookmark.isBookmark);
-    // });
-    promotionInBookmark = bookmarks.map((bookmark) => {
-      return {
-        promotionId: bookmark.promotion.id,
-        isBookmark: bookmark.isBookmark,
-      };
-    });
-
-    //push all promotion id
-    promo.forEach((promotion) => {
-      promotionIds.push(promotion.id);
-    });
-
-    //map both array and return if the promotion got bookmark
-    // const gotBookmark = promotionIds.map((el) => {
-    //   return promotionInBookmark.includes(el);
-    // });
-
-    const gotBookmark = promotionIds.map((promotionId) => {
-      const m = promotionInBookmark.filter((bookmark) => {
-        return bookmark.promotionId === promotionId;
-        // if (bookmark.promotionId === promotionId) {
-        //   console.log("a: " + bookmark.isBookmark);
-        //   return bookmark.isBookmark;
-        // }
-      });
-
-      if (m.length > 0) {
-        return m[0].isBookmark;
-      } else {
-        return false;
+    bookmarks.forEach((bookmark) => {
+      if (bookmark.isBookmark === true) {
+        activeBookmarks.push(bookmark);
       }
     });
 
+    activeBookmarks.forEach((bookmark) => {
+      isBookmark.push(bookmark.isBookmark);
+    });
+    console.log("bookmark: " + JSON.stringify(bookmarks));
+
+    console.log("activebookmarks: " + JSON.stringify(activeBookmarks));
+
     return (
-      <PromoList
+      <BookmarkList
         loading={readLoading}
         readBookmark={readBookmark}
         submitLoading={submitLoading}
-        dataSource={promo}
-        gotBookmark={gotBookmark}
+        dataSource={activeBookmarks}
+        gotBookmark={isBookmark}
         categories={this.state.categories}
         tags={this.state.tags}
         selectedCategory={this.state.selectedCategory}
@@ -246,7 +221,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   verifyPermission,
-  loadShopsPromo,
+  loadBookmark,
   update,
   submitToBackend,
   readFromDatabase,

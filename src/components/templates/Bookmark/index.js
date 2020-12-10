@@ -29,7 +29,6 @@ function Item({
   const { image } = styles;
 
   let cover = "";
-
   if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
   else cover = { uri: picture[0] };
   return (
@@ -65,7 +64,7 @@ function Item({
   );
 }
 
-const PromoList = ({
+const BookmarkList = ({
   loading,
   readBookmark,
   submitLoading,
@@ -84,7 +83,7 @@ const PromoList = ({
 }) => {
   return (
     <View style={{ height: "100%" }}>
-      <View
+      {/* <View
         style={{
           flexDirection: "row",
           justifyContent: "flex-end",
@@ -125,18 +124,18 @@ const PromoList = ({
         >
           <Icon name="filter" size={20} style={styles.tagsButton} />
         </ModalSelector>
-      </View>
+      </View> */}
 
       <FlatList
         data={dataSource}
         renderItem={({ item, index }) => (
           <Item
             onPress={() => onMerchantPressed(item)}
-            onBookmarkPressed={() => onBookmarkPressed(item)}
-            name={item.displayTitle}
-            picture={item.coverPhotos}
+            onBookmarkPressed={() => onBookmarkPressed(item.promotion)}
+            name={item.promotion.displayTitle}
+            picture={item.promotion.coverPhotos}
             distance={item.distance}
-            promoID={item.id}
+            promoID={item.promotion.id}
             bookmarkID={item.bookmark}
             gotBookmark={gotBookmark}
             index={index}
@@ -155,4 +154,4 @@ const PromoList = ({
   );
 };
 
-export { PromoList };
+export { BookmarkList };

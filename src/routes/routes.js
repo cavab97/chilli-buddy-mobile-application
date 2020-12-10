@@ -34,6 +34,7 @@ import LuckyDrawRanking from "../screens/subscreen/rank/LuckyDrawRanking";
 import LuckyDrawWinnerRanking from "../screens/subscreen/rank/LuckyDrawWinnerRanking";
 import RedeemPage from "../screens/subscreen/RedeemPage";
 import HelpCenter from "../screens/subscreen/HelpCenter";
+import Bookmark from "../screens/subscreen/Bookmark";
 
 import LoginTACScreen from "../screens/auth/TAC";
 
@@ -105,20 +106,10 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         />
       </Stack>
       <Stack key="Shops" back>
-        <Scene
-          key="Shops"
-          component={Shops}
-          title="Shops"
-          titleStyle={styles.title}
-        />
+        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
       </Stack>
       <Stack key="SingleMerchant" back>
-        <Scene
-          key="SingleMerchant"
-          component={Shop}
-          title="Shop"
-          titleStyle={styles.title}
-        />
+        <Scene key="SingleMerchant" component={Shop} title="Shop" titleStyle={styles.title} />
       </Stack>
 
       <Stack key="SingleMerchantPromo" back>
@@ -131,12 +122,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="EditProfile" back>
-        <Scene
-          key="EditProfile"
-          component={userForm}
-          title="Profile"
-          titleStyle={styles.title}
-        />
+        <Scene key="EditProfile" component={userForm} title="Profile" titleStyle={styles.title} />
       </Stack>
 
       <Stack key="CameraProfile" back>
@@ -149,29 +135,15 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="Route" back>
-        <Scene
-          key="Route"
-          component={Route}
-          title="Route"
-          titleStyle={styles.title}
-        />
+        <Scene key="Route" component={Route} title="Route" titleStyle={styles.title} />
       </Stack>
 
       <Stack key="Routes" back>
-        <Scene
-          key="Routes"
-          component={Routes}
-          title="Routes"
-          titleStyle={styles.title}
-        />
+        <Scene key="Routes" component={Routes} title="Routes" titleStyle={styles.title} />
       </Stack>
 
       <Stack key="Advertisement" back>
-        <Scene
-          key="Advertisement"
-          component={Advertisement}
-          title="Advertisement"
-        />
+        <Scene key="Advertisement" component={Advertisement} title="Advertisement" />
       </Stack>
 
       <Stack key="Amount">
@@ -215,21 +187,11 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="Prizes" back>
-        <Scene
-          key="Prizes"
-          component={Prizes}
-          title="Prizes"
-          titleStyle={styles.title}
-        />
+        <Scene key="Prizes" component={Prizes} title="Prizes" titleStyle={styles.title} />
       </Stack>
 
       <Stack key="Rules" back>
-        <Scene
-          key="Rules"
-          component={Rules}
-          title="Rules"
-          titleStyle={styles.title}
-        />
+        <Scene key="Rules" component={Rules} title="Rules" titleStyle={styles.title} />
       </Stack>
 
       <Stack key="CompletedUser" back>
@@ -286,12 +248,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         />
       </Stack>
       <Stack key="RedeemPage" back>
-        <Scene
-          key="RedeemPage"
-          component={RedeemPage}
-          title="Redeem"
-          titleStyle={styles.title}
-        />
+        <Scene key="RedeemPage" component={RedeemPage} title="Redeem" titleStyle={styles.title} />
       </Stack>
       <Stack key="HelpCenter" back>
         <Scene
@@ -300,6 +257,9 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           title="Help Center"
           titleStyle={styles.title}
         />
+      </Stack>
+      <Stack key="Bookmark" back>
+        <Scene key="Bookmark" component={Bookmark} title="Bookmark" titleStyle={styles.title} />
       </Stack>
     </Stack>
   );

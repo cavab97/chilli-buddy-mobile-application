@@ -1,5 +1,5 @@
 import { StyleSheet, ColorPropType, Platform } from "react-native";
-import { Colors, Mixins } from "../../../../settings/styles/theme";
+import { Colors, Mixins } from "../../../settings/styles/theme";
 
 const styles = StyleSheet.create({
   image: {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   tagsButton: {
     marginLeft: 10,
     marginRight: 10,
-    color: Colors.WHITE,
+    color: Colors.PRIMARY,
   },
   categoriesContainer: {
     borderWidth: 0,
@@ -74,34 +74,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
   },
   categoriesSelect: {
-    backgroundColor: Colors.PRIMARY,
-    borderWidth: 1.2,
+    backgroundColor: Colors.WHITE,
+    borderWidth: 0,
     marginTop: 5,
-    borderColor: Colors.PRIMARY,
+    borderColor: "#373737",
   },
   categoriesButton: {
-    borderColor: "#D60000",
-    borderRadius: 3,
+    borderWidth: 0,
     width: 200,
-    marginRight: 10,
-    marginTop: 8,
   },
   modalSelectTextStyle: {
-    color: Colors.WHITE,
-    fontWeight: "500",
+    color: Colors.PRIMARY,
   },
   modalOptionTextStyle: {
     color: Colors.PRIMARY,
-  },
-
-  bookmark: {
-    //backgroundColor: Colors.PRIMARY,
-    borderRadius: 30,
-    //justifyContent: "center",
-    //alignItems: "center",
-    position: "absolute",
-    right: 15,
-    top: -5,
   },
 });
 

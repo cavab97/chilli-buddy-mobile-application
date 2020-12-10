@@ -1,18 +1,25 @@
+import { proc } from "react-native-reanimated";
 import { database } from "../../marslab-library-react-native/utils/helper";
 
-const objectGroupName = "shop";
-const objectName = "promotion";
+const userName = "user";
+const objectGroupName = "promotion";
+const objectName = "bookmark";
 
-export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag }) {
+export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag, groupId }) {
+  console.log("geo");
+  console.log("l: " + JSON.stringify(l));
+  console.log("readius: " + radius);
   return new Promise((resolve, reject) => {
-    let databaseRef = database.geoReadTable({ ref: `${objectName}Packaging0` });
-    if (selectedCategory)
-      databaseRef = databaseRef.where("shop.categories", "array-contains-any", [selectedCategory]);
-
+    let databaseRef = database.geoReadTable({
+      ref: `${userName}Packaging0/${groupId}/${objectName}Packaging0`,
+    });
+    // if (selectedCategory)
+    //   databaseRef = databaseRef.where("shop.categories", "array-contains-any", [selectedCategory]);
     databaseRef
-      .where("started.boolean", "==", true)
-      .where("ended.boolean", "==", false)
-      .where("deleted.at", "==", null)
+      .where("isBookmark", "==", true)
+      .where("promotion.started.boolean", "==", true)
+      .where("promotion.ended.boolean", "==", false)
+      .where("promotion.deleted.at", "==", null)
       .limit(limit)
       .near({
         center: database.GeoPoint(l.latitude, l.longtitude),
@@ -20,8 +27,10 @@ export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag
       })
       .get()
       .then((QuerySnapshot) => {
+        console.log("query");
         const result = [];
         QuerySnapshot.forEach((snapshot) => {
+          console.log("load: " + JSON.stringify(snapshot));
           const data = {
             ...snapshot.data(),
             id: snapshot.id,
@@ -43,24 +52,27 @@ export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag
         resolve(result);
       })
       .catch((error) => {
+        console.log("database error: " + error);
         reject(error);
       });
   });
 }
 
-export function readObjects(groupId) {
+export function readObjects({ groupId }) {
   return new Promise((resolve, reject) => {
+    console.log("read object");
     database
       .readTable({
-        ref: `${objectGroupName}Packaging0/${groupId}/${objectName}Packaging0`,
+        ref: `${objectName}Private0`,
       })
-      .where("deleted.by", "==", null)
-      .where("d.ended.boolean", "==", false)
-      .where("d.started.boolean", "==", true)
+      .where("d.userIds", "array-contains-any", [groupId])
+      .where("d.promotion.ended.boolean", "==", false)
+      .where("d.promotion.started.boolean", "==", true)
       .get()
       .then((QuerySnapshot) => {
         const result = [];
         QuerySnapshot.forEach((snapshot) => {
+          console.log("snapshot: " + snapshot.id);
           const data = {
             ...snapshot.data(),
             ...snapshot.data().d,
@@ -74,7 +86,6 @@ export function readObjects(groupId) {
           const updated = database.processData({ data: data.updated });
 
           const processedData = { ...parent, created, deleted, updated };
-
           result.push(processedData);
         });
         resolve(result);
@@ -83,32 +94,4 @@ export function readObjects(groupId) {
         reject(error);
       });
   });
-}
-
-let objectListener = () => {};
-
-export function listenObject({ objectId = null, updateListener = () => {} }) {
-  objectListener = database
-    .readRecord({ ref: `${objectName}Packaging0/${objectId}` })
-    .onSnapshot((snapshot) => {
-      const data = {
-        ...snapshot.data(),
-        ...snapshot.data().d,
-        id: snapshot.id,
-      };
-      delete data["d"];
-
-      const parent = database.processData({ data });
-      const created = database.processData({ data: data.created });
-      const deleted = database.processData({ data: data.deleted });
-      const updated = database.processData({ data: data.updated });
-
-      const processedData = { ...parent, created, deleted, updated };
-
-      updateListener(processedData);
-    });
-}
-
-export function removeListenerToRecord() {
-  objectListener();
 }

@@ -16,6 +16,7 @@ import transactionReducer from "./transaction/reducer";
 import advertisementsReducer from "./advertisement/reducer";
 import settingsReducer from "./settings/reducer";
 import promoReducer from "./promo/reducer";
+import bookmarkReducer from "./bookmark/reducer";
 
 export default combineReducers = {
   Advertisement: advertisementsReducer,
@@ -25,9 +26,10 @@ export default combineReducers = {
   RouteGroup: routeGroupReducer,
   Route: routeReducer,
   RouteTicket: routeTicketReducer,
-  Event : eventReducer,
+  Event: eventReducer,
   Mission: missionReducer,
   Reward: rewardReducer,
   Transaction: transactionReducer,
   Promotion: promoReducer,
+  Bookmark: bookmarkReducer,
 };
