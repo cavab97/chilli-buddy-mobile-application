@@ -147,7 +147,6 @@ const bookmarkReducer = (state = initialState, { type, payload }) => {
       };
     case actions.SUBMIT_TO_BACKEND_SUCCESS:
       console.log("submitSuccess");
-      console.log("data:" + JSON.stringify(payload.data));
       return {
         ...state,
         submitLoading: false,

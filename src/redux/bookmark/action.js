@@ -100,7 +100,6 @@ export function loadBookmark({
           groupId: uid,
         });
         resolve(bookmarks);
-        console.log("action: " + JSON.stringify(bookmarks));
         dispatch({
           type: actions.READ_FROM_DATABASE_SUCCESS,
           payload: { data: bookmarks },

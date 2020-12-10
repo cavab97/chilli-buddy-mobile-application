@@ -6,9 +6,6 @@ const objectGroupName = "promotion";
 const objectName = "bookmark";
 
 export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag, groupId }) {
-  console.log("geo");
-  console.log("l: " + JSON.stringify(l));
-  console.log("readius: " + radius);
   return new Promise((resolve, reject) => {
     let databaseRef = database.geoReadTable({
       ref: `${userName}Packaging0/${groupId}/${objectName}Packaging0`,
@@ -27,10 +24,8 @@ export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag
       })
       .get()
       .then((QuerySnapshot) => {
-        console.log("query");
         const result = [];
         QuerySnapshot.forEach((snapshot) => {
-          console.log("load: " + JSON.stringify(snapshot));
           const data = {
             ...snapshot.data(),
             id: snapshot.id,
@@ -60,7 +55,6 @@ export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag
 
 export function readObjects({ groupId }) {
   return new Promise((resolve, reject) => {
-    console.log("read object");
     database
       .readTable({
         ref: `${objectName}Private0`,
@@ -72,7 +66,6 @@ export function readObjects({ groupId }) {
       .then((QuerySnapshot) => {
         const result = [];
         QuerySnapshot.forEach((snapshot) => {
-          console.log("snapshot: " + snapshot.id);
           const data = {
             ...snapshot.data(),
             ...snapshot.data().d,

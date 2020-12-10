@@ -102,7 +102,6 @@ class index extends Component {
     });
 
     //Filter empty shopID and Cover pic ads
-    console.log("dataSourceAds: " + dataSourceAds);
     var filteredDatasource = dataSourceAds.filter(
       (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
     );
@@ -116,7 +115,6 @@ class index extends Component {
     //Filter empty coverpic from array
 
     //var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
-    console.log("filteredAdPic: " + filteredAdPic);
     var randomAdPic = filteredAdPic[Math.floor(this.state.randomNumber * filteredAdPic.length)];
 
     //filter same pic and get shop ID
@@ -145,22 +143,54 @@ class index extends Component {
     //Assigning background pictures
     dataSource2.forEach((element, index) => {
       element.image = categoriesImage[index % 5];
-      if (element.title === "Food & Beverage") {
-        element.icon = "fnb";
-      } else if (element.title === "Beauty & Health") {
-        element.icon = "heart";
-      } else if (element.title === "Fashion") {
-        element.icon = "divide";
-      } else if (element.title === "Service") {
-        element.icon = "screw";
-      } else if (element.title === "Fun & Sports") {
-        element.icon = "star";
-      } else if (element.title === "Online Shop") {
-        element.icon = "wifi";
-      } else if (element.title === "Home & Design") {
-        element.icon = "house";
-      } else {
-        element.icon = "others";
+      switch (element.title) {
+        case "中餐 | Chinese":
+          element.icon = "chinese";
+          break;
+        case "西餐 | Western":
+          element.icon = "western";
+          break;
+        case "Cafe":
+          element.icon = "cafe";
+          break;
+        case "中國菜 | China":
+          element.icon = "china";
+          break;
+        case "日本餐 | Japanese":
+          element.icon = "japanese";
+          break;
+        case "韓國 | Korean":
+          element.icon = "korean";
+          break;
+        case "泰國 | Thai":
+          element.icon = "thai";
+          break;
+        case "台灣 | Taiwan":
+          element.icon = "taiwan";
+          break;
+        case "小酒館 | Bistro":
+          element.icon = "bistro";
+          break;
+        case "火鍋 | Steamboat":
+          element.icon = "steamboat";
+          break;
+        case "本地美食 | Local cuisine":
+          element.icon = "localcuisine";
+          break;
+        case "飲料店 | Beverage":
+          element.icon = "beverage";
+          break;
+        case "餐車 | Food Truck":
+          element.icon = "foodtruck";
+          break;
+        case "碌碌 | Lok Lok":
+          element.icon = "loklok";
+          break;
+        case "特色美食 | Speciality cuisine":
+          element.icon = "cuisine";
+          break;
+        default:
+          element.icon = "others";
       }
     });
 

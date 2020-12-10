@@ -114,7 +114,6 @@ class index extends Component {
   }
 
   onMerchantPressed(item) {
-    console.log("item: " + JSON.stringify(item));
     Actions.SingleMerchantPromo({ promoId: item.promotion.id, distance: item.distance });
   }
 
@@ -185,9 +184,6 @@ class index extends Component {
     activeBookmarks.forEach((bookmark) => {
       isBookmark.push(bookmark.isBookmark);
     });
-    console.log("bookmark: " + JSON.stringify(bookmarks));
-
-    console.log("activebookmarks: " + JSON.stringify(activeBookmarks));
 
     return (
       <BookmarkList

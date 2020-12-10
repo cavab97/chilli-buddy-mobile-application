@@ -32,7 +32,6 @@ class index extends Component {
   }
 
   componentDidMount = async () => {
-    console.log("componentDidMount");
     this.props.verifyPermission().then((permissions) => {
       this.props.verifyPermission().then((permissions) => {
         if (permissions.location !== "granted") {
@@ -76,7 +75,6 @@ class index extends Component {
       //&&
       //prevProps.bookmarkState.readLoading != readLoading
     ) {
-      console.log("update");
       this.handleRefresh();
     }
   }
