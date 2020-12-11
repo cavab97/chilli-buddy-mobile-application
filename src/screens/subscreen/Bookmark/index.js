@@ -97,14 +97,14 @@ class index extends Component {
         <Card style={{ backgroundColor: "transparent" }}>
           <CardSection style={styles.emptySection}>
             <Icon name="inbox" size={64} style={styles.emptyIcon} />
-            <Text style={styles.emptyText}>NO PROMOTION FOUND</Text>
+            <Text style={styles.emptyText}>NO BOOKMARK FOUND</Text>
           </CardSection>
         </Card>
       ) : (
         <Card style={{ backgroundColor: "transparent", elevation: 0 }}>
           <CardSection style={[styles.emptySection, { elevation: 0 }]}>
             <Icon name="inbox" size={64} style={styles.emptyIcon} />
-            <Text style={styles.emptyText}>NO PROMOTION FOUND</Text>
+            <Text style={styles.emptyText}>NO BOOKMARK FOUND</Text>
           </CardSection>
         </Card>
       );
