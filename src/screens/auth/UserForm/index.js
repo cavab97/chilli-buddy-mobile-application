@@ -210,8 +210,8 @@ export class Index extends Component {
           <TouchableWithoutFeedBack onPress={Keyboard.dismiss} accessible={false}>
             <View>
               <View style={styles.ProfileContatiner}>
-                <View style={styles.ProfileImageStyle}>
-                  {/* <View>  front camera profile picture*/}
+                {/* <View style={styles.ProfileImageStyle}> */}
+                <View>
                   <ImageInfo
                     banner={photoURL ? photoURL : require("../../../assets/DefaultAvatar.jpg")}
                     imageContainer={styles.ProfileImageStyle}

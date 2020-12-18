@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   detailArea: {
     width: "100%",
     paddingLeft: "5%",
-    //paddingRight: "5%", uncomment this at social media icon
+    paddingRight: "5%",
     paddingTop: "5%",
     marginTop: 0,
     marginBottom: 20,

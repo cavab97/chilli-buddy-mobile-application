@@ -25,9 +25,9 @@ import moment from "moment";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
-// const facebook = require("../../../../assets/icons/facebook.png");      //social media icon
-// const instagram = require("../../../../assets/icons/instagram.png");
-// const whatsapp = require("../../../../assets/icons/whatsapp.png");
+const facebook = require("../../../../assets/icons/facebook.png");
+const instagram = require("../../../../assets/icons/instagram.png");
+const whatsapp = require("../../../../assets/icons/whatsapp.png");
 
 const SingleMerchant = ({
   dataSource,
@@ -283,46 +283,36 @@ const SingleMerchant = ({
             >
               {
                 //dataSource.facebookUrl !== "" && dataSource.facebookUrl &&
-                <Ionicons
-                  style={{}}
-                  name="logo-facebook"
-                  size={30}
-                  color={Colors.PRIMARY}
-                  onPress={() => {
-                    if (!dataSource.facebookUrl) {
-                      return Alert.alert("Sorry, we don't have facebook.");
-                    }
-                    Linking.openURL(dataSource.facebookUrl);
-                  }}
-                />
-                // <TouchableOpacity      //uncomment social media icon
+                // <Ionicons
+                //   style={{}}
+                //   name="logo-facebook"
+                //   size={30}
+                //   color={Colors.PRIMARY}
                 //   onPress={() => {
                 //     if (!dataSource.facebookUrl) {
                 //       return Alert.alert("Sorry, we don't have facebook.");
                 //     }
                 //     Linking.openURL(dataSource.facebookUrl);
                 //   }}
-                // >
-                //   <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={facebook} />
-                // </TouchableOpacity>
+                // />
+                <TouchableOpacity
+                  onPress={() => {
+                    if (!dataSource.facebookUrl) {
+                      return Alert.alert("Sorry, we don't have facebook.");
+                    }
+                    Linking.openURL(dataSource.facebookUrl);
+                  }}
+                >
+                  <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={facebook} />
+                </TouchableOpacity>
               }
               {
                 //dataSource.instagramUrl !== "" && dataSource.instagramUrl &&
-                <Ionicons
-                  style={{}}
-                  name="logo-instagram"
-                  size={30}
-                  color={Colors.PRIMARY}
-                  onPress={() => {
-                    if (!dataSource.instagramUrl) {
-                      return Alert.alert("Sorry, we don't have instagram.");
-                    }
-                    Linking.openURL(
-                      "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
-                    );
-                  }}
-                />
-                // <TouchableOpacity   //uncomment social media icon
+                // <Ionicons
+                //   style={{}}
+                //   name="logo-instagram"
+                //   size={30}
+                //   color={Colors.PRIMARY}
                 //   onPress={() => {
                 //     if (!dataSource.instagramUrl) {
                 //       return Alert.alert("Sorry, we don't have instagram.");
@@ -331,58 +321,68 @@ const SingleMerchant = ({
                 //       "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
                 //     );
                 //   }}
-                // >
-                //   <Image style={{ width: 30, height: 30 }} source={instagram} />
-                // </TouchableOpacity>
+                // />
+                <TouchableOpacity
+                  onPress={() => {
+                    if (!dataSource.instagramUrl) {
+                      return Alert.alert("Sorry, we don't have instagram.");
+                    }
+                    Linking.openURL(
+                      "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
+                    );
+                  }}
+                >
+                  <Image style={{ width: 30, height: 30 }} source={instagram} />
+                </TouchableOpacity>
               }
               {
                 //dataSource.whatsapp !== "" && dataSource.whatsapp   &&
-                <Ionicons
-                  style={{}}
-                  name="logo-whatsapp"
-                  size={30}
-                  color={Colors.PRIMARY}
-                  onPress={() => {
-                    if (!dataSource.whatsapp) {
-                      return Alert.alert("Sorry, we don't have whatsapp.");
-                    }
-                    Linking.openURL("https://wa.me/" + dataSource.whatsapp);
-                  }}
-                />
-                // <TouchableOpacity   //uncomment social media icon
+                // <Ionicons
+                //   style={{}}
+                //   name="logo-whatsapp"
+                //   size={30}
+                //   color={Colors.PRIMARY}
                 //   onPress={() => {
                 //     if (!dataSource.whatsapp) {
                 //       return Alert.alert("Sorry, we don't have whatsapp.");
                 //     }
                 //     Linking.openURL("https://wa.me/" + dataSource.whatsapp);
                 //   }}
-                // >
-                //   <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={whatsapp} />
-                // </TouchableOpacity>
+                // />
+                <TouchableOpacity
+                  onPress={() => {
+                    if (!dataSource.whatsapp) {
+                      return Alert.alert("Sorry, we don't have whatsapp.");
+                    }
+                    Linking.openURL("https://wa.me/" + dataSource.whatsapp);
+                  }}
+                >
+                  <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={whatsapp} />
+                </TouchableOpacity>
               }
               {
                 //dataSource.websiteUrl !=='' && dataSource.websiteUrl &&
-                // <View    //UNCOMMENT VIEW
-                //   style={{
-                //     backgroundColor: Colors.PRIMARY,
-                //     borderRadius: 7,
-                //     width: 30,
-                //     height: 30,
-                //   }}
-                // >
-                <Ionicons
-                  style={{}} //{{ marginLeft: "auto", marginRight: "auto", top: "15%" }}  //uncomment social media icon
-                  name="md-link"
-                  size={30} //{20}  uncomment social media icon
-                  color={Colors.PRIMARY} //{Colors.WHITE} UNCOMMENT
-                  onPress={() => {
-                    if (!dataSource.websiteUrl) {
-                      return Alert.alert("Sorry, we don't have website.");
-                    }
-                    Linking.openURL("https://" + dataSource.websiteUrl);
+                <View
+                  style={{
+                    backgroundColor: Colors.PRIMARY,
+                    borderRadius: 7,
+                    width: 30,
+                    height: 30,
                   }}
-                />
-                // </View>  UNCOMMENT VIEW
+                >
+                  <Ionicons
+                    style={{ marginLeft: "auto", marginRight: "auto", top: "15%" }}
+                    name="md-link"
+                    size={20}
+                    color={Colors.WHITE}
+                    onPress={() => {
+                      if (!dataSource.websiteUrl) {
+                        return Alert.alert("Sorry, we don't have website.");
+                      }
+                      Linking.openURL("https://" + dataSource.websiteUrl);
+                    }}
+                  />
+                </View>
               }
             </View>
           </View>

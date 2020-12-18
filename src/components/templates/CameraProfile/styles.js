@@ -11,9 +11,9 @@ const styles = {
   },
   iconContainer: {
     alignSelf: "center",
-    //position: "absolute",  //front camera
+    position: "absolute",
     backgroundColor: "transparent",
-    //bottom: 0,
+    bottom: 0,
   },
   image: {
     flex: 1,
@@ -95,7 +95,7 @@ const styles = {
   imagePickerIcon: {
     position: "absolute",
     right: 0,
-    bottom: 7, //front camera need delete this
+    //bottom: 7,
   },
 };
 

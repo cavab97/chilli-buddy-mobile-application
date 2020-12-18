@@ -213,10 +213,10 @@ class index extends Component {
         uri={this.state.uri}
         uploadProgress={this.props.uploadImageProgress}
         onRetakePress={this.onRetakePress.bind(this)}
-        // changeCamera={this.handleCameraType.bind(this)}  //front camera
-        // ratio={this.state.ratio}
-        // setCameraReady={this.setCameraReady.bind(this)}
-        // imagePadding={this.state.imagePadding}
+        changeCamera={this.handleCameraType.bind(this)}
+        ratio={this.state.ratio}
+        setCameraReady={this.setCameraReady.bind(this)}
+        imagePadding={this.state.imagePadding}
         onUploadPress={this.uploadImage.bind(this)}
         errorHeader="Error"
         errorRedirectMessage="Please try again later."

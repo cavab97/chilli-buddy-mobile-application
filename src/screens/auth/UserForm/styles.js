@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
     //height: 754,
   },
   ProfileImageStyle: {
-    backgroundColor: Colors.GRAY_DARK, //delete this at profile picture
+    //backgroundColor: Colors.GRAY_DARK, //delete this at profile picture
     height: 114,
     width: 114,
     borderRadius: 60,
-    //borderRadius: 150,  uncomment this at profile picture
+    borderRadius: 150,
   },
   ProfileContatiner: {
     justifyContent: "center",
@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     borderRadius: 60,
-    //borderRadius: 150, uncomment this at profile picture
+    borderRadius: 150,
     width: null,
-    //resizeMode: "cover", uncomment this line need cover
+    resizeMode: "cover",
   },
   BodyContatiner: {
     //height: 800,
