@@ -15,6 +15,7 @@ const initialState = {
   promotion: {
     id: null,
     bookmark: null,
+    isBookmark: false,
     coverPhotos: null,
     endTime: null,
     description: null,
@@ -83,6 +84,9 @@ const promoReducer = (state = initialState, { type, payload }) => {
 
     case actions.READ_RECORD_ERROR:
       return { ...state, readLoading: false, readError: payload.error };
+
+    case actions.TOGGLE_PROMO_BOOKMARK:
+      return { ...state, promo: payload.data };
 
     default:
       return state;

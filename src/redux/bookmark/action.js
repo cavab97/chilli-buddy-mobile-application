@@ -13,6 +13,12 @@ const actions = {
   READ_FROM_DATABASE_SUCCESS: type + "READ_FROM_DATABASE_SUCCESS",
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
 
+  TOGGLE_BOOKMARK: type + "TOGGLE_BOOKMARK",
+
+  READ_BOOKMARK: type + "READ_BOOKMARK",
+  READ_BOOKMARK_SUCCESS: type + "READ_BOOKMARK_SUCCESS",
+  READ_BOOKMARK_ERROR: type + "READ_BOOKMARK_ERROR",
+
   READ_RECORD: type + "READ_RECORD",
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
   READ_RECORD_ERROR: type + "READ_RECORD_ERROR",
@@ -59,7 +65,6 @@ export function readFromDatabase() {
         const bookmarks = await objectDataServices.readObjects({
           groupId: uid,
         });
-
         resolve(bookmarks);
         dispatch({
           type: actions.READ_FROM_DATABASE_SUCCESS,
@@ -77,6 +82,26 @@ export function readFromDatabase() {
   };
 }
 
+export function updateIsBookmark(promoId) {
+  return (dispatch, getState) => {
+    return new Promise(async (resolve, reject) => {
+      const bookmarks = getState().Bookmark.bookmarks;
+      const newBookmarks = bookmarks.map((bookmark) => {
+        if (bookmark.promotion.id === promoId) {
+          bookmark.isBookmark = !bookmark.isBookmark;
+        }
+        return bookmark;
+      });
+
+      resolve(newBookmarks);
+      dispatch({
+        type: actions.TOGGLE_BOOKMARK,
+        payload: { data: newBookmarks },
+      });
+    });
+  };
+}
+
 export function loadBookmark({
   radius,
   latitude,
@@ -86,7 +111,7 @@ export function loadBookmark({
 }) {
   let limit = 0;
   return (dispatch, getState) => {
-    dispatch({ type: actions.READ_FROM_DATABASE });
+    dispatch({ type: actions.READ_BOOKMARK });
     return new Promise(async (resolve, reject) => {
       try {
         const { uid } = getState().Auth.user;
@@ -101,13 +126,13 @@ export function loadBookmark({
         });
         resolve(bookmarks);
         dispatch({
-          type: actions.READ_FROM_DATABASE_SUCCESS,
+          type: actions.READ_BOOKMARK_SUCCESS,
           payload: { data: bookmarks },
         });
       } catch (error) {
         reject(error);
         dispatch({
-          type: actions.READ_FROM_DATABASE_ERROR,
+          type: actions.READ_BOOKMARK_ERROR,
           payload: { error },
         });
       }
@@ -128,7 +153,7 @@ export function submitToBackend(data, actionName) {
             data = {
               shopIds: [shopId],
               promo: [promoId],
-              isBookmark: !isBookmark,
+              isBookmark: isBookmark,
             };
             result = await bookmarkBackendServices.create({ data });
             break;
@@ -136,7 +161,7 @@ export function submitToBackend(data, actionName) {
             const { bookmarkId } = data;
             data = {
               id: bookmarkId,
-              isBookmark: !data.isBookmark,
+              isBookmark: data.isBookmark,
             };
             result = await bookmarkBackendServices.update({ data });
             break;

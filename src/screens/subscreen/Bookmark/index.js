@@ -4,7 +4,9 @@ import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
 
 import { verifyPermission, loadBookmark } from "@redux/bookmark/action";
-import { update, submitToBackend, readFromDatabase } from "@redux/bookmark/action";
+import { update, submitToBackend } from "@redux/bookmark/action";
+import { onBookmarkClick } from "@redux/promo/action";
+
 import styles from "./styles";
 
 import { Image, Text, TouchableOpacity, View } from "@components/atoms";
@@ -26,6 +28,7 @@ class index extends Component {
       radiusAddition: 1,
       selectedCategory: { id: "", tags: ["All"], title: "All" },
       selectedTag: "All", //default all tag selected
+      readLoading: true,
     };
     this.handleRefresh = this.handleRefresh.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
@@ -50,7 +53,7 @@ class index extends Component {
     const currentPromo = this.props.promotionState.promo;
     const readError = this.props.promotionState.readError;
     const submitLoading = this.props.bookmarkState.submitLoading;
-    const readLoading = this.props.bookmarkState.readLoading;
+    const readBookmark = this.props.bookmarkState.readBookmark;
 
     // if no promo in the radius, call handleRefresh read again by increase radiusAddition state
     if (currentPromo.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
@@ -69,14 +72,14 @@ class index extends Component {
       alert(readError);
     }
 
-    if (
-      prevProps.bookmarkState.submitLoading &&
-      !submitLoading
-      //&&
-      //prevProps.bookmarkState.readLoading != readLoading
-    ) {
-      this.handleRefresh();
-    }
+    // if (
+    //   prevProps.bookmarkState.submitLoading &&
+    //   !submitLoading
+    //   //&&
+    //   //prevProps.bookmarkState.readBookmark != readBookmark
+    // ) {
+    //   this.handleRefresh();
+    // }
   }
 
   handleRefresh = async () => {
@@ -88,7 +91,7 @@ class index extends Component {
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    //await this.props.readFromDatabase();
+    this.setState({ readLoading: false });
   };
 
   renderFooter({ empty }) {
@@ -139,39 +142,32 @@ class index extends Component {
     return bookmarkId;
   }
 
-  lookingForIsBookmark({ promoId } = null) {
-    const bookmarks = this.props.bookmarks;
-    let isBookmark = null;
-
-    bookmarks.forEach((bookmark) => {
-      if (bookmark.promo[0] === promoId) {
-        isBookmark = bookmark.isBookmark;
-      }
-    });
-    return isBookmark;
-  }
-
   onBookmarkPressed = async (item) => {
-    const shopId = item.shop.id;
-    const promoId = item.id;
+    const click = item.isBookmark;
+    console.log("click: " + click);
+    item.isBookmark = !click;
+    console.log("become: " + item.isBookmark);
+
+    const shopId = item.promotion.shop.id;
+    const promoId = item.promotion.id;
     const bookmarkId = this.lookingForBookmark({ promoId });
-    const isBookmark = this.lookingForIsBookmark({ promoId });
+    const isBookmark = item.isBookmark;
+    this.props.onBookmarkClick(promoId, isBookmark);
+
     if (bookmarkId === null) {
       const data = { shopId, promoId, isBookmark };
       await this.props.submitToBackend(data, "create");
-      //this.props.readFromDatabase();
     } else {
       const data = { bookmarkId, isBookmark };
       await this.props.submitToBackend(data, "update");
-      //this.props.readFromDatabase();
     }
   };
 
   render() {
     const { readLoading, promo, bookmark } = this.props.promotionState;
-    const readBookmark = this.props.bookmarkState.readLoading;
+    const readBookmark = this.props.bookmarkState.readBookmark;
     const submitLoading = this.props.bookmarkState.submitLoading;
-    const bookmarks = this.props.bookmarks;
+    const bookmarks = this.props.bookmarkState.bookmarks;
     let isBookmark = [];
     let activeBookmarks = [];
 
@@ -187,11 +183,10 @@ class index extends Component {
 
     return (
       <BookmarkList
-        loading={readLoading}
         readBookmark={readBookmark}
+        readLoading={this.state.readLoading}
         submitLoading={submitLoading}
         dataSource={activeBookmarks}
-        gotBookmark={isBookmark}
         categories={this.state.categories}
         tags={this.state.tags}
         selectedCategory={this.state.selectedCategory}
@@ -218,7 +213,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   verifyPermission,
   loadBookmark,
+  onBookmarkClick,
   update,
   submitToBackend,
-  readFromDatabase,
 })(index);

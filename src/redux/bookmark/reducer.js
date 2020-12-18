@@ -6,6 +6,7 @@ const initialState = {
   permissions: {},
 
   readLoading: false,
+  readBookmark: false,
   readError: false,
   submitLoading: false,
   submitError: false,
@@ -121,27 +122,40 @@ const bookmarkReducer = (state = initialState, { type, payload }) => {
       return { ...state, readLoading: false, bookmarks: payload.data };
 
     case actions.READ_FROM_DATABASE_ERROR:
-      return { ...state, readLoading: false, readError: payload.error };
+      return { ...state, readLoading: true, readError: payload.error };
+
+    case actions.TOGGLE_BOOKMARK:
+      return { ...state, bookmarks: payload.data };
+
+    case actions.READ_BOOKMARK:
+      return { ...state, readBookmark: true };
+
+    case actions.READ_BOOKMARK_SUCCESS:
+      console.log("read database success");
+      return { ...state, readBookmark: false, bookmarks: payload.data };
+
+    case actions.READ_BOOKMARK_ERROR:
+      return { ...state, readBookmark: true, readError: payload.error };
 
     case actions.READ_RECORD:
-      return { ...state, readLoading: true, readError: false };
+      return { ...state, readBookmark: true, readError: false };
 
-    case actions.READ_RECORD_SUCCESS:
-      return {
-        ...state,
-        readLoading: false,
-        bookmark: payload.data,
-      };
+    // case actions.READ_RECORD_SUCCESS:
+    //   return {
+    //     ...state,
+    //     readBookmark: false,
+    //     bookmark: payload.data,
+    //   };
 
-    case actions.READ_RECORD_ERROR:
-      return { ...state, readLoading: false, readError: payload.error };
+    // case actions.READ_RECORD_ERROR:
+    //   return { ...state, readBookmark: false, readError: payload.error };
 
     case actions.SUBMIT_TO_BACKEND:
       console.log("submit");
       return {
         ...state,
         submitLoading: true,
-        readLoading: true,
+        readBookmark: true,
         submitError: initialState.submitError,
         submitResult: initialState.submitResult,
       };
@@ -150,7 +164,7 @@ const bookmarkReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         submitLoading: false,
-        // readLoading: false,
+        // readBookmark: false,
         submitError: initialState.submitError,
         submitResult: payload.data,
       };
@@ -159,7 +173,7 @@ const bookmarkReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         submitLoading: false,
-        readLoading: false,
+        //readBookmark: false,
         submitError: payload.error,
         submitResult: initialState.submitResult,
       };

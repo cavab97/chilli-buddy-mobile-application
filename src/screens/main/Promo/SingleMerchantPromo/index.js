@@ -25,7 +25,6 @@ class index extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     const promoId = this.props.promoId;
     this.props.listenFromDatabase({ promoId });
   }
@@ -42,7 +41,7 @@ class index extends Component {
 
   calculateDistance = async (destinationLocation) => {
     const promo = this.props.promotion;
-    console.log("get: " + destinationLocation.U + " and " + destinationLocation.k);
+    //console.log("get: " + destinationLocation.U + " and " + destinationLocation.k);
     var distance;
     let location = await Location.getCurrentPositionAsync({});
     distance =
@@ -53,7 +52,7 @@ class index extends Component {
           longitude: location.coords.longitude,
         }
       ) / 1000;
-    console.log("singleDis: " + distance);
+    //console.log("singleDis: " + distance);
 
     Actions.SingleMerchant({
       shopId: promo.promotion.shop.id,

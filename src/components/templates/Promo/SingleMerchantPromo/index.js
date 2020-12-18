@@ -71,11 +71,7 @@ const SingleMerchantPromo = ({
             return (
               <View key={index} style={subContainer1}>
                 {dataSource.images.length > 0 ? (
-                  <Image
-                    source={{ uri: item }}
-                    style={imageTopStyle}
-                    resizeMode={"cover"}
-                  />
+                  <Image source={{ uri: item }} style={imageTopStyle} resizeMode={"cover"} />
                 ) : (
                   <Image
                     source={noImage}
@@ -103,7 +99,7 @@ const SingleMerchantPromo = ({
           onPress={onPressedSwipe.bind(this, "next")}
         />
       </View>
-      <View style={styles.floatingDistanceIndicator}>
+      {/* <View style={styles.floatingDistanceIndicator}>
         <MaterialCommunityIcons
           name="map-marker-distance"
           color="white"
@@ -117,11 +113,8 @@ const SingleMerchantPromo = ({
           }
           KM Away
         </Text>
-      </View>
-      <TouchableOpacity
-        style={styles.floatingShopButton}
-        onPress={onMerchantPressed}
-      >
+      </View> */}
+      <TouchableOpacity style={styles.floatingShopButton} onPress={onMerchantPressed}>
         <CustomIcon name="merchant" size={20} color="white" />
         <Text style={styles.floatingShopButtonTitle}>View Shop</Text>
       </TouchableOpacity>

@@ -101,7 +101,29 @@ const styles = StyleSheet.create({
     //alignItems: "center",
     position: "absolute",
     right: 15,
-    top: -5,
+    top: 15,
+  },
+
+  floatingDistanceIndicator: {
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 130,
+    position: "absolute",
+    top: 10,
+    left: 10,
+    height: 30,
+    backgroundColor: "#D60000",
+    borderRadius: 100,
+    borderColor: Colors.SECONDARY,
+    flexDirection: "row",
+  },
+  distanceIndicatorTitle: {
+    marginLeft: 10,
+    fontSize: 12,
+    color: Colors.WHITE,
+    fontFamily: "RobotoBold",
   },
 });
 

@@ -36,7 +36,6 @@ export function update({ data }) {
       id,
       isBookmark,
     };
-
     data = backend.processData({ data });
 
     backend

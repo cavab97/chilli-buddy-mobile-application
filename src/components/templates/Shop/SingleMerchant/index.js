@@ -11,6 +11,7 @@ import {
   FlatList,
   Carousel,
   TouchableOpacity,
+  Button,
 } from "@components/atoms";
 
 import { Card } from "@components/molecules";
@@ -24,6 +25,9 @@ import moment from "moment";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
+// const facebook = require("../../../../assets/icons/facebook.png");      //social media icon
+// const instagram = require("../../../../assets/icons/instagram.png");
+// const whatsapp = require("../../../../assets/icons/whatsapp.png");
 
 const SingleMerchant = ({
   dataSource,
@@ -87,9 +91,7 @@ const SingleMerchant = ({
                   <ScrollView>
                     <View style={singlePostContainer}>
                       <Text style={singlePostTitle}>{item.title}</Text>
-                      <Text style={singlePostDescription}>
-                        {item.description}
-                      </Text>
+                      <Text style={singlePostDescription}>{item.description}</Text>
                       <Text style={{ paddingTop: 5 }}>
                         {moment(item.created.at).format("DD/MM/YYYY")}
                       </Text>
@@ -109,9 +111,7 @@ const SingleMerchant = ({
             <View>
               <ScrollView>
                 <View style={singlePostContainer}>
-                  <Text style={singlePostTitle}>
-                    Currently there are no post available
-                  </Text>
+                  <Text style={singlePostTitle}>Currently there are no post available</Text>
                 </View>
               </ScrollView>
             </View>
@@ -131,17 +131,9 @@ const SingleMerchant = ({
             return (
               <View key={index} style={subContainer1}>
                 {dataSource.images.length > 0 ? (
-                  <Image
-                    source={{ uri: item }}
-                    style={imageTopStyle}
-                    resizeMode={"cover"}
-                  />
+                  <Image source={{ uri: item }} style={imageTopStyle} resizeMode={"cover"} />
                 ) : (
-                  <Image
-                    source={noImage}
-                    style={imageTopStyle}
-                    resizeMode={"cover"}
-                  />
+                  <Image source={noImage} style={imageTopStyle} resizeMode={"cover"} />
                 )}
               </View>
             );
@@ -186,17 +178,9 @@ const SingleMerchant = ({
         titleStyle={postLabel}
         rightIcon={
           !isOpenPost ? (
-            <MaterialCommunityIcons
-              style={postIconSwap}
-              name="menu-swap"
-              size={30}
-            />
+            <MaterialCommunityIcons style={postIconSwap} name="menu-swap" size={30} />
           ) : (
-            <MaterialCommunityIcons
-              style={postIconSwap}
-              name="close"
-              size={30}
-            />
+            <MaterialCommunityIcons style={postIconSwap} name="close" size={30} />
           )
         }
         animeContainerStyle={{ marginTop: 10 }}
@@ -211,12 +195,7 @@ const SingleMerchant = ({
             <Text style={title}>{dataSource.displayTitle}</Text>
             <View>
               <View style={setRow}>
-                <Ionicons
-                  style={{}}
-                  name="md-calendar"
-                  size={26}
-                  color={Colors.PRIMARY}
-                />
+                <Ionicons style={{}} name="md-calendar" size={26} color={Colors.PRIMARY} />
                 <Text
                   style={{
                     fontSize: 18,
@@ -266,9 +245,7 @@ const SingleMerchant = ({
                   onPress={() => {
                     const latitude = dataSource.l.latitude;
                     const longitude = dataSource.l.longitude;
-                    Linking.openURL(
-                      `http://www.google.com/maps/place/${latitude},${longitude}`
-                    );
+                    Linking.openURL(`http://www.google.com/maps/place/${latitude},${longitude}`);
                   }}
                 >
                   {dataSource.address.line1} {dataSource.address.line2}{" "}
@@ -300,7 +277,7 @@ const SingleMerchant = ({
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignSelf: "center",
-                width: "45%",
+                width: "50%",
                 // borderWidth:1,
               }}
             >
@@ -318,6 +295,16 @@ const SingleMerchant = ({
                     Linking.openURL(dataSource.facebookUrl);
                   }}
                 />
+                // <TouchableOpacity      //uncomment social media icon
+                //   onPress={() => {
+                //     if (!dataSource.facebookUrl) {
+                //       return Alert.alert("Sorry, we don't have facebook.");
+                //     }
+                //     Linking.openURL(dataSource.facebookUrl);
+                //   }}
+                // >
+                //   <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={facebook} />
+                // </TouchableOpacity>
               }
               {
                 //dataSource.instagramUrl !== "" && dataSource.instagramUrl &&
@@ -331,11 +318,22 @@ const SingleMerchant = ({
                       return Alert.alert("Sorry, we don't have instagram.");
                     }
                     Linking.openURL(
-                      "instagram://user?username=" +
-                        dataSource.instagramUrl.replace(/ /g, "")
+                      "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
                     );
                   }}
                 />
+                // <TouchableOpacity   //uncomment social media icon
+                //   onPress={() => {
+                //     if (!dataSource.instagramUrl) {
+                //       return Alert.alert("Sorry, we don't have instagram.");
+                //     }
+                //     Linking.openURL(
+                //       "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
+                //     );
+                //   }}
+                // >
+                //   <Image style={{ width: 30, height: 30 }} source={instagram} />
+                // </TouchableOpacity>
               }
               {
                 //dataSource.whatsapp !== "" && dataSource.whatsapp   &&
@@ -351,14 +349,32 @@ const SingleMerchant = ({
                     Linking.openURL("https://wa.me/" + dataSource.whatsapp);
                   }}
                 />
+                // <TouchableOpacity   //uncomment social media icon
+                //   onPress={() => {
+                //     if (!dataSource.whatsapp) {
+                //       return Alert.alert("Sorry, we don't have whatsapp.");
+                //     }
+                //     Linking.openURL("https://wa.me/" + dataSource.whatsapp);
+                //   }}
+                // >
+                //   <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={whatsapp} />
+                // </TouchableOpacity>
               }
               {
                 //dataSource.websiteUrl !=='' && dataSource.websiteUrl &&
+                // <View    //UNCOMMENT VIEW
+                //   style={{
+                //     backgroundColor: Colors.PRIMARY,
+                //     borderRadius: 7,
+                //     width: 30,
+                //     height: 30,
+                //   }}
+                // >
                 <Ionicons
-                  style={{}}
+                  style={{}} //{{ marginLeft: "auto", marginRight: "auto", top: "15%" }}  //uncomment social media icon
                   name="md-link"
-                  size={30}
-                  color={Colors.PRIMARY}
+                  size={30} //{20}  uncomment social media icon
+                  color={Colors.PRIMARY} //{Colors.WHITE} UNCOMMENT
                   onPress={() => {
                     if (!dataSource.websiteUrl) {
                       return Alert.alert("Sorry, we don't have website.");
@@ -366,6 +382,7 @@ const SingleMerchant = ({
                     Linking.openURL("https://" + dataSource.websiteUrl);
                   }}
                 />
+                // </View>  UNCOMMENT VIEW
               }
             </View>
           </View>
@@ -381,18 +398,11 @@ const SingleMerchant = ({
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
                   <TouchableOpacity
-                    onPress={onPromoteClick.bind(
-                      this,
-                      item,
-                      distance,
-                      calculatedDistance
-                    )}
+                    onPress={onPromoteClick.bind(this, item, distance, calculatedDistance)}
                   >
                     <Card
                       key={item.id}
-                      style={
-                        index === 0 ? firstPromoteCardStyle : promoteCardStyle
-                      }
+                      style={index === 0 ? firstPromoteCardStyle : promoteCardStyle}
                     >
                       {item.coverPhotos.length > 0 ? (
                         <Image
@@ -401,11 +411,7 @@ const SingleMerchant = ({
                           resizeMode="cover"
                         />
                       ) : (
-                        <Image
-                          source={noPromoteImage}
-                          style={promoteNoImage}
-                          resizeMode="cover"
-                        />
+                        <Image source={noPromoteImage} style={promoteNoImage} resizeMode="cover" />
                       )}
                       <Text numberOfLines={2} style={promoteTitleTextStyle}>
                         {item.title}

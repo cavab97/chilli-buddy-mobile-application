@@ -1,9 +1,6 @@
 import firebase from "firebase";
 
-import {
-    permissionsRegistration,
-    LOCATION,
-  } from "../../marslab-library-react-native/utils/system";
+import { permissionsRegistration, LOCATION } from "../../marslab-library-react-native/utils/system";
 import { promoDataServices as objectDataServices } from "../../services/database";
 
 const type = "promotion";
@@ -16,6 +13,8 @@ const actions = {
   READ_FROM_DATABASE: type + "READ_FROM_DATABASE",
   READ_FROM_DATABASE_SUCCESS: type + "READ_FROM_DATABASE_SUCCESS",
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
+
+  TOGGLE_PROMO_BOOKMARK: type + "TOGGLE_PROMO_BOOKMARK",
 
   READ_RECORD: type + "READ_RECORD",
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
@@ -48,32 +47,35 @@ export function verifyPermission() {
   };
 }
 
-export function readFromDatabase(groupId) {
-  return (dispatch) => {
-    dispatch({ type: actions.READ_FROM_DATABASE });
+export function onBookmarkClick(promoId) {
+  return (dispatch, getState) => {
     return new Promise(async (resolve, reject) => {
-      try {
-        const promotions = await objectDataServices.readObjects(groupId);
-        resolve(promotions);
-        dispatch({
-          type: actions.READ_FROM_DATABASE_SUCCESS,
-          payload: { data: promotions },
-        });
-      } catch (error) {
-        console.log(error);
-        reject(error);
-        dispatch({
-          type: actions.READ_FROM_DATABASE_ERROR,
-          payload: { error },
-        });
-      }
+      const promotions = getState().Promotion.promo;
+      const newPromos = promotions.map((promotion) => {
+        if (promotion.id === promoId) {
+          promotion.isBookmark = !promotion.isBookmark;
+        }
+        return promotion;
+      });
+
+      resolve(newPromos);
+      dispatch({
+        type: actions.TOGGLE_PROMO_BOOKMARK,
+        payload: { data: newPromos },
+      });
     });
   };
 }
 
-export function loadShopsPromo({ radius, latitude, longtitude, selectedCategory = null, selectedTag = null }) {
+export function loadShopsPromo({
+  radius,
+  latitude,
+  longtitude,
+  selectedCategory = null,
+  selectedTag = null,
+}) {
   let limit = 0;
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({ type: actions.READ_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
       try {
@@ -83,18 +85,31 @@ export function loadShopsPromo({ radius, latitude, longtitude, selectedCategory 
           radius,
           limit,
           selectedCategory,
-          selectedTag
+          selectedTag,
         });
+        const { uid } = getState().Auth.user;
+        const { bookmarks } = getState().Bookmark;
 
+        promotions.map((promotion) => {
+          const isBookmark = bookmarks.filter((bookmark) => {
+            return bookmark.promotion.id === promotion.id;
+          });
+
+          if (isBookmark.length > 0) {
+            promotion.isBookmark = isBookmark[0].isBookmark;
+          } else {
+            promotion.isBookmark = false;
+          }
+        });
         resolve(promotions);
-        dispatch({ 
+        dispatch({
           type: actions.READ_FROM_DATABASE_SUCCESS,
           payload: { data: promotions },
         });
       } catch (error) {
         console.log(error);
         reject(error);
-        dispatch({ 
+        dispatch({
           type: actions.READ_FROM_DATABASE_ERROR,
           payload: { error },
         });
@@ -106,7 +121,7 @@ export function loadShopsPromo({ radius, latitude, longtitude, selectedCategory 
 export function listenToRecord({ promoId = null }) {
   return (dispatch) => {
     dispatch({ type: actions.READ_RECORD });
-    console.log(`Start listen to shop with promo : ${promoId} `)
+    console.log(`Start listen to shop with promo : ${promoId} `);
     try {
       objectDataServices.listenObject({
         objectId: promoId,
@@ -129,9 +144,9 @@ export function listenToRecord({ promoId = null }) {
 
 export function removeListenerToRecord() {
   return (dispatch) => {
-    console.log("Removed promo listener")
+    console.log("Removed promo listener");
     objectDataServices.removeListenerToRecord();
-  }
+  };
 }
 
 export default actions;

@@ -1,9 +1,10 @@
 import React from "react";
 import styles from "./styles";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
   ActivityIndicator,
+  Icon as Icon2,
   FlatList,
   Image,
   ModalSelector,
@@ -16,20 +17,10 @@ import { Card, CardSection } from "@components/molecules";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-function Item({
-  picture = [],
-  onPress,
-  onBookmarkPressed,
-  gotBookmark,
-  readBookmark,
-  submitLoading,
-  index,
-  distance,
-}) {
+function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance }) {
   const { image } = styles;
 
   let cover = "";
-
   if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
   else cover = { uri: picture[0] };
   return (
@@ -42,24 +33,53 @@ function Item({
         >
           <Image style={image} resizeMode="cover" source={cover} />
         </CardSection>
-        {readBookmark || submitLoading ? (
-          // <ActivityIndicator style={styles.bookmark} />
-          <TouchableOpacity style={styles.bookmark}>
-            {gotBookmark[index] ? (
-              <FontAwesome name="bookmark" size={40} color="#D60000" />
-            ) : (
-              <FontAwesome name="bookmark-o" size={40} color="#D60000" />
-            )}
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
-            {gotBookmark[index] ? (
-              <FontAwesome name="bookmark" size={40} color="#D60000" />
-            ) : (
-              <FontAwesome name="bookmark-o" size={40} color="#D60000" />
-            )}
-          </TouchableOpacity>
-        )}
+        <View style={styles.floatingDistanceIndicator}>
+          <MaterialCommunityIcons name="map-marker-distance" color="white" size={20} />
+          <Text style={styles.distanceIndicatorTitle}>
+            {
+              +(distance != undefined
+                ? Math.round(distance + "e+2") + "e-2"
+                : Math.round(calculatedDistance + "e+2") + "e-2")
+            }
+            KM Away
+          </Text>
+        </View>
+        <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
+          {gotBookmark ? (
+            <View
+              style={{
+                borderRadius: 100,
+                borderWidth: 0,
+                borderColor: "#ffd30f",
+                backgroundColor: "#ffd30f",
+              }}
+            >
+              <Icon2
+                size={50}
+                iconStyle={{ borderWidth: 0 }}
+                containerStyle={{ justifyContent: "center" }}
+                name={"stars"}
+                color="#d60000"
+              />
+            </View>
+          ) : (
+            <View
+              style={{
+                borderRadius: 100,
+                backgroundColor: "#ffffff",
+              }}
+            >
+              <Icon2
+                size={50}
+                iconStyle={{ borderWidth: 0 }}
+                containerStyle={{ justifyContent: "center" }}
+                name={"stars"}
+                color="#d60000"
+              />
+            </View>
+          )}
+        </TouchableOpacity>
+        {/* )} */}
       </Card>
     </TouchableOpacity>
   );
@@ -79,8 +99,6 @@ const PromoList = ({
   onCategoryChange,
   onTagChange,
   onBookmarkPressed,
-  gotBookmark,
-  bookmarkClick,
 }) => {
   return (
     <View style={{ height: "100%" }}>
@@ -137,10 +155,8 @@ const PromoList = ({
             picture={item.coverPhotos}
             distance={item.distance}
             promoID={item.id}
-            bookmarkID={item.bookmark}
-            gotBookmark={gotBookmark}
+            gotBookmark={item.isBookmark} //{gotBookmark}
             index={index}
-            bookmarkClick={bookmarkClick}
             readBookmark={readBookmark}
             submitLoading={submitLoading}
           />

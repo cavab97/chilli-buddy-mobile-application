@@ -57,9 +57,9 @@ const styles = StyleSheet.create({
   //--join now--------------------------------------------
   sectionTitle: {
     fontSize: Platform.OS === "ios" && Platform.isPad === true ? 40 : 22,
-    marginBottom: Platform.OS === "ios" && Platform.isPad === true ? 20 : 5,
+    paddingBottom: Platform.OS === "ios" && Platform.isPad === true ? 20 : 5,
     marginTop: "5%",
-    fontFamily: "KomikaAxis",
+    fontFamily: "ZiTiQuanXinYiGuanHeiTi",
     color: Colors.PRIMARY,
   },
   cardSection: {
@@ -138,6 +138,8 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
     //marginRight: 10,
     marginRight: "auto",
+    paddingTop: 3,
+    paddingBottom: 3,
     paddingLeft: 10,
   },
 
@@ -159,11 +161,13 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   cardTitle2: {
-    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 23 : 13,
+    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 23 : 15,
     color: "#ffffff",
+    paddingTop: 3,
+    paddingBottom: 3,
     marginRight: "auto",
     //textAlign: "center",
-    fontFamily: "KomikaAxis",
+    fontFamily: "ZiTiQuanXinYiGuanHeiTi",
   },
   textHolderStyle2: {
     //flex: 1,

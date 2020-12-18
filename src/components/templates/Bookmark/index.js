@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./styles";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
   ActivityIndicator,
+  Icon as Icon2,
   FlatList,
   Image,
   ModalSelector,
@@ -41,31 +43,58 @@ function Item({
         >
           <Image style={image} resizeMode="cover" source={cover} />
         </CardSection>
-        {readBookmark || submitLoading ? (
-          // <ActivityIndicator style={styles.bookmark} />
-          <TouchableOpacity style={styles.bookmark}>
-            {gotBookmark[index] ? (
-              <FontAwesome name="bookmark" size={40} color="#D60000" />
-            ) : (
-              <FontAwesome name="bookmark-o" size={40} color="#D60000" />
-            )}
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
-            {gotBookmark[index] ? (
-              <FontAwesome name="bookmark" size={40} color="#D60000" />
-            ) : (
-              <FontAwesome name="bookmark-o" size={40} color="#D60000" />
-            )}
-          </TouchableOpacity>
-        )}
+        <View style={styles.floatingDistanceIndicator}>
+          <MaterialCommunityIcons name="map-marker-distance" color="white" size={20} />
+          <Text style={styles.distanceIndicatorTitle}>
+            {
+              +(distance != undefined
+                ? Math.round(distance + "e+2") + "e-2"
+                : Math.round(calculatedDistance + "e+2") + "e-2")
+            }
+            KM Away
+          </Text>
+        </View>
+        <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
+          {gotBookmark ? (
+            <View
+              style={{
+                borderRadius: 100,
+                borderWidth: 0,
+                borderColor: "#ffd30f",
+                backgroundColor: "#ffd30f",
+              }}
+            >
+              <Icon2
+                size={50}
+                iconStyle={{ borderWidth: 0 }}
+                containerStyle={{ justifyContent: "center" }}
+                name={"stars"}
+                color="#d60000"
+              />
+            </View>
+          ) : (
+            <View
+              style={{
+                borderRadius: 100,
+                backgroundColor: "#ffffff",
+              }}
+            >
+              <Icon2
+                size={50}
+                iconStyle={{ borderWidth: 0 }}
+                containerStyle={{ justifyContent: "center" }}
+                name={"stars"}
+                color="#d60000"
+              />
+            </View>
+          )}
+        </TouchableOpacity>
       </Card>
     </TouchableOpacity>
   );
 }
 
 const BookmarkList = ({
-  loading,
   readBookmark,
   submitLoading,
   dataSource,
@@ -78,8 +107,7 @@ const BookmarkList = ({
   onCategoryChange,
   onTagChange,
   onBookmarkPressed,
-  gotBookmark,
-  bookmarkClick,
+  readLoading,
 }) => {
   return (
     <View style={{ height: "100%" }}>
@@ -125,31 +153,31 @@ const BookmarkList = ({
           <Icon name="filter" size={20} style={styles.tagsButton} />
         </ModalSelector>
       </View> */}
-
-      <FlatList
-        data={dataSource}
-        renderItem={({ item, index }) => (
-          <Item
-            onPress={() => onMerchantPressed(item)}
-            onBookmarkPressed={() => onBookmarkPressed(item.promotion)}
-            name={item.promotion.displayTitle}
-            picture={item.promotion.coverPhotos}
-            distance={item.distance}
-            promoID={item.promotion.id}
-            bookmarkID={item.bookmark}
-            gotBookmark={gotBookmark}
-            index={index}
-            bookmarkClick={bookmarkClick}
-            readBookmark={readBookmark}
-            submitLoading={submitLoading}
-          />
-        )}
-        keyExtractor={(item) => item.id}
-        onRefresh={handleRefresh}
-        refreshing={false}
-        ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
-        style={styles.flatList}
-      />
+      {readLoading ? (
+        <View />
+      ) : (
+        <FlatList
+          data={dataSource}
+          renderItem={({ item, index }) => (
+            <Item
+              onPress={() => onMerchantPressed(item)}
+              onBookmarkPressed={() => onBookmarkPressed(item)}
+              name={item.promotion.displayTitle}
+              picture={item.promotion.coverPhotos}
+              distance={item.distance}
+              gotBookmark={item.isBookmark}
+              index={index}
+              readBookmark={readBookmark}
+              submitLoading={submitLoading}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          onRefresh={handleRefresh}
+          refreshing={false}
+          ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
+          style={styles.flatList}
+        />
+      )}
     </View>
   );
 };

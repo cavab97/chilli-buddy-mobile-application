@@ -3,8 +3,13 @@ import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
 
-import { verifyPermission, loadShopsPromo } from "@redux/promo/action";
-import { update, submitToBackend, readFromDatabase } from "@redux/bookmark/action";
+import { verifyPermission, loadShopsPromo, onBookmarkClick } from "@redux/promo/action";
+import {
+  update,
+  submitToBackend,
+  readFromDatabase,
+  updateIsBookmark,
+} from "@redux/bookmark/action";
 import styles from "./styles";
 
 import { Image, Text, TouchableOpacity, View } from "@components/atoms";
@@ -69,14 +74,14 @@ class index extends Component {
       alert(readError);
     }
 
-    if (
-      prevProps.bookmarkState.submitLoading &&
-      !submitLoading
-      //&&
-      //prevProps.bookmarkState.readLoading != readLoading
-    ) {
-      this.handleRefresh();
-    }
+    // if (
+    //   prevProps.bookmarkState.submitLoading &&
+    //   !submitLoading
+    //   //&&
+    //   //prevProps.bookmarkState.readLoading != readLoading
+    // ) {
+    //   this.handleRefresh();
+    // }
   }
 
   handleRefresh = async () => {
@@ -88,7 +93,7 @@ class index extends Component {
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    await this.props.readFromDatabase();
+    //await this.props.readFromDatabase();
   };
 
   renderFooter({ empty }) {
@@ -139,31 +144,21 @@ class index extends Component {
     return bookmarkId;
   }
 
-  lookingForIsBookmark({ promoId } = null) {
-    const bookmarks = this.props.bookmarks;
-    let isBookmark = null;
-
-    bookmarks.forEach((bookmark) => {
-      if (bookmark.promo[0] === promoId) {
-        isBookmark = bookmark.isBookmark;
-      }
-    });
-    return isBookmark;
-  }
-
   onBookmarkPressed = async (item) => {
     const shopId = item.shop.id;
     const promoId = item.id;
     const bookmarkId = this.lookingForBookmark({ promoId });
-    const isBookmark = this.lookingForIsBookmark({ promoId });
+    const isBookmark = !item.isBookmark;
+    this.props.onBookmarkClick(promoId);
+    this.props.updateIsBookmark(promoId);
+    console.log("bookmark" + JSON.stringify(this.props.bookmarkState.bookmarks));
+    console.log("promotion" + JSON.stringify(this.props.promotionState.promo));
     if (bookmarkId === null) {
       const data = { shopId, promoId, isBookmark };
       await this.props.submitToBackend(data, "create");
-      //this.props.readFromDatabase();
     } else {
       const data = { bookmarkId, isBookmark };
       await this.props.submitToBackend(data, "update");
-      //this.props.readFromDatabase();
     }
   };
 
@@ -171,46 +166,6 @@ class index extends Component {
     const { readLoading, promo, bookmark } = this.props.promotionState;
     const readBookmark = this.props.bookmarkState.readLoading;
     const submitLoading = this.props.bookmarkState.submitLoading;
-    const bookmarks = this.props.bookmarks;
-    let promotionInBookmark = [];
-    let promotionIds = [];
-
-    //push all promotion id in bookmark
-    // bookmarks.forEach((bookmark) => {
-    //   promotionInBookmark.push(bookmark.promotion.id, bookmark.isBookmark);
-    // });
-    promotionInBookmark = bookmarks.map((bookmark) => {
-      return {
-        promotionId: bookmark.promotion.id,
-        isBookmark: bookmark.isBookmark,
-      };
-    });
-
-    //push all promotion id
-    promo.forEach((promotion) => {
-      promotionIds.push(promotion.id);
-    });
-
-    //map both array and return if the promotion got bookmark
-    // const gotBookmark = promotionIds.map((el) => {
-    //   return promotionInBookmark.includes(el);
-    // });
-
-    const gotBookmark = promotionIds.map((promotionId) => {
-      const m = promotionInBookmark.filter((bookmark) => {
-        return bookmark.promotionId === promotionId;
-        // if (bookmark.promotionId === promotionId) {
-        //   console.log("a: " + bookmark.isBookmark);
-        //   return bookmark.isBookmark;
-        // }
-      });
-
-      if (m.length > 0) {
-        return m[0].isBookmark;
-      } else {
-        return false;
-      }
-    });
 
     return (
       <PromoList
@@ -218,7 +173,6 @@ class index extends Component {
         readBookmark={readBookmark}
         submitLoading={submitLoading}
         dataSource={promo}
-        gotBookmark={gotBookmark}
         categories={this.state.categories}
         tags={this.state.tags}
         selectedCategory={this.state.selectedCategory}
@@ -245,6 +199,8 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   verifyPermission,
   loadShopsPromo,
+  onBookmarkClick,
+  updateIsBookmark,
   update,
   submitToBackend,
   readFromDatabase,
