@@ -144,49 +144,49 @@ class index extends Component {
     dataSource2.forEach((element, index) => {
       element.image = categoriesImage[index % 5];
       switch (element.title) {
-        case "中餐 | Chinese":
+        case "CHINESE | 中餐":
           element.icon = "chinese";
           break;
-        case "西餐 | Western":
+        case "WESTERN | 西餐":
           element.icon = "western";
           break;
-        case "Cafe":
+        case "CAFE | 咖啡馆":
           element.icon = "cafe";
           break;
-        case "中國菜 | China":
+        case "CHINA | 中国菜":
           element.icon = "china";
           break;
-        case "日本餐 | Japanese":
+        case "JAPANESE | 日本餐":
           element.icon = "japanese";
           break;
-        case "韓國 | Korean":
+        case "KOREAN | 韩国餐":
           element.icon = "korean";
           break;
-        case "泰國 | Thai":
+        case "THAI | 泰国餐":
           element.icon = "thai";
           break;
-        case "台灣 | Taiwan":
+        case "TAIWAN | 台湾":
           element.icon = "taiwan";
           break;
-        case "小酒館 | Bistro":
+        case "BISTRO | 小酒馆":
           element.icon = "bistro";
           break;
-        case "火鍋 | Steamboat":
+        case "STEAMBOAT | 火锅":
           element.icon = "steamboat";
           break;
-        case "本地美食 | Local cuisine":
+        case "LOCAL CUISINE | 本地美食":
           element.icon = "localcuisine";
           break;
-        case "飲料店 | Beverage":
+        case "BEVERAGE | 饮料店":
           element.icon = "beverage";
           break;
-        case "餐車 | Food Truck":
+        case "FOOD TRUCK | 餐车":
           element.icon = "foodtruck";
           break;
-        case "碌碌 | Lok Lok":
+        case "LOK LOK | 碌碌":
           element.icon = "loklok";
           break;
-        case "特色美食 | Speciality cuisine":
+        case "SPECIAL CUISINE | 特色美食":
           element.icon = "cuisine";
           break;
         default:

@@ -99,12 +99,8 @@ const SingleMerchantPromo = ({
           onPress={onPressedSwipe.bind(this, "next")}
         />
       </View>
-      {/* <View style={styles.floatingDistanceIndicator}>
-        <MaterialCommunityIcons
-          name="map-marker-distance"
-          color="white"
-          size={20}
-        />
+      <View style={styles.floatingDistanceIndicator}>
+        <MaterialCommunityIcons name="map-marker-distance" color="white" size={20} />
         <Text style={styles.distanceIndicatorTitle}>
           {
             +(distance != undefined
@@ -113,7 +109,7 @@ const SingleMerchantPromo = ({
           }
           KM Away
         </Text>
-      </View> */}
+      </View>
       <TouchableOpacity style={styles.floatingShopButton} onPress={onMerchantPressed}>
         <CustomIcon name="merchant" size={20} color="white" />
         <Text style={styles.floatingShopButtonTitle}>View Shop</Text>
