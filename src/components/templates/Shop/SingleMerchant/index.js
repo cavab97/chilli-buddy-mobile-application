@@ -122,7 +122,7 @@ const SingleMerchant = ({
   };
 
   return (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{ right: 0.1 }}>
       <View style={posterArea}>
         <Carousel
           ref={setSwiperRef}
