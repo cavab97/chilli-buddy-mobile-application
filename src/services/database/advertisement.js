@@ -3,7 +3,6 @@ import { database } from "../../marslab-library-react-native/utils/helper";
 var adsBegin = new Date();
 adsBegin.setHours(0, 0, 0, 0);
 var adsEnd = new Date();
-adsEnd.setHours(23, 59, 59, 999);
 
 export function readObjects() {
   return new Promise((resolve, reject) => {
@@ -21,16 +20,13 @@ export function readObjects() {
             id: snapshot.id,
           };
           // delete data["d"];
+          if (data.startDate.seconds <= Math.floor(adsEnd / 1000)) {
+            const parent = database.processData({ data });
 
-          const parent = database.processData({ data });
-          // const created = database.processData({ data: data.created });
-          // const deleted = database.processData({ data: data.deleted });
-          // const updated = database.processData({ data: data.updated });
+            const processedData = { ...parent };
 
-          //const processedData = { ...parent, created, deleted, updated };
-          const processedData = { ...parent };
-
-          result.push(processedData);
+            result.push(processedData);
+          }
         });
         resolve(result);
       })

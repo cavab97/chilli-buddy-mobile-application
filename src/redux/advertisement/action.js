@@ -13,7 +13,6 @@ export function readFromDatabase() {
     dispatch({ type: actions.READ_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
       try {
-        
         const advertisements = await objectDataServices.readObjects();
 
         resolve(advertisements);
@@ -32,6 +31,5 @@ export function readFromDatabase() {
     });
   };
 }
-
 
 export default actions;
