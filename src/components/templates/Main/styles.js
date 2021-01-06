@@ -283,12 +283,13 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    top: 10,
-    right: 10,
+    top: -20,
+    right: -20,
   },
   adsImageStyle: {
     // width: "100%",
     // height: "100%",
+
     minWidth: Platform.OS === "ios" && Platform.isPad === true ? 460 : 300, //windowWidth - 150,
     //maxWidth: (windowWidth * 85) / 100, //windowWidth - 100,
     height: Platform.OS === "ios" && Platform.isPad === true ? 810 : 530, //(windowHeight * 80) / 100,

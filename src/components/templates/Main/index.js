@@ -2,6 +2,10 @@ import React from "react";
 import styles from "./styles";
 import { Platform, Dimensions } from "react-native";
 import { Actions } from "react-native-router-flux";
+//import Video  from "react-native-video";
+import { Video } from "expo-av";
+import VideoPlayer from "expo-video-player";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
   FlatList,
@@ -13,6 +17,7 @@ import {
   View,
   VirtualizedList,
   Modal,
+  RefreshControl,
 } from "../../atoms";
 
 import { Card, CardSection } from "../../molecules";
@@ -34,14 +39,7 @@ export default ({
   slider,
   dataSource,
   dataSource2,
-  casualImage,
-  luxuryImage,
   sectionTitle1,
-  sectionTitle2,
-  sectionTitle3,
-  label1,
-  label2,
-  unit,
   onPressCard,
   onPressImage, //Constant for clicking image advertisement
   advertisements,
@@ -57,10 +55,15 @@ export default ({
   randomAdPic,
   getShopId,
   onPressPopUp,
+  handleRefresh,
+  refreshing,
+  handleVideoRef,
+  type,
+  openModal,
 }) => {
   const DATA = [];
   const DATA2 = [];
-  console.log("randomAd: " + randomAdPic);
+  //console.log("randomAd: " + randomAdPic);
   const getItem = (data, index) => {
     return {
       key: "routeTicketsOrRoutesLoading" + index,
@@ -72,9 +75,10 @@ export default ({
       key: "advertisementLoading" + index,
     };
   };
+  const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
 
-  const AdvertisementPopUp = () => {
-    return (
+  const AdvertisementPopUp = (url) => {
+    return type === "image" ? (
       <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
@@ -84,9 +88,59 @@ export default ({
                 style={styles.adsImageStyle}
                 //resizeMode="contain"
               />
-              <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
-                <FontAwesome name="close" size={30} color="#D60000" />
-              </TouchableOpacity>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
+              <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View></View>
+      </Modal>
+    ) : type === "video" ? (
+      <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
+        <View style={styles.modelBackground}>
+          <View style={styles.adsImageContainer}>
+            <Video
+              ref={handleVideoRef}
+              source={{
+                uri: randomAdPic,
+              }}
+              shouldPlay
+              resizeMode="contain"
+              style={styles.adsImageStyle}
+              positionMillis={0}
+              useNativeControls={true}
+            />
+            <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
+              <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View></View>
+      </Modal>
+    ) : (
+      <View />
+    );
+  };
+
+  const pressHeaderToPopUp = (url) => {
+    return (
+      <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
+        <View style={styles.modelBackground}>
+          <View style={styles.adsImageContainer}>
+            <Video
+              ref={handleVideoRef}
+              source={{
+                uri: url,
+              }}
+              shouldPlay
+              resizeMode="contain"
+              style={styles.adsImageStyle}
+              positionMillis={0}
+              useNativeControls={true}
+            />
+            <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
+              <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
             </TouchableOpacity>
           </View>
         </View>
@@ -142,7 +196,11 @@ export default ({
   };
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      //refresh main page function
+      //refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
+    >
       <View style={styles.container}>
         {readFail && (
           <InfoBox
@@ -179,6 +237,8 @@ export default ({
         ) : (
           <View />
         )}
+
+        {openModal ? <pressHeaderToPopUp /> : <View />}
 
         {readLoadingCategoryList ? (
           <View style={styles.subContainer2}>

@@ -24,6 +24,7 @@ class index extends Component {
       selectedCategory: {},
       selectedTag: "All",
       randomNumber: Math.random(),
+      refreshing: false,
     };
   }
 
@@ -42,13 +43,31 @@ class index extends Component {
   //   Actions.Route({ routeId: id });
   // }
 
+  handleRefresh = async () => {
+    this.setState({ refreshing: true });
+    await this.props.readAdvertisements();
+    await this.props.readSettingInfo();
+    this.setState({ refreshing: false });
+  };
+
+  handleVideoRef = (component) => {
+    const playbackObject = component;
+  };
+
   onPressCategory(id, no) {
     Actions.Shops({ selectedCategory: id, number: no });
   }
 
   // View shop from clicking image swiper advertisements
-  onPressViewShop(shopId) {
-    Actions.SingleMerchant({ shopId: shopId });
+  onPressViewShop(index) {
+    console.log("click: " + index);
+    const filteredDatasource = this.filteredDatasource();
+    console.log("filteredDataSource: " + JSON.stringify(filteredDatasource));
+    if (filteredDatasource[index].adsType === "image") {
+      Actions.SingleMerchant({ shopId: filteredDatasource[index].shopId });
+    } else if (filteredDatasource[index].adsType === "video") {
+      this.props.openModal = true;
+    }
   }
 
   onPressPopUp(getShopId) {
@@ -59,6 +78,48 @@ class index extends Component {
   // Close advertisement modal
   onCloseAdvertisementModal() {
     this.setState({ isAdvertisementModelShow: false });
+  }
+
+  //Filtered Data Source from empty shopId and empty cover pic
+  filteredDatasource() {
+    const advertisements = this.props.advertisements;
+    let dataSourceAds = [];
+
+    //Map image URL and Shop ID to array
+    dataSourceAds = advertisements.map((item) => {
+      return {
+        imageUri: item.coverPic,
+        shopId: item.shopID,
+        popUpImage: item.popUpImage,
+      };
+    });
+
+    //Filter empty shopID and Cover pic ads
+    var filteredDatasource = dataSourceAds.filter(
+      (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
+    );
+
+    //check pop up image type in slider
+    filteredDatasource.forEach((data) => {
+      data.adsType = this.checkType(data.popUpImage);
+    });
+
+    return filteredDatasource;
+  }
+
+  //Check the type of url is image or video
+  checkType(imageUrl) {
+    //define image and video type
+    var imageType = new RegExp("https?://.*.(?:png|jpg|jpeg)");
+    var videoType = new RegExp("https?://.*.(?:mp4|3gp)");
+
+    if (imageType.test(imageUrl)) {
+      return "image";
+    } else if (videoType.test(imageUrl)) {
+      return "video";
+    } else {
+      return null;
+    }
   }
 
   render() {
@@ -80,7 +141,6 @@ class index extends Component {
 
     let dataSource = [];
     let dataSource2 = [];
-    let dataSourceAds = []; //Testing advertisement slider click
     let filteredAdPic = [];
     let categoriesImage = [
       require("../../../assets/chillibuddy/category1.png"),
@@ -93,29 +153,18 @@ class index extends Component {
     //Sort to show latest
     advertisements.sort((a, b) => b.createAt - a.createAt);
 
-    //Map image URL and Shop ID to array
-    dataSourceAds = advertisements.map((item) => {
-      return {
-        imageUri: item.coverPic,
-        shopId: item.shopID,
-      };
-    });
-
-    //Filter empty shopID and Cover pic ads
-    var filteredDatasource = dataSourceAds.filter(
-      (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
-    );
-
     //Push ads popup cover pic into array
     advertisements.forEach((advertisement) => {
       if (advertisement.popUpImage) {
         filteredAdPic.push(advertisement.popUpImage);
       }
     });
-    //Filter empty coverpic from array
 
-    //var filteredAdPic = adCoverPic.filter((value) => Object.keys(value).length !== 0);
+    //Get random pop up ads
     var randomAdPic = filteredAdPic[Math.floor(this.state.randomNumber * filteredAdPic.length)];
+
+    //get type of random pop up ads
+    const type = this.checkType(randomAdPic);
 
     //filter same pic and get shop ID
     const getShopId = advertisements
@@ -202,7 +251,7 @@ class index extends Component {
     return (
       <MainTemplete
         readFail={readFail}
-        slider={filteredDatasource}
+        slider={this.filteredDatasource()}
         filteredAdPic={filteredAdPic}
         randomAdPic={randomAdPic}
         getShopId={getShopId}
@@ -230,6 +279,11 @@ class index extends Component {
         readLoadingCategoryList={readLoadingRoute}
         readLoadingRouteTicket={readLoadingRouteTicket}
         readLoadingHeaderImages={readLoadingHeaderImages}
+        handleRefresh={this.handleRefresh.bind(this)}
+        refreshing={this.state.refreshing}
+        handleVideoRef={this.handleVideoRef.bind(this)}
+        type={type}
+        openModal={this.props.openModal}
       />
     );
   }
@@ -251,6 +305,8 @@ const mapStateToProps = (state) => {
   const readErrorAdvertisement = state.Advertisement.readError;
   const readErrorHeaderImages = state.Settings.readError;
 
+  const openModal = state.Advertisement.openModal;
+
   return {
     categories,
     tags,
@@ -265,6 +321,7 @@ const mapStateToProps = (state) => {
     readErrorRouteTicket,
     readErrorAdvertisement,
     readErrorHeaderImages,
+    openModal,
   };
 };
 
