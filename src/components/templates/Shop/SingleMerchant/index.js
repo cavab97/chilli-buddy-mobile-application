@@ -189,7 +189,7 @@ const SingleMerchant = ({
         animeContent={<PostList data={shopPosts} />}
       />
 
-      {!isOpenPost && (
+      {!isOpenPost ? (
         <View>
           <View style={detailArea}>
             <Text style={title}>{dataSource.displayTitle}</Text>
@@ -254,7 +254,7 @@ const SingleMerchant = ({
               </View>
             </View>
 
-            {dataSource.description && (
+            {dataSource.description ? (
               <View>
                 <Text style={subTitle}>DESCRIPTION</Text>
                 <Text
@@ -270,6 +270,8 @@ const SingleMerchant = ({
                   {dataSource.description}
                 </Text>
               </View>
+            ) : (
+              []
             )}
             <View
               style={{
@@ -387,7 +389,7 @@ const SingleMerchant = ({
             </View>
           </View>
 
-          {promotions.length > 0 && (
+          {promotions.length > 0 ? (
             <View>
               <Text style={sectionTitle}>Promote</Text>
 
@@ -422,10 +424,14 @@ const SingleMerchant = ({
                 scrollEnabled={promotions.length > 1}
               />
             </View>
+          ) : (
+            []
           )}
 
           <View style={{ height: 50 }} />
         </View>
+      ) : (
+        []
       )}
     </ScrollView>
   );
