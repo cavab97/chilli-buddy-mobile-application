@@ -60,6 +60,8 @@ export default ({
   handleVideoRef,
   type,
   openModal,
+  popUpImage,
+  onClosePopUp,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -123,9 +125,9 @@ export default ({
     );
   };
 
-  const pressHeaderToPopUp = (url) => {
+  const PressHeaderToPopUp = ({ url }) => {
     return (
-      <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
+      <Modal animationType="fade" transparent={true} visible={openModal}>
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
             <Video
@@ -139,7 +141,7 @@ export default ({
               positionMillis={0}
               useNativeControls={true}
             />
-            <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
+            <TouchableOpacity style={styles.closeButton} onPress={onClosePopUp}>
               <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
             </TouchableOpacity>
           </View>
@@ -238,7 +240,7 @@ export default ({
           <View />
         )}
 
-        {openModal ? <pressHeaderToPopUp /> : <View />}
+        {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
 
         {readLoadingCategoryList ? (
           <View style={styles.subContainer2}>

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import MainTemplete from "@components/templates/Main";
 import { Actions } from "react-native-router-flux";
 import { readAllFromDatabase as readAllRoute } from "@redux/route/action";
-import { readFromDatabase as readAdvertisements } from "@redux/advertisement/action";
+import { readFromDatabase as readAdvertisements, toggleModal } from "@redux/advertisement/action";
 import { readInfo as readSettingInfo } from "@redux/settings/action";
 import { verifyPermission, loadShops } from "@redux/shops/action";
 import {
@@ -25,6 +25,7 @@ class index extends Component {
       selectedTag: "All",
       randomNumber: Math.random(),
       refreshing: false,
+      popUpImage: "",
     };
   }
 
@@ -60,14 +61,18 @@ class index extends Component {
 
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
-    console.log("click: " + index);
     const filteredDatasource = this.filteredDatasource();
-    console.log("filteredDataSource: " + JSON.stringify(filteredDatasource));
     if (filteredDatasource[index].adsType === "image") {
       Actions.SingleMerchant({ shopId: filteredDatasource[index].shopId });
     } else if (filteredDatasource[index].adsType === "video") {
-      this.props.openModal = true;
+      this.props.toggleModal();
+      this.state.popUpImage = filteredDatasource[index].popUpImage;
     }
+  }
+
+  //close pop up from header
+  onClosePopUp() {
+    this.props.toggleModal();
   }
 
   onPressPopUp(getShopId) {
@@ -272,7 +277,6 @@ class index extends Component {
         onPressImage={this.onPressViewShop.bind(this)}
         onPressPopUp={this.onPressPopUp.bind(this)}
         onCloseAdvertisementModal={this.onCloseAdvertisementModal.bind(this)}
-        //onPressAdvertisement = {this.onPressAdvertisement.bind(this)}
         noImageAdvertisement={noImageAdvertisement}
         noImageHeaderSlider={noImageHeaderSlider}
         readLoadingAdvertisement={readLoadingAdvertisement}
@@ -284,6 +288,8 @@ class index extends Component {
         handleVideoRef={this.handleVideoRef.bind(this)}
         type={type}
         openModal={this.props.openModal}
+        popUpImage={this.state.popUpImage}
+        onClosePopUp={this.onClosePopUp.bind(this)}
       />
     );
   }
@@ -330,6 +336,7 @@ export default connect(mapStateToProps, {
   removeListenerFromRouteTickets,
   readAllRoute,
   readAdvertisements,
+  toggleModal,
   verifyPermission,
   loadShops,
   readSettingInfo,

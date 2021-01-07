@@ -47,6 +47,9 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.READ_FROM_DATABASE_ERROR:
       return { ...state, readLoading: false, readError: payload.error };
 
+    case actions.TOGGLE_MODAL:
+      return { ...state, openModal: !state.openModal };
+
     default:
       return state;
   }
