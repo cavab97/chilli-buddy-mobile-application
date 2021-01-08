@@ -6,6 +6,8 @@ const actions = {
   READ_FROM_DATABASE: type + "READ_FROM_DATABASE",
   READ_FROM_DATABASE_SUCCESS: type + "READ_FROM_DATABASE_SUCCESS",
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
+
+  TOGGLE_MODAL: type + "TOGGLE_MODAL",
 };
 
 export function readFromDatabase() {
@@ -31,5 +33,12 @@ export function readFromDatabase() {
     });
   };
 }
+
+export const toggleModal = (data = null) => {
+  return {
+    type: actions.TOGGLE_MODAL,
+    payload: { data },
+  };
+};
 
 export default actions;

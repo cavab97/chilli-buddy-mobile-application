@@ -4,29 +4,31 @@ const initialState = {
   readLoading: false,
   readError: false,
 
+  openModal: false,
+
   advertisements: [],
   advertisement: {
     id: null,
-    title:null,
-    merchantDesc:null,
-    description:null,
-    termAndCon:null,
-    coverPic:null,
-    logo:null,
-    subImage:[null,null,null],
-    startDate:null,
-    endDate:null,
-    
-    createAt:null,
-    created:{
-      by:null,
-      time:null
+    title: null,
+    merchantDesc: null,
+    description: null,
+    termAndCon: null,
+    coverPic: null,
+    logo: null,
+    subImage: [null, null, null],
+    startDate: null,
+    endDate: null,
+
+    createAt: null,
+    created: {
+      by: null,
+      time: null,
     },
-    deleted_at:null,
-    key:null,
-    likes:0,
-    subImage2:null,
-    updated:{by:null,time:null}
+    deleted_at: null,
+    key: null,
+    likes: 0,
+    subImage2: null,
+    updated: { by: null, time: null },
   },
 };
 
@@ -44,6 +46,9 @@ const reducer = (state = initialState, { type, payload }) => {
 
     case actions.READ_FROM_DATABASE_ERROR:
       return { ...state, readLoading: false, readError: payload.error };
+
+    case actions.TOGGLE_MODAL:
+      return { ...state, openModal: !state.openModal };
 
     default:
       return state;

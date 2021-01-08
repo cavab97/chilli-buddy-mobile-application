@@ -36,7 +36,7 @@ const ImageSwiper = ({
             <TouchableOpacity
               key={index}
               activeOpacity={0.6}
-              onPress={onPressImage.bind(this, data.shopId)}
+              onPress={onPressImage.bind(this, index)}
             >
               {/* <View key={index} style={style.subContainer1}> */}
               <Image
