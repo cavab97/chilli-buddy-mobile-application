@@ -42,7 +42,7 @@
     "android": {
       "package": "com.infobay.gogogain",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 34,
+      "versionCode": 35,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
