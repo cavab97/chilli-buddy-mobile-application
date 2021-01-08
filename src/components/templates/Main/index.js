@@ -200,8 +200,7 @@ export default ({
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
-      //refresh main page function
-      //refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
     >
       <View style={styles.container}>
         {readFail && (
