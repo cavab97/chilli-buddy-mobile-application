@@ -6,6 +6,7 @@ import { Actions } from "react-native-router-flux";
 import { Video } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+//import WheelOfFortune from "react-native-wheel-of-fortune";
 
 import {
   FlatList,
@@ -62,6 +63,8 @@ export default ({
   openModal,
   popUpImage,
   onClosePopUp,
+  toggleSpinningWheelModal,
+  onCloseSpinningWheelModal,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -78,6 +81,7 @@ export default ({
     };
   };
   const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
+  const spinningWheel = require("../../../assets/icons/spinningWheelIcon.png");
 
   const AdvertisementPopUp = (url) => {
     return type === "image" ? (
@@ -197,88 +201,144 @@ export default ({
     );
   };
 
+  const SpinningWheelModal = ({ url }) => {
+    const wheelOptions = {
+      rewards: participants,
+      knobSize: 50,
+      borderWidth: 5,
+      borderColor: "#000",
+      innerRadius: 50,
+      duration: 4000,
+      backgroundColor: "transparent",
+      textAngle: "horizontal",
+      knobSource: require("../../../assets/notificationIconbak.png"),
+      getWinner: (value, index) => {
+        this.setState({ winnerValue: value, winnerIndex: index });
+      },
+      onRef: (ref) => (this.child = ref),
+    };
+    return (
+      <Modal animationType="fade" transparent={true} visible={openModal}>
+        <View style={styles.modelBackground}>
+          <View style={styles.adsImageContainer}>
+            <TouchableOpacity style={styles.closeButton} onPress={onClosePopUp}>
+              <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View></View>
+      </Modal>
+    );
+  };
+
+  const participants = ["%10", "%20", "%30", "%40", "%50", "%60", "%70", "%90", "FREE"];
+
   return (
-    <ScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-      //refresh main page function
-      //refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
-    >
-      <View style={styles.container}>
-        {readFail && (
-          <InfoBox
-            title="Memo"
-            message={`Your network connection are not healthy`}
-            titleStyle={styles.infoTitle}
-            messageStyle={styles.infoSubtitle}
-            containerStyle={styles.infoContainer}
-          />
-        )}
-        <View style={{ height: Constants.statusBarHeight }} />
-        <View style={styles.subContainer1}>
-          {readLoadingHeaderImages ? (
-            <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
-              <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
-            </ContentLoader>
-          ) : (
-            <ImageSwiper
-              style={styles}
-              slider={slider}
-              autoplayTime={5}
-              autoplay={true}
-              noImageSlider={noImageHeaderSlider}
-              condition={slider.length > 0}
-              onPressImage={onPressImage}
+    <View>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        //refresh main page function
+        //refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
+      >
+        <View style={styles.container}>
+          {readFail && (
+            <InfoBox
+              title="Memo"
+              message={`Your network connection are not healthy`}
+              titleStyle={styles.infoTitle}
+              messageStyle={styles.infoSubtitle}
+              containerStyle={styles.infoContainer}
             />
           )}
+          <View style={{ height: Constants.statusBarHeight }} />
+          <View style={styles.subContainer1}>
+            {readLoadingHeaderImages ? (
+              <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
+                <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
+              </ContentLoader>
+            ) : (
+              <ImageSwiper
+                style={styles}
+                slider={slider}
+                autoplayTime={5}
+                autoplay={true}
+                noImageSlider={noImageHeaderSlider}
+                condition={slider.length > 0}
+                onPressImage={onPressImage}
+              />
+            )}
+          </View>
+
+          {readLoadingHeaderImages ? (
+            <View />
+          ) : randomAdPic !== undefined ? (
+            <AdvertisementPopUp />
+          ) : (
+            <View />
+          )}
+
+          {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
+
+          {readLoadingCategoryList ? (
+            <View style={styles.subContainer2}>
+              <View>
+                <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
+              </View>
+              <VirtualizedList
+                vertical
+                showsHorizontalScrollIndicator={false}
+                data={DATA}
+                renderItem={({ index }) => <CardListLoading index={index} />}
+                keyExtractor={(item) => item.key}
+                getItemCount={() => {
+                  return 6;
+                }}
+                getItem={getItem}
+              />
+            </View>
+          ) : dataSource2.length != 0 ? (
+            <View style={styles.subContainer2}>
+              {/* {randomAdPic !== undefined && <AdvertisementPopUp />} */}
+              <View>
+                <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
+              </View>
+              <FlatList
+                vertical
+                showsHorizontalScrollIndicator={false}
+                data={dataSource2}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
+                scrollEnabled={dataSource2.length > 1 ? true : false}
+              />
+              <View style={{ height: 25 }} />
+            </View>
+          ) : (
+            <View style={styles.subContainer2}></View>
+          )}
+
+          {/* <FloatingAction
+          position={"left"}
+          onPressItem={(name) => {
+            console.log(`selected button: ${name}`);
+          }}
+        /> */}
         </View>
-
-        {readLoadingHeaderImages ? (
-          <View />
-        ) : randomAdPic !== undefined ? (
-          <AdvertisementPopUp />
-        ) : (
-          <View />
-        )}
-
-        {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
-
-        {readLoadingCategoryList ? (
-          <View style={styles.subContainer2}>
-            <View>
-              <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-            </View>
-            <VirtualizedList
-              vertical
-              showsHorizontalScrollIndicator={false}
-              data={DATA}
-              renderItem={({ index }) => <CardListLoading index={index} />}
-              keyExtractor={(item) => item.key}
-              getItemCount={() => {
-                return 6;
-              }}
-              getItem={getItem}
-            />
-          </View>
-        ) : dataSource2.length != 0 ? (
-          <View style={styles.subContainer2}>
-            {/* {randomAdPic !== undefined && <AdvertisementPopUp />} */}
-            <View>
-              <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-            </View>
-            <FlatList
-              vertical
-              showsHorizontalScrollIndicator={false}
-              data={dataSource2}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
-              scrollEnabled={dataSource2.length > 1 ? true : false}
-            />
-            <View style={{ height: 25 }} />
-          </View>
-        ) : (
-          <View style={styles.subContainer2}></View>
-        )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <TouchableOpacity
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          width: 70,
+          position: "absolute",
+          bottom: 10,
+          left: 10,
+          height: 85,
+          borderRadius: 100,
+        }}
+        onPress={() => onPressPopUp(getShopId)}
+      >
+        <Image source={spinningWheel} style={styles.floatingButton} />
+      </TouchableOpacity>
+    </View>
   );
 };

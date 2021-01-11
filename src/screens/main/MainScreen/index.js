@@ -127,6 +127,11 @@ class index extends Component {
     }
   }
 
+  //close pop up from spinning wheel modal
+  onCloseSpinningWheelModal() {
+    this.props.toggleSpinningWheelModal();
+  }
+
   render() {
     const {
       allRoutes,
@@ -290,6 +295,8 @@ class index extends Component {
         openModal={this.props.openModal}
         popUpImage={this.state.popUpImage}
         onClosePopUp={this.onClosePopUp.bind(this)}
+        toggleSpinningWheelModal={this.props.toggleSpinningWheelModal}
+        onCloseSpinningWheelModal={this.onCloseSpinningWheelModal.bind(this)}
       />
     );
   }
@@ -299,7 +306,7 @@ const mapStateToProps = (state) => {
   const routeTickets = state.RouteTicket.userRouteTickets;
   const { allRoutes } = state.Route;
   const { advertisements } = state.Advertisement;
-  const { categories, tags } = state.Settings;
+  const { categories, tags, toggleSpinningWheelModal } = state.Settings;
 
   const readLoadingRouteTicket = state.RouteTicket.readLoading;
   const readLoadingRoute = state.Route.readLoading;
@@ -328,6 +335,7 @@ const mapStateToProps = (state) => {
     readErrorAdvertisement,
     readErrorHeaderImages,
     openModal,
+    toggleSpinningWheelModal,
   };
 };
 

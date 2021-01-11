@@ -301,6 +301,13 @@ const styles = StyleSheet.create({
   adsImageContainer: {
     //borderWidth: 1,
   },
+
+  //Floating button style
+  floatingButton: {
+    width: "100%",
+    height: "100%",
+    alignSelf: "center",
+  },
 });
 
 export default styles;

@@ -9,11 +9,13 @@ const actions = {
 
   READ_INFO: type + "READ_INFO",
   READ_INFO_SUCCESS: type + "READ_INFO_SUCCESS",
-  READ_INFO_ERROR: type + "READ_INFO_ERROR"
+  READ_INFO_ERROR: type + "READ_INFO_ERROR",
+
+  TOGGLE_SPINNING_WHEEL_MODAL: type + "TOGGLE_SPINNING_WHEEL_MODAL",
 };
 
 export function readFromDatabase() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: actions.READ_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
       try {
@@ -22,17 +24,17 @@ export function readFromDatabase() {
 
         const [categories, tags] = await Promise.all([getCategories, getTags]);
 
-        resolve({ categories, tags })
+        resolve({ categories, tags });
         dispatch({
           type: actions.READ_FROM_DATABASE_SUCCESS,
-          payload: { data: { categories, tags } }
+          payload: { data: { categories, tags } },
         });
       } catch (error) {
         console.log(error);
         reject(error);
         dispatch({
           type: actions.READ_FROM_DATABASE_ERROR,
-          payload: { error }
+          payload: { error },
         });
       }
     });
@@ -40,29 +42,34 @@ export function readFromDatabase() {
 }
 
 export function readInfo() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: actions.READ_INFO });
     return new Promise(async (resolve, reject) => {
       try {
         const info = await settingsDataServices.readInfo();
-        
-        resolve({ info })
+
+        resolve({ info });
         dispatch({
           type: actions.READ_INFO_SUCCESS,
-          payload: { data: { info } }
+          payload: { data: { info } },
         });
       } catch (error) {
         console.log(error);
         reject(error);
         dispatch({
           type: actions.READ_INFO_ERROR,
-          payload: { error }
+          payload: { error },
         });
       }
     });
   };
 }
 
-
+export const toggleSpinningWheelModal = (data = null) => {
+  return {
+    type: actions.TOGGLE_SPINNING_WHEEL_MODAL,
+    payload: { data },
+  };
+};
 
 export default actions;

@@ -7,6 +7,8 @@ const initialState = {
   tags: [],
   categories: [],
 
+  toggleSpinningWheelModal: false,
+
   readInfoLoading: false,
   readInfoError: false,
 
@@ -17,7 +19,7 @@ const initialState = {
     description: null,
     images: [],
     headerImages: [],
-    share : {
+    share: {
       title: null,
       message: null,
       fbPost: null,
@@ -57,6 +59,9 @@ const reducer = (state = initialState, { type, payload }) => {
 
     case actions.READ_INFO_ERROR:
       return { ...state, readInfoLoading: false, readInfoError: payload.error };
+
+    case actions.TOGGLE_SPINNING_WHEEL_MODAL:
+      return { toggleSpinningWheelModal: !state.toggleSpinningWheelModal };
 
     default:
       return state;
