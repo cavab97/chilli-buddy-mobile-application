@@ -36,6 +36,7 @@ import LuckyDrawWinnerRanking from "../screens/subscreen/rank/LuckyDrawWinnerRan
 import RedeemPage from "../screens/subscreen/RedeemPage";
 import HelpCenter from "../screens/subscreen/HelpCenter";
 import Bookmark from "../screens/subscreen/Bookmark";
+import Voucher from "../screens/subscreen/Voucher";
 
 import LoginTACScreen from "../screens/auth/TAC";
 
@@ -261,6 +262,10 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
       <Stack key="Bookmark" back>
         <Scene key="Bookmark" component={Bookmark} title="Bookmark" titleStyle={styles.title} />
+      </Stack>
+
+      <Stack key="Voucher" back>
+        <Scene key="Voucher" component={Voucher} title="Voucher" titleStyle={styles.title} />
       </Stack>
     </Stack>
   );
