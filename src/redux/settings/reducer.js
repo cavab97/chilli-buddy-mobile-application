@@ -7,7 +7,7 @@ const initialState = {
   tags: [],
   categories: [],
 
-  toggleSpinningWheelModal: false,
+  spinningWheelModal: false,
 
   readInfoLoading: false,
   readInfoError: false,
@@ -61,7 +61,7 @@ const reducer = (state = initialState, { type, payload }) => {
       return { ...state, readInfoLoading: false, readInfoError: payload.error };
 
     case actions.TOGGLE_SPINNING_WHEEL_MODAL:
-      return { toggleSpinningWheelModal: !state.toggleSpinningWheelModal };
+      return { ...state, spinningWheelModal: !state.spinningWheelModal };
 
     default:
       return state;

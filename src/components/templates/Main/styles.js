@@ -308,6 +308,17 @@ const styles = StyleSheet.create({
     height: "100%",
     alignSelf: "center",
   },
+
+  containerForFloatingButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 70,
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+    height: 85,
+    borderRadius: 100,
+  }
 });
 
 export default styles;

@@ -68,7 +68,7 @@ export function readInfo() {
 export const toggleSpinningWheelModal = (data = null) => {
   return {
     type: actions.TOGGLE_SPINNING_WHEEL_MODAL,
-    payload: { data },
+    payload: { data }
   };
 };
 

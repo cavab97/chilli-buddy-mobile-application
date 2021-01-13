@@ -22,4 +22,3 @@ export * from "./Prizes";
 export * from "./Shop/ShopList";
 export * from "./Shop/SingleMerchant";
 export * from "./Bookmark";
-export * from "./SpinningWheel";

@@ -4,7 +4,7 @@ import MainTemplete from "@components/templates/Main";
 import { Actions } from "react-native-router-flux";
 import { readAllFromDatabase as readAllRoute } from "@redux/route/action";
 import { readFromDatabase as readAdvertisements, toggleModal } from "@redux/advertisement/action";
-import { readInfo as readSettingInfo } from "@redux/settings/action";
+import { readInfo as readSettingInfo, toggleSpinningWheelModal } from "@redux/settings/action";
 import { verifyPermission, loadShops } from "@redux/shops/action";
 import {
   listenFromDatabase as listenToRouteTickets,
@@ -13,6 +13,8 @@ import {
 
 import clone from "clone";
 import { lessThan } from "react-native-reanimated";
+import { Animated } from 'react-native';
+
 
 class index extends Component {
   constructor(props) {
@@ -26,6 +28,9 @@ class index extends Component {
       randomNumber: Math.random(),
       refreshing: false,
       popUpImage: "",
+      wheelRotation: new Animated.Value(0),
+      randomCategoryNumber: null,
+      randomCategory: null
     };
   }
 
@@ -69,6 +74,7 @@ class index extends Component {
       this.state.popUpImage = filteredDatasource[index].popUpImage;
     }
   }
+
 
   //close pop up from header
   onClosePopUp() {
@@ -127,10 +133,56 @@ class index extends Component {
     }
   }
 
+  //open spinning wheel modal
+  onOpenSpinningWheelModal(){
+    this.props.toggleSpinningWheelModal();
+  }
+
   //close pop up from spinning wheel modal
   onCloseSpinningWheelModal() {
     this.props.toggleSpinningWheelModal();
   }
+
+  spinningWheel(){
+    let size = 30;
+    let categoryArray = this.state.categories.slice(1, size).map((category) => {
+      return {
+        key: category.id,
+        id: category.id,
+        no: category.no,
+        title: category.title,
+        tags: category.tags,
+      };
+    });
+    let newDeg = Math.random() * 360;
+    const curValue = this.state.wheelRotation.__getValue();
+    if ( curValue > 720 ){
+        newDeg = curValue - newDeg - 720;
+    } else {
+        newDeg = curValue + newDeg + 720;
+    }
+
+    this.setState({randomCategoryNumber: Math.random()})
+
+    const get = Animated.decay(this.state.wheelRotation, {
+        //duration: 2500,
+        toValue: newDeg,
+        velocity: 200,
+        //deceleration: 0.999, 
+        useNativeDriver: true,
+    }).start(({ finished }) => {
+      const randomCategory = this.getRandomCategory(categoryArray);
+      console.log("randomCategory: "+randomCategory)
+          this.setState({randomCategory: randomCategory});   
+
+          });
+  }
+
+  getRandomCategory(categoryArray){
+    var randomCategory = categoryArray[Math.floor(this.state.randomCategoryNumber * categoryArray.length)];
+    return randomCategory;
+  }
+
 
   render() {
     const {
@@ -258,7 +310,8 @@ class index extends Component {
     const casualImage = require("../../../assets/gogogain/Mascot-C.png");
     const luxuryImage = require("../../../assets/gogogain/Mascot-L.png");
 
-    return (
+
+    return (      
       <MainTemplete
         readFail={readFail}
         slider={this.filteredDatasource()}
@@ -270,12 +323,6 @@ class index extends Component {
         //routeTickets={routeTickets}
         casualImage={casualImage}
         luxuryImage={luxuryImage}
-        sectionTitle1="Category"
-        sectionTitle2="Latest News"
-        sectionTitle3="Your Challenges"
-        label1="Total Mission : "
-        label2="Period : "
-        unit=" pax"
         onPressCard={this.onPressCategory.bind(this)}
         advertisements={advertisements}
         isAdvertisementModelShow={this.state.isAdvertisementModelShow} //Get state to show advertisement Model
@@ -295,8 +342,12 @@ class index extends Component {
         openModal={this.props.openModal}
         popUpImage={this.state.popUpImage}
         onClosePopUp={this.onClosePopUp.bind(this)}
-        toggleSpinningWheelModal={this.props.toggleSpinningWheelModal}
+        spinningWheelModal={this.props.spinningWheelModal}
+        onOpenSpinningWheelModal={this.onOpenSpinningWheelModal.bind(this)}
         onCloseSpinningWheelModal={this.onCloseSpinningWheelModal.bind(this)}
+        spinningWheel={this.spinningWheel.bind(this)}
+        wheelRotation={this.state.wheelRotation}
+        randomCategory={this.state.randomCategory}
       />
     );
   }
@@ -306,8 +357,8 @@ const mapStateToProps = (state) => {
   const routeTickets = state.RouteTicket.userRouteTickets;
   const { allRoutes } = state.Route;
   const { advertisements } = state.Advertisement;
-  const { categories, tags, toggleSpinningWheelModal } = state.Settings;
-
+  const { categories, tags } = state.Settings;
+  const spinningWheelModal = state.Settings.spinningWheelModal;
   const readLoadingRouteTicket = state.RouteTicket.readLoading;
   const readLoadingRoute = state.Route.readLoading;
   const readLoadingAdvertisement = state.Advertisement.readLoading;
@@ -335,7 +386,7 @@ const mapStateToProps = (state) => {
     readErrorAdvertisement,
     readErrorHeaderImages,
     openModal,
-    toggleSpinningWheelModal,
+    spinningWheelModal
   };
 };
 
@@ -348,4 +399,5 @@ export default connect(mapStateToProps, {
   verifyPermission,
   loadShops,
   readSettingInfo,
+  toggleSpinningWheelModal
 })(index);

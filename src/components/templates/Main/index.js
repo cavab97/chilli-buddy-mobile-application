@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./styles";
-import { Platform, Dimensions } from "react-native";
+import { Platform, Dimensions, Animated } from "react-native";
 import { Actions } from "react-native-router-flux";
 //import Video  from "react-native-video";
 import { Video } from "expo-av";
@@ -18,6 +18,7 @@ import {
   View,
   VirtualizedList,
   Modal,
+  Button,
   RefreshControl,
 } from "../../atoms";
 
@@ -43,13 +44,9 @@ export default ({
   sectionTitle1,
   onPressCard,
   onPressImage, //Constant for clicking image advertisement
-  advertisements,
-  onPressAdvertisement,
-  noImageAdvertisement,
   noImageHeaderSlider,
   readLoadingAdvertisement,
   readLoadingCategoryList,
-  readLoadingRouteTicket,
   readLoadingHeaderImages,
   onCloseAdvertisementModal,
   isAdvertisementModelShow,
@@ -63,8 +60,12 @@ export default ({
   openModal,
   popUpImage,
   onClosePopUp,
-  toggleSpinningWheelModal,
+  spinningWheelModal,
+  onOpenSpinningWheelModal,
   onCloseSpinningWheelModal,
+  spinningWheel,
+  wheelRotation,
+  randomCategory
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -81,7 +82,7 @@ export default ({
     };
   };
   const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
-  const spinningWheel = require("../../../assets/icons/spinningWheelIcon.png");
+  const wheelIcon = require("../../../assets/icons/spinningWheelIcon.png");
 
   const AdvertisementPopUp = (url) => {
     return type === "image" ? (
@@ -201,27 +202,37 @@ export default ({
     );
   };
 
-  const SpinningWheelModal = ({ url }) => {
-    const wheelOptions = {
-      rewards: participants,
-      knobSize: 50,
-      borderWidth: 5,
-      borderColor: "#000",
-      innerRadius: 50,
-      duration: 4000,
-      backgroundColor: "transparent",
-      textAngle: "horizontal",
-      knobSource: require("../../../assets/notificationIconbak.png"),
-      getWinner: (value, index) => {
-        this.setState({ winnerValue: value, winnerIndex: index });
-      },
-      onRef: (ref) => (this.child = ref),
-    };
+
+
+  const SpinningWheelPopUpModal = () => {
+    const wheelImage = require("../../../assets/notificationIconbak.png");
+
+    let {width} = Dimensions.get('window');
+    width = width * .5;
+    const rotation = wheelRotation.interpolate({
+        inputRange: [0, 360],
+        outputRange: ['0deg', '360deg']
+    });
+
     return (
-      <Modal animationType="fade" transparent={true} visible={openModal}>
+      <Modal animationType="fade" transparent={true} visible={spinningWheelModal}>
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
-            <TouchableOpacity style={styles.closeButton} onPress={onClosePopUp}>
+          <View>
+            <TouchableOpacity onPress={spinningWheel}>
+                <Animated.Image style={{width, height: width, transform:[{ rotate: rotation }] }} resizeMode={'contain'} source={wheelImage}/>
+            </TouchableOpacity>
+        </View>
+        <View>
+          {randomCategory != null ?
+        <Button
+            title={randomCategory.title}
+            buttonStyle={styles.cardSection2}
+            titleStyle={styles.cardTitle2}
+            // onPress={onRetakePress}
+          /> : <View/> }
+        </View>
+            <TouchableOpacity style={styles.closeButton} onPress={onCloseSpinningWheelModal}>
               <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
             </TouchableOpacity>
           </View>
@@ -231,7 +242,7 @@ export default ({
     );
   };
 
-  const participants = ["%10", "%20", "%30", "%40", "%50", "%60", "%70", "%90", "FREE"];
+  console.log("randomcat: "+JSON.stringify(randomCategory))
 
   return (
     <View>
@@ -278,6 +289,7 @@ export default ({
           )}
 
           {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
+          {spinningWheelModal ? <SpinningWheelPopUpModal/> : <View/>}
 
           {readLoadingCategoryList ? (
             <View style={styles.subContainer2}>
@@ -316,29 +328,12 @@ export default ({
             <View style={styles.subContainer2}></View>
           )}
 
-          {/* <FloatingAction
-          position={"left"}
-          onPressItem={(name) => {
-            console.log(`selected button: ${name}`);
-          }}
-        /> */}
         </View>
       </ScrollView>
-      <TouchableOpacity
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          width: 70,
-          position: "absolute",
-          bottom: 10,
-          left: 10,
-          height: 85,
-          borderRadius: 100,
-        }}
-        onPress={() => onPressPopUp(getShopId)}
-      >
-        <Image source={spinningWheel} style={styles.floatingButton} />
+      <TouchableOpacity style={styles.containerForFloatingButton} onPress={onOpenSpinningWheelModal}>
+        <Image source={wheelIcon} style={styles.floatingButton} />
       </TouchableOpacity>
+
     </View>
   );
 };
