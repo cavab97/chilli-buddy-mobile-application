@@ -4,7 +4,7 @@ import MainTemplete from "@components/templates/Main";
 import { Actions } from "react-native-router-flux";
 import { readAllFromDatabase as readAllRoute } from "@redux/route/action";
 import { readFromDatabase as readAdvertisements, toggleModal } from "@redux/advertisement/action";
-import { readInfo as readSettingInfo } from "@redux/settings/action";
+import { readInfo as readSettingInfo, toggleSpinningWheelModal } from "@redux/settings/action";
 import { verifyPermission, loadShops } from "@redux/shops/action";
 import {
   listenFromDatabase as listenToRouteTickets,
@@ -13,6 +13,8 @@ import {
 
 import clone from "clone";
 import { lessThan } from "react-native-reanimated";
+import { Animated } from 'react-native';
+
 
 class index extends Component {
   constructor(props) {
@@ -26,6 +28,12 @@ class index extends Component {
       randomNumber: Math.random(),
       refreshing: false,
       popUpImage: "",
+      wheelRotation: new Animated.Value(0),
+      fadeWheel: new Animated.Value(1),
+      fadeResult: new Animated.Value(0),
+      randomCategoryNumber: null,
+      randomCategory: null,
+      spinStatus: false,
     };
   }
 
@@ -69,6 +77,7 @@ class index extends Component {
       this.state.popUpImage = filteredDatasource[index].popUpImage;
     }
   }
+
 
   //close pop up from header
   onClosePopUp() {
@@ -127,6 +136,151 @@ class index extends Component {
     }
   }
 
+  //open spinning wheel modal
+  onOpenSpinningWheelModal(){
+    this.setState({ randomCategory: null })
+    this.props.toggleSpinningWheelModal();
+  }
+
+  //close pop up from spinning wheel modal
+  onCloseSpinningWheelModal() {
+    this.setState({ randomCategory: null })
+    this.props.toggleSpinningWheelModal();
+  }
+
+  spinningWheel(){
+    let newDeg = Math.random() * 360;
+    const curValue = this.state.wheelRotation.__getValue();
+    if ( curValue > 720 ){
+        newDeg = curValue - newDeg - 720;
+    } else {
+        newDeg = curValue + newDeg + 720;
+    }
+
+    this.setState({
+      randomCategoryNumber: Math.random( ),
+      spinStatus: true,
+      randomCategory: null
+    })
+
+    const randomCategory = this.getRandomCategory();
+    this.setState({ randomCategory: randomCategory}); 
+
+    Animated.parallel([
+      Animated.decay(this.state.wheelRotation, {
+        toValue: newDeg,
+        velocity: 200,
+        //deceleration: 0.99915, 
+        useNativeDriver: true,
+      }).start(({ finished }) => {
+        // const randomCategory = this.getRandomCategory();
+        this.setState({  spinStatus: false});   
+        Animated.timing(this.state.fadeResult, {
+          toValue: 1,
+          //delay: 2000,
+          duration: 1500,
+          useNativeDriver: true,
+        }).start()
+      }),
+      Animated.timing(this.state.fadeWheel, {
+        toValue: 0,
+        duration: 6000,
+        useNativeDriver: true,
+      }).start(),
+      
+    ])
+
+  }
+  getRandomCategory(){
+    let categoryArray = this.passCategory();
+    var randomCategory = categoryArray[Math.floor(this.state.randomCategoryNumber * categoryArray.length)];
+    return randomCategory;
+  }
+
+  onPressRandomCategory(category) {
+    Actions.Shops({ selectedCategory: category });
+    this.props.toggleSpinningWheelModal();
+
+  }
+
+  //Pass category
+  passCategory(){
+    let dataSource2 = [];
+    let categoriesImage = [
+      require("../../../assets/chillibuddy/category1.png"),
+      require("../../../assets/chillibuddy/category2.png"),
+      require("../../../assets/chillibuddy/category3.png"),
+      require("../../../assets/chillibuddy/category4.png"),
+      require("../../../assets/chillibuddy/category5.png"),
+    ];
+    let size = 30;
+    dataSource2 = this.state.categories.slice(1, size).map((category) => {
+      return {
+        key: category.id,
+        id: category.id,
+        no: category.no,
+        title: category.title,
+        tags: category.tags,
+        //image: require("../../../assets/chillibuddy/category1.png"),
+      };
+    });
+
+    //Assigning background pictures
+    dataSource2.forEach((element, index) => {
+      element.image = categoriesImage[index % 5];
+      switch (element.title) {
+        case "Chinese | 中餐": 
+          element.icon = "chinese";
+          break;
+        case "Western | 西餐":
+          element.icon = "western";
+          break;
+        case "Cafe | 咖啡馆":
+          element.icon = "cafe";
+          break;
+        case "China | 中国菜":
+          element.icon = "china";
+          break;
+        case "Japanese | 日本餐":
+          element.icon = "japanese";
+          break;
+        case "Korean | 韩国餐":
+          element.icon = "korean";
+          break;
+        case "Thai | 泰国餐":
+          element.icon = "thai";
+          break;
+        case "TAIWAN | 台湾":
+          element.icon = "taiwan";
+          break;
+        case "Bistro | 小酒馆":
+          element.icon = "bistro";
+          break;
+        case "Steamboat | 火锅":
+          element.icon = "steamboat";
+          break;
+        case "Local Cuisine | 本地美食":
+          element.icon = "localcuisine";
+          break;
+        case "Beverage | 饮料店":
+          element.icon = "beverage";
+          break;
+        case "Food Truck | 餐车":
+          element.icon = "foodtruck";
+          break;
+        case "LOK LOK | 碌碌":
+          element.icon = "loklok";
+          break;
+        case "Special Cuisine | 特色美食":
+          element.icon = "cuisine";
+          break;
+        default:
+          element.icon = "others";
+      }
+    });
+    return dataSource2;
+  }
+
   render() {
     const {
       allRoutes,
@@ -145,15 +299,8 @@ class index extends Component {
       readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
 
     let dataSource = [];
-    let dataSource2 = [];
     let filteredAdPic = [];
-    let categoriesImage = [
-      require("../../../assets/chillibuddy/category1.png"),
-      require("../../../assets/chillibuddy/category2.png"),
-      require("../../../assets/chillibuddy/category3.png"),
-      require("../../../assets/chillibuddy/category4.png"),
-      require("../../../assets/chillibuddy/category5.png"),
-    ];
+    
 
     //Sort to show latest
     advertisements.sort((a, b) => b.createAt - a.createAt);
@@ -181,79 +328,12 @@ class index extends Component {
       })
       .toString();
 
-    //Pass category
-    let size = 30;
-    dataSource2 = this.state.categories.slice(1, size).map((category) => {
-      return {
-        key: category.id,
-        id: category.id,
-        no: category.no,
-        title: category.title,
-        tags: category.tags,
-        //image: require("../../../assets/chillibuddy/category1.png"),
-      };
-    });
-
-    //Assigning background pictures
-    dataSource2.forEach((element, index) => {
-      element.image = categoriesImage[index % 5];
-      switch (element.title) {
-        case "CHINESE | 中餐":
-          element.icon = "chinese";
-          break;
-        case "WESTERN | 西餐":
-          element.icon = "western";
-          break;
-        case "CAFE | 咖啡馆":
-          element.icon = "cafe";
-          break;
-        case "CHINA | 中国菜":
-          element.icon = "china";
-          break;
-        case "JAPANESE | 日本餐":
-          element.icon = "japanese";
-          break;
-        case "KOREAN | 韩国餐":
-          element.icon = "korean";
-          break;
-        case "THAI | 泰国餐":
-          element.icon = "thai";
-          break;
-        case "TAIWAN | 台湾":
-          element.icon = "taiwan";
-          break;
-        case "BISTRO | 小酒馆":
-          element.icon = "bistro";
-          break;
-        case "STEAMBOAT | 火锅":
-          element.icon = "steamboat";
-          break;
-        case "LOCAL CUISINE | 本地美食":
-          element.icon = "localcuisine";
-          break;
-        case "BEVERAGE | 饮料店":
-          element.icon = "beverage";
-          break;
-        case "FOOD TRUCK | 餐车":
-          element.icon = "foodtruck";
-          break;
-        case "LOK LOK | 碌碌":
-          element.icon = "loklok";
-          break;
-        case "SPECIAL CUISINE | 特色美食":
-          element.icon = "cuisine";
-          break;
-        default:
-          element.icon = "others";
-      }
-    });
-
     const noImageHeaderSlider = require("../../../assets/gogogain/top_image.jpg");
     const noImageAdvertisement = require("../../../assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
     const casualImage = require("../../../assets/gogogain/Mascot-C.png");
     const luxuryImage = require("../../../assets/gogogain/Mascot-L.png");
 
-    return (
+    return (      
       <MainTemplete
         readFail={readFail}
         slider={this.filteredDatasource()}
@@ -261,16 +341,11 @@ class index extends Component {
         randomAdPic={randomAdPic}
         getShopId={getShopId}
         dataSource={dataSource}
-        dataSource2={dataSource2}
+        dataSource2={this.passCategory()}
+        sectionTitle1="Category"
         //routeTickets={routeTickets}
         casualImage={casualImage}
         luxuryImage={luxuryImage}
-        sectionTitle1="Category"
-        sectionTitle2="Latest News"
-        sectionTitle3="Your Challenges"
-        label1="Total Mission : "
-        label2="Period : "
-        unit=" pax"
         onPressCard={this.onPressCategory.bind(this)}
         advertisements={advertisements}
         isAdvertisementModelShow={this.state.isAdvertisementModelShow} //Get state to show advertisement Model
@@ -290,6 +365,16 @@ class index extends Component {
         openModal={this.props.openModal}
         popUpImage={this.state.popUpImage}
         onClosePopUp={this.onClosePopUp.bind(this)}
+        spinningWheelModal={this.props.spinningWheelModal}
+        onOpenSpinningWheelModal={this.onOpenSpinningWheelModal.bind(this)}
+        onCloseSpinningWheelModal={this.onCloseSpinningWheelModal.bind(this)}
+        spinningWheel={this.spinningWheel.bind(this)}
+        wheelRotation={this.state.wheelRotation}
+        randomCategory={this.state.randomCategory}
+        onPressRandomCategory={this.onPressRandomCategory.bind(this)}
+        fadeWheel={this.state.fadeWheel}
+        fadeResult={this.state.fadeResult}
+        spinStatus={this.state.spinStatus}
       />
     );
   }
@@ -300,7 +385,7 @@ const mapStateToProps = (state) => {
   const { allRoutes } = state.Route;
   const { advertisements } = state.Advertisement;
   const { categories, tags } = state.Settings;
-
+  const spinningWheelModal = state.Settings.spinningWheelModal;
   const readLoadingRouteTicket = state.RouteTicket.readLoading;
   const readLoadingRoute = state.Route.readLoading;
   const readLoadingAdvertisement = state.Advertisement.readLoading;
@@ -328,6 +413,7 @@ const mapStateToProps = (state) => {
     readErrorAdvertisement,
     readErrorHeaderImages,
     openModal,
+    spinningWheelModal
   };
 };
 
@@ -340,4 +426,5 @@ export default connect(mapStateToProps, {
   verifyPermission,
   loadShops,
   readSettingInfo,
+  toggleSpinningWheelModal
 })(index);

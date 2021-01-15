@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 37262,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "packagerPid": 40290,
+  "expoServerNgrokUrl": "https://cg-rav.huihannn.chillibuddy-mobile-application.exp.direct",
+  "packagerNgrokUrl": "https://packager.cg-rav.huihannn.chillibuddy-mobile-application.exp.direct",
+  "ngrokPid": 40555,
   "webpackServerPort": null
 }
