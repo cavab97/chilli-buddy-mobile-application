@@ -65,11 +65,16 @@ export default ({
   onCloseSpinningWheelModal,
   spinningWheel,
   wheelRotation,
-  randomCategory
+  randomCategory,
+  onPressRandomCategory,
+  fadeWheel,
+  fadeResult,
+  spinStatus,
 }) => {
   const DATA = [];
   const DATA2 = [];
-  //console.log("randomAd: " + randomAdPic);
+  
+
   const getItem = (data, index) => {
     return {
       key: "routeTicketsOrRoutesLoading" + index,
@@ -82,7 +87,8 @@ export default ({
     };
   };
   const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
-  const wheelIcon = require("../../../assets/icons/spinningWheelIcon.png");
+  const wheelIcon = require("../../../assets/icons/wheelIcon.png");
+
 
   const AdvertisementPopUp = (url) => {
     return type === "image" ? (
@@ -203,46 +209,15 @@ export default ({
   };
 
 
+  const wheelImage = require("../../../assets/categoryWheel.png");
+  const resultImage = require("../../../assets/categoryResult.png");
 
-  const SpinningWheelPopUpModal = () => {
-    const wheelImage = require("../../../assets/notificationIconbak.png");
-
-    let {width} = Dimensions.get('window');
-    width = width * .5;
-    const rotation = wheelRotation.interpolate({
-        inputRange: [0, 360],
-        outputRange: ['0deg', '360deg']
-    });
-
-    return (
-      <Modal animationType="fade" transparent={true} visible={spinningWheelModal}>
-        <View style={styles.modelBackground}>
-          <View style={styles.adsImageContainer}>
-          <View>
-            <TouchableOpacity onPress={spinningWheel}>
-                <Animated.Image style={{width, height: width, transform:[{ rotate: rotation }] }} resizeMode={'contain'} source={wheelImage}/>
-            </TouchableOpacity>
-        </View>
-        <View>
-          {randomCategory != null ?
-        <Button
-            title={randomCategory.title}
-            buttonStyle={styles.cardSection2}
-            titleStyle={styles.cardTitle2}
-            // onPress={onRetakePress}
-          /> : <View/> }
-        </View>
-            <TouchableOpacity style={styles.closeButton} onPress={onCloseSpinningWheelModal}>
-              <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View></View>
-      </Modal>
-    );
-  };
-
-  console.log("randomcat: "+JSON.stringify(randomCategory))
+  let {width} = Dimensions.get('window');
+  width = width * .7;
+  const rotation = wheelRotation.interpolate({
+      inputRange: [0, 360],
+      outputRange: ['0deg', '360deg']
+  });
 
   return (
     <View>
@@ -289,8 +264,57 @@ export default ({
           )}
 
           {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
-          {spinningWheelModal ? <SpinningWheelPopUpModal/> : <View/>}
 
+          <Modal transparent={true} visible={spinningWheelModal}>
+            <View style={styles.modelBackground}>
+              <View style={styles.containerForSpinningWheel}>
+              
+              {randomCategory != null && spinStatus === false ?
+              <View>
+                <View style={{alignItems: "center", paddingTop: 30}}>
+                  <Text style={styles.spinningTitle2}> We have a great choice of Restaurants near you </Text>
+                  <Text style={styles.subTitle}> Let's go! </Text>
+                </View>
+                <View style={styles.spinningWheelImage}>
+                    <Animated.View style={{ opacity: fadeResult}}>
+                      <TouchableOpacity onPress={() =>onPressRandomCategory(randomCategory)}>
+                      <Animated.Image style={{width, height: width }} source={resultImage}/>
+                        <View style={styles.categoryTextHolder}>
+                        <CustomIcon name={randomCategory.icon} size={30} style={{color: "#FFFFFF"}} /> 
+                          <Text style={styles.categoryText}> {randomCategory.title} </Text>
+                        </View>
+                    </TouchableOpacity>      
+                    </Animated.View> 
+                </View> 
+              </View> : 
+              <View>
+                <View style={{alignItems: "center", paddingTop: 30}}>
+                  <Text style={styles.spinningTitle}> Don't know </Text>
+                  <Text style={styles.subTitle}> WHAT TO EAT? </Text>
+                </View>
+                <View style={styles.spinningWheelImage}>
+                    <View>
+                      <Animated.View style={{ opacity: fadeWheel }}>
+                      <Animated.Image style={{width, height: width,  transform:[{ rotate: rotation }] }} source={wheelImage}/>
+                      </Animated.View> 
+                    </View> 
+                </View>
+              </View>}
+                <View>
+                    <TouchableOpacity 
+                      style={ spinStatus ? styles.categoriesButton : styles.categoriesButton}
+                      onPress={spinningWheel} 
+                      disabled={spinStatus}>
+                        <Text style={styles.buttonText}> {spinStatus ? "Spinning..." : randomCategory ? "SPIN AGAIN": "START"} </Text>
+                    </TouchableOpacity>      
+                </View>
+                  <TouchableOpacity style={styles.closeWheelModal} onPress={onCloseSpinningWheelModal}>
+                    <MaterialCommunityIcons name="close-circle-outline" size={40} color="#FFFFFF" />
+                  </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+   
           {readLoadingCategoryList ? (
             <View style={styles.subContainer2}>
               <View>
