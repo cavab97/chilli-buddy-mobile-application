@@ -73,7 +73,6 @@ export default ({
 }) => {
   const DATA = [];
   const DATA2 = [];
-  
 
   const getItem = (data, index) => {
     return {
@@ -88,7 +87,6 @@ export default ({
   };
   const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
   const wheelIcon = require("../../../assets/icons/wheelIcon.png");
-
 
   const AdvertisementPopUp = (url) => {
     return type === "image" ? (
@@ -208,15 +206,14 @@ export default ({
     );
   };
 
-
   const wheelImage = require("../../../assets/categoryWheel.png");
   const resultImage = require("../../../assets/categoryResult.png");
 
-  let {width} = Dimensions.get('window');
-  width = width * .7;
+  let { width } = Dimensions.get("window");
+  width = width * 0.7;
   const rotation = wheelRotation.interpolate({
-      inputRange: [0, 360],
-      outputRange: ['0deg', '360deg']
+    inputRange: [0, 360],
+    outputRange: ["0deg", "360deg"],
   });
 
   return (
@@ -268,53 +265,71 @@ export default ({
           <Modal transparent={true} visible={spinningWheelModal}>
             <View style={styles.modelBackground}>
               <View style={styles.containerForSpinningWheel}>
-              
-              {randomCategory != null && spinStatus === false ?
-              <View>
-                <View style={{alignItems: "center", paddingTop: 30}}>
-                  <Text style={styles.spinningTitle2}> We have a great choice of Restaurants near you </Text>
-                  <Text style={styles.subTitle}> Let's go! </Text>
-                </View>
-                <View style={styles.spinningWheelImage}>
-                    <Animated.View style={{ opacity: fadeResult}}>
-                      <TouchableOpacity onPress={() =>onPressRandomCategory(randomCategory)}>
-                      <Animated.Image style={{width, height: width }} source={resultImage}/>
-                        <View style={styles.categoryTextHolder}>
-                        <CustomIcon name={randomCategory.icon} size={30} style={{color: "#FFFFFF"}} /> 
-                          <Text style={styles.categoryText}> {randomCategory.title} </Text>
-                        </View>
-                    </TouchableOpacity>      
-                    </Animated.View> 
-                </View> 
-              </View> : 
-              <View>
-                <View style={{alignItems: "center", paddingTop: 30}}>
-                  <Text style={styles.spinningTitle}> Don't know </Text>
-                  <Text style={styles.subTitle}> WHAT TO EAT? </Text>
-                </View>
-                <View style={styles.spinningWheelImage}>
-                    <View>
-                      <Animated.View style={{ opacity: fadeWheel }}>
-                      <Animated.Image style={{width, height: width,  transform:[{ rotate: rotation }] }} source={wheelImage}/>
-                      </Animated.View> 
-                    </View> 
-                </View>
-              </View>}
+                {randomCategory != null && spinStatus === false ? (
+                  <View>
+                    <View style={{ alignItems: "center", paddingTop: 30 }}>
+                      <Text style={styles.spinningTitle2}>
+                        {" "}
+                        We have a great choice of Restaurants near you{" "}
+                      </Text>
+                      <Text style={styles.subTitle}> Let's go! </Text>
+                    </View>
+                    <View style={styles.spinningWheelImage}>
+                      <Animated.View style={{ opacity: fadeResult }}>
+                        <TouchableOpacity onPress={() => onPressRandomCategory(randomCategory)}>
+                          <Animated.Image style={{ width, height: width }} source={resultImage} />
+                          <View style={styles.categoryTextHolder}>
+                            <CustomIcon
+                              name={randomCategory.icon}
+                              size={30}
+                              style={{ color: "#FFFFFF" }}
+                            />
+                            <Text style={styles.categoryText}> {randomCategory.title} </Text>
+                          </View>
+                        </TouchableOpacity>
+                      </Animated.View>
+                    </View>
+                  </View>
+                ) : (
+                  <View>
+                    <View style={{ alignItems: "center", paddingTop: 30 }}>
+                      <Text style={styles.spinningTitle}> Don't know </Text>
+                      <Text style={styles.subTitle}> WHAT TO EAT? </Text>
+                    </View>
+                    <View style={styles.spinningWheelImage}>
+                      <View>
+                        <Animated.View style={{ opacity: fadeWheel }}>
+                          <Animated.Image
+                            style={{ width, height: width, transform: [{ rotate: rotation }] }}
+                            source={wheelImage}
+                          />
+                        </Animated.View>
+                      </View>
+                    </View>
+                  </View>
+                )}
                 <View>
-                    <TouchableOpacity 
-                      style={ spinStatus ? styles.categoriesButton : styles.categoriesButton}
-                      onPress={spinningWheel} 
-                      disabled={spinStatus}>
-                        <Text style={styles.buttonText}> {spinStatus ? "Spinning..." : randomCategory ? "SPIN AGAIN": "START"} </Text>
-                    </TouchableOpacity>      
-                </View>
-                  <TouchableOpacity style={styles.closeWheelModal} onPress={onCloseSpinningWheelModal}>
-                    <MaterialCommunityIcons name="close-circle-outline" size={40} color="#FFFFFF" />
+                  <TouchableOpacity
+                    style={spinStatus ? styles.categoriesButton : styles.categoriesButton}
+                    onPress={spinningWheel}
+                    disabled={spinStatus}
+                  >
+                    <Text style={styles.buttonText}>
+                      {" "}
+                      {spinStatus ? "SPINNING..." : randomCategory ? "SPIN AGAIN" : "START"}{" "}
+                    </Text>
                   </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                  style={styles.closeWheelModal}
+                  onPress={onCloseSpinningWheelModal}
+                >
+                  <MaterialCommunityIcons name="close-circle-outline" size={40} color="#FFFFFF" />
+                </TouchableOpacity>
               </View>
             </View>
           </Modal>
-   
+
           {readLoadingCategoryList ? (
             <View style={styles.subContainer2}>
               <View>
@@ -351,13 +366,14 @@ export default ({
           ) : (
             <View style={styles.subContainer2}></View>
           )}
-
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.containerForFloatingButton} onPress={onOpenSpinningWheelModal}>
+      <TouchableOpacity
+        style={styles.containerForFloatingButton}
+        onPress={onOpenSpinningWheelModal}
+      >
         <Image source={wheelIcon} style={styles.floatingButton} />
       </TouchableOpacity>
-
     </View>
   );
 };
