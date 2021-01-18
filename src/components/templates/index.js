@@ -23,3 +23,4 @@ export * from "./Shop/ShopList";
 export * from "./Shop/SingleMerchant";
 export * from "./Bookmark";
 export * from "./Voucher";
+export * from "./Voucher/SingleVoucher";

@@ -17,6 +17,7 @@ import advertisementsReducer from "./advertisement/reducer";
 import settingsReducer from "./settings/reducer";
 import promoReducer from "./promo/reducer";
 import bookmarkReducer from "./bookmark/reducer";
+import voucherReducer from "./voucher/reducer";
 
 export default combineReducers = {
   Advertisement: advertisementsReducer,
@@ -32,4 +33,5 @@ export default combineReducers = {
   Transaction: transactionReducer,
   Promotion: promoReducer,
   Bookmark: bookmarkReducer,
+  Voucher: voucherReducer,
 };

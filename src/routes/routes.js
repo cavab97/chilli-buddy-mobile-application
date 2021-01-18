@@ -37,6 +37,8 @@ import RedeemPage from "../screens/subscreen/RedeemPage";
 import HelpCenter from "../screens/subscreen/HelpCenter";
 import Bookmark from "../screens/subscreen/Bookmark";
 import Voucher from "../screens/subscreen/Voucher";
+import SingleVoucher from "../screens/subscreen/Voucher/SingleVoucher";
+import CheckIn from "../screens/subscreen/CheckIn";
 
 import LoginTACScreen from "../screens/auth/TAC";
 
@@ -150,6 +152,10 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
 
       <Stack key="Amount">
         <Scene key="Amount" component={Amount} hideNavBar />
+      </Stack>
+
+      <Stack key="CheckIn" back>
+        <Scene key="CheckIn" component={CheckIn} title="CheckIn" />
       </Stack>
 
       <Stack key="PaymentDetail" back>
@@ -266,6 +272,15 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
 
       <Stack key="Voucher" back>
         <Scene key="Voucher" component={Voucher} title="Voucher" titleStyle={styles.title} />
+      </Stack>
+
+      <Stack key="SingleVoucher" back>
+        <Scene
+          key="SingleVoucher"
+          component={SingleVoucher}
+          title="SingleVoucher"
+          titleStyle={styles.title}
+        />
       </Stack>
     </Stack>
   );
