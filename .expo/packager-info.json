@@ -3,8 +3,8 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://cg-rav.huihannn.chillibuddy-mobile-application.exp.direct",
+  "packagerNgrokUrl": "https://packager.cg-rav.huihannn.chillibuddy-mobile-application.exp.direct",
+  "ngrokPid": 81243,
   "webpackServerPort": null
 }
