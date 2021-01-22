@@ -2,6 +2,7 @@ import { Dimensions } from "react-native";
 import { StyleSheet } from "react-native";
 
 const numColumns = 4;
+
 const size = Dimensions.get("window").width / numColumns;
 const styles = StyleSheet.create({
   itemContainer: {

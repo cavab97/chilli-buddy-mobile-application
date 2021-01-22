@@ -6,13 +6,15 @@ import { CheckIn } from "@components/templates";
 
 const RADIUS = 50;
 const NUM = 7;
-import { Actions } from "react-native-router-flux";
 
 import styles from "./styles";
+
+import { Actions } from "react-native-router-flux";
 
 class index extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       tableData24: [],
       tableData4: [],
@@ -52,6 +54,7 @@ class index extends Component {
       });
     }
     this.setState({ tableData4: temp });
+    this.state = { date: [] };
   }
 
   componentWillMount() {
@@ -64,10 +67,6 @@ class index extends Component {
     this.setState({ date: tempdate });
     // this.setState({ myState: [] }); //this line must be removed
     //i deliberately leave mystate empty so that i can push new array later
-  }
-
-  onClickCheckIn() {
-    console.log("trigger");
   }
 
   onPressCheckIn() {

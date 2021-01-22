@@ -66,6 +66,10 @@ class index extends Component {
     Actions.CheckIn();
   }
 
+  onPressCheckIn() {
+    Actions.CheckIn();
+  }
+
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
     const filteredDatasource = this.filteredDatasource();
