@@ -63,6 +63,7 @@ export default ({
   popUpImage,
   onClosePopUp,
   onCheckInPressed,
+  checkIn,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -119,7 +120,6 @@ export default ({
             </TouchableOpacity>
           </View>
         </View>
-        <View></View>
       </Modal>
     ) : (
       <View />
@@ -215,23 +215,25 @@ export default ({
               containerStyle={styles.infoContainer}
             />
           )}
-          <View style={{ height: Constants.statusBarHeight }} />
-          <View style={styles.subContainer1}>
-            {readLoadingHeaderImages ? (
-              <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
-                <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
-              </ContentLoader>
-            ) : (
-              <ImageSwiper
-                style={styles}
-                slider={slider}
-                autoplayTime={5}
-                autoplay={true}
-                noImageSlider={noImageHeaderSlider}
-                condition={slider.length > 0}
-                onPressImage={onPressImage}
-              />
-            )}
+          <View>
+            <View style={{ height: Constants.statusBarHeight }} />
+            <View style={styles.subContainer1}>
+              {readLoadingHeaderImages ? (
+                <ContentLoader spçeed={1} height={250} backgroundColor="#d9d9d9">
+                  <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
+                </ContentLoader>
+              ) : (
+                <ImageSwiper
+                  style={styles}
+                  slider={slider}
+                  autoplayTime={5}
+                  autoplay={true}
+                  noImageSlider={noImageHeaderSlider}
+                  condition={slider.length > 0}
+                  onPressImage={onPressImage}
+                />
+              )}
+            </View>
           </View>
 
           {readLoadingHeaderImages ? (

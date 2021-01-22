@@ -271,6 +271,9 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Scene key="Bookmark" component={Bookmark} title="Bookmark" titleStyle={styles.title} />
       </Stack>
 
+      <Stack key="CheckIn" back>
+        <Scene key="CheckIn" component={CheckIn} title="CheckIn" titleStyle={styles.title} />
+      </Stack>
       <Stack key="Voucher" back>
         <Scene key="Voucher" component={Voucher} title="Vouchers" titleStyle={styles.title} />
       </Stack>

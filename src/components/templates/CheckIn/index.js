@@ -1,4 +1,11 @@
 import React from "react";
+
+// import styles from "./styles";
+import { StyleSheet, Dimensions } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { CheckInButton } from "../../molecules";
+
 import styles from "./styles";
 import { SignoutButton } from "../../../components/molecules";
 
@@ -18,27 +25,7 @@ const calenderEmpty = require("../../../assets/chilliBuddyCheckin/blackColor_bac
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-// function Voucher({ title, salesPoint, expiredDate, onPress }) {
-//   const { image, card, columnOneText, columnOne, columnTwo } = styles;
-
-//   return (
-//     <TouchableOpacity onPress={onPress}>
-//       <Card style={{ width: "95%" }}>
-//         <CardSection style={card}>
-//           <View style={columnOne}>
-//             <Text style={columnOneText}>{salesPoint}</Text>
-//           </View>
-//           <View style={columnTwo}>
-//             <Text style={{ fontWeight: "bold", fontSize: 18 }}>{title}</Text>
-//             <Text>Valid until {expiredDate}</Text>
-//           </View>
-//         </CardSection>
-//       </Card>
-//     </TouchableOpacity>
-//   );
-// }
-
-function Grid({ data }) {
+function Grid({ data = [], numColumns }) {
   return (
     <FlatList
       numColumns={7}

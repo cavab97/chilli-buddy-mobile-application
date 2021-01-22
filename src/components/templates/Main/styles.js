@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     minHeight: (windowWidth / 800) * 600,
     maxHeight: (windowWidth / 800) * 600,
   },
+
   subContainer2: {
     alignItems: "center",
     flex: 1,
@@ -53,6 +54,27 @@ const styles = StyleSheet.create({
   imageTopStyle: {
     width: "100%",
     height: "100%",
+  },
+  floatingCheckInButton: {
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 70,
+    position: "absolute",
+    top: 10,
+    right: 10,
+    height: 70,
+    backgroundColor: "#D60000",
+    borderRadius: 100,
+    borderColor: Colors.SECONDARY,
+  },
+  floatingCheckInButtonTitle: {
+    fontSize: 9,
+    fontWeight: "bold",
+    color: "white",
+    paddingTop: 4,
+    textAlign: "center",
   },
   //--join now--------------------------------------------
   sectionTitle: {

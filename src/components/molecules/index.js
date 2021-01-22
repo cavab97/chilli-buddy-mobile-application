@@ -10,6 +10,7 @@ export * from "./LoginTextField";
 export * from "./SignoutButton";
 export * from "./TACTextInput";
 export * from "./RedeemButton";
+export * from "./CheckInButton";
 
 export { default as Nav } from "./Nav";
 export { default as Tab } from "./Tab";

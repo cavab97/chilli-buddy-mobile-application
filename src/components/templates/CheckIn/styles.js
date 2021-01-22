@@ -1,5 +1,6 @@
 import { Dimensions } from "react-native";
 import { StyleSheet } from "react-native";
+
 const numColumns = 7;
 const size = Dimensions.get("window").width / numColumns;
 const styles = StyleSheet.create({

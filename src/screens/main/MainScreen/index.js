@@ -62,6 +62,10 @@ class index extends Component {
     Actions.CheckIn();
   }
 
+  onPressCheckIn() {
+    Actions.CheckIn();
+  }
+
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
     const filteredDatasource = this.filteredDatasource();
@@ -294,6 +298,7 @@ class index extends Component {
         popUpImage={this.state.popUpImage}
         onClosePopUp={this.onClosePopUp.bind(this)}
         onCheckInPressed={this.onCheckInPressed.bind(this)}
+        checkIn={this.onPressCheckIn.bind(this)}
       />
     );
   }
