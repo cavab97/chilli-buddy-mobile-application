@@ -382,7 +382,7 @@ const SingleMerchant = ({
                     Linking.openURL("https://" + dataSource.websiteUrl);
                   }}
                 />
-                // </View>  UNCOMMENT VIEW
+                // </View>  UNCOMMENT VIEW‹
               }
             </View>
           </View>

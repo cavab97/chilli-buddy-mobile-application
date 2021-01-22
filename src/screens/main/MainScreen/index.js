@@ -58,6 +58,9 @@ class index extends Component {
   onPressCategory(id, no) {
     Actions.Shops({ selectedCategory: id, number: no });
   }
+  onCheckInPressed() {
+    Actions.CheckIn();
+  }
 
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
@@ -290,6 +293,7 @@ class index extends Component {
         openModal={this.props.openModal}
         popUpImage={this.state.popUpImage}
         onClosePopUp={this.onClosePopUp.bind(this)}
+        onCheckInPressed={this.onCheckInPressed.bind(this)}
       />
     );
   }

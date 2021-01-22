@@ -62,6 +62,7 @@ export default ({
   openModal,
   popUpImage,
   onClosePopUp,
+  onCheckInPressed,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -198,87 +199,93 @@ export default ({
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-      //refresh main page function
-      //refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
-    >
-      <View style={styles.container}>
-        {readFail && (
-          <InfoBox
-            title="Memo"
-            message={`Your network connection are not healthy`}
-            titleStyle={styles.infoTitle}
-            messageStyle={styles.infoSubtitle}
-            containerStyle={styles.infoContainer}
-          />
-        )}
-        <View style={{ height: Constants.statusBarHeight }} />
-        <View style={styles.subContainer1}>
-          {readLoadingHeaderImages ? (
-            <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
-              <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
-            </ContentLoader>
-          ) : (
-            <ImageSwiper
-              style={styles}
-              slider={slider}
-              autoplayTime={5}
-              autoplay={true}
-              noImageSlider={noImageHeaderSlider}
-              condition={slider.length > 0}
-              onPressImage={onPressImage}
+    <View>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        //refresh main page function
+        //refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
+      >
+        <View style={styles.container}>
+          {readFail && (
+            <InfoBox
+              title="Memo"
+              message={`Your network connection are not healthy`}
+              titleStyle={styles.infoTitle}
+              messageStyle={styles.infoSubtitle}
+              containerStyle={styles.infoContainer}
             />
           )}
+          <View style={{ height: Constants.statusBarHeight }} />
+          <View style={styles.subContainer1}>
+            {readLoadingHeaderImages ? (
+              <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
+                <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
+              </ContentLoader>
+            ) : (
+              <ImageSwiper
+                style={styles}
+                slider={slider}
+                autoplayTime={5}
+                autoplay={true}
+                noImageSlider={noImageHeaderSlider}
+                condition={slider.length > 0}
+                onPressImage={onPressImage}
+              />
+            )}
+          </View>
+
+          {readLoadingHeaderImages ? (
+            <View />
+          ) : randomAdPic !== undefined ? (
+            <AdvertisementPopUp />
+          ) : (
+            <View />
+          )}
+
+          {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
+
+          {readLoadingCategoryList ? (
+            <View style={styles.subContainer2}>
+              <View>
+                <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
+              </View>
+              <VirtualizedList
+                vertical
+                showsHorizontalScrollIndicator={false}
+                data={DATA}
+                renderItem={({ index }) => <CardListLoading index={index} />}
+                keyExtractor={(item) => item.key}
+                getItemCount={() => {
+                  return 6;
+                }}
+                getItem={getItem}
+              />
+            </View>
+          ) : dataSource2.length != 0 ? (
+            <View style={styles.subContainer2}>
+              {/* {randomAdPic !== undefined && <AdvertisementPopUp />} */}
+              <View>
+                <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
+              </View>
+              <FlatList
+                vertical
+                showsHorizontalScrollIndicator={false}
+                data={dataSource2}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
+                scrollEnabled={dataSource2.length > 1 ? true : false}
+              />
+              <View style={{ height: 25 }} />
+            </View>
+          ) : (
+            <View style={styles.subContainer2}></View>
+          )}
         </View>
-
-        {readLoadingHeaderImages ? (
-          <View />
-        ) : randomAdPic !== undefined ? (
-          <AdvertisementPopUp />
-        ) : (
-          <View />
-        )}
-
-        {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
-
-        {readLoadingCategoryList ? (
-          <View style={styles.subContainer2}>
-            <View>
-              <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-            </View>
-            <VirtualizedList
-              vertical
-              showsHorizontalScrollIndicator={false}
-              data={DATA}
-              renderItem={({ index }) => <CardListLoading index={index} />}
-              keyExtractor={(item) => item.key}
-              getItemCount={() => {
-                return 6;
-              }}
-              getItem={getItem}
-            />
-          </View>
-        ) : dataSource2.length != 0 ? (
-          <View style={styles.subContainer2}>
-            {/* {randomAdPic !== undefined && <AdvertisementPopUp />} */}
-            <View>
-              <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-            </View>
-            <FlatList
-              vertical
-              showsHorizontalScrollIndicator={false}
-              data={dataSource2}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
-              scrollEnabled={dataSource2.length > 1 ? true : false}
-            />
-            <View style={{ height: 25 }} />
-          </View>
-        ) : (
-          <View style={styles.subContainer2}></View>
-        )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
+        <CustomIcon name="ranking" size={20} color="white" />
+        <Text style={styles.floatingShopButtonTitle}>CHECK IN</Text>
+      </TouchableOpacity>
+    </View>
   );
 };

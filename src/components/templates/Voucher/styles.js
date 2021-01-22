@@ -2,30 +2,48 @@ import { StyleSheet, ColorPropType, Platform } from "react-native";
 import { Colors, Mixins } from "../../../settings/styles/theme";
 
 const styles = StyleSheet.create({
-    card: {
-        width: "100%",
-        height: 150,
-        borderBottomWidth: 0,
-        //backgroundColor: Colors.PRIMARY,
-        borderRadius: 5
-    },
-    columnOne: {
-        backgroundColor: '#d60000',
-        padding: 10,
-        width: '30%',
-        justifyContent: 'center', 
-        alignItems: 'center'
-    },
-    columnOneText: {
-        textTransform: 'uppercase', 
-        fontWeight: 'bold', 
-        color: '#fff',
-        fontSize: 18,
-        fontFamily: "RobotoBold",
-    },
-    columnTwo: {
-        padding: 10
-    },
+  card: {
+    width: "100%",
+    height: 150,
+    borderBottomWidth: 0,
+    //backgroundColor: Colors.PRIMARY,
+    borderRadius: 5,
+  },
+  columnOne: {
+    backgroundColor: "#d60000",
+    padding: 10,
+    width: "30%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  columnOneText: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    color: "#fff",
+    fontSize: 18,
+    fontFamily: "RobotoBold",
+  },
+  columnTwoText: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    color: "#fff",
+    fontSize: 10,
+    fontFamily: "RobotoBold",
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  columnTwo: {
+    padding: 10,
+  },
+  columnThree: {
+    backgroundColor: Colors.SECONDARY,
+    padding: 2,
+    justifyContent: "center",
+    width: "100%",
+    top: 45,
+    textAlign: "center",
+    alignContent: "center",
+  },
   image: {
     width: "100%",
     height: 250,
@@ -148,6 +166,23 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.WHITE,
     fontFamily: "RobotoBold",
+  },
+
+  //image logo
+  logoImage: {
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+    bottom: 12,
+  },
+
+  //status invalid ui
+  columnOneInvalid: {
+    backgroundColor: "grey",
+    padding: 10,
+    width: "30%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

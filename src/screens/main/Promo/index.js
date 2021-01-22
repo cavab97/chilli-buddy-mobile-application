@@ -121,9 +121,6 @@ class index extends Component {
   onMerchantPressed(item) {
     Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
   }
-  onVoucherPressed(item) {
-    Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
-  }
 
   onCategoryChange = (value) => {
     this.setState({ selectedCategory: value, selectedTag: "All" });
@@ -185,7 +182,6 @@ class index extends Component {
         onBookmarkPressed={this.onBookmarkPressed.bind(this)}
         onCategoryChange={this.onCategoryChange.bind(this)}
         onTagChange={this.onTagChange.bind(this)}
-        onVoucherPressed={this.onVoucherPressed.bind(this)}
       />
     );
   }

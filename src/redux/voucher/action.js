@@ -7,6 +7,9 @@ const actions = {
   READ_FROM_DATABASE: type + "READ_FROM_DATABASE",
   READ_FROM_DATABASE_SUCCESS: type + "READ_FROM_DATABASE_SUCCESS",
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
+  SUBMIT_TO_BACKEND: type + "SUBMIT_TO_BACKEND",
+  SUBMIT_TO_BACKEND_SUCCESS: type + "SUBMIT_TO_BACKEND_SUCCESS",
+  SUBMIT_TO_BACKEND_ERROR: type + "SUBMIT_TO_BACKEND_ERROR",
 };
 
 //export const COLLECTION = "promotionPackaging0";
@@ -26,15 +29,23 @@ export function readFromDatabase() {
         const temp = [
           {
             id: "1",
-            title: "Buy one get one free",
+            title: "RM12 Off",
             salesPoint: "10%",
+            amount: "RM20",
+            description: "Happy New Year Big Offer",
             expiredDate: moment().format("d/mm/yy"),
+            MerchantName: "Marslab Solution Sdn.Bhd",
+            status: true,
           },
           {
             id: "2",
-            title: "Buy one get one free",
+            title: "Year End Sales ",
             salesPoint: "10%",
+            amount: "RM20",
+            description: "Festival Moon",
             expiredDate: moment().format("d/mm/yy"),
+            MerchantName: "The Store",
+            status: false,
           },
         ];
         // const vouchers = await temp.readObjects({
@@ -66,6 +77,39 @@ export function readFromDatabase() {
         reject(error);
         dispatch({
           type: actions.READ_FROM_DATABASE_ERROR,
+          payload: { error },
+        });
+      }
+    });
+  };
+}
+
+export function submitToBackend(data, actionName) {
+  return (dispatch, getState) => {
+    dispatch({ type: actions.SUBMIT_TO_BACKEND });
+    return new Promise(async (resolve, reject) => {
+      let result = {};
+
+      const { routeId } = data;
+      const routeIds = [routeId];
+
+      try {
+        switch (actionName) {
+          case "create":
+            result = await routeTicketBackendServices.create({ data: { routeIds } });
+            break;
+        }
+
+        resolve(result);
+        dispatch({
+          type: actions.SUBMIT_TO_BACKEND_SUCCESS,
+          payload: { data: result },
+        });
+      } catch (error) {
+        console.log(error);
+        reject(error);
+        dispatch({
+          type: actions.SUBMIT_TO_BACKEND_ERROR,
           payload: { error },
         });
       }

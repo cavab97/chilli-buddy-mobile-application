@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./styles";
+import { SignoutButton } from "../../../components/molecules";
 
 import {
   ActivityIndicator,
@@ -13,6 +14,7 @@ import {
 } from "@components/atoms";
 
 import { Card, CardSection } from "@components/molecules";
+const calenderEmpty = require("../../../assets/chilliBuddyCheckin/blackColor_background_empty.png");
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -39,20 +41,37 @@ import Icon from "react-native-vector-icons/FontAwesome";
 function Grid({ data }) {
   return (
     <FlatList
+      numColumns={7}
       data={data}
       renderItem={({ item }) => (
         <View style={styles.itemContainer}>
           <Text style={styles.item}>{item.value}</Text>
+          <Image
+            source={require("../../../assets/chilliBuddyCheckin/blackColor_background_empty.png")}
+            style={styles.logoImage}
+          />
         </View>
       )}
       keyExtractor={(item) => item.id}
-      numColumns={numColumns}
     />
   );
 }
 
-const CheckIn = ({ data }) => {
-  return <Grid data={data} />;
+const CheckIn = ({ data, onPressCheckIn, submitLoading }) => {
+  return (
+    <View>
+      <Grid data={data} />
+      <View style={styles.buttonStyles}>
+        <SignoutButton
+          style={styles.checkinButton}
+          onPress={onPressCheckIn}
+          loading={submitLoading}
+        >
+          Check in
+        </SignoutButton>
+      </View>
+    </View>
+  );
 };
 
 export { CheckIn };

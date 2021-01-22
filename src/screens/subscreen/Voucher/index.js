@@ -22,9 +22,6 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.renderFooter = this.renderFooter.bind(this);
-    this.state = {
-      refreshing: false,
-    };
     this.handleRefresh = this.handleRefresh.bind(this);
   }
   componentDidMount = async () => {
@@ -33,9 +30,7 @@ class index extends Component {
   };
 
   handleRefresh = async () => {
-    this.setState({ refreshing: true });
     await this.props.readFromDatabase();
-    this.setState({ refreshing: false });
   };
 
   renderFooter({ empty }) {
@@ -61,15 +56,20 @@ class index extends Component {
   }
 
   onVoucherPressed(item) {
-    Actions.SingleVoucher({ distance: item.distance });
+    Actions.SingleVoucher({
+      voucherTitle: item.title,
+      voucherSalesPoint: item.salesPoint,
+      vocuherExpiredDate: item.expiredDate,
+      voucherMerchantName: item.MerchantName,
+      voucherDescription: item.description,
+      voucherStatus: item.status,
+    });
   }
 
   render() {
     // const readBookmark = this.props.bookmarkState.readBookmark;
     // const submitLoading = this.props.bookmarkState.submitLoading;
-    const vouchers = this.props.voucherState.vouchers;
-
-    console.log(this.state.refreshing);
+    const vouchers = this.props.vouchers;
 
     return (
       <VoucherList
@@ -78,7 +78,6 @@ class index extends Component {
         renderFooter={this.renderFooter.bind(this)}
         onVoucherPressed={this.onVoucherPressed.bind(this)}
         handleRefresh={this.handleRefresh.bind(this)}
-        state={this.state}
       />
     );
   }
@@ -87,9 +86,9 @@ class index extends Component {
 const mapStateToProps = (state) => {
   const { categories, tags } = state.Settings;
   const { vouchers } = state.Voucher;
-  const voucherState = state.Voucher;
+  const { readLoading } = state.Voucher;
 
-  return { categories, tags, vouchers, voucherState };
+  return { categories, tags, vouchers, readLoading };
 };
 
 export default connect(mapStateToProps, {

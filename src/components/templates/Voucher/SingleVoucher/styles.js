@@ -1,5 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
+
+const HEIGHT = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   wrapper: {},
@@ -23,14 +25,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
   },
-  posterArea: {
-    flex: 1,
-    height: 250,
-  },
-  subContainer1: {
-    flex: 1,
-    height: 250,
-  },
+
   actionDotStyle: {
     // backgroundColor: '#ffffff',
     width: 6,
@@ -70,19 +65,37 @@ const styles = StyleSheet.create({
   detailArea: {
     width: "100%",
     paddingLeft: "5%",
+    height: "100%",
     //paddingRight: "5%", uncomment this at social media icon
     paddingTop: "5%",
     marginTop: 0,
-    marginBottom: 20,
+    marginBottom: 40,
     alignSelf: "center",
     backgroundColor: "white",
+    shadowRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    position: "relative",
+    borderWidth: 0,
   },
-  title: {
+  titleStyle: {
+    // fontSize: 25,
+    // fontWeight: "700",
+    // fontFamily: "RobotoRegular",
+    // marginBottom: 10,
+    // marginTop: 10,
+    // paddingTop: 40,
+    marginTop: 16,
+    paddingVertical: 8,
+    borderWidth: 4,
+    borderColor: "#20232a",
+    borderRadius: 6,
+    // backgroundColor: "#61dafb",
+    color: "#20232a",
+    textAlign: "center",
     fontSize: 25,
-    fontWeight: "700",
-    fontFamily: "RobotoRegular",
-    marginBottom: 10,
-    marginTop: 10,
+    fontWeight: "bold",
   },
   subTitle: {
     fontSize: 18,
@@ -104,6 +117,7 @@ const styles = StyleSheet.create({
   },
   setRow: {
     flexDirection: "row",
+    paddingTop: 10,
   },
   operatingHour: {},
   operatingContainer: {
@@ -213,6 +227,115 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     marginBottom: 8,
     marginLeft: 22,
+  },
+
+  // button style
+  RedeemButtonStyle: {
+    alignSelf: "center",
+    backgroundColor: Colors.SUCCESS,
+    borderRadius: 20,
+    bottom: 0,
+    position: "relative",
+  },
+
+  RedeemInvalidButtonStyle: {
+    alignSelf: "center",
+    backgroundColor: "grey",
+    borderRadius: 20,
+    bottom: 0,
+    position: "relative",
+  },
+
+  subContainer1: {
+    height: "100%",
+  },
+
+  posterArea: {
+    height: "20%",
+  },
+
+  ///card
+
+  columnOne: {
+    borderRadius: 30,
+    backgroundColor: "purple",
+    padding: 0,
+    width: "30%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  columnOneText: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    color: "#fff",
+    fontSize: 18,
+    fontFamily: "RobotoBold",
+  },
+
+  columnTwoText: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    color: "#fff",
+    fontSize: 15,
+    fontFamily: "RobotoBold",
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  columnTwo: {
+    padding: 10,
+  },
+  columnThree: {
+    backgroundColor: Colors.PRIMARY,
+    padding: 5,
+    borderRadius: 10,
+    width: "100%",
+    bottom: 0,
+    // textAlign: "center",
+    // alignContent: "center",
+  },
+  card: {
+    width: "100%",
+    height: "100%",
+    borderBottomWidth: 0,
+    //backgroundColor: Colors.PRIMARY,
+    borderRadius: 0,
+  },
+  cardContainer: {
+    width: "90%",
+    position: "absolute",
+    height: "18%",
+    padding: Platform.OS === "ios" ? 10 : 20,
+    marginBottom: Platform.OS === "ios" ? 10 : 30,
+    borderRadius: 20,
+    marginTop: 60,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+  },
+  logoImage: {
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+    bottom: 12,
+  },
+  titleBox: {
+    paddingTop: 20,
+    backgroundColor: "white",
+    width: "95%",
+    justifyContent: "center",
+    textAlign: "center",
+  },
+
+  //status
+  statusActiveText: {
+    textTransform: "uppercase",
+    color: Colors.SUCCESS,
+  },
+  statusDeactiveText: {
+    textTransform: "uppercase",
+    color: Colors.PRIMARY,
   },
 });
 

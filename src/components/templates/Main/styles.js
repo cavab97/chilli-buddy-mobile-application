@@ -301,6 +301,28 @@ const styles = StyleSheet.create({
   adsImageContainer: {
     //borderWidth: 1,
   },
+
+  floatingShopButtonTitle: {
+    fontSize: 9,
+    fontWeight: "bold",
+    color: "white",
+    paddingTop: 4,
+    textAlign: "center",
+  },
+  floatingShopButton: {
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 70,
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+    height: 70,
+    backgroundColor: "#D60000",
+    borderRadius: 100,
+    borderColor: Colors.SECONDARY,
+  },
 });
 
 export default styles;

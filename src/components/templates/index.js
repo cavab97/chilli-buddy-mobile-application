@@ -24,3 +24,6 @@ export * from "./Shop/SingleMerchant";
 export * from "./Bookmark";
 export * from "./Voucher";
 export * from "./Voucher/SingleVoucher";
+export * from "./Voucher/SingleVoucherRedeem";
+export * from "./Voucher/SingleVoucherErrorModal";
+export * from "./CheckIn";

@@ -144,9 +144,7 @@ class index extends Component {
 
   onBookmarkPressed = async (item) => {
     const click = item.isBookmark;
-    console.log("click: " + click);
     item.isBookmark = !click;
-    console.log("become: " + item.isBookmark);
 
     const shopId = item.promotion.shop.id;
     const promoId = item.promotion.id;

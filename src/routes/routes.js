@@ -23,6 +23,8 @@ import Amount from "../screens/subscreen/payment/Amount";
 import PaymentDetail from "../screens/subscreen/payment/Method";
 import CameraReceipt from "../screens/subscreen/payment/CameraReceipt";
 import SubmitReceipt from "../screens/subscreen/payment/SubmitReceipt";
+import SingleVoucherRedeem from "../screens/subscreen/Voucher/SingleVoucherRedeem";
+import RedeemedVoucherScreen from "../screens/subscreen/Voucher/RedeemedVoucherScreen";
 
 import Rules from "../screens/subscreen/Rules";
 
@@ -45,7 +47,6 @@ import LoginTACScreen from "../screens/auth/TAC";
 import styles from "./styles";
 import * as icons from "./icons";
 import { Colors } from "../settings/styles/theme";
-import { StatusBar } from "@components/atoms";
 
 export const authRoute = () => {
   return <Scene key="loginTAC" component={LoginTACScreen} hideNavBar />;
@@ -271,14 +272,31 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="Voucher" back>
-        <Scene key="Voucher" component={Voucher} title="Voucher" titleStyle={styles.title} />
+        <Scene key="Voucher" component={Voucher} title="Vouchers" titleStyle={styles.title} />
       </Stack>
 
       <Stack key="SingleVoucher" back>
         <Scene
           key="SingleVoucher"
           component={SingleVoucher}
-          title="SingleVoucher"
+          title={SingleVoucher.title}
+          titleStyle={styles.title}
+        />
+      </Stack>
+
+      <Stack key="SingleVoucherRedeem" back>
+        <Scene
+          key="SingleVoucherRedeem"
+          component={SingleVoucherRedeem}
+          title="SingleVoucherRedeem"
+          titleStyle={styles.title}
+        />
+      </Stack>
+      <Stack key="RedeemedVoucherScreen" back>
+        <Scene
+          key="RedeemedVoucherScreen"
+          component={RedeemedVoucherScreen}
+          title="RedeemedVoucherScreen"
           titleStyle={styles.title}
         />
       </Stack>

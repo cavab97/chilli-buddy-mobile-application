@@ -1,12 +1,8 @@
 import actions from "./action";
 
 const initialState = {
-  permissionVerificationLoading: false,
-  permissionVerificationError: false,
-  permissions: {},
-
   readLoading: false,
-  readBookmark: false,
+  readVoucher: false,
   readError: false,
   submitLoading: false,
   submitError: false,
@@ -96,23 +92,6 @@ const initialState = {
 
 const voucherReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case actions.PERMISSION_VERIFICATION:
-      return { ...state, permissionVerificationLoading: true, permissionVerificationError: false };
-
-    case actions.PERMISSION_VERIFICATION_SUCCESS:
-      return {
-        ...state,
-        permissionVerificationLoading: false,
-        permissions: payload.data.permissions,
-      };
-
-    case actions.PERMISSION_VERIFICATION_ERROR:
-      return {
-        ...state,
-        permissionVerificationLoading: false,
-        permissionVerificationError: payload.error,
-      };
-
     case actions.READ_FROM_DATABASE:
       console.log("read database");
       return { ...state, readLoading: true };
@@ -129,7 +108,7 @@ const voucherReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         submitLoading: true,
-        readBookmark: true,
+        readVoucher: true,
         submitError: initialState.submitError,
         submitResult: initialState.submitResult,
       };
