@@ -22,4 +22,9 @@ export * from "./Prizes";
 export * from "./Shop/ShopList";
 export * from "./Shop/SingleMerchant";
 export * from "./Bookmark";
+<<<<<<< HEAD
 export * from "./CheckIn";
+=======
+export * from "./Voucher";
+export * from "./Voucher/SingleVoucher";
+>>>>>>> ffb513a687754a08769b93aa240820e8ba9031b4

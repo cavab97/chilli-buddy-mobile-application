@@ -36,6 +36,11 @@ import LuckyDrawWinnerRanking from "../screens/subscreen/rank/LuckyDrawWinnerRan
 import RedeemPage from "../screens/subscreen/RedeemPage";
 import HelpCenter from "../screens/subscreen/HelpCenter";
 import Bookmark from "../screens/subscreen/Bookmark";
+<<<<<<< HEAD
+=======
+import Voucher from "../screens/subscreen/Voucher";
+import SingleVoucher from "../screens/subscreen/Voucher/SingleVoucher";
+>>>>>>> ffb513a687754a08769b93aa240820e8ba9031b4
 import CheckIn from "../screens/subscreen/CheckIn";
 
 import LoginTACScreen from "../screens/auth/TAC";
@@ -152,6 +157,10 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Scene key="Amount" component={Amount} hideNavBar />
       </Stack>
 
+      <Stack key="CheckIn" back>
+        <Scene key="CheckIn" component={CheckIn} title="CheckIn" />
+      </Stack>
+
       <Stack key="PaymentDetail" back>
         <Scene
           key="PaymentDetail"
@@ -264,8 +273,22 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Scene key="Bookmark" component={Bookmark} title="Bookmark" titleStyle={styles.title} />
       </Stack>
 
+<<<<<<< HEAD
       <Stack key="CheckIn" back>
         <Scene key="CheckIn" component={CheckIn} title="CheckIn" titleStyle={styles.title} />
+=======
+      <Stack key="Voucher" back>
+        <Scene key="Voucher" component={Voucher} title="Voucher" titleStyle={styles.title} />
+      </Stack>
+
+      <Stack key="SingleVoucher" back>
+        <Scene
+          key="SingleVoucher"
+          component={SingleVoucher}
+          title="SingleVoucher"
+          titleStyle={styles.title}
+        />
+>>>>>>> ffb513a687754a08769b93aa240820e8ba9031b4
       </Stack>
     </Stack>
   );

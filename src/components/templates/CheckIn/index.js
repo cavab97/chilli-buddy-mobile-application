@@ -1,9 +1,13 @@
 import React from "react";
+<<<<<<< HEAD
 // import styles from "./styles";
 import { StyleSheet, Dimensions } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { CheckInButton } from "../../molecules";
+=======
+import styles from "./styles";
+>>>>>>> ffb513a687754a08769b93aa240820e8ba9031b4
 
 import {
   ActivityIndicator,
@@ -20,6 +24,7 @@ import { Card, CardSection } from "@components/molecules";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
+<<<<<<< HEAD
 const width = Dimensions.get("window").width / 7;
 const height = Dimensions.get("window").height / 14;
 const styles = StyleSheet.create({
@@ -42,6 +47,29 @@ const styles = StyleSheet.create({
 });
 
 function Grid({ data = [], numColumns }) {
+=======
+// function Voucher({ title, salesPoint, expiredDate, onPress }) {
+//   const { image, card, columnOneText, columnOne, columnTwo } = styles;
+
+//   return (
+//     <TouchableOpacity onPress={onPress}>
+//       <Card style={{ width: "95%" }}>
+//         <CardSection style={card}>
+//           <View style={columnOne}>
+//             <Text style={columnOneText}>{salesPoint}</Text>
+//           </View>
+//           <View style={columnTwo}>
+//             <Text style={{ fontWeight: "bold", fontSize: 18 }}>{title}</Text>
+//             <Text>Valid until {expiredDate}</Text>
+//           </View>
+//         </CardSection>
+//       </Card>
+//     </TouchableOpacity>
+//   );
+// }
+
+function Grid({ data }) {
+>>>>>>> ffb513a687754a08769b93aa240820e8ba9031b4
   return (
     <FlatList
       data={data}
@@ -56,6 +84,7 @@ function Grid({ data = [], numColumns }) {
   );
 }
 
+<<<<<<< HEAD
 const CheckIn = ({ data, submitLoading, numColumns, dataSource, onClickCheckIn }) => {
   return (
     <View style={{ height: "100%" }}>
@@ -72,6 +101,10 @@ const CheckIn = ({ data, submitLoading, numColumns, dataSource, onClickCheckIn }
          </SignoutButton> */}
     </View>
   );
+=======
+const CheckIn = ({ data }) => {
+  return <Grid data={data} />;
+>>>>>>> ffb513a687754a08769b93aa240820e8ba9031b4
 };
 
 export { CheckIn };

@@ -1,3 +1,7 @@
 [submodule "src/marslab-library-react-native"]
 	path = src/marslab-library-react-native
+<<<<<<< HEAD
 url=https://cavab97@gitlab.com/development-team13/marslibrary/react-native.git
+=======
+url=https://calynlow@gitlab.com/development-team13/marslibrary/react-native.git
+>>>>>>> ffb513a687754a08769b93aa240820e8ba9031b4

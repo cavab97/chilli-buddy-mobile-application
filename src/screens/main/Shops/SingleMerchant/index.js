@@ -56,13 +56,9 @@ class index extends Component {
       }
       this.setState({ getLocationLoading: false });
     });
-    // this.calculateDistance(this.props.shopState.shop.l);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // this.calculateDistance(this.props.shopState.shop.l);
-    //console.log("componentDidUpdate");
-    //console.log(this.state.location);
     if (
       //Shop location changed
       prevProps.shopState.shop.l.U !== this.props.shopState.shop.l.U ||

@@ -73,9 +73,15 @@ const getEnvVars = (env = Constants.manifest.releaseChannel) => {
 
   if (__DEV__ || env === "dev") {
     console.log("running in development mode");
+<<<<<<< HEAD
     return ENV.dev;
     //return ENV.staging;
     // return ENV.prod;
+=======
+    // return ENV.dev;
+    return ENV.staging;
+    //return ENV.prod;
+>>>>>>> ffb513a687754a08769b93aa240820e8ba9031b4
   } else if (env === "staging") {
     console.log("running in staging mode");
     return ENV.staging;
