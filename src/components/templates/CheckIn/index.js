@@ -25,18 +25,20 @@ const calenderEmpty = require("../../../assets/chilliBuddyCheckin/blackColor_bac
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-function Grid({ data = [], numColumns }) {
+function Grid({ data = [], numColumns, data4 }) {
   return (
     <FlatList
-      numColumns={7}
+      numColumns={3}
       data={data}
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <View style={styles.itemContainer}>
-          <Text style={styles.item}>{item.value}</Text>
-          <Image
-            source={require("../../../assets/chilliBuddyCheckin/blackColor_background_empty.png")}
-            style={styles.logoImage}
-          />
+          <Text style={styles.dayStyle}>{item.value}</Text>
+          <TouchableOpacity>
+            <Image
+              source={require("../../../assets/chilliBuddyCheckin/small_blackColor_background_empty.png")}
+              style={styles.logoImage}
+            />
+          </TouchableOpacity>
         </View>
       )}
       keyExtractor={(item) => item.id}
@@ -44,11 +46,15 @@ function Grid({ data = [], numColumns }) {
   );
 }
 
-const CheckIn = ({ data, onPressCheckIn, submitLoading }) => {
+const CheckIn = ({ data, onPressCheckIn, submitLoading, data4 }) => {
   return (
-    <View>
-      <Grid data={data} />
-      <View style={styles.buttonStyles}>
+    <View style={styles.CheckinContainer}>
+      <View>
+        <Text>Check-In</Text>
+        <Text>Stand the chance to win a random a random prize by checking ion ev </Text>
+      </View>
+      <Grid data={data} data4={data4} />
+      {/* <View style={styles.buttonStyles}>
         <SignoutButton
           style={styles.checkinButton}
           onPress={onPressCheckIn}
@@ -56,7 +62,7 @@ const CheckIn = ({ data, onPressCheckIn, submitLoading }) => {
         >
           Check in
         </SignoutButton>
-      </View>
+      </View> */}
     </View>
   );
 };

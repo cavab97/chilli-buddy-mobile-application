@@ -14,25 +14,44 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableData: [],
+      tableData24: [],
+      tableData4: [],
     };
   }
 
   componentDidMount = async () => {
-    this.table();
+    this.table24();
+    this.tableData4();
     await this.props.readFromDatabase();
   };
 
-  table() {
+  table24() {
     let temp = [];
-    for (let i = 0; i < 28; i++) {
+    for (let i = 1; i < 25; i++) {
+      if (i % 7 === 0) {
+        temp.push({
+          id: i,
+          value: "Day" + i,
+        });
+      } else {
+        temp.push({
+          id: i,
+          value: "Day" + i,
+        });
+      }
+    }
+    this.setState({ tableData24: temp });
+  }
+
+  tableData4() {
+    let temp = [];
+    for (let i = 1; i < 5; i++) {
       temp.push({
         id: i,
-        value: i,
+        value: "Day" + i * 7,
       });
     }
-    console.log(temp);
-    this.setState({ tableData: temp });
+    this.setState({ tableData4: temp });
   }
 
   componentWillMount() {
@@ -73,10 +92,11 @@ class index extends Component {
     const { id } = this.props.CheckInState;
     console.log("read data");
     console.log(id);
-    const { tableData } = this.state;
+    const { tableData24, tableData4 } = this.state;
     return (
       <CheckIn
-        data={tableData}
+        data={tableData24}
+        data4={tableData4}
         onPressCheckIn={this.onPressCheckIn.bind(this)}
         submitLoading={submitLoading}
       />
