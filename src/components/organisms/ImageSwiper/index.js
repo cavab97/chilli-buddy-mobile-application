@@ -1,5 +1,5 @@
 import React from "react";
-
+import styles from "./styles";
 import { Image, Swiper, View, TouchableOpacity } from "../../atoms";
 
 const ImageSwiper = ({
@@ -33,19 +33,22 @@ const ImageSwiper = ({
       {condition ? (
         slider.map((data, index) => {
           return (
-            <TouchableOpacity
-              key={index}
-              activeOpacity={0.6}
-              onPress={onPressImage.bind(this, index)}
-            >
-              {/* <View key={index} style={style.subContainer1}> */}
-              <Image
-                source={{ uri: data.imageUri }}
-                style={style.imageTopStyle}
-                resizeMode={resizeMode}
-              />
-              {/* </View> */}
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                key={index}
+                activeOpacity={0.6}
+                onPress={onPressImage.bind(this, index)}
+              >
+                {/* <View key={index} style={style.subContainer1}> */}
+                <Image
+                  source={{ uri: data.imageUri }}
+                  style={style.imageTopStyle}
+                  resizeMode={resizeMode}
+                />
+
+                {/* </View> */}
+              </TouchableOpacity>
+            </View>
           );
         })
       ) : (

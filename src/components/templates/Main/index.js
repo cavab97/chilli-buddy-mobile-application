@@ -62,6 +62,7 @@ export default ({
   openModal,
   popUpImage,
   onClosePopUp,
+  checkIn,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -118,7 +119,6 @@ export default ({
             </TouchableOpacity>
           </View>
         </View>
-        <View></View>
       </Modal>
     ) : (
       <View />
@@ -230,6 +230,10 @@ export default ({
               onPressImage={onPressImage}
             />
           )}
+          <TouchableOpacity style={styles.floatingCheckInButton} onPress={() => checkIn()}>
+            <CustomIcon name="checkIn" size={20} color="white" />
+            <Text style={styles.floatingCheckInButtonTitle}>Check In</Text>
+          </TouchableOpacity>
         </View>
 
         {readLoadingHeaderImages ? (
