@@ -16,7 +16,7 @@ class index extends Component {
     super(props);
 
     this.state = {
-      tableData24: { id: "", value: "", count: "", checked: false },
+      tableData24: { id: "", value: "", count: "", checked: false, reward: false },
       tableData4: [],
     };
   }
@@ -40,7 +40,7 @@ class index extends Component {
 
     let j = 0;
     let temp = [];
-    let checkInCounter = checkInRecord[0] ? checkInRecord[0].length : 0;
+    let checkInCounter = checkInRecord ? checkInRecord.length : 0;
 
     for (let i = 1; i < 33; i++) {
       if (i === 4 || i === 12 || i === 20 || i === 28) {
@@ -49,8 +49,9 @@ class index extends Component {
           id: i,
           value: i - j,
           count: 80,
-          checked: true,
-          //checked: checkInRecord[i-checkInCounter] ? true : false,
+          ///cannot change
+          checked: false,
+          reward: false,
         });
       } else {
         temp.push({
@@ -58,6 +59,7 @@ class index extends Component {
           value: i - j,
           count: i,
           checked: checkInRecord[i-checkInCounter] ? true : false,
+          reward: true,
         });
       }
     }
@@ -146,16 +148,19 @@ class index extends Component {
     const { id, submitLoading, checkInState } = this.props;
 
     const { tableData24, tableData4 } = this.state;
-
-    return (
-      <CheckIn
-        data={tableData24}
-        data4={tableData4}
-        checkInRecord={checkInState.checkInRecord}
-        onPressCheckIn={this.onPressCheckIn.bind(this)}
-        submitLoading={submitLoading}
-      />
-    );
+    if (true) {
+      // return <CheckInModal />;
+      return (
+        <CheckIn
+          data={tableData24}
+          data4={tableData4}
+          onPressCheckIn={this.onPressCheckIn.bind(this)}
+          submitLoading={submitLoading}
+        />
+      );
+    } else {
+      return <CheckInModal />;
+    }
   }
 }
 

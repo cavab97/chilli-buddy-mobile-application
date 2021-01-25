@@ -5,7 +5,7 @@ const numColumns = 5;
 
 const size = Dimensions.get("window").width / numColumns;
 const size1w = Dimensions.get("window").width * 0.4;
-const size1h = Dimensions.get("window").width * 0.39;
+const size1h = Dimensions.get("window").width * 0.4;
 
 const styles = StyleSheet.create({
   viewPanel: {
@@ -18,14 +18,14 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 0,
     paddingLeft: 0,
-    paddingTop: 5,
+    paddingBottom: 0,
   },
   itemContainer2: {
     width: size1w,
     height: size1h,
     borderWidth: 0,
     paddingLeft: 0,
-    paddingTop: 5,
+    paddingTop: 0,
   },
 
   checkinButton: {
@@ -67,23 +67,20 @@ const styles = StyleSheet.create({
   },
   checkInBox: {
     backgroundColor: "black",
-    borderRadius: 17,
+    borderRadius: 10,
     borderWidth: 0,
     borderColor: "white",
-    width: "90%",
-    height: "100%",
+    width: "95%",
+    height: "95%",
   },
   checkInBoxWhite: {
     backgroundColor: "white",
-    width: "90%",
-    height: "65%",
+    width: "100%",
+    height: "70%",
     justifyContent: "center",
-    top: 1,
     borderBottomLeftRadius: 9,
     borderBottomRightRadius: 9,
-    borderTopRightRadius: 0,
-    marginLeft: "5%",
-    borderWidth: 0,
+    borderWidth: 3,
   },
   touchContainer: {
     borderRadius: 15,
@@ -92,7 +89,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: "white",
-    paddingTop: 4,
     textAlign: "center",
   },
 
@@ -106,44 +102,51 @@ const styles = StyleSheet.create({
 
   checkInBox2: {
     backgroundColor: "black",
-    borderRadius: 17,
-    borderWidth: 0,
+    borderRadius: 10,
     borderColor: "white",
-    width: "90%",
-    height: "100%",
+    width: "80%",
+    height: "80%",
   },
-  checkInBox21: {
+  checkInBoxRed: {
     backgroundColor: "red",
-    borderRadius: 17,
-    borderWidth: 0,
+    borderRadius: 10,
     borderColor: "white",
-    width: "90%",
-    height: "100%",
+    width: "80%",
+    height: "80%",
   },
   checkInBoxWhite2: {
     backgroundColor: "white",
-    width: "95%",
-    height: "75%",
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
-    top: 13,
-    marginLeft: "2.5%",
+    top: 0,
     borderBottomLeftRadius: 9,
     borderBottomRightRadius: 9,
-    borderTopRightRadius: 0,
-    borderWidth: 0,
+    borderWidth: 5,
+  },
+  checkInBoxWhite2Red: {
+    backgroundColor: "white",
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    top: 0,
+    borderBottomLeftRadius: 9,
+    borderBottomRightRadius: 9,
+    borderWidth: 5,
+    borderColor: "red",
   },
 
   ///large box
   redeemImageStyle: {
     width: "55%",
     height: "55%",
-    left: 30,
+    left: 20,
     resizeMode: "contain",
   },
   redeemImageQuestionStyle: {
     width: "55%",
     height: "55%",
-    left: 25,
+    left: 20,
     justifyContent: "center",
     resizeMode: "contain",
   },
@@ -166,6 +169,16 @@ const styles = StyleSheet.create({
   CheckInTextContainer: {
     paddingLeft: 15,
     paddingRight: 15,
+  },
+
+  /// small container star
+  smallRedeemImageStarStyle: {
+    width: "50%",
+    height: "50%",
+    left: 18,
+    resizeMode: "contain",
+    top: 23,
+    position: "absolute",
   },
 });
 

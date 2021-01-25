@@ -18,6 +18,7 @@ import {
   TouchableOpacity,
   View,
   Text,
+  ScrollView,
 } from "@components/atoms";
 
 import { Card, CardSection } from "@components/molecules";
@@ -25,7 +26,7 @@ const calenderEmpty = require("../../../assets/chilliBuddyCheckin/blackColor_bac
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-function Grid({ data = [], numColumns, data4, onPressCheckIn }) {
+function Grid({ data = [], onPressCheckIn }) {
   return (
     <View style={styles.viewPanel}>
       <FlatList
@@ -33,15 +34,23 @@ function Grid({ data = [], numColumns, data4, onPressCheckIn }) {
         data={data}
         renderItem={({ item, index }) => (
           <View style={styles.itemContainer}>
-            {item.count % 80 !== 0 ? (
-              item.id % 8 ? (
+            {item.count % 80 != 0 ? (
+              item.id % 8 != 0 ? (
                 <TouchableOpacity
                   style={styles.touchContainer}
                   onPress={() => onPressCheckIn(item)}
                 >
                   <View style={styles.checkInBox}>
-                    <Text style={styles.Days}>{item.value}</Text>
+                    <Text style={styles.Days}>Day{item.value}</Text>
                     <View style={styles.checkInBoxWhite}></View>
+                    {item.checked != true ? (
+                      <View />
+                    ) : (
+                      <Image
+                        source={require("../../../assets/chilliBuddyCheckin/checkin_part_star.png")}
+                        style={styles.smallRedeemImageStarStyle}
+                      />
+                    )}
                   </View>
                 </TouchableOpacity>
               ) : item.checked != true ? (
@@ -50,7 +59,7 @@ function Grid({ data = [], numColumns, data4, onPressCheckIn }) {
                   onPress={() => onPressCheckIn(item)}
                 >
                   <View style={styles.checkInBox2}>
-                    <Text style={styles.Days}>{item.value}</Text>
+                    <Text style={styles.Days}>Day{item.value}</Text>
                     <View style={styles.checkInBoxWhite2}>
                       {item.id === 24 || item.id === 32 ? (
                         <Image
@@ -58,10 +67,9 @@ function Grid({ data = [], numColumns, data4, onPressCheckIn }) {
                           style={styles.redeemImageQuestionStyle}
                         />
                       ) : (
-                        //   <Image
+                        // <Image
                         //   source={require("../../../assets/chilliBuddyCheckin/checkin_part_star.png")}
                         //   style={styles.redeemImageStyle}
-
                         // />
                         <View />
                       )}
@@ -74,18 +82,18 @@ function Grid({ data = [], numColumns, data4, onPressCheckIn }) {
                   onPress={() => onPressCheckIn(item.id)}
                 >
                   {console.log("red")}
-                  <View style={styles.checkInBox21}>
-                    <Text style={styles.Days}>{item.value}</Text>
-                    <View style={styles.checkInBoxWhite2}>
-                      {item.checked == false ? (
+                  <View style={styles.checkInBoxRed}>
+                    <Text style={styles.Days}>Day{item.value}</Text>
+                    <View style={styles.checkInBoxWhite2Red}>
+                      {item.id === 24 || item.id === 32 ? (
                         <Image
-                          source={require("../../../assets/chilliBuddyCheckin/checkin_part_star.png")}
-                          style={styles.redeemImageStyle}
+                          source={require("../../../assets/chilliBuddyCheckin/checkIn_part_letter.png")}
+                          style={styles.redeemImageQuestionStyle}
                         />
                       ) : (
                         <Image
-                          source={require("../../../assets/chilliBuddyCheckin/checkin_questionMark.png")}
-                          style={styles.redeemImageQuestionStyle}
+                          source={require("../../../assets/chilliBuddyCheckin/checkin_part_star.png")}
+                          style={styles.redeemImageStyle}
                         />
                       )}
                     </View>
@@ -103,24 +111,19 @@ function Grid({ data = [], numColumns, data4, onPressCheckIn }) {
   );
 }
 
-const CheckIn = ({ 
-  data, 
-  onPressCheckIn, 
-  submitLoading, 
-  data4,
-  checkInRecord
-}) => {
+const CheckIn = ({ data, onPressCheckIn, submitLoading }) => {
   return (
-    <View style={styles.CheckinContainer}>
-      <View style={styles.CheckInTextContainer}>
-        <Text style={styles.checkInTitle}>Check-In</Text>
-        <Text style={styles.checkInSubTitle}>
-          Stand the chance to win a random a random prize by checking in everyday!{" "}
-        </Text>
-        <Text style={styles.checkInSubRefreshing}>Refresh in:</Text>
-      </View>
-      <Grid data={data} data4={data4} onPressCheckIn={onPressCheckIn} />
-      <View style={styles.buttonStyles}>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={styles.CheckinContainer}>
+        <View style={styles.CheckInTextContainer}>
+          <Text style={styles.checkInTitle}>Check-In</Text>
+          <Text style={styles.checkInSubTitle}>
+            Stand the chance to win a random a random prize by checking in everyday!{" "}
+          </Text>
+          <Text style={styles.checkInSubRefreshing}>Refresh in:</Text>
+        </View>
+        <Grid data={data} onPressCheckIn={onPressCheckIn} />
+         {/* <View style={styles.buttonStyles}>
         <SignoutButton
           style={styles.checkinButton}
           onPress={onPressCheckIn}
@@ -128,8 +131,9 @@ const CheckIn = ({
         >
           Check in
         </SignoutButton>
-      </View> 
-    </View>
+      </View> */}
+      </View>
+    </ScrollView>
   );
 };
 
