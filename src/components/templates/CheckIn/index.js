@@ -56,7 +56,7 @@ function Grid({ data = [], onPressCheckIn }) {
               ) : item.checked != true ? (
                 <TouchableOpacity
                   style={styles.touchContainer2}
-                  onPress={() => onPressCheckIn(item)}
+                  onPress={() => onPressCheckIn()}
                 >
                   <View style={styles.checkInBox2}>
                     <Text style={styles.Days}>Day{item.value}</Text>
@@ -81,7 +81,6 @@ function Grid({ data = [], onPressCheckIn }) {
                   style={styles.touchContainer2}
                   onPress={() => onPressCheckIn(item.id)}
                 >
-                  {console.log("red")}
                   <View style={styles.checkInBoxRed}>
                     <Text style={styles.Days}>Day{item.value}</Text>
                     <View style={styles.checkInBoxWhite2Red}>

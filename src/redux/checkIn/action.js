@@ -56,18 +56,20 @@ export function readFromDatabase() {
     });
   };
 }
+
 export function submitToBackend(data, actionName) {
   return (dispatch, getState) => {
     dispatch({ type: actions.SUBMIT_TO_BACKEND });
     return new Promise(async (resolve, reject) => {
       let result = {};
-      const { uid } = data;
-      //   const { uid } = getState().Auth.user;
-      console.log("uid");
-      console.log(uid);
+      const { uid, id } = data;
+
       data = {
         userIds: [uid],
+        id: id
       };
+
+      console.log(actionName)
 
       try {
         switch (actionName) {
@@ -78,6 +80,8 @@ export function submitToBackend(data, actionName) {
             result = await checkInBackendServices.update({ data });
             break;
         }
+
+        console.log(result)
 
         resolve(result);
         dispatch({

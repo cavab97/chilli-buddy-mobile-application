@@ -24,7 +24,7 @@ class index extends Component {
   componentDidMount = async () => {
     await this.table24();
     this.tableData4();
-    await this.props.readFromDatabase();
+    this.props.readFromDatabase();
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -32,6 +32,23 @@ class index extends Component {
 
     if (prevProps.checkInState.readError !== readError && readError !== false) {
       alert(readError);
+    }
+
+    if (
+      this.props.checkInState.submitError.message !==
+        prevProps.checkInState.submitError.message &&
+      this.props.checkInState.submitError.message
+    ) {
+      alert(this.props.checkInState.submitError.message);
+    }
+
+    if (
+      this.props.checkInState.submitResult.message !==
+        prevProps.checkInState.submitResult.message &&
+      this.props.checkInState.submitResult.message
+    ) {
+      alert(this.props.checkInState.submitResult.message);
+      this.props.readFromDatabase();
     }
   }
 
@@ -108,40 +125,26 @@ class index extends Component {
     //i deliberately leave mystate empty so that i can push new array later
   }
 
-  // lookingForBookmark({ promoId } = null) {
-  //   const bookmarks = this.props.bookmarks;
-  //   let bookmarkId = null;
-
-  //   bookmarks.forEach((bookmark) => {
-  //     if (bookmark.promo[0] === promoId) {
-  //       bookmarkId = bookmark.id;
-  //     }
-  //   });
-  //   return bookmarkId;
-  // }
-
   lookingForCheckIn({ id } = null) {}
 
-  onPressCheckIn = async (item) => {
+  onPressCheckIn = async () => {
     const template = this.state.tableData24;
+    const { checkIn } = this.props.checkInState
 
-    // if(item.id==this.state.tableData24.id){
-    //   console.log()
-    // }
+    console.log('enter the data')
+    const data = { 
+      uid: this.props.uid, 
+      id: checkIn.id 
+    };
+    
+    console.log(checkIn.id)
 
-    //console.log(this.state.tableData24);
-    // const uid = this.props.uid;
-    // const data = { uid };
-    // this.props.submitToBackend(data, "create");
-    // console.log("this.props.submitLoading");
-    // console.log(this.props.submitLoading);
-    // if (bookmarkId === null) {
-    //   const data = { shopId, promoId, isBookmark };
-    //   await this.props.submitToBackend(data, "create");
-    // } else {
-    //   const data = { bookmarkId, isBookmark };
-    //   await this.props.submitToBackend(data, "update");
-    // }
+    /* if (checkIn.id === null) { */
+      this.props.submitToBackend(data, "create");
+  /*   } else {
+      this.props.submitToBackend(data, "update");
+    } */
+    
   };
 
   render() {
