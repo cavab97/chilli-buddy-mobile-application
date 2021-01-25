@@ -16,7 +16,7 @@ class index extends Component {
     super(props);
 
     this.state = {
-      tableData24: { id: "", value: "", count: "", checked: false },
+      tableData24: { id: "", value: "", count: "", checked: false, reward: false },
       tableData4: [],
     };
   }
@@ -37,13 +37,17 @@ class index extends Component {
           id: i,
           value: i - j,
           count: 80,
+          ///cannot change
           checked: false,
+          reward: false,
         });
       } else {
         temp.push({
           id: i,
           value: i - j,
           count: i,
+          checked: true,
+          reward: true,
         });
       }
     }
@@ -133,14 +137,19 @@ class index extends Component {
     console.log("read data");
     console.log(id);
     const { tableData24, tableData4 } = this.state;
-    return (
-      <CheckIn
-        data={tableData24}
-        data4={tableData4}
-        onPressCheckIn={this.onPressCheckIn.bind(this)}
-        submitLoading={submitLoading}
-      />
-    );
+    if (true) {
+      // return <CheckInModal />;
+      return (
+        <CheckIn
+          data={tableData24}
+          data4={tableData4}
+          onPressCheckIn={this.onPressCheckIn.bind(this)}
+          submitLoading={submitLoading}
+        />
+      );
+    } else {
+      return <CheckInModal />;
+    }
   }
 }
 const mapStateToProps = (state) => {
