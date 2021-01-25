@@ -156,7 +156,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="CheckIn" back>
-        <Scene key="CheckIn" component={CheckIn} title="CheckIn" />
+        <Scene key="CheckIn" component={CheckIn}/>
       </Stack>
 
       <Stack key="PaymentDetail" back>
@@ -272,7 +272,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="CheckIn" back>
-        <Scene key="CheckIn" component={CheckIn} title="CheckIn" titleStyle={styles.title} />
+        <Scene key="CheckIn" component={CheckIn} titleStyle={styles.title} />
       </Stack>
 
       <Stack key="Voucher" back>

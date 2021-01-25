@@ -173,11 +173,11 @@ const styles = StyleSheet.create({
 
   /// small container star
   smallRedeemImageStarStyle: {
-    width: "55%",
-    height: "55%",
-    left: 15,
+    width: "50%",
+    height: "50%",
+    left: 18,
     resizeMode: "contain",
-    top: 25,
+    top: 23,
     position: "absolute",
   },
 });
