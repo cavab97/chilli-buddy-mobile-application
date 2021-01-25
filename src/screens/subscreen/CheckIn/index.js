@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { submitToBackend } from "@redux/checkIn/action";
 
-import { CheckIn } from "@components/templates";
+import { CheckIn, CheckInModal } from "@components/templates";
 
 const RADIUS = 50;
 const NUM = 7;
@@ -16,34 +16,57 @@ class index extends Component {
     super(props);
 
     this.state = {
-      tableData24: [],
+      tableData24: { id: "", value: "", count: "", checked: false },
       tableData4: [],
     };
   }
 
   componentDidMount = async () => {
-    this.table24();
+    await this.table24();
     this.tableData4();
     await this.props.readFromDatabase();
   };
 
-  table24() {
+  table24 = async () => {
+    let j = 0;
     let temp = [];
-    for (let i = 1; i < 25; i++) {
-      if (i % 7 === 0) {
+    for (let i = 1; i < 33; i++) {
+      if (i === 4 || i === 12 || i === 20 || i === 28) {
+        j++;
         temp.push({
           id: i,
-          value: "Day" + i,
+          value: i - j,
+          count: 80,
+          checked: false,
         });
       } else {
         temp.push({
           id: i,
-          value: "Day" + i,
+          value: i - j,
+          count: i,
         });
       }
     }
+
+    // for (let i = 4; i < 12; i++) {
+    //   temp[i].value = i;
+    // }
+    // for (let i = 12; i < 20; i++) {
+    //   temp[i].value = i - 1;
+    // }
+
+    // for (let i = 20; i < 28; i++) {
+    //   temp[i].value = i - 2;
+    // }
+    // for (let i = 28; i < 32; i++) {
+    //   temp[i].value = i - 3;
+    // }
+    // for (let i = 28; i < 33; i++) {
+    //   temp[i].value = i - 3;
+    //   console.log(temp[i]);
+    // }
     this.setState({ tableData24: temp });
-  }
+  };
 
   tableData4() {
     let temp = [];
@@ -69,14 +92,33 @@ class index extends Component {
     //i deliberately leave mystate empty so that i can push new array later
   }
 
-  onPressCheckIn() {
-    const uid = this.props.uid;
+  // lookingForBookmark({ promoId } = null) {
+  //   const bookmarks = this.props.bookmarks;
+  //   let bookmarkId = null;
 
-    const data = { uid };
-    this.props.submitToBackend(data, "create");
-    console.log("this.props.submitLoading");
-    console.log(this.props.submitLoading);
+  //   bookmarks.forEach((bookmark) => {
+  //     if (bookmark.promo[0] === promoId) {
+  //       bookmarkId = bookmark.id;
+  //     }
+  //   });
+  //   return bookmarkId;
+  // }
 
+  lookingForCheckIn({ id } = null) {}
+
+  onPressCheckIn = async (item) => {
+    const template = this.state.tableData24;
+
+    // if(item.id==this.state.tableData24.id){
+    //   console.log()
+    // }
+
+    console.log(this.state.tableData24);
+    // const uid = this.props.uid;
+    // const data = { uid };
+    // this.props.submitToBackend(data, "create");
+    // console.log("this.props.submitLoading");
+    // console.log(this.props.submitLoading);
     // if (bookmarkId === null) {
     //   const data = { shopId, promoId, isBookmark };
     //   await this.props.submitToBackend(data, "create");
@@ -84,11 +126,10 @@ class index extends Component {
     //   const data = { bookmarkId, isBookmark };
     //   await this.props.submitToBackend(data, "update");
     // }
-  }
+  };
 
   render() {
-    const submitLoading = this.props.submitLoading;
-    const { id } = this.props.CheckInState;
+    const { id, submitLoading } = this.props;
     console.log("read data");
     console.log(id);
     const { tableData24, tableData4 } = this.state;
