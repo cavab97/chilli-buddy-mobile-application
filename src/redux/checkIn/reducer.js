@@ -1,9 +1,10 @@
 import actions from "./action";
 
 const initialState = {
+  submitLoading: false,
   readLoading: false,
   readError: false,
-  submitLoading: false,
+  modalVisible: false,
   submitError: {
     code: null,
     message: null,
@@ -147,31 +148,31 @@ const initialState = {
     created: { at: null, by: null },
     deleted: { at: null, by: null },
     updated: { at: null, by: null },
-  }
+  },
 };
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.READ_FROM_DATABASE:
-      return { 
-        ...state, 
-        readLoading: true, 
-        readError: initialState.readError, 
+      return {
+        ...state,
+        readLoading: true,
+        readError: initialState.readError,
       };
 
     case actions.READ_FROM_DATABASE_SUCCESS:
-      return { 
-        ...state, 
-        readLoading: initialState.readLoading, 
+      return {
+        ...state,
+        readLoading: initialState.readLoading,
         checkIns: payload.data,
-        checkIn: payload.data[0] ? payload.data[0] : initialState.checkIn
+        checkIn: payload.data[0] ? payload.data[0] : initialState.checkIn,
       };
 
     case actions.READ_FROM_DATABASE_ERROR:
-      return { 
-        ...state, 
-        readLoading: initialState.readLoading, 
-        readError: payload.error 
+      return {
+        ...state,
+        readLoading: initialState.readLoading,
+        readError: payload.error,
       };
 
     case actions.SUBMIT_TO_BACKEND:
@@ -180,6 +181,7 @@ const reducer = (state = initialState, { type, payload }) => {
         submitLoading: true,
         submitError: initialState.submitError,
         submitResult: initialState.submitResult,
+        modalVisible: true,
       };
 
     case actions.SUBMIT_TO_BACKEND_SUCCESS:

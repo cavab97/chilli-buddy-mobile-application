@@ -76,11 +76,11 @@ const styles = StyleSheet.create({
   checkInBoxWhite: {
     backgroundColor: "white",
     width: "100%",
-    height: "70%",
+    height: "80%",
     justifyContent: "center",
     borderBottomLeftRadius: 9,
     borderBottomRightRadius: 9,
-    borderWidth: 3,
+    borderWidth: 5,
   },
   touchContainer: {
     borderRadius: 15,
@@ -105,14 +105,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "white",
     width: "80%",
-    height: "80%",
+    height: "85%",
   },
   checkInBoxRed: {
     backgroundColor: "red",
     borderRadius: 10,
     borderColor: "white",
     width: "80%",
-    height: "80%",
+    height: "85%",
   },
   checkInBoxWhite2: {
     backgroundColor: "white",

@@ -10,12 +10,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   subjectText: {
-    fontSize: 20,
+    fontSize: 22,
     color: "black",
     fontWeight: "bold",
-    paddingTop: 20,
-    marginHorizontal: 20,
+    marginHorizontal: 0,
     textAlign: "center",
+    bottom: 65,
   },
   contentContainer: {
     justifyContent: "center",
@@ -50,15 +50,38 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 40,
     borderBottomLeftRadius: 40,
   },
+
+  ///icon view
   closeIcon: {
     position: "absolute",
-    // top: -20,
-    // right: -20,
+    top: -30,
+    right: -54,
     // backgroundColor: "red",
     resizeMode: "cover",
     fontSize: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
   },
-  redeemImageQuestionStyle: { resizeMode: "contain", width: 100, height: 50 },
+  redeemImageCrossStyle: { resizeMode: "contain", width: 100, height: 50 },
+
+  ///image view
+  imageAnime: {
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center", // backgroundColor: "red",
+    resizeMode: "cover",
+  },
+  redeemImageChilliStyle: {
+    flex: 1,
+    resizeMode: "contain",
+    width: 150,
+    height: 150,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+  },
 });
 
 export default styles;

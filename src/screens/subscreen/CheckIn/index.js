@@ -16,8 +16,16 @@ class index extends Component {
     super(props);
 
     this.state = {
-      tableData24: { id: "", value: "", count: "", checked: false, reward: false },
+      tableData24: {
+        id: "",
+        value: "",
+        count: "",
+        checked: false,
+        reward: false,
+        submitLoading: false,
+      },
       tableData4: [],
+      focusId: "",
     };
   }
 
@@ -53,7 +61,7 @@ class index extends Component {
   }
 
   table24 = async () => {
-    const { checkInRecord } = this.props.checkInState.checkIn
+    const { checkInRecord } = this.props.checkInState.checkIn;
 
     let j = 0;
     let temp = [];
@@ -75,8 +83,9 @@ class index extends Component {
           id: i,
           value: i - j,
           count: i,
-          checked: checkInRecord[i-checkInCounter] ? true : false,
+          checked: checkInRecord[i - checkInCounter] ? true : false,
           reward: true,
+          submitLoading: this.props.submitLoading,
         });
       }
     }
@@ -101,69 +110,69 @@ class index extends Component {
     this.setState({ tableData24: temp });
   };
 
-  tableData4() {
-    let temp = [];
-    for (let i = 1; i < 5; i++) {
-      temp.push({
-        id: i,
-        value: "Day" + i * 7,
-      });
-    }
-    this.setState({ tableData4: temp });
-    this.state = { date: [] };
-  }
-
   componentWillMount() {
-    const tempdate = [];
+    this.table24();
+
     let id;
     let value;
-    for (let i = 1; i <= 28; i++) {
-      tempdate.push({ id: i, value: i });
-    }
-    this.setState({ date: tempdate });
+
     // this.setState({ myState: [] }); //this line must be removed
     //i deliberately leave mystate empty so that i can push new array later
   }
 
   lookingForCheckIn({ id } = null) {}
 
-  onPressCheckIn = async () => {
-    const template = this.state.tableData24;
+  onPressCheckIn = async (item) => {
+    // if(item.id==this.state.tableData24.id){
+    //   console.log()
+    // }
+    const tableDataTemp = this.state.tableData24;
     const { checkIn } = this.props.checkInState
 
-    console.log('enter the data')
+    // console.log(this.state.tableData24);
+    const uid = this.props.uid;
+
     const data = { 
-      uid: this.props.uid, 
+      uid: uid, 
       id: checkIn.id 
     };
     
-    console.log(checkIn.id)
-
-    /* if (checkIn.id === null) { */
-      this.props.submitToBackend(data, "create");
-  /*   } else {
+    tableDataTemp.forEach((table24) => {
+      if (table24.id === item.id) {
+        this.setState({ focusId: item.id });
+        /* if (checkIn.id === null) { */
+        this.props.submitToBackend(data, "create");
+        /*   } else {
       this.props.submitToBackend(data, "update");
     } */
-    
+        
+        // console.log("this.props.submitLoading");
+        // console.log(this.props.submitLoading);
+      }
+    });
   };
 
   render() {
-    const { id, submitLoading, checkInState } = this.props;
+    const { tableData24 } = this.state;
+    const { submitLoading } = this.props;
+    tableData24.forEach((table24) => {
+      if (table24.id === this.state.focusId) {
+        table24.submitLoading = submitLoading;
+        // console.log("this.props.submitLoading");
+        // console.log(this.props.submitLoading);
+      }
+    });
 
-    const { tableData24, tableData4 } = this.state;
-    if (true) {
-      // return <CheckInModal />;
-      return (
-        <CheckIn
-          data={tableData24}
-          data4={tableData4}
-          onPressCheckIn={this.onPressCheckIn.bind(this)}
-          submitLoading={submitLoading}
-        />
-      );
-    } else {
-      return <CheckInModal />;
-    }
+    return (
+      <CheckIn
+        data={tableData24}
+        onPressCheckIn={this.onPressCheckIn.bind(this)}
+        submitLoading={submitLoading}
+        rewardOnceThanOneOption={false}
+        happy={true}
+        isVisible={false}
+      />
+    );
   }
 }
 
@@ -181,9 +190,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(
-  mapStateToProps, 
-  { 
-    submitToBackend,
-    readFromDatabase
+export default connect(mapStateToProps, {
+  submitToBackend,
+  readFromDatabase,
 })(index);
