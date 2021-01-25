@@ -140,11 +140,11 @@ class index extends Component {
     tableDataTemp.forEach((table24) => {
       if (table24.id === item.id) {
         this.setState({ focusId: item.id });
-        /* if (checkIn.id === null) { */
-        this.props.submitToBackend(data, "create");
-        /*   } else {
-      this.props.submitToBackend(data, "update");
-    } */
+        if (checkIn.id === null) {
+          this.props.submitToBackend(data, "create");
+        } else {
+          this.props.submitToBackend(data, "update");
+        }
         
         // console.log("this.props.submitLoading");
         // console.log(this.props.submitLoading);
