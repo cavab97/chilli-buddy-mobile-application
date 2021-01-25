@@ -103,7 +103,13 @@ function Grid({ data = [], numColumns, data4, onPressCheckIn }) {
   );
 }
 
-const CheckIn = ({ data, onPressCheckIn, submitLoading, data4 }) => {
+const CheckIn = ({ 
+  data, 
+  onPressCheckIn, 
+  submitLoading, 
+  data4,
+  checkInRecord
+}) => {
   return (
     <View style={styles.CheckinContainer}>
       <View style={styles.CheckInTextContainer}>
@@ -114,7 +120,7 @@ const CheckIn = ({ data, onPressCheckIn, submitLoading, data4 }) => {
         <Text style={styles.checkInSubRefreshing}>Refresh in:</Text>
       </View>
       <Grid data={data} data4={data4} onPressCheckIn={onPressCheckIn} />
-      {/* <View style={styles.buttonStyles}>
+      <View style={styles.buttonStyles}>
         <SignoutButton
           style={styles.checkinButton}
           onPress={onPressCheckIn}
@@ -123,7 +129,6 @@ const CheckIn = ({ data, onPressCheckIn, submitLoading, data4 }) => {
           Check in
         </SignoutButton>
       </View> 
-      */}
     </View>
   );
 };

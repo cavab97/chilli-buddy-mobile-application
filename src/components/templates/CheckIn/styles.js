@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     color: "red",
-    fontFamily: "Cochin",
+    // fontFamily: "Cochin",
   },
   checkInSubTitle: {
     fontSize: 17,

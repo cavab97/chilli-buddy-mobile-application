@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { submitToBackend } from "@redux/checkIn/action";
+import { submitToBackend, readFromDatabase } from "@redux/checkIn/action";
 
 import { CheckIn, CheckInModal } from "@components/templates";
 
@@ -27,9 +27,21 @@ class index extends Component {
     await this.props.readFromDatabase();
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    const readError = this.props.checkInState.readError;
+
+    if (prevProps.checkInState.readError !== readError && readError !== false) {
+      alert(readError);
+    }
+  }
+
   table24 = async () => {
+    const { checkInRecord } = this.props.checkInState.checkIn
+
     let j = 0;
     let temp = [];
+    let checkInCounter = checkInRecord[0] ? checkInRecord[0].length : 0;
+
     for (let i = 1; i < 33; i++) {
       if (i === 4 || i === 12 || i === 20 || i === 28) {
         j++;
@@ -37,13 +49,15 @@ class index extends Component {
           id: i,
           value: i - j,
           count: 80,
-          checked: false,
+          checked: true,
+          //checked: checkInRecord[i-checkInCounter] ? true : false,
         });
       } else {
         temp.push({
           id: i,
           value: i - j,
           count: i,
+          checked: checkInRecord[i-checkInCounter] ? true : false,
         });
       }
     }
@@ -113,7 +127,7 @@ class index extends Component {
     //   console.log()
     // }
 
-    console.log(this.state.tableData24);
+    //console.log(this.state.tableData24);
     // const uid = this.props.uid;
     // const data = { uid };
     // this.props.submitToBackend(data, "create");
@@ -129,32 +143,39 @@ class index extends Component {
   };
 
   render() {
-    const { id, submitLoading } = this.props;
-    console.log("read data");
-    console.log(id);
+    const { id, submitLoading, checkInState } = this.props;
+
     const { tableData24, tableData4 } = this.state;
+
     return (
       <CheckIn
         data={tableData24}
         data4={tableData4}
+        checkInRecord={checkInState.checkInRecord}
         onPressCheckIn={this.onPressCheckIn.bind(this)}
         submitLoading={submitLoading}
       />
     );
   }
 }
+
 const mapStateToProps = (state) => {
   const routeTicketState = state.RouteTicket;
   const { uid } = state.Auth.user;
-  const CheckInState = state.CheckIn;
+  const checkInState = state.CheckIn;
   const { submitLoading } = state.CheckIn;
 
   return {
     routeTicketState,
     uid,
-    CheckInState,
+    checkInState,
     submitLoading,
   };
 };
 
-export default connect(mapStateToProps, { submitToBackend })(index);
+export default connect(
+  mapStateToProps, 
+  { 
+    submitToBackend,
+    readFromDatabase
+})(index);

@@ -1,9 +1,9 @@
-import { checkInServices } from "../../services/database";
+import { checkInDataServices } from "../../services/database";
 import { checkInBackendServices } from "../../services/backend";
 
 // import _ from "lodash";
 
-const type = "checkin";
+const type = "checkIn";
 
 const actions = {
   READ_FROM_DATABASE: type + "READ_FROM_DATABASE",
@@ -36,7 +36,7 @@ export function readFromDatabase() {
       try {
         const { uid } = getState().Auth.user;
 
-        const checkIN = await checkInServices.readObjects({
+        const checkIN = await checkInDataServices.readObjects({
           uid: uid,
         });
 
