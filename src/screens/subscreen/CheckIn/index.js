@@ -16,8 +16,16 @@ class index extends Component {
     super(props);
 
     this.state = {
-      tableData24: { id: "", value: "", count: "", checked: false, reward: false },
+      tableData24: {
+        id: "",
+        value: "",
+        count: "",
+        checked: false,
+        reward: false,
+        submitLoading: false,
+      },
       tableData4: [],
+      focusId: "",
     };
   }
 
@@ -48,6 +56,7 @@ class index extends Component {
           count: i,
           checked: true,
           reward: true,
+          submitLoading: this.props.submitLoading,
         });
       }
     }
@@ -72,26 +81,12 @@ class index extends Component {
     this.setState({ tableData24: temp });
   };
 
-  tableData4() {
-    let temp = [];
-    for (let i = 1; i < 5; i++) {
-      temp.push({
-        id: i,
-        value: "Day" + i * 7,
-      });
-    }
-    this.setState({ tableData4: temp });
-    this.state = { date: [] };
-  }
-
   componentWillMount() {
-    const tempdate = [];
+    this.table24();
+
     let id;
     let value;
-    for (let i = 1; i <= 28; i++) {
-      tempdate.push({ id: i, value: i });
-    }
-    this.setState({ date: tempdate });
+
     // this.setState({ myState: [] }); //this line must be removed
     //i deliberately leave mystate empty so that i can push new array later
   }
@@ -108,19 +103,16 @@ class index extends Component {
   //   return bookmarkId;
   // }
 
-  lookingForCheckIn({ id } = null) {}
-
   onPressCheckIn = async (item) => {
-    const template = this.state.tableData24;
-
     // if(item.id==this.state.tableData24.id){
     //   console.log()
     // }
+    const tableDataTemp = this.state.tableData24;
 
-    console.log(this.state.tableData24);
-    // const uid = this.props.uid;
-    // const data = { uid };
-    // this.props.submitToBackend(data, "create");
+    // console.log(this.state.tableData24);
+    const uid = this.props.uid;
+    const data = { uid };
+
     // console.log("this.props.submitLoading");
     // console.log(this.props.submitLoading);
     // if (bookmarkId === null) {
@@ -130,26 +122,37 @@ class index extends Component {
     //   const data = { bookmarkId, isBookmark };
     //   await this.props.submitToBackend(data, "update");
     // }
+    tableDataTemp.forEach((table24) => {
+      if (table24.id === item.id) {
+        this.setState({ focusId: item.id });
+        this.props.submitToBackend(data, "create");
+        // console.log("this.props.submitLoading");
+        // console.log(this.props.submitLoading);
+      }
+    });
   };
 
   render() {
-    const { id, submitLoading } = this.props;
-    console.log("read data");
-    console.log(id);
-    const { tableData24, tableData4 } = this.state;
-    if (true) {
-      // return <CheckInModal />;
-      return (
-        <CheckIn
-          data={tableData24}
-          data4={tableData4}
-          onPressCheckIn={this.onPressCheckIn.bind(this)}
-          submitLoading={submitLoading}
-        />
-      );
-    } else {
-      return <CheckInModal />;
-    }
+    const { tableData24 } = this.state;
+    const { uid, submitLoading } = this.props;
+    tableData24.forEach((table24) => {
+      if (table24.id === this.state.focusId) {
+        table24.submitLoading = submitLoading;
+        // console.log("this.props.submitLoading");
+        // console.log(this.props.submitLoading);
+      }
+    });
+
+    return (
+      <CheckIn
+        data={tableData24}
+        onPressCheckIn={this.onPressCheckIn.bind(this)}
+        submitLoading={submitLoading}
+        rewardOnceThanOneOption={false}
+        happy={true}
+        isVisible={false}
+      />
+    );
   }
 }
 const mapStateToProps = (state) => {

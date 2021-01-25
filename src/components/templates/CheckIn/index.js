@@ -8,6 +8,7 @@ import { CheckInButton } from "../../molecules";
 
 import styles from "./styles";
 import { SignoutButton } from "../../../components/molecules";
+import { CheckInModal } from "@components/templates";
 
 import {
   ActivityIndicator,
@@ -25,8 +26,11 @@ import { Card, CardSection } from "@components/molecules";
 const calenderEmpty = require("../../../assets/chilliBuddyCheckin/blackColor_background_empty.png");
 
 import Icon from "react-native-vector-icons/FontAwesome";
+const sadHeader = "Better luck \n next Time!";
+const happyHeader = "Congratulations!";
+const happyDesciption = "You have won a";
 
-function Grid({ data = [], onPressCheckIn }) {
+function Grid({ data = [], onPressCheckIn, submitLoading }) {
   return (
     <View style={styles.viewPanel}>
       <FlatList
@@ -43,7 +47,13 @@ function Grid({ data = [], onPressCheckIn }) {
                   <View style={styles.checkInBox}>
                     <Text style={styles.Days}>Day{item.value}</Text>
                     <View style={styles.checkInBoxWhite}></View>
-                    {item.checked != true ? (
+                    {item.submitLoading == true ? (
+                      <ActivityIndicator
+                        size="small"
+                        color="black"
+                        style={styles.smallRedeemImageStarStyle}
+                      />
+                    ) : item.checked != true ? (
                       <View />
                     ) : (
                       <Image
@@ -61,7 +71,13 @@ function Grid({ data = [], onPressCheckIn }) {
                   <View style={styles.checkInBox2}>
                     <Text style={styles.Days}>Day{item.value}</Text>
                     <View style={styles.checkInBoxWhite2}>
-                      {item.id === 24 || item.id === 32 ? (
+                      {item.submitLoading == true ? (
+                        <ActivityIndicator
+                          size="large"
+                          color="black"
+                          style={styles.redeemImageQuestionStyle}
+                        />
+                      ) : item.id === 24 || item.id === 32 ? (
                         <Image
                           source={require("../../../assets/chilliBuddyCheckin/checkin_questionMark.png")}
                           style={styles.redeemImageQuestionStyle}
@@ -79,13 +95,19 @@ function Grid({ data = [], onPressCheckIn }) {
               ) : (
                 <TouchableOpacity
                   style={styles.touchContainer2}
-                  onPress={() => onPressCheckIn(item.id)}
+                  onPress={() => onPressCheckIn(item)}
                 >
                   {console.log("red")}
                   <View style={styles.checkInBoxRed}>
                     <Text style={styles.Days}>Day{item.value}</Text>
                     <View style={styles.checkInBoxWhite2Red}>
-                      {item.id === 24 || item.id === 32 ? (
+                      {item.submitLoading == true ? (
+                        <ActivityIndicator
+                          size="large"
+                          color="black"
+                          style={styles.redeemImageQuestionStyle}
+                        />
+                      ) : item.id === 24 || item.id === 32 ? (
                         <Image
                           source={require("../../../assets/chilliBuddyCheckin/checkIn_part_letter.png")}
                           style={styles.redeemImageQuestionStyle}
@@ -111,9 +133,36 @@ function Grid({ data = [], onPressCheckIn }) {
   );
 }
 
-const CheckIn = ({ data, onPressCheckIn, submitLoading }) => {
+const CheckIn = ({
+  data,
+  onPressCheckIn,
+  submitLoading,
+  happy,
+  isVisible,
+  rewardOnceThanOneOption,
+}) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {happy == true ? (
+        rewardOnceThanOneOption == false ? (
+          <CheckInModal
+            Header={happyHeader}
+            happy={happy}
+            isVisible={isVisible}
+            rewardOnceThanOneOption={rewardOnceThanOneOption}
+          />
+        ) : (
+          <CheckInModal
+            Header={happyHeader}
+            happyDesciption={happyDesciption}
+            happy={happy}
+            isVisible={isVisible}
+            rewardOnceThanOneOption={rewardOnceThanOneOption}
+          />
+        )
+      ) : (
+        <CheckInModal Header={sadHeader} isVisible={isVisible} />
+      )}
       <View style={styles.CheckinContainer}>
         <View style={styles.CheckInTextContainer}>
           <Text style={styles.checkInTitle}>Check-In</Text>
@@ -122,7 +171,8 @@ const CheckIn = ({ data, onPressCheckIn, submitLoading }) => {
           </Text>
           <Text style={styles.checkInSubRefreshing}>Refresh in:</Text>
         </View>
-        <Grid data={data} onPressCheckIn={onPressCheckIn} />
+        <Grid data={data} onPressCheckIn={onPressCheckIn} submitLoading={submitLoading} />
+
         {/* <View style={styles.buttonStyles}>
         <SignoutButton
           style={styles.checkinButton}
