@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { submitToBackend } from "@redux/checkIn/action";
+import { submitToBackend, readFromDatabase } from "@redux/checkIn/action";
 
 import { CheckIn, CheckInModal } from "@components/templates";
 
@@ -35,9 +35,21 @@ class index extends Component {
     await this.props.readFromDatabase();
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    const readError = this.props.checkInState.readError;
+
+    if (prevProps.checkInState.readError !== readError && readError !== false) {
+      alert(readError);
+    }
+  }
+
   table24 = async () => {
+    const { checkInRecord } = this.props.checkInState.checkIn;
+
     let j = 0;
     let temp = [];
+    let checkInCounter = checkInRecord ? checkInRecord.length : 0;
+
     for (let i = 1; i < 33; i++) {
       if (i === 4 || i === 12 || i === 20 || i === 28) {
         j++;
@@ -54,7 +66,7 @@ class index extends Component {
           id: i,
           value: i - j,
           count: i,
-          checked: true,
+          checked: checkInRecord[i - checkInCounter] ? true : false,
           reward: true,
           submitLoading: this.props.submitLoading,
         });
@@ -155,18 +167,22 @@ class index extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   const routeTicketState = state.RouteTicket;
   const { uid } = state.Auth.user;
-  const CheckInState = state.CheckIn;
+  const checkInState = state.CheckIn;
   const { submitLoading } = state.CheckIn;
 
   return {
     routeTicketState,
     uid,
-    CheckInState,
+    checkInState,
     submitLoading,
   };
 };
 
-export default connect(mapStateToProps, { submitToBackend })(index);
+export default connect(mapStateToProps, {
+  submitToBackend,
+  readFromDatabase,
+})(index);

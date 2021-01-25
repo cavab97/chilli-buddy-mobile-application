@@ -1,17 +1,18 @@
 import { database } from "../../marslab-library-react-native/utils/helper";
 
-const userName = "user";
-const objectName = "checkin";
+const subjectName = "user";
+const objectName = "checkInTicket";
 
 export function readObjects({ uid }) {
   return new Promise((resolve, reject) => {
-    let databaseRef = database.geoReadTable({
-      ref: `${userName}Packaging0`,
+    let databaseRef = database.readTable({
+      ref: `${objectName}Packaging0`,
     });
     // if (selectedCategory)
     //   databaseRef = databaseRef.where("shop.categories", "array-contains-any", [selectedCategory]);
     databaseRef
       .where("userIds", "==", [uid])
+      .where("status", "==", true)
       .get()
       .then((QuerySnapshot) => {
         const result = [];
