@@ -50,11 +50,11 @@ const CheckIn = ({ data, onPressCheckIn, submitLoading, data4 }) => {
   return (
     <View style={styles.CheckinContainer}>
       <View>
-        <Text>Check-In</Text>
+        <Text style={{ fontSize: 28, fontWeight: "bold" }}>Check-In</Text>
         <Text>Stand the chance to win a random a random prize by checking ion ev </Text>
       </View>
       <Grid data={data} data4={data4} />
-      {/* <View style={styles.buttonStyles}>
+      <View style={styles.buttonStyles}>
         <SignoutButton
           style={styles.checkinButton}
           onPress={onPressCheckIn}
@@ -62,7 +62,7 @@ const CheckIn = ({ data, onPressCheckIn, submitLoading, data4 }) => {
         >
           Check in
         </SignoutButton>
-      </View> */}
+      </View> 
     </View>
   );
 };

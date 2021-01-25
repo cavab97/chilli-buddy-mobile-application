@@ -149,13 +149,25 @@ const initialState = {
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.READ_FROM_DATABASE:
-      return { ...state, readLoading: true, readError: false };
+      return { 
+        ...state, 
+        readLoading: true, 
+        readError: initialState.readError, 
+      };
 
     case actions.READ_FROM_DATABASE_SUCCESS:
-      return { ...state, readLoading: true, checkIns: payload.data };
+      return { 
+        ...state, 
+        readLoading: initialState.readLoading, 
+        checkIns: payload.data 
+      };
 
     case actions.READ_FROM_DATABASE_ERROR:
-      return { ...state, readLoading: false, readError: payload.error };
+      return { 
+        ...state, 
+        readLoading: initialState.readLoading, 
+        readError: payload.error 
+      };
 
     case actions.SUBMIT_TO_BACKEND:
       return {
@@ -164,6 +176,7 @@ const reducer = (state = initialState, { type, payload }) => {
         submitError: initialState.submitError,
         submitResult: initialState.submitResult,
       };
+
     case actions.SUBMIT_TO_BACKEND_SUCCESS:
       return {
         ...state,
