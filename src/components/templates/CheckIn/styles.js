@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   checkInBox: {
-    backgroundColor: "black",
+    backgroundColor: "#303030",
     borderRadius: 10,
     borderWidth: 0,
     borderColor: "white",
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
 
   checkInBox2: {
-    backgroundColor: "black",
+    backgroundColor: "#303030",
     borderRadius: 10,
     borderColor: "white",
     width: "80%",

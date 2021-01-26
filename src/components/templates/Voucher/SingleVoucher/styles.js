@@ -1,7 +1,8 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
 
-const HEIGHT = Dimensions.get("window").height;
+const size = Dimensions.get("window").width / 1.1;
+const fullsize = Dimensions.get("window").width / 5;
 
 const styles = StyleSheet.create({
   wrapper: {},
@@ -72,10 +73,10 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     alignSelf: "center",
     backgroundColor: "white",
-    shadowRadius: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.5,
+    // shadowRadius: 5,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 1 },
+    // shadowOpacity: 0.5,
     position: "relative",
     borderWidth: 0,
   },
@@ -118,6 +119,8 @@ const styles = StyleSheet.create({
   setRow: {
     flexDirection: "row",
     paddingTop: 10,
+    width: fullsize * 2,
+    backgroundColor: "black",
   },
   operatingHour: {},
   operatingContainer: {
@@ -240,7 +243,7 @@ const styles = StyleSheet.create({
 
   RedeemInvalidButtonStyle: {
     alignSelf: "center",
-    backgroundColor: "grey",
+    backgroundColor: "#fff",
     borderRadius: 20,
     bottom: 0,
     position: "relative",
@@ -257,13 +260,25 @@ const styles = StyleSheet.create({
   ///card
 
   columnOne: {
-    borderRadius: 30,
-    backgroundColor: "purple",
+    borderRadius: 100,
+    borderWidth: 5,
     padding: 0,
-    width: "30%",
-    height: "100%",
+    position: "relative",
+    width: size / 4.5,
+    height: size / 4.5,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
+    top: 0,
+    marginVertical: 5,
+    zIndex: -1,
+    borderColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    backgroundColor: "#fff",
+    zIndex: -1,
   },
   columnOneText: {
     textTransform: "uppercase",
@@ -276,21 +291,22 @@ const styles = StyleSheet.create({
   columnTwoText: {
     textTransform: "uppercase",
     fontWeight: "bold",
-    color: "#fff",
+    color: "black",
     fontSize: 15,
     fontFamily: "RobotoBold",
     justifyContent: "center",
-    textAlign: "center",
+    textAlign: "left",
   },
   columnTwo: {
     padding: 10,
   },
   columnThree: {
-    backgroundColor: Colors.PRIMARY,
-    padding: 5,
+    backgroundColor: "#fff",
+    padding: 0,
     borderRadius: 10,
-    width: "100%",
+    width: size / 2.1,
     bottom: 0,
+    marginVertical: 10,
     // textAlign: "center",
     // alignContent: "center",
   },
@@ -299,26 +315,32 @@ const styles = StyleSheet.create({
     height: "100%",
     borderBottomWidth: 0,
     //backgroundColor: Colors.PRIMARY,
-    borderRadius: 0,
+    borderRadius: 100,
+    backgroundColor: "#fff",
   },
   cardContainer: {
-    width: "90%",
+    width: "85%",
     position: "absolute",
-    height: "18%",
+    height: "16.5%",
     padding: Platform.OS === "ios" ? 10 : 20,
     marginBottom: Platform.OS === "ios" ? 10 : 30,
     borderRadius: 20,
-    marginTop: 60,
+    marginTop: 50,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
   },
   logoImage: {
-    width: 200,
-    height: 200,
+    width: size / 5,
+    height: size / 5,
     resizeMode: "contain",
-    bottom: 12,
+    top: 0,
+    marginTop: "0%",
+    borderRadius: 100,
+    position: "absolute",
+    zIndex: -1,
+    borderWidth: 1,
   },
   titleBox: {
     paddingTop: 20,
@@ -326,6 +348,9 @@ const styles = StyleSheet.create({
     width: "95%",
     justifyContent: "center",
     textAlign: "center",
+  },
+  detailsBox: {
+    paddingTop: 20,
   },
 
   //status
@@ -337,6 +362,45 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: Colors.PRIMARY,
   },
+
+  // QR IMage
+  qrLogo: {
+    resizeMode: "contain",
+    width: size / 6.5,
+    height: size / 6.5,
+    color: "grey",
+    backgroundColor: "#fff",
+  },
+  qrContainer: {
+    backgroundColor: "black",
+    width: size / 8,
+    height: size / 8,
+    justifyContent: "center",
+    alignItems: "center",
+    right: -28,
+    bottom: size / 20,
+    marginLeft: 0,
+    // marginRight: 50,
+    resizeMode: "contain",
+    position: "absolute",
+  },
+  FirstRow: {
+    paddingTop: 20,
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+  },
+  col: { width: "45%", backgroundColor: "#fff" },
+  col2: { width: "50%", backgroundColor: "#fff", textAlign: "left" },
+  col2Text: {
+    color: "grey",
+  },
+  columnTwoSubText: {
+    color: "grey",
+    fontSize: 12,
+  },
+  ///descriptiontext
 });
 
 export default styles;

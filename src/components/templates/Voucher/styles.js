@@ -1,21 +1,18 @@
-import { StyleSheet, ColorPropType, Platform } from "react-native";
+import { StyleSheet, ColorPropType, Platform, Dimensions } from "react-native";
+
 import { Colors, Mixins } from "../../../settings/styles/theme";
+
+const size = Dimensions.get("window").width / 1.1;
 
 const styles = StyleSheet.create({
   card: {
     width: "100%",
-    height: 150,
+    height: size / 3,
     borderBottomWidth: 0,
-    //backgroundColor: Colors.PRIMARY,
-    borderRadius: 5,
+    backgroundColor: "#fff",
+    borderRadius: 25,
   },
-  columnOne: {
-    backgroundColor: "#d60000",
-    padding: 10,
-    width: "30%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   columnOneText: {
     textTransform: "uppercase",
     fontWeight: "bold",
@@ -26,24 +23,18 @@ const styles = StyleSheet.create({
   columnTwoText: {
     textTransform: "uppercase",
     fontWeight: "bold",
-    color: "#fff",
-    fontSize: 10,
+    color: "black",
+    fontSize: 15,
     fontFamily: "RobotoBold",
     justifyContent: "center",
-    textAlign: "center",
+    textAlign: "left",
+    resizeMode: "contain",
   },
   columnTwo: {
-    padding: 10,
+    paddingHorizontal: 5,
+    paddingVertical: 20,
   },
-  columnThree: {
-    backgroundColor: Colors.SECONDARY,
-    padding: 2,
-    justifyContent: "center",
-    width: "100%",
-    top: 45,
-    textAlign: "center",
-    alignContent: "center",
-  },
+
   image: {
     width: "100%",
     height: 250,
@@ -169,11 +160,34 @@ const styles = StyleSheet.create({
   },
 
   //image logo
-  logoImage: {
-    width: 200,
-    height: 200,
+  borderImage: {
+    width: size / 2.5,
+    height: size * 0.5,
     resizeMode: "contain",
-    bottom: 12,
+    bottom: 0,
+  },
+
+  merchantImage: {
+    resizeMode: "contain",
+    // position: "absolute",
+    width: size / 8,
+    height: size / 8,
+    left: 0,
+    borderRadius: 100,
+  },
+
+  merchantBorder: {
+    backgroundColor: "#fff",
+    width: size / 8,
+    height: size / 8,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    borderRadius: 100,
+    left: 15,
+    resizeMode: "contain",
+    borderColor: "black",
+    borderWidth: 3,
   },
 
   //status invalid ui
@@ -183,6 +197,150 @@ const styles = StyleSheet.create({
     width: "30%",
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  //single card list's card
+  CardListSingleCard: {
+    width: size,
+    // height: size / 4,
+    paddingBottom: 0,
+    borderRadius: 25,
+  },
+  // image border
+  columnOne: {
+    backgroundColor: "white",
+    padding: 0,
+    width: size / 2.3,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    height: size / 4.5,
+    marginVertical: "4%",
+  },
+  textStyle: { fontWeight: "bold", fontSize: 18 },
+  columnThree: {
+    backgroundColor: "#fff",
+    padding: 2,
+
+    width: size / 2,
+    bottom: 0,
+    resizeMode: "contain",
+    textAlign: "left",
+  },
+  salesPoint: {
+    position: "absolute",
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    textAlign: "center",
+    right: 38,
+    fontWeight: "bold",
+  },
+  salesPointText: {
+    fontSize: 20,
+  },
+  VoucherListTitle: {
+    color: "#D81212",
+    fontSize: 40,
+    padding: 10,
+    fontWeight: "bold",
+    fontFamily: "RobotoBold",
+  },
+  termNconditionText: {
+    color: "grey",
+    fontSize: 10,
+  },
+  usedBanner: {
+    backgroundColor: "grey",
+    position: "absolute",
+    width: size / 1,
+    height: size / 3,
+    borderBottomWidth: 0,
+    borderRadius: 25,
+    marginVertical: "3%",
+    paddingBottom: 0,
+    zIndex: 1,
+    opacity: 0.8,
+    marginHorizontal: "5%",
+    resizeMode: "contain",
+  },
+  usedBannerImage: {
+    position: "absolute",
+    resizeMode: "contain",
+    height: size / 3,
+    width: "100%",
+    paddingBottom: 0,
+  },
+  usedStyles: {
+    color: "#fff",
+    zIndex: 2,
+    opacity: 1,
+    fontSize: 30,
+    top: 70,
+    right: 10,
+    textAlign: "right",
+  },
+
+  ///Used Banner
+  CardListSingleCard2: {
+    width: size,
+    // height: size / 4,
+    paddingBottom: 0,
+    borderRadius: 25,
+  },
+  card2: {
+    width: "100%",
+    height: size / 3,
+    borderBottomWidth: 0,
+    backgroundColor: "#fff",
+    borderRadius: 25,
+  },
+  columnOne2: {
+    backgroundColor: "white",
+    padding: 0,
+    width: size / 2.3,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    height: size / 4.5,
+    marginVertical: "4%",
+  },
+  // bannerOutSide: {
+  //   backgroundColor: "grey",
+  // },
+  merchantBorder2: {
+    backgroundColor: "#fff",
+    width: size / 8,
+    height: size / 8,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    borderRadius: 100,
+    left: 15,
+    resizeMode: "contain",
+    borderColor: "black",
+    borderWidth: 3,
+  },
+  merchantImage2: {
+    resizeMode: "contain",
+    // position: "absolute",
+    width: size / 8,
+    height: size / 8,
+    left: 0,
+    borderRadius: 100,
+  },
+  borderImage2: {
+    width: size / 2.5,
+    height: size * 0.5,
+    resizeMode: "contain",
+    bottom: 0,
+  },
+  salesPoint2: {
+    position: "absolute",
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    textAlign: "center",
+    right: 38,
+    fontWeight: "bold",
   },
 });
 

@@ -95,7 +95,7 @@ class index extends Component {
       voucherStatus,
     } = this.props;
 
-    const noImage = require("@assets/chillibuddy/category1.png");
+    const noImage = require("@assets/chilliBuddyCheckin/backgroundIma.png");
     const { errorStatus, errorHeader, errorMessage } = this.state;
     console.log(errorHeader);
     console.log(errorStatus);

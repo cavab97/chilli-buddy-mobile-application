@@ -20,30 +20,38 @@ import { Card, CardSection } from "@components/molecules";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 function Voucher({ title, salesPoint, expiredDate, onPress, merchantName, columnTwoText, status }) {
-  const {
-    image,
-    card,
-    columnOneText,
-    columnOne,
-    columnTwo,
-    columnThree,
-    columnOneInvalid,
-  } = styles;
-
   return status ? (
     <TouchableOpacity onPress={onPress}>
-      <Card style={{ width: "95%" }}>
-        <CardSection style={card}>
-          <View style={columnOne}>
+      <Card style={styles.CardListSingleCard}>
+        <CardSection style={styles.card}>
+          <View style={styles.columnOne}>
             <Image
-              source={require("../../../assets/gogogain/loginIcon.png")}
-              style={styles.logoImage}
+              source={require("../../../assets/chilliBuddyCheckin/merchant_logo_border.png")}
+              style={styles.borderImage}
             />
+            <View style={styles.merchantBorder}>
+              <Image
+                source={require("../../../assets/chilliBuddyCheckin/starbucks.png")}
+                style={styles.merchantImage}
+              />
+            </View>
+
+            <View style={styles.salesPoint}>
+              <Text style={styles.salesPointText}>{salesPoint}</Text>
+            </View>
           </View>
-          <View style={columnTwo}>
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>{title}</Text>
-            <Text>Valid until {expiredDate}</Text>
-            <Text
+          {/* <Text style={styles.columnTwoText}>Provide by {merchantName}</Text> */}
+          <View style={styles.columnTwo}>
+            <View style={styles.columnThree}>
+              <Text style={styles.columnTwoText}> {merchantName}</Text>
+              <Text style={styles.termNconditionText}>
+                {salesPoint} Discount * with Terms & Conditions
+              </Text>
+            </View>
+
+            {/* <Text style={styles.textStyle}>{title}</Text>
+            <Text>Valid until {expiredDate}</Text> */}
+            {/* <Text
               style={{
                 fontSize: 18,
                 fontWeight: "bold",
@@ -56,46 +64,59 @@ function Voucher({ title, salesPoint, expiredDate, onPress, merchantName, column
               }}
             >
               Active
-            </Text>
-
-            <View style={columnThree}>
-              <Text style={columnTwoText}>Provide by {merchantName}</Text>
-            </View>
+            </Text> */}
           </View>
         </CardSection>
       </Card>
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity onPress={onPress}>
-      <Card style={{ width: "95%" }}>
-        <CardSection style={card}>
-          <View style={columnOneInvalid}>
+    <TouchableOpacity onPress={onPress} style={styles.bannerOutSide}>
+      <View style={styles.usedBanner}>
+        <Text style={styles.usedStyles}>Used</Text>
+      </View>
+      <Card style={styles.CardListSingleCard2}>
+        <CardSection style={styles.card2}>
+          <View style={styles.columnOne2}>
             <Image
-              source={require("../../../assets/gogogain/loginIcon.png")}
-              style={styles.logoImage}
+              source={require("../../../assets/chilliBuddyCheckin/merchant_logo_border.png")}
+              style={styles.borderImage2}
             />
-          </View>
-          <View style={columnTwo}>
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>{title}</Text>
-            <Text>Valid until {expiredDate}</Text>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                fontFamily: "RobotoRegular",
-                marginLeft: 0,
-                //marginRight: 10.5,
-                marginTop: 3,
-                color: Colors.PRIMARY,
-                marginBottom: 5,
-              }}
-            >
-              Deactive
-            </Text>
-
-            <View style={columnThree}>
-              <Text style={columnTwoText}>Provide by {merchantName}</Text>
+            <View style={styles.merchantBorder2}>
+              <Image
+                source={require("../../../assets/chilliBuddyCheckin/starbucks.png")}
+                style={styles.merchantImage2}
+              />
             </View>
+
+            <View style={styles.salesPoint2}>
+              <Text style={styles.salesPointText}>{salesPoint}</Text>
+            </View>
+          </View>
+          {/* <Text style={styles.columnTwoText}>Provide by {merchantName}</Text> */}
+          <View style={styles.columnTwo}>
+            <View style={styles.columnThree}>
+              <Text style={styles.columnTwoText}> {merchantName}</Text>
+              <Text style={styles.termNconditionText}>
+                {salesPoint} Discount * with Terms & Conditions
+              </Text>
+            </View>
+
+            {/* <Text style={styles.textStyle}>{title}</Text>
+          <Text>Valid until {expiredDate}</Text> */}
+            {/* <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              fontFamily: "RobotoRegular",
+              marginLeft: 0,
+              //marginRight: 10.5,
+              marginTop: 3,
+              color: Colors.SUCCESS,
+              marginBottom: 5,
+            }}
+          >
+            Active
+          </Text> */}
           </View>
         </CardSection>
       </Card>
@@ -112,6 +133,7 @@ const VoucherList = ({
 }) => {
   return (
     <View style={{ height: "100%" }}>
+      <Text style={styles.VoucherListTitle}>Voucher</Text>
       <FlatList
         data={dataSource}
         renderItem={({ item, index }) => (

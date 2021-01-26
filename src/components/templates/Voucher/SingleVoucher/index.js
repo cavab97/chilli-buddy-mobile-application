@@ -3,7 +3,7 @@ import styles from "./styles";
 
 import { Dimensions, Linking } from "react-native";
 
-import { View, Image, Text, ScrollView, FlatList } from "@components/atoms";
+import { View, Image, Text, ScrollView, FlatList, TouchableOpacity } from "@components/atoms";
 
 import { Card, CardSection } from "@components/molecules";
 
@@ -70,90 +70,48 @@ const SingleVoucher = ({
       </View>
       <ScrollView scrollIndicatorInsets={{ right: 0.4 }} style={{ height: "70%" }}>
         <View style={detailArea}>
-          <View style={titleBox}>
+          {/* <View style={titleBox}>
             <Text style={titleStyle}>{title}</Text>
-          </View>
+          </View> */}
 
-          <View>
-            <View style={setRow}>
-              <Ionicons style={{}} name="md-calendar" size={26} color={Colors.PRIMARY} />
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  fontFamily: "RobotoRegular",
-                  marginLeft: 10.5,
-                  //marginRight: 10.5,
-                  marginTop: 3,
-                  color: Colors.PRIMARY,
-                  marginBottom: 5,
-                }}
-              >
-                Valid from
-              </Text>
+          <View style={styles.detailsBox}>
+            {/* valid row */}
+            <View style={styles.FirstRow}>
+              {/* col */}
+              <View style={styles.col}>
+                <Text>Valid from</Text>
+              </View>
+              {/* col */}
+              <View style={styles.col2}>
+                <Text style={styles.col2Text}>11/1/2021-15/2/2021</Text>
+              </View>
             </View>
-            <View>
-              <Text>11/1/2021-15/2/2021</Text>
+
+            {/* description row */}
+            <View style={styles.FirstRow}>
+              {/* col */}
+              <View style={styles.col}>
+                <Text>Description</Text>
+              </View>
+              {/* col */}
+              <View style={styles.col2}>
+                <Text style={styles.col2Text}>This is my description for the voucher</Text>
+              </View>
             </View>
-            <View style={setRow}>
-              <Ionicons style={{}} name="ios-document" size={26} color={Colors.PRIMARY} />
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  fontFamily: "RobotoRegular",
-                  marginLeft: 10.5,
-                  //marginRight: 10.5,
-                  marginTop: 3,
-                  color: Colors.PRIMARY,
-                  marginBottom: 5,
-                }}
-              >
-                Description
-              </Text>
+
+            {/* term and condition row */}
+            <View style={styles.FirstRow}>
+              {/* col */}
+              <View style={styles.col}>
+                <Text>Terms & Condition</Text>
+              </View>
+              {/* col */}
+              <View style={styles.col2}>
+                <Text style={styles.col2Text}>3. This is my description for the voucher</Text>
+                <Text style={styles.col2Text}>3. This is my description for the voucher</Text>
+              </View>
             </View>
-            <View>
-              <Text>This is my description for the voucher</Text>
-            </View>
-            <View style={setRow}>
-              <Ionicons style={{}} name="ios-document" size={26} color={Colors.PRIMARY} />
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  fontFamily: "RobotoRegular",
-                  marginLeft: 10.5,
-                  //marginRight: 10.5,
-                  marginTop: 3,
-                  color: Colors.PRIMARY,
-                  marginBottom: 5,
-                }}
-              >
-                Terms and Condition
-              </Text>
-            </View>
-            <View>
-              <Text>1. This is my description for the voucher</Text>
-              <Text>2. This is my description for the voucher</Text>
-              <Text>3. This is my description for the voucher</Text>
-              <Text>4. This is my description for the voucher</Text>
-              <Text>5. This is my description for the voucher</Text>
-              <Text>1. This is my description for the voucher</Text>
-              <Text>2. This is my description for the voucher</Text>
-              <Text>3. This is my description for the voucher</Text>
-              <Text>4. This is my description for the voucher</Text>
-              <Text>5. This is my description for the voucher</Text>
-              <Text>1. This is my description for the voucher</Text>
-              <Text>2. This is my description for the voucher</Text>
-              <Text>3. This is my description for the voucher</Text>
-              <Text>4. This is my description for the voucher</Text>
-              <Text>5. This is my description for the voucher</Text>
-              <Text>1. This is my description for the voucher</Text>
-              <Text>2. This is my description for the voucher</Text>
-              <Text>3. This is my description for the voucher</Text>
-              <Text>4. This is my description for the voucher</Text>
-              <Text>5. This is my description for the voucher</Text>
-            </View>
+
             {/* <View style={setRow}>
                 <Ionicons
                   style={subIconDetailMain}
@@ -169,7 +127,7 @@ const SingleVoucher = ({
         <CardSection style={card}>
           <View style={columnOne}>
             <Image
-              source={require("../../../../assets/gogogain/loginIcon.png")}
+              source={require("../../../../assets/chilliBuddyCheckin/starbucks.png")}
               style={styles.logoImage}
             />
           </View>
@@ -191,21 +149,37 @@ const SingleVoucher = ({
 
             <View style={columnThree}>
               <Text style={columnTwoText}>{merchantName}</Text>
+              <Text style={styles.columnTwoSubText}>{SalesPoint} Discount</Text>
             </View>
+            {status ? (
+              <TouchableOpacity style={styles.qrContainer} onPress={OpenCamPress}>
+                <Image
+                  source={require("/Users/huihan/chillibuddy-mobile-application/src/assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
+                  style={styles.qrLogo}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={styles.qrContainer} onPress={OnInvalidPress}>
+                <Image
+                  source={require("/Users/huihan/chillibuddy-mobile-application/src/assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
+                  style={styles.qrLogo}
+                />
+              </TouchableOpacity>
+            )}
 
-            <View>
+            {/* <View>
               {status ? (
                 <Text style={statusActiveText}> Active</Text>
               ) : (
                 <Text style={statusDeactiveText}>Deactive</Text>
               )}
-            </View>
+            </View> */}
 
-            <Text>{description}</Text>
+            {/* <Text>{description}</Text> */}
           </View>
         </CardSection>
       </Card>
-      {status ? (
+      {/* {status ? (
         <View style={styles.RedeemButtonStyle}>
           <RedeeemButton onPress={OpenCamPress}>Redeem Now</RedeeemButton>
         </View>
@@ -213,7 +187,7 @@ const SingleVoucher = ({
         <View style={styles.RedeemInvalidButtonStyle}>
           <RedeeemButton onPress={OnInvalidPress}>Redeemed</RedeeemButton>
         </View>
-      )}
+      )} */}
     </View>
   );
 };
