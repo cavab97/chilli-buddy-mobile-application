@@ -30,7 +30,7 @@ const sadHeader = "Better luck \n next Time!";
 const happyHeader = "Congratulations!";
 const happyDesciption = "You have won a";
 
-function Grid({ data = [], onPressCheckIn, submitLoading }) {
+function Grid({ data = [], onPressCheckIn, submitLoading, checkInRecordLength }) {
   return (
     <View style={styles.viewPanel}>
       <FlatList
@@ -43,6 +43,9 @@ function Grid({ data = [], onPressCheckIn, submitLoading }) {
                 <TouchableOpacity
                   style={styles.touchContainer}
                   onPress={() => onPressCheckIn(item)}
+                  disabled={
+                    (item.checked == false || item.checked) && checkInRecordLength !== item.id
+                  }
                 >
                   <View style={styles.checkInBox}>
                     <Text style={styles.Days}>Day{item.value}</Text>
@@ -67,6 +70,9 @@ function Grid({ data = [], onPressCheckIn, submitLoading }) {
                 <TouchableOpacity
                   style={styles.touchContainer2}
                   onPress={() => onPressCheckIn(item)}
+                  disabled={
+                    (item.checked == false || item.checked) && checkInRecordLength !== item.id
+                  }
                 >
                   <View style={styles.checkInBox2}>
                     <Text style={styles.Days}>Day{item.value}</Text>
@@ -96,6 +102,9 @@ function Grid({ data = [], onPressCheckIn, submitLoading }) {
                 <TouchableOpacity
                   style={styles.touchContainer2}
                   onPress={() => onPressCheckIn(item)}
+                  disabled={
+                    (item.checked == false || item.checked) && checkInRecordLength !== item.id
+                  }
                 >
                   <View style={styles.checkInBoxRed}>
                     <Text style={styles.Days}>Day{item.value}</Text>
@@ -140,6 +149,7 @@ const CheckIn = ({
   isVisible,
   rewardOnceThanOneOption,
   readLoading,
+  checkInRecordLength,
 }) => {
   /* if (readLoading) {
     return (
@@ -186,7 +196,12 @@ const CheckIn = ({
           </Text>
           <Text style={styles.checkInSubRefreshing}>Refresh in:</Text>
         </View>
-        <Grid data={data} onPressCheckIn={onPressCheckIn} submitLoading={submitLoading} />
+        <Grid
+          data={data}
+          onPressCheckIn={onPressCheckIn}
+          submitLoading={submitLoading}
+          checkInRecordLength={checkInRecordLength}
+        />
 
         {/* <View style={styles.buttonStyles}>
         <SignoutButton

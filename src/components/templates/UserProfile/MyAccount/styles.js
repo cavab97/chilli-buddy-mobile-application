@@ -32,9 +32,10 @@ const styles = {
         fontFamily: "RobotoRegular",
     },
     signoutButtonStyle: {
-        alignSelf: "center",
-        padding: Platform.OS === 'ios' ? 20 : 20,
-        marginBottom: Platform.OS === 'ios' ? 30 : 30,
+        alignSelf: "left",
+        paddingVertical: 35,
+        paddingHorizontal: 30,
+        // marginBottom: Platform.OS === 'ios' ? 30 : 30,
         // position: "absolute",
         // bottom: -130,
     },

@@ -282,6 +282,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       <Stack key="SingleVoucher" back>
         <Scene
           key="SingleVoucher"
+          navTransparent={true}
           component={SingleVoucher}
           title={SingleVoucher.title}
           titleStyle={styles.title}

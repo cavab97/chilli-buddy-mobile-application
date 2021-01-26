@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 0,
     justifyContent: "center",
+    paddingTop: 10,
   },
   //text
   textContainer: {
@@ -155,7 +156,9 @@ const styles = StyleSheet.create({
   checkInTitle: {
     fontSize: 40,
     fontWeight: "bold",
-    color: "red",
+    color: "#D81212",
+    fontFamily: "RobotoBold",
+
     // fontFamily: "Cochin",
   },
   checkInSubTitle: {
