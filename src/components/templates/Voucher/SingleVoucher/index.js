@@ -154,14 +154,14 @@ const SingleVoucher = ({
             {status ? (
               <TouchableOpacity style={styles.qrContainer} onPress={OpenCamPress}>
                 <Image
-                  source={require("/Users/huihan/chillibuddy-mobile-application/src/assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
+                  source={require("../../../../assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
                   style={styles.qrLogo}
                 />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity style={styles.qrContainer} onPress={OnInvalidPress}>
                 <Image
-                  source={require("/Users/huihan/chillibuddy-mobile-application/src/assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
+                  source={require("../../../../assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
                   style={styles.qrLogo}
                 />
               </TouchableOpacity>
