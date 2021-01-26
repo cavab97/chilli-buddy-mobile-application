@@ -29,13 +29,15 @@ class index extends Component {
     };
   }
 
-  componentDidMount = async () => {
-    await this.table24();
-    this.tableData4();
-    this.props.readFromDatabase();
+  async componentDidMount() {
+    this.table24();
+    //this.tableData4();
+    await this.props.readFromDatabase();
+    this.table24();
+    console.log("did mount")
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const readError = this.props.checkInState.readError;
 
     if (prevProps.checkInState.readError !== readError && readError !== false) {
@@ -55,17 +57,18 @@ class index extends Component {
         prevProps.checkInState.submitResult.message &&
       this.props.checkInState.submitResult.message
     ) {
-      alert(this.props.checkInState.submitResult.message);
-      this.props.readFromDatabase();
+      await this.props.readFromDatabase();
+      this.table24();
     }
   }
 
   table24 = async () => {
     const { checkInRecord } = this.props.checkInState.checkIn;
+    console.log("table24 table24");
+    console.log("table24"+checkInRecord.length);
 
     let j = 0;
     let temp = [];
-    let checkInCounter = checkInRecord ? checkInRecord.length : 0;
 
     for (let i = 1; i < 33; i++) {
       if (i === 4 || i === 12 || i === 20 || i === 28) {
@@ -83,7 +86,7 @@ class index extends Component {
           id: i,
           value: i - j,
           count: i,
-          checked: checkInRecord[i - checkInCounter] ? true : false,
+          checked: checkInRecord[i-1] ? true : false,
           reward: true,
           submitLoading: this.props.submitLoading,
         });
@@ -154,7 +157,10 @@ class index extends Component {
 
   render() {
     const { tableData24 } = this.state;
-    const { submitLoading } = this.props;
+    const { 
+      submitLoading,
+    } = this.props;
+
     tableData24.forEach((table24) => {
       if (table24.id === this.state.focusId) {
         table24.submitLoading = submitLoading;
@@ -162,6 +168,8 @@ class index extends Component {
         // console.log(this.props.submitLoading);
       }
     });
+
+    console.log("length in render"+this.props.checkInState.checkIn.checkInRecord.length)
 
     return (
       <CheckIn
@@ -171,6 +179,7 @@ class index extends Component {
         rewardOnceThanOneOption={false}
         happy={true}
         isVisible={false}
+        readLoading={this.props.checkInState.readLoading}
       />
     );
   }
@@ -181,12 +190,14 @@ const mapStateToProps = (state) => {
   const { uid } = state.Auth.user;
   const checkInState = state.CheckIn;
   const { submitLoading } = state.CheckIn;
+  const { checkIn } = state.CheckIn;
 
   return {
     routeTicketState,
     uid,
     checkInState,
     submitLoading,
+    checkIn
   };
 };
 

@@ -39,7 +39,8 @@ export function readFromDatabase() {
         const checkIN = await checkInDataServices.readObjects({
           uid: uid,
         });
-
+        console.log("read database")
+        console.log(checkIN.length)
         resolve(checkIN);
         dispatch({
           type: actions.READ_FROM_DATABASE_SUCCESS,
@@ -80,8 +81,6 @@ export function submitToBackend(data, actionName) {
             result = await checkInBackendServices.update({ data });
             break;
         }
-
-        console.log(result)
 
         resolve(result);
         dispatch({

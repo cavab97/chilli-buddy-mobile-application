@@ -6,7 +6,7 @@ const objectName = "checkInTicket";
 export function readObjects({ uid }) {
   return new Promise((resolve, reject) => {
     let databaseRef = database.readTable({
-      ref: `${objectName}Packaging0`,
+      ref: `${objectName}Private0`,
     });
     // if (selectedCategory)
     //   databaseRef = databaseRef.where("shop.categories", "array-contains-any", [selectedCategory]);

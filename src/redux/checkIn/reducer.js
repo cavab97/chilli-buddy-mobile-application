@@ -161,14 +161,15 @@ const reducer = (state = initialState, { type, payload }) => {
       };
 
     case actions.READ_FROM_DATABASE_SUCCESS:
+      console.log("READ_FROM_DATABASE_SUCCESS");
       return {
         ...state,
         readLoading: initialState.readLoading,
-        checkIns: payload.data,
         checkIn: payload.data[0] ? payload.data[0] : initialState.checkIn,
       };
 
     case actions.READ_FROM_DATABASE_ERROR:
+      console.log("READ_FROM_DATABASE_ERROR");
       return {
         ...state,
         readLoading: initialState.readLoading,
