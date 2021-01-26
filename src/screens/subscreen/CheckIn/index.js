@@ -194,7 +194,7 @@ class index extends Component {
         onPressCheckIn={this.onPressCheckIn.bind(this)}
         submitLoading={submitLoading}
         rewardOnceThanOneOption={false}
-        happy={true}
+        happy={false}
         isVisible={false}
         readLoading={this.props.checkInState.readLoading}
         checkInRecordLength={checkInRecord.length + y}
