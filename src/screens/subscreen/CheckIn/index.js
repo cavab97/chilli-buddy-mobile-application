@@ -169,15 +169,13 @@ class index extends Component {
       }
     });
 
-    console.log("length in render"+this.props.checkInState.checkIn.checkInRecord.length)
-
     return (
       <CheckIn
         data={tableData24}
         onPressCheckIn={this.onPressCheckIn.bind(this)}
         submitLoading={submitLoading}
         rewardOnceThanOneOption={false}
-        happy={true}
+        happy={false}
         isVisible={false}
         readLoading={this.props.checkInState.readLoading}
       />
