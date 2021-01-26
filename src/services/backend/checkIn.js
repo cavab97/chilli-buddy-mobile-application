@@ -28,12 +28,13 @@ export function update({ data }) {
   return new Promise((resolve, reject) => {
     const apiName = `http${objectName}Update`;
 
-    const { id, isBookmark } = data;
+    const { id, userIds } = data;
 
     data = {
       id,
-      isBookmark,
+      userIds,
     };
+    
     data = backend.processData({ data });
 
     backend

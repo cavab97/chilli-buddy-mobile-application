@@ -33,5 +33,6 @@ export {
   promoDataServices,
   shopPostDataServices,
   bookmarkDataServices,
-  checkInDataServices
+  checkInDataServices,
+  voucherDataServices
 };

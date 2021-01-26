@@ -29,26 +29,46 @@ class index extends Component {
     };
   }
 
-  componentDidMount = async () => {
-    await this.table24();
-    this.tableData4();
+  async componentDidMount() {
+    this.table24();
+    //this.tableData4();
     await this.props.readFromDatabase();
+    this.table24();
+    console.log("did mount")
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const readError = this.props.checkInState.readError;
 
     if (prevProps.checkInState.readError !== readError && readError !== false) {
       alert(readError);
     }
+
+    if (
+      this.props.checkInState.submitError.message !==
+        prevProps.checkInState.submitError.message &&
+      this.props.checkInState.submitError.message
+    ) {
+      alert(this.props.checkInState.submitError.message);
+    }
+
+    if (
+      this.props.checkInState.submitResult.message !==
+        prevProps.checkInState.submitResult.message &&
+      this.props.checkInState.submitResult.message
+    ) {
+      await this.props.readFromDatabase();
+      this.table24();
+    }
   }
 
   table24 = async () => {
     const { checkInRecord } = this.props.checkInState.checkIn;
+    console.log("table24 table24");
+    console.log("table24"+checkInRecord.length);
 
     let j = 0;
     let temp = [];
-    let checkInCounter = checkInRecord ? checkInRecord.length : 0;
 
     for (let i = 1; i < 33; i++) {
       if (i === 4 || i === 12 || i === 20 || i === 28) {
@@ -66,7 +86,7 @@ class index extends Component {
           id: i,
           value: i - j,
           count: i,
-          checked: checkInRecord[i - checkInCounter] ? true : false,
+          checked: checkInRecord[i-1] ? true : false,
           reward: true,
           submitLoading: this.props.submitLoading,
         });
@@ -103,41 +123,32 @@ class index extends Component {
     //i deliberately leave mystate empty so that i can push new array later
   }
 
-  // lookingForBookmark({ promoId } = null) {
-  //   const bookmarks = this.props.bookmarks;
-  //   let bookmarkId = null;
-
-  //   bookmarks.forEach((bookmark) => {
-  //     if (bookmark.promo[0] === promoId) {
-  //       bookmarkId = bookmark.id;
-  //     }
-  //   });
-  //   return bookmarkId;
-  // }
+  lookingForCheckIn({ id } = null) {}
 
   onPressCheckIn = async (item) => {
     // if(item.id==this.state.tableData24.id){
     //   console.log()
     // }
     const tableDataTemp = this.state.tableData24;
+    const { checkIn } = this.props.checkInState
 
     // console.log(this.state.tableData24);
     const uid = this.props.uid;
-    const data = { uid };
 
-    // console.log("this.props.submitLoading");
-    // console.log(this.props.submitLoading);
-    // if (bookmarkId === null) {
-    //   const data = { shopId, promoId, isBookmark };
-    //   await this.props.submitToBackend(data, "create");
-    // } else {
-    //   const data = { bookmarkId, isBookmark };
-    //   await this.props.submitToBackend(data, "update");
-    // }
+    const data = { 
+      uid: uid, 
+      id: checkIn.id 
+    };
+    
     tableDataTemp.forEach((table24) => {
       if (table24.id === item.id) {
         this.setState({ focusId: item.id });
-        this.props.submitToBackend(data, "create");
+        if (checkIn.id === null) {
+          this.props.submitToBackend(data, "create");
+        } else {
+          this.props.submitToBackend(data, "update");
+        }
+        
         // console.log("this.props.submitLoading");
         // console.log(this.props.submitLoading);
       }
@@ -146,7 +157,10 @@ class index extends Component {
 
   render() {
     const { tableData24 } = this.state;
-    const { uid, submitLoading } = this.props;
+    const { 
+      submitLoading,
+    } = this.props;
+
     tableData24.forEach((table24) => {
       if (table24.id === this.state.focusId) {
         table24.submitLoading = submitLoading;
@@ -154,6 +168,8 @@ class index extends Component {
         // console.log(this.props.submitLoading);
       }
     });
+
+    console.log("length in render"+this.props.checkInState.checkIn.checkInRecord.length)
 
     return (
       <CheckIn
@@ -163,6 +179,7 @@ class index extends Component {
         rewardOnceThanOneOption={false}
         happy={true}
         isVisible={false}
+        readLoading={this.props.checkInState.readLoading}
       />
     );
   }
@@ -173,12 +190,14 @@ const mapStateToProps = (state) => {
   const { uid } = state.Auth.user;
   const checkInState = state.CheckIn;
   const { submitLoading } = state.CheckIn;
+  const { checkIn } = state.CheckIn;
 
   return {
     routeTicketState,
     uid,
     checkInState,
     submitLoading,
+    checkIn
   };
 };
 

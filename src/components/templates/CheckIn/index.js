@@ -66,7 +66,7 @@ function Grid({ data = [], onPressCheckIn, submitLoading }) {
               ) : item.checked != true ? (
                 <TouchableOpacity
                   style={styles.touchContainer2}
-                  onPress={() => onPressCheckIn(item)}
+                  onPress={() => onPressCheckIn()}
                 >
                   <View style={styles.checkInBox2}>
                     <Text style={styles.Days}>Day{item.value}</Text>
@@ -97,7 +97,6 @@ function Grid({ data = [], onPressCheckIn, submitLoading }) {
                   style={styles.touchContainer2}
                   onPress={() => onPressCheckIn(item)}
                 >
-                  {console.log("red")}
                   <View style={styles.checkInBoxRed}>
                     <Text style={styles.Days}>Day{item.value}</Text>
                     <View style={styles.checkInBoxWhite2Red}>
@@ -140,7 +139,23 @@ const CheckIn = ({
   happy,
   isVisible,
   rewardOnceThanOneOption,
+  readLoading
 }) => {
+  /* if (readLoading) {
+    return (
+      <View style={styles.CheckinContainer}>
+        <View style={styles.CheckInTextContainer}>
+          <Text style={styles.checkInTitle}>
+            Check-In
+          </Text>
+          <Text style={styles.checkInSubTitle}>
+            Stand the chance to win a random a random prize by checking in everyday!{" "}
+          </Text>
+          <ActivityIndicator animating={readLoading}/>
+        </View>
+      </View>
+    )
+  } */
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {happy == true ? (
@@ -165,13 +180,21 @@ const CheckIn = ({
       )}
       <View style={styles.CheckinContainer}>
         <View style={styles.CheckInTextContainer}>
-          <Text style={styles.checkInTitle}>Check-In</Text>
+          <Text style={styles.checkInTitle}>
+            Check-In
+          </Text>
           <Text style={styles.checkInSubTitle}>
             Stand the chance to win a random a random prize by checking in everyday!{" "}
           </Text>
-          <Text style={styles.checkInSubRefreshing}>Refresh in:</Text>
+          <Text style={styles.checkInSubRefreshing}>
+            Refresh in:
+          </Text>
         </View>
-        <Grid data={data} onPressCheckIn={onPressCheckIn} submitLoading={submitLoading} />
+        <Grid 
+          data={data} 
+          onPressCheckIn={onPressCheckIn} 
+          submitLoading={submitLoading} 
+        />
 
         {/* <View style={styles.buttonStyles}>
         <SignoutButton
