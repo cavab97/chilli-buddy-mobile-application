@@ -34,8 +34,8 @@ class index extends Component {
     //this.tableData4();
     await this.props.readFromDatabase();
     this.table24();
-    console.log("did mount")
-  };
+    console.log("did mount");
+  }
 
   async componentDidUpdate(prevProps, prevState) {
     const readError = this.props.checkInState.readError;
@@ -45,8 +45,7 @@ class index extends Component {
     }
 
     if (
-      this.props.checkInState.submitError.message !==
-        prevProps.checkInState.submitError.message &&
+      this.props.checkInState.submitError.message !== prevProps.checkInState.submitError.message &&
       this.props.checkInState.submitError.message
     ) {
       alert(this.props.checkInState.submitError.message);
@@ -64,15 +63,17 @@ class index extends Component {
 
   table24 = async () => {
     const { checkInRecord } = this.props.checkInState.checkIn;
-    console.log("table24 table24");
-    console.log("table24"+checkInRecord.length);
+    // console.log("table24 table24");
+    // console.log("table24" + checkInRecord.length);
 
     let j = 0;
+    let k = 1;
     let temp = [];
 
     for (let i = 1; i < 33; i++) {
       if (i === 4 || i === 12 || i === 20 || i === 28) {
         j++;
+        k++;
         temp.push({
           id: i,
           value: i - j,
@@ -81,12 +82,19 @@ class index extends Component {
           checked: false,
           reward: false,
         });
+
+        continue;
       } else {
         temp.push({
           id: i,
           value: i - j,
           count: i,
-          checked: checkInRecord[i-1] ? true : false,
+          checked:
+            i === 4 || i === 12 || i === 20 || i === 28
+              ? false
+              : checkInRecord[i - k]
+              ? true
+              : false,
           reward: true,
           submitLoading: this.props.submitLoading,
         });
@@ -110,6 +118,7 @@ class index extends Component {
     //   temp[i].value = i - 3;
     //   console.log(temp[i]);
     // }
+    // console.log(temp);
     this.setState({ tableData24: temp });
   };
 
@@ -130,16 +139,16 @@ class index extends Component {
     //   console.log()
     // }
     const tableDataTemp = this.state.tableData24;
-    const { checkIn } = this.props.checkInState
+    const { checkIn } = this.props.checkInState;
 
     // console.log(this.state.tableData24);
     const uid = this.props.uid;
 
-    const data = { 
-      uid: uid, 
-      id: checkIn.id 
+    const data = {
+      uid: uid,
+      id: checkIn.id,
     };
-    
+
     tableDataTemp.forEach((table24) => {
       if (table24.id === item.id) {
         this.setState({ focusId: item.id });
@@ -148,7 +157,7 @@ class index extends Component {
         } else {
           this.props.submitToBackend(data, "update");
         }
-        
+
         // console.log("this.props.submitLoading");
         // console.log(this.props.submitLoading);
       }
@@ -157,9 +166,7 @@ class index extends Component {
 
   render() {
     const { tableData24 } = this.state;
-    const { 
-      submitLoading,
-    } = this.props;
+    const { submitLoading } = this.props;
 
     tableData24.forEach((table24) => {
       if (table24.id === this.state.focusId) {
@@ -169,7 +176,7 @@ class index extends Component {
       }
     });
 
-    console.log("length in render"+this.props.checkInState.checkIn.checkInRecord.length)
+    console.log("length in render" + this.props.checkInState.checkIn.checkInRecord.length);
 
     return (
       <CheckIn
@@ -197,7 +204,7 @@ const mapStateToProps = (state) => {
     uid,
     checkInState,
     submitLoading,
-    checkIn
+    checkIn,
   };
 };
 
