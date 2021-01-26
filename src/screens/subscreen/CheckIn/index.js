@@ -10,7 +10,7 @@ const NUM = 7;
 import styles from "./styles";
 
 import { Actions } from "react-native-router-flux";
-
+let y = 1;
 class index extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +26,7 @@ class index extends Component {
       },
       tableData4: [],
       focusId: "",
+      y: 1,
     };
   }
 
@@ -68,6 +69,7 @@ class index extends Component {
 
     let j = 0;
     let k = 1;
+
     let temp = [];
 
     for (let i = 1; i < 33; i++) {
@@ -89,12 +91,7 @@ class index extends Component {
           id: i,
           value: i - j,
           count: i,
-          checked:
-            i === 4 || i === 12 || i === 20 || i === 28
-              ? false
-              : checkInRecord[i - k]
-              ? true
-              : false,
+          checked: checkInRecord[i - k] ? true : false,
           reward: true,
           submitLoading: this.props.submitLoading,
         });
@@ -167,7 +164,7 @@ class index extends Component {
   render() {
     const { tableData24 } = this.state;
     const { submitLoading } = this.props;
-
+    const { checkInRecord } = this.props.checkInState.checkIn;
     tableData24.forEach((table24) => {
       if (table24.id === this.state.focusId) {
         table24.submitLoading = submitLoading;
@@ -175,8 +172,21 @@ class index extends Component {
         // console.log(this.props.submitLoading);
       }
     });
+    if (checkInRecord.length < 3) {
+      y = 1;
+    } else if (checkInRecord.length == 3) {
+      y = 2;
+    } else if (checkInRecord.length == 10) {
+      y = 3;
+    } else if (checkInRecord.length == 17) {
+      y = 4;
+    } else if (checkInRecord.length == 24) {
+      y = 5;
+    }
+    console.log("y");
 
-    console.log("length in render" + this.props.checkInState.checkIn.checkInRecord.length);
+    console.log(y);
+    // console.log("length in render" + this.props.checkInState.checkIn.checkInRecord.length);
 
     return (
       <CheckIn
@@ -187,6 +197,7 @@ class index extends Component {
         happy={true}
         isVisible={false}
         readLoading={this.props.checkInState.readLoading}
+        checkInRecordLength={checkInRecord.length + y}
       />
     );
   }
