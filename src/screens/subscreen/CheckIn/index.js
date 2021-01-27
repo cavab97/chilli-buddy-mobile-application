@@ -132,7 +132,9 @@ class index extends Component {
     //i deliberately leave mystate empty so that i can push new array later
   }
 
-  lookingForCheckIn({ id } = null) {}
+  onClose() {
+    this.props.toggleModal();
+  }
 
   onPressCheckIn = async (item) => {
     // if(item.id==this.state.tableData24.id){
@@ -152,6 +154,7 @@ class index extends Component {
     tableDataTemp.forEach((table24) => {
       if (table24.id === item.id) {
         console.log(item.id)
+        console.log(table24.id)
         this.setState({ focusId: item.id });
         if (checkIn.id === null) {
           this.props.submitToBackend(data, "create");
@@ -208,6 +211,7 @@ class index extends Component {
         happy={checkIn.voucher.id !== null ? true : false}
         isVisible={modalVisible}
         readLoading={readLoading}
+        onCLose={this.onClose.bind(this)}
         checkInRecordLength={checkInRecord.length + y}
       />
     );

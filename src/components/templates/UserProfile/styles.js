@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   avatarContainer: {
     //marginRight: 12,
     marginTop: 80,
+    paddingLeft: 15,
   },
   userTitle: {
     justifyContent: "flex-start",
