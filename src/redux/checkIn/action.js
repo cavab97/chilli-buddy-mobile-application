@@ -103,7 +103,6 @@ export function submitToBackend(data, actionName) {
 export const toggleModal = () => {
   return {
     type: actions.TOGGLE_MODAL,
-    // payload: { data },
   };
 };
 

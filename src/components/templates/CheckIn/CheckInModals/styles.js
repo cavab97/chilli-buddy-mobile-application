@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
+const size = Dimensions.get("window").width / 1.1;
 
 const styles = StyleSheet.create({
   messageText: {
@@ -9,22 +10,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     textAlign: "center",
   },
-  subjectText: {
-    fontSize: 22,
-    color: "black",
-    fontWeight: "bold",
-    marginHorizontal: 0,
-    textAlign: "center",
-    bottom: 65,
-  },
+
   contentContainer: {
     justifyContent: "center",
     alignItems: "center",
   },
-  contentContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   submitContainer: {
     backgroundColor: Colors.PRIMARY,
     borderRadius: 3,
@@ -72,15 +63,150 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center", // backgroundColor: "red",
     resizeMode: "cover",
+    marginTop: "50%",
+    backgroundColor: "#fff",
+  },
+  imageAnime2: {
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center", // backgroundColor: "red",
+    resizeMode: "cover",
+    marginTop: "0%",
+    backgroundColor: "#fff",
   },
   redeemImageChilliStyle: {
     flex: 1,
     resizeMode: "contain",
-    width: 150,
-    height: 150,
+    width: size / 2.2,
+    height: size / 2.2,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
+    position: "absolute",
+  },
+  redeemImageChilliStyle2: {
+    flex: 1,
+    resizeMode: "contain",
+    width: size / 2.2,
+    height: size / 2.2,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    // position: "absolute",
+  },
+
+  //redeem now
+  redeemNowBox: {
+    backgroundColor: "#fff",
+    shadowRadius: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    padding: 6,
+    borderRadius: 100,
+    width: size / 3,
+    color: "red",
+    alignItems: "center",
+    top: 225,
+    position: "absolute",
+  },
+  redeemNowText: {
+    color: "#D81212",
+    fontWeight: "bold",
+
+    textAlign: "center",
+  },
+  emojiText: {
+    fontSize: size / 15,
+    color: "#D81212",
+    fontWeight: "bold",
+    marginHorizontal: 0,
+    textAlign: "center",
+    bottom: 0,
+    paddingBottom: 5,
+  },
+  emojiText2: {
+    fontSize: size / 15,
+    color: "black",
+    fontWeight: "bold",
+    marginHorizontal: 0,
+    textAlign: "center",
+    bottom: 0,
+    paddingBottom: 5,
+  },
+  subjectText: {
+    fontSize: size / 25,
+    color: "black",
+    fontWeight: "bold",
+    marginHorizontal: 0,
+    textAlign: "center",
+    bottom: 0,
+    paddingBottom: 3,
+  },
+  subjectText2: {
+    fontSize: size / 25,
+    color: "black",
+    fontWeight: "bold",
+    marginHorizontal: 0,
+    textAlign: "center",
+    bottom: 0,
+    paddingBottom: 3,
+  },
+  desciptionBox: {
+    backgroundColor: "#fff",
+    alignItems: "center",
+    top: 100,
+    position: "absolute",
+  },
+  desciptionBox2: {
+    backgroundColor: "#fff",
+    alignItems: "center",
+    bottom: 50,
+
+    // position: "absolute",
+  },
+  voucherValue: {
+    fontSize: size / 13,
+    color: "black",
+    fontWeight: "bold",
+    marginHorizontal: 0,
+    textAlign: "center",
+    bottom: 0,
+  },
+  restaurantText: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  doubleOption: {
+    alignItems: "center",
+  },
+  redeemNowBoxSecond: {
+    backgroundColor: "#fff",
+    shadowRadius: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    padding: 6,
+    borderRadius: 100,
+    width: size / 3,
+    color: "red",
+    alignItems: "center",
+    top: 290,
+    position: "absolute",
+  },
+  Or: {
+    color: "grey",
+    top: 265,
+  },
+  bottomText: {
+    color: "grey",
+    top: 309,
+    textAlign: "center",
+    fontSize: 8,
+  },
+  bottomTextBox: {
+    width: size / 2.65,
   },
 });
 

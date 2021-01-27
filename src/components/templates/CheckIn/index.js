@@ -8,7 +8,7 @@ import { CheckInButton } from "../../molecules";
 
 import styles from "./styles";
 import { SignoutButton } from "../../../components/molecules";
-import { CheckInModal } from "@components/templates";
+import { CheckInModal, CheckInModalError } from "@components/templates";
 
 import {
   ActivityIndicator,
@@ -31,6 +31,7 @@ const happyHeader = "Congratulations!";
 const happyDesciption = "You have won a";
 
 function Grid({ data, onPressCheckIn, submitLoading, checkInRecordLength }) {
+  const img = require("../../../assets/chilliBuddyCheckin/checkin_part_star.png");
   return (
     <View style={styles.viewPanel}>
       <FlatList
@@ -59,11 +60,13 @@ function Grid({ data, onPressCheckIn, submitLoading, checkInRecordLength }) {
                     ) : item.checked != true ? (
                       <Image
                         source={require("../../../assets/chilliBuddyCheckin/starEmpty.png")}
+                        transition={false}
                         style={styles.smallRedeemImageStarStyle}
                       />
                     ) : (
                       <Image
-                        source={require("../../../assets/chilliBuddyCheckin/checkin_part_star.png")}
+                        source={img}
+                        transition={false}
                         style={styles.smallRedeemImageStarStyle}
                       />
                     )}
@@ -89,11 +92,13 @@ function Grid({ data, onPressCheckIn, submitLoading, checkInRecordLength }) {
                       ) : item.id === 24 || item.id === 32 ? (
                         <Image
                           source={require("../../../assets/chilliBuddyCheckin/checkin_questionMark.png")}
+                          transition={false}
                           style={styles.redeemImageQuestionStyle}
                         />
                       ) : (
                         <Image
                           source={require("../../../assets/chilliBuddyCheckin/starEmpty.png")}
+                          transition={false}
                           style={styles.redeemImageQuestionStyle}
                         />
                       )}
@@ -120,13 +125,11 @@ function Grid({ data, onPressCheckIn, submitLoading, checkInRecordLength }) {
                       ) : item.id === 24 || item.id === 32 ? (
                         <Image
                           source={require("../../../assets/chilliBuddyCheckin/checkIn_part_letter.png")}
+                          transition={false}
                           style={styles.redeemImageQuestionStyle}
                         />
                       ) : (
-                        <Image
-                          source={require("../../../assets/chilliBuddyCheckin/checkin_part_star.png")}
-                          style={styles.redeemImageStyle}
-                        />
+                        <Image source={img} transition={false} style={styles.redeemImageStyle} />
                       )}
                     </View>
                   </View>
@@ -153,6 +156,7 @@ const CheckIn = ({
   readLoading,
   checkInRecordLength,
   onCLose,
+  message,
 }) => {
   /* if (readLoading) {
     return (
@@ -178,6 +182,7 @@ const CheckIn = ({
             happy={happy}
             isVisible={isVisible}
             onClose={onCLose}
+            message={message}
             rewardOnceThanOneOption={rewardOnceThanOneOption}
           />
         ) : (
@@ -188,11 +193,18 @@ const CheckIn = ({
             isVisible={isVisible}
             onClose={onCLose}
             rewardOnceThanOneOption={rewardOnceThanOneOption}
+            message={message}
           />
         )
       ) : (
-        <CheckInModal Header={sadHeader} isVisible={isVisible} onClose={onCLose} />
+        <CheckInModalError
+          Header={sadHeader}
+          isVisible={isVisible}
+          onClose={onCLose}
+          message={message}
+        />
       )}
+
       <View style={styles.CheckinContainer}>
         <View style={styles.CheckInTextContainer}>
           <Text style={styles.checkInTitle}>Check-In</Text>

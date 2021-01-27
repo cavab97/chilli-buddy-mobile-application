@@ -31,10 +31,13 @@ class index extends Component {
   }
 
   async componentDidMount() {
-    this.table24();
+    // this.props.toggleModal();
+
+    // this.table24();
     //this.tableData4();
+
     await this.props.readFromDatabase();
-    this.table24();
+    await this.table24();
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -120,15 +123,14 @@ class index extends Component {
   componentWillMount() {
     this.table24();
 
-    let id;
-    let value;
+    // this.props.toggleModal();
 
     // this.setState({ myState: [] }); //this line must be removed
     //i deliberately leave mystate empty so that i can push new array later
   }
 
   onClose = () => {
-    console.log("hello");
+    // this.props.toggleModal();
     this.props.toggleModal();
   };
 
@@ -140,17 +142,19 @@ class index extends Component {
       uid: uid,
       id: checkIn.id,
     };
+
     tableDataTemp.forEach((table24) => {
       if (table24.id === item.id) {
-        console.log(item.id);
-        console.log(table24.id);
         this.setState({ focusId: item.id });
         if (checkIn.id === null) {
           this.props.submitToBackend(data, "create");
         } else {
           if (checkIn.voucher.id !== null && item.id === 21) {
+            console.log("success");
             this.props.toggleModal();
           } else {
+            console.log(checkIn.voucher.id);
+            console.log("fail");
             this.props.submitToBackend(data, "update");
           }
         }
@@ -160,14 +164,16 @@ class index extends Component {
 
   render() {
     let y = 1;
-    const { tableData24 } = this.state;
+    const { tableData24, focusId } = this.state;
     const { submitLoading } = this.props;
     const { checkIn, readLoading, modalVisible } = this.props.checkInState;
 
     const { checkInRecord } = this.props.checkInState.checkIn;
+    console.log("modalVisible");
+
     console.log(modalVisible);
     tableData24.forEach((table24) => {
-      if (table24.id === this.state.focusId) {
+      if (table24.id === focusId) {
         table24.submitLoading = submitLoading;
       }
     });
@@ -189,7 +195,7 @@ class index extends Component {
     // }
 
     switch (checkInRecord !== undefined) {
-      case checkInRecord.length < 3 && checkInRecord:
+      case checkInRecord.length < 3:
         y = 1;
         break;
 
@@ -215,14 +221,15 @@ class index extends Component {
         data={tableData24}
         onPressCheckIn={this.onPressCheckIn.bind(this)}
         submitLoading={submitLoading}
-        rewardOnceThanOneOption={false}
+        // checkInRecord.length === 21 ? true : false
+        rewardOnceThanOneOption={true}
         happy={checkIn.voucher.id !== null ? true : false}
-        // message={}
+        message={this.props.checkInState.submitError.message}
         isVisible={modalVisible}
         readLoading={readLoading}
         onCLose={this.onClose.bind(this)}
         checkInRecordLength={
-          checkInRecord === undefined ? console.log("false") : checkInRecord.length + y
+          checkInRecord === undefined ? console.log(" ") : checkInRecord.length + y
         }
       />
     );

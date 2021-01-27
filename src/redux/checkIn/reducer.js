@@ -180,7 +180,7 @@ const reducer = (state = initialState, { type, payload }) => {
         submitLoading: true,
         submitError: initialState.submitError,
         submitResult: initialState.submitResult,
-        modalVisible: true,
+        modalVisible: false,
       };
 
     case actions.SUBMIT_TO_BACKEND_SUCCESS:
@@ -197,9 +197,12 @@ const reducer = (state = initialState, { type, payload }) => {
         submitLoading: false,
         submitError: payload.error,
         submitResult: initialState.submitResult,
+        modalVisible: true,
       };
 
     case actions.TOGGLE_MODAL:
+      console.log("!state.modalVisible");
+
       console.log(!state.modalVisible);
       return {
         ...state,
