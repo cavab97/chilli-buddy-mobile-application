@@ -198,13 +198,13 @@ const reducer = (state = initialState, { type, payload }) => {
         submitError: payload.error,
         submitResult: initialState.submitResult,
       };
-    
-      case actions.TOGGLE_MODAL:
-        console.log(!state.modalVisible)
-        return {
-          ...state,
-          modalVisible: !state.modalVisible
-        }
+
+    case actions.TOGGLE_MODAL:
+      console.log(!state.modalVisible);
+      return {
+        ...state,
+        modalVisible: !state.modalVisible,
+      };
 
     default:
       return state;

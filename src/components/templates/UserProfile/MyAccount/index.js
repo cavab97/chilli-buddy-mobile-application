@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Icon, ScrollView, Text, TouchableOpacity, View } from "../../../atoms";
+import { Icon, ScrollView, Text, TouchableOpacity, View, ActivityIndicator } from "../../../atoms";
 
 import { Colors } from "../../../../settings/styles/theme";
 import styles from "./styles";
@@ -71,7 +71,7 @@ export class MyAccount extends Component {
          // disabled={props.disabled}
         >
           <View style={{ flexDirection: "row", justifyContent: "start" }}>
-            {logOutLoading && <ActivityIndicator size="large" color={Colors.WHITE} />}
+            {logOutLoading && <ActivityIndicator size="large" color={Colors.GRAY_DARK} />}
             <Text style={styles.versionTextStyle}>Sign Out</Text>
           </View>
         </TouchableOpacity>

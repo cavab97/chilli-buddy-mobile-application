@@ -48,7 +48,7 @@ class index extends Component {
       this.props.checkInState.submitError.message !== prevProps.checkInState.submitError.message &&
       this.props.checkInState.submitError.message
     ) {
-      alert(this.props.checkInState.submitError.message);
+      // alert(this.props.checkInState.submitError.message);
     }
 
     if (
@@ -65,7 +65,6 @@ class index extends Component {
     const { checkInRecord } = this.props.checkInState.checkIn;
     // console.log("table24 table24");
     // console.log("table24" + checkInRecord.length);
-
     let j = 0;
     let k = 1;
 
@@ -91,7 +90,7 @@ class index extends Component {
           value: i - j,
           count: i,
           checked: checkInRecord[i - k] ? true : false,
-          reward: checkInRecord[i - k].checked == true ? true : false,
+          // reward: checkInRecord[i - k].checked == true ? true : false,
           submitLoading: this.props.submitLoading,
         });
       }
@@ -128,25 +127,19 @@ class index extends Component {
     //i deliberately leave mystate empty so that i can push new array later
   }
 
-  onClose() {
+  onClose = () => {
+    console.log("hello");
     this.props.toggleModal();
-  }
+  };
 
   onPressCheckIn = async (item) => {
-    // if(item.id==this.state.tableData24.id){
-    //   console.log()
-    // }
     const tableDataTemp = this.state.tableData24;
     const { checkIn } = this.props.checkInState;
-
-    // console.log(this.state.tableData24);
     const uid = this.props.uid;
-
     const data = {
       uid: uid,
       id: checkIn.id,
     };
-
     tableDataTemp.forEach((table24) => {
       if (table24.id === item.id) {
         console.log(item.id);
@@ -161,9 +154,6 @@ class index extends Component {
             this.props.submitToBackend(data, "update");
           }
         }
-
-        // console.log("this.props.submitLoading");
-        // console.log(this.props.submitLoading);
       }
     });
   };
@@ -175,25 +165,49 @@ class index extends Component {
     const { checkIn, readLoading, modalVisible } = this.props.checkInState;
 
     const { checkInRecord } = this.props.checkInState.checkIn;
-
+    console.log(modalVisible);
     tableData24.forEach((table24) => {
       if (table24.id === this.state.focusId) {
         table24.submitLoading = submitLoading;
-        // console.log("this.props.submitLoading");
-        // console.log(this.props.submitLoading);
       }
     });
 
-    if (checkInRecord.length < 3) {
-      y = 1;
-    } else if (checkInRecord.length >= 3 && checkInRecord.length <= 9) {
-      y = 2;
-    } else if (checkInRecord.length >= 10 && checkInRecord.length <= 16) {
-      y = 3;
-    } else if (checkInRecord.length >= 17 && checkInRecord.length <= 23) {
-      y = 4;
-    } else if (checkInRecord.length >= 24 && checkInRecord.length <= 28) {
-      y = 5;
+    // if (checkInRecord === undefined) {
+    //   console.log("success");
+    // } else {
+    //   if (checkInRecord.length < 3 && checkInRecord) {
+    //     y = 1;
+    //   } else if (checkInRecord.length >= 3 && checkInRecord.length <= 9) {
+    //     y = 2;
+    //   } else if (checkInRecord.length >= 10 && checkInRecord.length <= 16) {
+    //     y = 3;
+    //   } else if (checkInRecord.length >= 17 && checkInRecord.length <= 23) {
+    //     y = 4;
+    //   } else if (checkInRecord.length >= 24 && checkInRecord.length <= 28) {
+    //     y = 5;
+    //   }
+    // }
+
+    switch (checkInRecord !== undefined) {
+      case checkInRecord.length < 3 && checkInRecord:
+        y = 1;
+        break;
+
+      case checkInRecord.length >= 3 && checkInRecord.length <= 9:
+        y = 2;
+        break;
+
+      case checkInRecord.length >= 10 && checkInRecord.length <= 16:
+        y = 3;
+        break;
+
+      case checkInRecord.length >= 17 && checkInRecord.length <= 23:
+        y = 4;
+        break;
+
+      case checkInRecord.length >= 24 && checkInRecord.length <= 28:
+        y = 5;
+        break;
     }
 
     return (
@@ -203,10 +217,13 @@ class index extends Component {
         submitLoading={submitLoading}
         rewardOnceThanOneOption={false}
         happy={checkIn.voucher.id !== null ? true : false}
+        // message={}
         isVisible={modalVisible}
         readLoading={readLoading}
         onCLose={this.onClose.bind(this)}
-        checkInRecordLength={checkInRecord.length + y}
+        checkInRecordLength={
+          checkInRecord === undefined ? console.log("false") : checkInRecord.length + y
+        }
       />
     );
   }
