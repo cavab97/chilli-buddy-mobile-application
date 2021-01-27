@@ -128,7 +128,6 @@ class index extends Component {
   }
 
   onClose = () => {
-    console.log("hello");
     this.props.toggleModal();
   };
 
@@ -163,6 +162,8 @@ class index extends Component {
     const { tableData24 } = this.state;
     const { submitLoading } = this.props;
     const { checkIn, readLoading, modalVisible } = this.props.checkInState;
+
+    console.log(checkIn.voucher.id)
 
     const { checkInRecord } = this.props.checkInState.checkIn;
     console.log(modalVisible);
@@ -218,7 +219,7 @@ class index extends Component {
         rewardOnceThanOneOption={false}
         happy={checkIn.voucher.id !== null ? true : false}
         // message={}
-        isVisible={modalVisible}
+        /* isVisible={modalVisible} */
         readLoading={readLoading}
         onCLose={this.onClose.bind(this)}
         checkInRecordLength={
