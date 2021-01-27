@@ -190,15 +190,16 @@ class index extends Component {
         // console.log(this.props.submitLoading);
       }
     });
+
     if (checkInRecord.length < 3) {
       y = 1;
-    } else if (checkInRecord.length == 3) {
+    } else if (checkInRecord.length >= 3 && checkInRecord.length <= 9) {
       y = 2;
-    } else if (checkInRecord.length == 10) {
+    } else if (checkInRecord.length >= 10 && checkInRecord.length <= 16) {
       y = 3;
-    } else if (checkInRecord.length == 17) {
+    } else if (checkInRecord.length >= 17 && checkInRecord.length <= 23) {
       y = 4;
-    } else if (checkInRecord.length == 24) {
+    } else if (checkInRecord.length >= 24 && checkInRecord.length <= 28) {
       y = 5;
     }
 
