@@ -19,7 +19,7 @@ const actions = {
   UPLOAD_TO_STORAGE_ERROR: type + "UPLOAD_TO_STORAGE_ERROR",
   UPDATE_UPLOAD_PROGRESS: type + "UPDATE_UPLOAD_PROGRESS",
 
-  TOGGLE_MODAL: type + "TOGGLE_MODAL"
+  TOGGLE_MODAL: type + "TOGGLE_MODAL",
 
   //   UPDATE: type + "UPDATE",
 };
@@ -68,10 +68,10 @@ export function submitToBackend(data, actionName) {
 
       data = {
         userIds: [uid],
-        id: id
+        id: id,
       };
 
-      console.log(actionName)
+      console.log(actionName);
 
       try {
         switch (actionName) {
@@ -103,7 +103,7 @@ export function submitToBackend(data, actionName) {
 export const toggleModal = () => {
   return {
     type: actions.TOGGLE_MODAL,
-    payload: { data },
+    // payload: { data },
   };
 };
 

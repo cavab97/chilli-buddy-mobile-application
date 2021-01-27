@@ -26,9 +26,7 @@ const CheckInModal = ({
     >
       <View style={styles.contentContainer}>
         <View style={styles.closeIcon}>
-          <TouchableOpacity
-            onPress={onClose}
-          >
+          <TouchableOpacity onPress={onClose}>
             <Image
               source={require("../../../../assets/chilliBuddyCheckin/closeButton.png")}
               style={styles.redeemImageCrossStyle}

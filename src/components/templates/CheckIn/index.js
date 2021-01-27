@@ -30,7 +30,7 @@ const sadHeader = "Better luck \n next Time!";
 const happyHeader = "Congratulations!";
 const happyDesciption = "You have won a";
 
-function Grid({ data = [], onPressCheckIn, submitLoading, checkInRecordLength }) {
+function Grid({ data, onPressCheckIn, submitLoading, checkInRecordLength }) {
   return (
     <View style={styles.viewPanel}>
       <FlatList
@@ -152,7 +152,7 @@ const CheckIn = ({
   rewardOnceThanOneOption,
   readLoading,
   checkInRecordLength,
-  onClose
+  onCLose,
 }) => {
   /* if (readLoading) {
     return (
@@ -177,7 +177,7 @@ const CheckIn = ({
             Header={happyHeader}
             happy={happy}
             isVisible={isVisible}
-            onClose={onClose}
+            onClose={onCLose}
             rewardOnceThanOneOption={rewardOnceThanOneOption}
           />
         ) : (
@@ -191,7 +191,7 @@ const CheckIn = ({
           />
         )
       ) : (
-        <CheckInModal Header={sadHeader} isVisible={isVisible} />
+        <CheckInModal Header={sadHeader} isVisible={isVisible} onClose={onCLose} />
       )}
       <View style={styles.CheckinContainer}>
         <View style={styles.CheckInTextContainer}>
