@@ -213,7 +213,7 @@ class index extends Component {
         happy={checkIn.voucher.id !== null ? true : false}
         isVisible={modalVisible}
         readLoading={readLoading}
-        onCLose={this.onClose.bind(this)}
+        onClose={this.onClose.bind(this)}
         checkInRecordLength={checkInRecord.length + y}
       />
     );
