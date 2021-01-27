@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     height: "85%",
   },
   checkInBoxRed: {
-    backgroundColor: "red",
+    backgroundColor: "#D81212",
     borderRadius: 10,
     borderColor: "white",
     width: "80%",
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 9,
     borderBottomRightRadius: 9,
     borderWidth: 5,
-    borderColor: "red",
+    borderColor: "#D81212",
   },
 
   ///large box
