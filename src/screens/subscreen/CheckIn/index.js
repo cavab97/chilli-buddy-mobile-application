@@ -10,7 +10,7 @@ const NUM = 7;
 import styles from "./styles";
 
 import { Actions } from "react-native-router-flux";
-let y = 1;
+
 class index extends Component {
   constructor(props) {
     super(props);
@@ -162,6 +162,7 @@ class index extends Component {
   };
 
   render() {
+    let y = 1;
     const { tableData24 } = this.state;
     const { submitLoading } = this.props;
     const { checkInRecord } = this.props.checkInState.checkIn;
@@ -174,13 +175,13 @@ class index extends Component {
     });
     if (checkInRecord.length < 3) {
       y = 1;
-    } else if (checkInRecord.length == 3) {
+    } else if (checkInRecord.length >= 3 && checkInRecord.length <= 9) {
       y = 2;
-    } else if (checkInRecord.length == 10) {
+    } else if (checkInRecord.length >= 10 && checkInRecord.length <= 16) {
       y = 3;
-    } else if (checkInRecord.length == 17) {
+    } else if (checkInRecord.length >= 17 && checkInRecord.length <= 23) {
       y = 4;
-    } else if (checkInRecord.length == 24) {
+    } else if (checkInRecord.length >= 24 && checkInRecord.length <= 28) {
       y = 5;
     }
     console.log("y");

@@ -5,7 +5,7 @@ const numColumns = 5;
 
 const size = Dimensions.get("window").width / numColumns;
 const size1w = Dimensions.get("window").width * 0.4;
-const size1h = Dimensions.get("window").width * 0.4;
+const size1h = Dimensions.get("window").width * 0.43;
 
 const styles = StyleSheet.create({
   viewPanel: {
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 0,
     paddingLeft: 0,
-    paddingBottom: 0,
+    paddingBottom: size * 1.1,
   },
   itemContainer2: {
     width: size1w,
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     paddingLeft: 0,
     paddingTop: 0,
+    paddingBottom: size * 1.1,
   },
 
   checkinButton: {
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderColor: "white",
     width: "95%",
-    height: "95%",
+    height: size,
   },
   checkInBoxWhite: {
     backgroundColor: "white",
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   ///days 7
   touchContainer2: {
     width: size1w - 15,
-    height: size1h,
+    height: size1h + 2,
     position: "absolute",
     bottom: 0,
   },

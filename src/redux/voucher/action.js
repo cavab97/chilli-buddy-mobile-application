@@ -1,4 +1,4 @@
-import { bookmarkDataServices as objectDataServices } from "../../services/database";
+import { voucherDataServices } from "../../services/database";
 
 import moment from "moment";
 const type = "voucher";
@@ -19,8 +19,8 @@ export function readFromDatabase() {
     dispatch({ type: actions.READ_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
       try {
-        const { uid } = getState().Auth.user;
-        // const vouchers = await objectDataServices.readObjects({
+        // const { uid } = getState().Auth.user;
+        // const vouchers = await voucherDataServices.readObjects({
         //   groupId: uid,
         //   title: "Buy one get one free",
         //   salesPoint: "10%",

@@ -57,7 +57,10 @@ function Grid({ data = [], onPressCheckIn, submitLoading, checkInRecordLength })
                         style={styles.smallRedeemImageStarStyle}
                       />
                     ) : item.checked != true ? (
-                      <View />
+                      <Image
+                        source={require("../../../assets/chilliBuddyCheckin/starEmpty.png")}
+                        style={styles.smallRedeemImageStarStyle}
+                      />
                     ) : (
                       <Image
                         source={require("../../../assets/chilliBuddyCheckin/checkin_part_star.png")}
@@ -89,11 +92,10 @@ function Grid({ data = [], onPressCheckIn, submitLoading, checkInRecordLength })
                           style={styles.redeemImageQuestionStyle}
                         />
                       ) : (
-                        // <Image
-                        //   source={require("../../../assets/chilliBuddyCheckin/checkin_part_star.png")}
-                        //   style={styles.redeemImageStyle}
-                        // />
-                        <View />
+                        <Image
+                          source={require("../../../assets/chilliBuddyCheckin/starEmpty.png")}
+                          style={styles.redeemImageQuestionStyle}
+                        />
                       )}
                     </View>
                   </View>
