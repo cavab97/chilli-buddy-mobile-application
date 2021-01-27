@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { 
-  submitToBackend, 
-  readFromDatabase, 
-  toggleModal 
-} from "@redux/checkIn/action";
+import { submitToBackend, readFromDatabase, toggleModal } from "@redux/checkIn/action";
 
 import { CheckIn, CheckInModal } from "@components/templates";
 
@@ -95,7 +91,7 @@ class index extends Component {
           value: i - j,
           count: i,
           checked: checkInRecord[i - k] ? true : false,
-          reward: true,
+          reward: checkInRecord[i - k].checked == true ? true : false,
           submitLoading: this.props.submitLoading,
         });
       }
@@ -153,8 +149,8 @@ class index extends Component {
 
     tableDataTemp.forEach((table24) => {
       if (table24.id === item.id) {
-        console.log(item.id)
-        console.log(table24.id)
+        console.log(item.id);
+        console.log(table24.id);
         this.setState({ focusId: item.id });
         if (checkIn.id === null) {
           this.props.submitToBackend(data, "create");
@@ -176,14 +172,10 @@ class index extends Component {
     let y = 1;
     const { tableData24 } = this.state;
     const { submitLoading } = this.props;
-    const { 
-      checkIn, 
-      readLoading, 
-      modalVisible 
-    } = this.props.checkInState;
+    const { checkIn, readLoading, modalVisible } = this.props.checkInState;
 
     const { checkInRecord } = this.props.checkInState.checkIn;
-    
+
     tableData24.forEach((table24) => {
       if (table24.id === this.state.focusId) {
         table24.submitLoading = submitLoading;
@@ -239,5 +231,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   submitToBackend,
   readFromDatabase,
-  toggleModal
+  toggleModal,
 })(index);

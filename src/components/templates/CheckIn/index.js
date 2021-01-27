@@ -152,7 +152,7 @@ const CheckIn = ({
   rewardOnceThanOneOption,
   readLoading,
   checkInRecordLength,
-  onClose
+  onClose,
 }) => {
   /* if (readLoading) {
     return (
