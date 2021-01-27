@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   },
 
   posterArea: {
-    height: "20%",
+    height: "25%",
   },
 
   ///card
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     padding: Platform.OS === "ios" ? 10 : 20,
     marginBottom: Platform.OS === "ios" ? 10 : 30,
     borderRadius: 20,
-    marginTop: 50,
+    marginTop: 100,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
@@ -372,9 +372,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   qrContainer: {
-    backgroundColor: "black",
+    backgroundColor: "white",
     width: size / 8,
-    height: size / 8,
+    height: size / 5,
     justifyContent: "center",
     alignItems: "center",
     right: -28,

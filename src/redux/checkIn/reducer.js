@@ -161,7 +161,6 @@ const reducer = (state = initialState, { type, payload }) => {
       };
 
     case actions.READ_FROM_DATABASE_SUCCESS:
-      console.log("READ_FROM_DATABASE_SUCCESS");
       return {
         ...state,
         readLoading: initialState.readLoading,
@@ -169,7 +168,6 @@ const reducer = (state = initialState, { type, payload }) => {
       };
 
     case actions.READ_FROM_DATABASE_ERROR:
-      console.log("READ_FROM_DATABASE_ERROR");
       return {
         ...state,
         readLoading: initialState.readLoading,
@@ -200,6 +198,13 @@ const reducer = (state = initialState, { type, payload }) => {
         submitError: payload.error,
         submitResult: initialState.submitResult,
       };
+    
+      case actions.TOGGLE_MODAL:
+        console.log(!state.modalVisible)
+        return {
+          ...state,
+          modalVisible: !state.modalVisible
+        }
 
     default:
       return state;

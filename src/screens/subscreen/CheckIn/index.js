@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { submitToBackend, readFromDatabase } from "@redux/checkIn/action";
+import { 
+  submitToBackend, 
+  readFromDatabase, 
+  toggleModal 
+} from "@redux/checkIn/action";
 
 import { CheckIn, CheckInModal } from "@components/templates";
 
@@ -35,7 +39,6 @@ class index extends Component {
     //this.tableData4();
     await this.props.readFromDatabase();
     this.table24();
-    console.log("did mount");
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -129,7 +132,9 @@ class index extends Component {
     //i deliberately leave mystate empty so that i can push new array later
   }
 
-  lookingForCheckIn({ id } = null) {}
+  onClose() {
+    this.props.toggleModal();
+  }
 
   onPressCheckIn = async (item) => {
     // if(item.id==this.state.tableData24.id){
@@ -148,11 +153,17 @@ class index extends Component {
 
     tableDataTemp.forEach((table24) => {
       if (table24.id === item.id) {
+        console.log(item.id)
+        console.log(table24.id)
         this.setState({ focusId: item.id });
         if (checkIn.id === null) {
           this.props.submitToBackend(data, "create");
         } else {
-          this.props.submitToBackend(data, "update");
+          if (checkIn.voucher.id !== null && item.id === 21) {
+            this.props.toggleModal();
+          } else {
+            this.props.submitToBackend(data, "update");
+          }
         }
 
         // console.log("this.props.submitLoading");
@@ -165,7 +176,14 @@ class index extends Component {
     let y = 1;
     const { tableData24 } = this.state;
     const { submitLoading } = this.props;
+    const { 
+      checkIn, 
+      readLoading, 
+      modalVisible 
+    } = this.props.checkInState;
+
     const { checkInRecord } = this.props.checkInState.checkIn;
+    
     tableData24.forEach((table24) => {
       if (table24.id === this.state.focusId) {
         table24.submitLoading = submitLoading;
@@ -173,6 +191,7 @@ class index extends Component {
         // console.log(this.props.submitLoading);
       }
     });
+
     if (checkInRecord.length < 3) {
       y = 1;
     } else if (checkInRecord.length >= 3 && checkInRecord.length <= 9) {
@@ -184,10 +203,6 @@ class index extends Component {
     } else if (checkInRecord.length >= 24 && checkInRecord.length <= 28) {
       y = 5;
     }
-    console.log("y");
-
-    console.log(y);
-    // console.log("length in render" + this.props.checkInState.checkIn.checkInRecord.length);
 
     return (
       <CheckIn
@@ -195,9 +210,10 @@ class index extends Component {
         onPressCheckIn={this.onPressCheckIn.bind(this)}
         submitLoading={submitLoading}
         rewardOnceThanOneOption={false}
-        happy={false}
-        isVisible={false}
-        readLoading={this.props.checkInState.readLoading}
+        happy={checkIn.voucher.id !== null ? true : false}
+        isVisible={modalVisible}
+        readLoading={readLoading}
+        onCLose={this.onClose.bind(this)}
         checkInRecordLength={checkInRecord.length + y}
       />
     );
@@ -223,4 +239,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   submitToBackend,
   readFromDatabase,
+  toggleModal
 })(index);

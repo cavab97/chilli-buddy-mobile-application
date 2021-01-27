@@ -379,7 +379,9 @@ const SingleMerchant = ({
                     if (!dataSource.websiteUrl) {
                       return Alert.alert("Sorry, we don't have website.");
                     }
-                    Linking.openURL("https://" + dataSource.websiteUrl);
+                    dataSource.websiteUrl.substring(0,4) === 'http'
+                      ? Linking.openURL(dataSource.websiteUrl)
+                      : Linking.openURL("https://" + dataSource.websiteUrl)
                   }}
                 />
                 // </View>  UNCOMMENT VIEW‹

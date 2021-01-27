@@ -276,12 +276,18 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="Voucher" back>
-        <Scene key="Voucher" component={Voucher} title="Vouchers" titleStyle={styles.title} />
+        <Scene key="Voucher" 
+          component={Voucher} 
+          //title="Vouchers" 
+          titleStyle={styles.title} 
+          
+        />
       </Stack>
 
       <Stack key="SingleVoucher" back>
         <Scene
           key="SingleVoucher"
+          navTransparent={true}
           component={SingleVoucher}
           title={SingleVoucher.title}
           titleStyle={styles.title}

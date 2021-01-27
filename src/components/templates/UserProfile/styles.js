@@ -29,18 +29,19 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   container: {
-    alignItems: "center",
     paddingBottom: 8,
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 6,
-    borderRadius: 5,
+    /* borderRadius: 5,
     borderColor: "#ddd",
-    borderBottomWidth: 1,
+    borderBottomWidth: 1, */
+    flexDirection: "row",
   },
   avatarContainer: {
     //marginRight: 12,
     marginTop: 80,
+    paddingLeft: 15,
   },
   userTitle: {
     justifyContent: "flex-start",
@@ -73,10 +74,12 @@ const styles = StyleSheet.create({
     color: "#FFF",
   },
   editProfileTextContainer: {
-    marginTop: 15,
+    marginTop: 100,
     padding: 3,
     borderRadius: 5,
     backgroundColor: "#D60000",
+    left: 15,
+    bottom: 0,
   },
   editButtonContainer: {
     width: 80,
@@ -85,19 +88,23 @@ const styles = StyleSheet.create({
   },
   textContainer1: {
     flexDirection: "row",
+    marginTop: 80,
+    paddingLeft: 15,
     justifyContent: "center",
     alignItems: "flex-start",
   },
   textContainer2: {
     flexDirection: "row",
-    justifyContent: "center",
+    paddingLeft: 18,
     alignItems: "flex-start",
     marginTop: 10,
+    // backgroundColor: "grey",
   },
   textContainer3: {
     marginTop: 0,
+    paddingLeft: 15,
     flexDirection: "row",
-    justifyContent: "center",
+    //justifyContent: "center",
     alignItems: "flex-start",
   },
   userInfomationIcon: {
@@ -318,9 +325,9 @@ const styles = StyleSheet.create({
   },
   profileImageStyle: {
     backgroundColor: Colors.GRAY_DARK,
-    height: 80,
-    width: 80,
-    borderRadius: 60,
+    height: 100,
+    width: 100,
+    borderRadius: 80,
   },
   scrollBox: {
     flex: 1,

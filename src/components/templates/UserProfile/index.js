@@ -95,7 +95,7 @@ const UserProfile = ({
           </View>
         </View>
 
-        <View style={styles.multitabContainer}>
+        {/* <View style={styles.multitabContainer}>
           <Nav
             selected={page}
             onTabChange={onTabChange}
@@ -121,9 +121,9 @@ const UserProfile = ({
               label="MY RANKING"
               fontStyle={styles.navFontStyle}
               style={styles.tabStyle}
-            /> */}
+            /> 
           </Nav>
-        </View>
+        </View> */}
       </View>
       <View
         style={{

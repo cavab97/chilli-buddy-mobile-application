@@ -152,6 +152,7 @@ const CheckIn = ({
   rewardOnceThanOneOption,
   readLoading,
   checkInRecordLength,
+  onClose
 }) => {
   /* if (readLoading) {
     return (
@@ -176,6 +177,7 @@ const CheckIn = ({
             Header={happyHeader}
             happy={happy}
             isVisible={isVisible}
+            onClose={onClose}
             rewardOnceThanOneOption={rewardOnceThanOneOption}
           />
         ) : (
@@ -184,6 +186,7 @@ const CheckIn = ({
             happyDesciption={happyDesciption}
             happy={happy}
             isVisible={isVisible}
+            onClose={onCLose}
             rewardOnceThanOneOption={rewardOnceThanOneOption}
           />
         )

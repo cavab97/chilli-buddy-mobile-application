@@ -19,6 +19,8 @@ const actions = {
   UPLOAD_TO_STORAGE_ERROR: type + "UPLOAD_TO_STORAGE_ERROR",
   UPDATE_UPLOAD_PROGRESS: type + "UPDATE_UPLOAD_PROGRESS",
 
+  TOGGLE_MODAL: type + "TOGGLE_MODAL"
+
   //   UPDATE: type + "UPDATE",
 };
 
@@ -39,8 +41,7 @@ export function readFromDatabase() {
         const checkIN = await checkInDataServices.readObjects({
           uid: uid,
         });
-        console.log("read database")
-        console.log(checkIN.length)
+
         resolve(checkIN);
         dispatch({
           type: actions.READ_FROM_DATABASE_SUCCESS,
@@ -98,5 +99,12 @@ export function submitToBackend(data, actionName) {
     });
   };
 }
+
+export const toggleModal = () => {
+  return {
+    type: actions.TOGGLE_MODAL,
+    payload: { data },
+  };
+};
 
 export default actions;

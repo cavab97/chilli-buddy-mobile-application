@@ -164,15 +164,18 @@ const styles = StyleSheet.create({
   },
   checkInSubTitle: {
     fontSize: 17,
+    marginTop: 10,
   },
   checkInSubRefreshing: {
-    paddingTop: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
     fontSize: 15,
     color: "grey",
   },
   CheckInTextContainer: {
     paddingLeft: 15,
     paddingRight: 15,
+    paddingTop: 5,
   },
 
   /// small container star
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
     height: "50%",
     left: 18,
     resizeMode: "contain",
-    top: 23,
+    top: 28,
     position: "absolute",
   },
 });
