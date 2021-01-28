@@ -24,7 +24,8 @@ class index extends Component {
     this.renderFooter = this.renderFooter.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
   }
-  componentDidMount = async () => {
+
+  componentDidMount() {
     this.props.readFromDatabase();
     this.handleRefresh();
   };
@@ -39,14 +40,14 @@ class index extends Component {
         <Card style={{ backgroundColor: "transparent" }}>
           <CardSection style={styles.emptySection}>
             <Icon name="inbox" size={64} style={styles.emptyIcon} />
-            <Text style={styles.emptyText}>NO BOOKMARK FOUND</Text>
+            <Text style={styles.emptyText}>NO VOUCHER FOUND</Text>
           </CardSection>
         </Card>
       ) : (
         <Card style={{ backgroundColor: "transparent", elevation: 0 }}>
           <CardSection style={[styles.emptySection, { elevation: 0 }]}>
             <Icon name="inbox" size={64} style={styles.emptyIcon} />
-            <Text style={styles.emptyText}>NO BOOKMARK FOUND</Text>
+            <Text style={styles.emptyText}>NO VOUCHER FOUND</Text>
           </CardSection>
         </Card>
       );
@@ -57,12 +58,7 @@ class index extends Component {
 
   onVoucherPressed(item) {
     Actions.SingleVoucher({
-      voucherTitle: item.title,
-      voucherSalesPoint: item.salesPoint,
-      vocuherExpiredDate: item.expiredDate,
-      voucherMerchantName: item.MerchantName,
-      voucherDescription: item.description,
-      voucherStatus: item.status,
+      voucherID: item.id,
     });
   }
 

@@ -167,7 +167,7 @@ class index extends Component {
     const { submitLoading } = this.props;
     const { checkIn, readLoading, modalVisible } = this.props.checkInState;
 
-    console.log(checkIn.voucher.id)
+    console.log(checkIn.id)
 
     const { checkInRecord } = this.props.checkInState.checkIn;
     console.log("modalVisible");

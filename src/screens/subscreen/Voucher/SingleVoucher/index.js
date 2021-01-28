@@ -5,10 +5,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { Dimensions, View, Text } from "react-native";
 import moment from "moment";
 
-import { listenToRecord as listenFromDatabase } from "@redux/promo/action";
+import { listenToRecord as listenFromDatabase } from "@redux/voucher/action";
 
 import { SingleVoucher, SingleVoucherErrorModal } from "@components/templates";
-import { readFromDatabase as readShopPost } from "@redux/shopPost/action";
 
 import ContentLoader, { Rect } from "react-content-loader/native";
 
@@ -31,12 +30,12 @@ class index extends Component {
     // const promoId = this.props.promoId;
     // this.voucherTitle = this.props.voucherTitle;
     // this.props.listenFromDatabase({ promoId });
+    const voucherID = this.props.voucherID;
+    this.props.listenFromDatabase({ voucherID });
   }
 
   componentDidUpdate() {
-    // this.calculateDistance(this.props.shopState.shop.l);
-    //console.log("componentDidUpdate");
-    //console.log(this.state.location);
+    
   }
 
   componentWillUnmount() {}
@@ -48,9 +47,11 @@ class index extends Component {
   OpenCamPress() {
     Actions.SingleVoucherRedeem();
   }
+
   OnInvalidPress() {
     this.setState({ errorStatus: true });
   }
+
   errorSubmit() {
     this.setState({ errorStatus: false });
   }
@@ -95,10 +96,17 @@ class index extends Component {
       voucherStatus,
     } = this.props;
 
+    const { 
+      readLoading,
+      voucher
+    } = this.props.voucherState
+
+    let cover;
+
     const noImage = require("@assets/chilliBuddyCheckin/backgroundIma.png");
     const { errorStatus, errorHeader, errorMessage } = this.state;
     console.log(errorHeader);
-    console.log(errorStatus);
+    console.log(this.props.voucherState.voucher);
 
     if (!errorStatus) {
       return (
@@ -106,12 +114,13 @@ class index extends Component {
           renderTermAndCondition={this.renderTermAndCondition.bind(this)}
           shopPosts={posts}
           onRedeemPress={this.onRedeemPress.bind(this)}
-          title={voucherTitle}
-          SalesPoint={voucherSalesPoint}
+          title={voucher.title}
+          SalesPoint={voucher.amount}
           noImage={noImage}
+          image={noImage}
           expiredDate={vocuherExpiredDate}
-          merchantName={voucherMerchantName}
-          description={voucherDescription}
+          merchantName={readLoading ? voucher.merchant[0].businessName : null}
+          description={readLoading ? voucher.description : null}
           status={voucherStatus}
           OpenCamPress={this.OpenCamPress.bind(this)}
           OnInvalidPress={this.OnInvalidPress.bind(this)}
@@ -131,13 +140,12 @@ class index extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const shopState = state.Shops;
+  const voucherState = state.Voucher;
   return {
-    shopState,
+    voucherState,
   };
 };
 
 export default connect(mapStateToProps, {
   listenFromDatabase,
-  readShopPost,
 })(index);

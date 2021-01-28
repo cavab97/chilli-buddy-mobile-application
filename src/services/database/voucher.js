@@ -10,8 +10,8 @@ export function readObjects({ uid }) {
     // if (selectedCategory)
     //   databaseRef = databaseRef.where("shop.categories", "array-contains-any", [selectedCategory]);
     databaseRef
-      // .where("userIds", "==", [uid])
-      .where("status", "==", true)
+      .where("userIds", "==", [uid])
+      .where("assigned", "==", true)
       .get()
       .then((QuerySnapshot) => {
         const result = [];
@@ -32,4 +32,26 @@ export function readObjects({ uid }) {
         reject(error);
       });
   });
+}
+
+let objectListener = () => {};
+
+export function listenObject({ objectId = null, updateListener = () => {} }) {
+  objectListener = database
+    .readRecord({ ref: `${objectName}Packaging0/${objectId}` })
+    .onSnapshot((snapshot) => {
+      const data = {
+        ...snapshot.data(),
+        id: snapshot.id,
+      };
+
+      const parent = database.processData({ data });
+      const created = database.processData({ data: data.created });
+      const deleted = database.processData({ data: data.deleted });
+      const updated = database.processData({ data: data.updated });
+
+      const processedData = { ...parent, created, deleted, updated };
+
+      updateListener(processedData);
+    });
 }
