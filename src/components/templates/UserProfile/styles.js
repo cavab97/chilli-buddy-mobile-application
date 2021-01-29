@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   userTitle: {
-    justifyContent: "flex-start",
+    //justifyContent: "flex-start",
     fontSize: 21,
     fontFamily: "RobotoRegular",
     color: "#000",

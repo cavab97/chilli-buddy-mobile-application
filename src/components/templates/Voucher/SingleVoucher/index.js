@@ -161,23 +161,23 @@ const SingleVoucher = ({
               <Text style={columnTwoText}>{merchantName}</Text>
               <Text style={styles.columnTwoSubText}>{SalesPoint} Discount</Text>
             </View>
-            {status ? (
+            {/* status ? ( */
               <TouchableOpacity style={styles.qrContainer} onPress={OpenCamPress}>
                 <Image
                   source={require("../../../../assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
                   style={styles.qrLogo}
                 />
               </TouchableOpacity>
-            ) : (
+            /* ) : (
               <TouchableOpacity style={styles.qrContainer} onPress={OnInvalidPress}>
                 <Image
                   source={require("../../../../assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
                   style={styles.qrLogo}
                 />
               </TouchableOpacity>
-            )}
+            )} */
 
-            {/* <View>
+            /* <View>
               {status ? (
                 <Text style={statusActiveText}> Active</Text>
               ) : (

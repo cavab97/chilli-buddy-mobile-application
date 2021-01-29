@@ -32,7 +32,7 @@ const styles = {
         fontFamily: "RobotoRegular",
     },
     signoutButtonStyle: {
-        alignSelf: "left",
+        //alignSelf: "left",
         paddingVertical: 35,
         paddingHorizontal: 30,
         // marginBottom: Platform.OS === 'ios' ? 30 : 30,

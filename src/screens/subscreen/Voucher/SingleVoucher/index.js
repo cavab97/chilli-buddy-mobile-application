@@ -45,7 +45,7 @@ class index extends Component {
   }
 
   OpenCamPress() {
-    Actions.SingleVoucherRedeem();
+    Actions.SingleVoucherRedeem({ voucherIds: this.props.voucherID });
   }
 
   OnInvalidPress() {
@@ -105,8 +105,6 @@ class index extends Component {
 
     const noImage = require("@assets/chilliBuddyCheckin/backgroundIma.png");
     const { errorStatus, errorHeader, errorMessage } = this.state;
-    console.log(errorHeader);
-    console.log(this.props.voucherState.voucher);
 
     if (!errorStatus) {
       return (
@@ -119,8 +117,8 @@ class index extends Component {
           noImage={noImage}
           image={noImage}
           expiredDate={vocuherExpiredDate}
-          merchantName={readLoading ? voucher.merchant[0].businessName : null}
-          description={readLoading ? voucher.description : null}
+          merchantName="heelo"
+          description="description"
           status={voucherStatus}
           OpenCamPress={this.OpenCamPress.bind(this)}
           OnInvalidPress={this.OnInvalidPress.bind(this)}
