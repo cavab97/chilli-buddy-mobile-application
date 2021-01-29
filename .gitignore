@@ -69,3 +69,4 @@ node_modules/
 
 #expo modules
 .expo/
+.expo/packager-info.json

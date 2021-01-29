@@ -70,7 +70,7 @@ export class MyAccount extends Component {
           style={styles.signoutButtonStyle}
          // disabled={props.disabled}
         >
-          <View style={{ flexDirection: "row", justifyContent: "start" }}>
+          <View style={{ flexDirection: "row",/*  justifyContent: "start" */ }}>
             {logOutLoading && <ActivityIndicator size="large" color={Colors.GRAY_DARK} />}
             <Text style={styles.versionTextStyle}>Sign Out</Text>
           </View>

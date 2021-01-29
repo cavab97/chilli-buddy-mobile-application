@@ -168,12 +168,12 @@ const styles = StyleSheet.create({
   },
 
   merchantImage: {
-    resizeMode: "contain",
+    resizeMode: "cover",
     // position: "absolute",
     width: size / 8,
     height: size / 8,
     left: 0,
-    borderRadius: 100,
+    borderRadius: 80,
   },
 
   merchantBorder: {

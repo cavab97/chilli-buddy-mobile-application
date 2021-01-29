@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styles from "./styles";
 import { Actions } from "react-native-router-flux";
-
+import { Dimensions } from 'react-native';
 import { SingleVoucherRedeem, SingleVoucherErrorModal } from "@components/templates";
 
 import { BarCodeScanner, Permissions } from "expo-barcode-scanner";
@@ -41,11 +41,12 @@ class index extends Component {
       this.setState({ scanned: true });
       this.setState({ errorStatus: false });
       alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-      Actions.RedeemedVoucherScreen();
+      //Actions.RedeemedVoucherScreen();
     }
   };
 
   handleSetScanned(scan) {
+    console.log('scanned')
     this.setState({ scanned: false });
   }
   errorSubmit() {
@@ -54,10 +55,28 @@ class index extends Component {
     });
   }
 
+  onBarCodeRead({ type, data } ) {
+   /*  if ((type === this.state.scannedItem.type && data === this.state.scannedItem.data) || data === null) {
+      return;
+    } */
+
+    const voucherId = this.props.voucherIds
+
+    if (data) {
+      // Do samething for QRCode
+      console.log(data)
+      Actions.RedeemedVoucherScreen({ data, voucherIds: voucherId });
+    } else {
+      alert(
+        'No QR Code Detected'
+      );
+    }
+  }
+
   render() {
     const { scanned, hasPermission, errorStatus, errorMessage } = this.state;
 
-    if (errorStatus) {
+    /* if (errorStatus) {
       return (
         <SingleVoucherErrorModal
           errorStatus={errorStatus}
@@ -66,16 +85,17 @@ class index extends Component {
           errorSubmit={this.errorSubmit.bind(this)}
         />
       );
-    } else {
+    } else { */
       return (
         <SingleVoucherRedeem
           scanned={scanned}
+          onBarCodeRead={this.onBarCodeRead.bind(this)}
           handleBarCodeScanned={this.handleBarCodeScanned.bind(this)}
           hasPermission={hasPermission}
           handleSetScanned={this.handleSetScanned.bind(this)}
         />
       );
-    }
+    //}
   }
 }
 

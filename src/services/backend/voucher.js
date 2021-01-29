@@ -2,18 +2,22 @@ import { backend } from "../../marslab-library-react-native/utils/helper";
 
 const objectName = "Voucher";
 
-export function create({
+export function redeem({
     data
   }) {
     return new Promise((resolve, reject) => {
       const apiName = `http${objectName}Redeem`;
 
+      console.log(data)
+
       const {
-        id
+        id,
+        merchantIds
       } = data;
 
       data = {
-        id
+        id,
+        merchantIds
       }
 
       data = backend.processData({ data })

@@ -78,11 +78,20 @@ export function submitToBackend(data) {
     return new Promise(async (resolve, reject) => {
       let result = {};
 
-      const { voucherID } = data;
-      const id = voucherID;
+      console.log(data)
+      const { voucherIds, merchantIds } = data;
+
+      console.log(voucherIds)
+      console.log(merchantIds)
+      data = {
+        id: voucherIds,
+        merchantIds: [merchantIds]
+      }
+      
+      console.log(merchantIds)
 
       try {
-        result = await voucherBackendServices.create({ data: { id } });
+        result = await voucherBackendServices.redeem({ data });
 
         resolve(result);
         dispatch({

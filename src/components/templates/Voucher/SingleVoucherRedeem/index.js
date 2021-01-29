@@ -9,6 +9,7 @@ import { Camera } from "expo-camera";
 
 const SingleVoucherRedeem = ({
   hasPermission,
+  onBarCodeRead,
   handleBarCodeScanned,
   scanned,
   handleSetScanned,
@@ -39,7 +40,7 @@ const SingleVoucherRedeem = ({
     //   </BarCodeScanner>
     // </View>
     <Camera
-      onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+      onBarCodeScanned={onBarCodeRead}
       barCodeScannerSettings={{
         barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
       }}

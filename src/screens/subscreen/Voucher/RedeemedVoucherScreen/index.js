@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { submitToBackend, readFromDatabase } from "@redux/voucher/action";
 import { Image, Text, View } from "../../../../components/atoms";
 import { Actions } from "react-native-router-flux";
 import { SignoutButton } from "../../../../components/molecules";
@@ -12,12 +12,34 @@ import styles from "./styles";
 class index extends Component {
   constructor(props) {
     super(props);
-    this.state = { claimed: true };
+    this.state = { 
+      claimed: true 
+    };
   }
 
   componentDidMount() {
-    // const { rewardId } = this.props.navigation.state.params;
-    // this.props.listenToReward({ rewardId });
+    console.log(this.props)
+
+    let data;
+    const voucherIds = this.props.voucherIds
+    let qrData = this.props.data;
+    let appName = null;
+
+    if (qrData.length > 0) {
+      appName = qrData.substring(0, 12);
+      if (appName === "chillibuddy:") {
+        qrData = qrData.replace("chillibuddy:", "")
+      }
+    }
+    console.log(qrData)
+    console.log(voucherIds)
+
+    data = {
+      merchantIds: qrData,
+      voucherIds
+    }
+    
+    this.props.submitToBackend(data);
   }
 
   componentWillUnmount() {}
@@ -30,9 +52,10 @@ class index extends Component {
     //data
 
     let gameTitle = "game";
-    const { claimed, RedeemStatus } = this.state;
+    const { claimed } = this.state;
+    const { submitLoading } = this.props;
 
-    if (RedeemStatus) {
+    if (submitLoading) {
       return (
         <View style={styles.constainer}>
           <View style={styles.headerContainerStyle}>
@@ -82,7 +105,7 @@ class index extends Component {
               onPress={this.onRedeemWay}
               disabled={claimed}
             >
-              {"Back"}
+              Back
             </SignoutButton>
           </View>
           <View></View>
@@ -92,4 +115,15 @@ class index extends Component {
   }
 }
 
-export default index;
+const mapStateToProps = (state) => {
+  const { categories, tags } = state.Settings;
+  const { vouchers } = state.Voucher;
+  const { submitLoading, submitResult, submitError } = state.Voucher;
+
+
+  return { categories, tags, vouchers, submitLoading, submitResult, submitError };
+};
+
+export default connect(mapStateToProps, {
+  submitToBackend
+})(index);

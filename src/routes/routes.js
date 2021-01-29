@@ -302,7 +302,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-      <Stack key="RedeemedVoucherScreen" back>
+      <Stack key="RedeemedVoucherScreen">
         <Scene
           key="RedeemedVoucherScreen"
           component={RedeemedVoucherScreen}

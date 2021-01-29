@@ -1,4 +1,5 @@
 import React from "react";
+import { TouchableHighlight, TouchableOpacity, TouchableNativeFeedback } from "react-native";
 
 // import styles from "./styles";
 import { StyleSheet, Dimensions } from "react-native";
@@ -16,7 +17,6 @@ import {
   FlatList,
   Image,
   ModalSelector,
-  TouchableOpacity,
   View,
   Text,
   ScrollView,
@@ -50,7 +50,7 @@ function Grid({
           <View style={styles.itemContainer}>
             {item.count % 80 != 0 ? (
               item.id % 8 != 0 ? (
-                <TouchableOpacity
+                <TouchableNativeFeedback
                   style={styles.touchContainer}
                   onPress={() => onPressCheckIn(item)}
                   disabled={
@@ -58,6 +58,9 @@ function Grid({
                     voucher
                   }
                 >
+                  {/* <TouchableOpacity     style={styles.touchContainer}>
+                    <Text>hello</Text>
+                  </TouchableOpacity> */}
                   <View
                     style={
                       rewardOnceThanOneOption && voucher && item.id > 24
@@ -93,7 +96,7 @@ function Grid({
                       />
                     )}
                   </View>
-                </TouchableOpacity>
+                </TouchableNativeFeedback>
               ) : item.checked != true ? (
                 <TouchableOpacity
                   style={styles.touchContainer2}
