@@ -47,3 +47,26 @@ export function update({ data }) {
       });
   });
 }
+
+export function cancel({ data }) {
+  return new Promise((resolve, reject) => {
+    const apiName = `http${objectName}Cancel`;
+
+    const { voucherIds, id } = data;
+
+    data = {
+      voucherIds,
+      id
+    };
+    data = backend.processData({ data });
+    backend
+      .callApi({ apiName, data })
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((error) => {
+        console.log("error: " + JSON.stringify(error));
+        reject(error);
+      });
+  });
+}

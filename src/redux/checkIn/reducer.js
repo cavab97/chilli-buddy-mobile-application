@@ -199,6 +199,32 @@ const reducer = (state = initialState, { type, payload }) => {
         submitResult: initialState.submitResult,
         modalVisible: true,
       };
+    
+    case actions.SUBMIT_CANCEL:
+      return {
+        ...state,
+        submitLoading: true,
+        submitError: initialState.submitError,
+        submitResult: initialState.submitResult,
+        // modalVisible: false,
+      };
+
+    case actions.SUBMIT_CANCEL_SUCCESS:
+      return {
+        ...state,
+        submitLoading: false,
+        submitError: initialState.submitError,
+        submitResult: payload.data,
+      };
+
+    case actions.SUBMIT_CANCEL_ERROR:
+      return {
+        ...state,
+        submitLoading: false,
+        submitError: payload.error,
+        submitResult: initialState.submitResult,
+        modalVisible: true,
+      };
 
     case actions.TOGGLE_MODAL:
       console.log("!state.modalVisible");

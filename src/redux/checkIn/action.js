@@ -14,6 +14,10 @@ const actions = {
   SUBMIT_TO_BACKEND_ERROR: type + "SUBMIT_TO_BACKEND_ERROR",
   SUBMIT_TO_BACKEND_SUCCESS: type + "SUBMIT_TO_BACKEND_SUCCESS",
 
+  SUBMIT_CANCEL: type + "SUBMIT_CANCEL",
+  SUBMIT_CANCEL_SUCCESS: type + "SUBMIT_CANCEL_SUCCESS",
+  SUBMIT_CANCEL_ERROR: type + "SUBMIT_CANCEL_ERROR",
+
   UPLOAD_TO_STORAGE: type + "UPLOAD_TO_STORAGE",
   UPLOAD_TO_STORAGE_SUCCESS: type + "UPLOAD_TO_STORAGE_SUCCESS",
   UPLOAD_TO_STORAGE_ERROR: type + "UPLOAD_TO_STORAGE_ERROR",
@@ -93,6 +97,39 @@ export function submitToBackend(data, actionName) {
         reject(error);
         dispatch({
           type: actions.SUBMIT_TO_BACKEND_ERROR,
+          payload: { error },
+        });
+      }
+    });
+  };
+}
+
+export function submitCancel(data, actionName) {
+  return (dispatch, getState) => {
+    dispatch({ type: actions.SUBMIT_CANCEL });
+    return new Promise(async (resolve, reject) => {
+      let result = {};
+      const { voucherIds, id } = data;
+
+      data = {
+        voucherIds: voucherIds,
+        id: id,
+      };
+
+      try {
+
+        result = await checkInBackendServices.cancel({ data });
+
+        resolve(result);
+        dispatch({
+          type: actions.SUBMIT_CANCEL_SUCCESS,
+          payload: { data: result },
+        });
+      } catch (error) {
+        console.log(error);
+        reject(error);
+        dispatch({
+          type: actions.SUBMIT_CANCEL_ERROR,
           payload: { error },
         });
       }

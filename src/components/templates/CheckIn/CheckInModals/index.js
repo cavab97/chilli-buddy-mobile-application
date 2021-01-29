@@ -19,6 +19,7 @@ const CheckInModal = ({
   happyDesciption,
   message,
   rewardOnceThanOneOption,
+  onPressCancel
 }) => {
   return (
     <Overlay
@@ -55,7 +56,7 @@ const CheckInModal = ({
             <Text style={styles.subjectText}>{happyDesciption}</Text>
             <Text style={styles.voucherValue}>{message == null ? " " : message.amount}</Text>
             <Text style={styles.restaurantText}>
-              {message == null ? " " : message.merchant[0].businessName + " "} Voucher!
+              {message === null ? " " : message.merchant[0].businessName + " "} Voucher!
             </Text>
           </View>
           {rewardOnceThanOneOption != true ? (
@@ -68,7 +69,10 @@ const CheckInModal = ({
                 <Text style={styles.redeemNowText}>Redeem Now</Text>
               </TouchableOpacity>
               <Text style={styles.Or}>Or</Text>
-              <TouchableOpacity style={styles.redeemNowBoxSecond}>
+              <TouchableOpacity 
+                style={styles.redeemNowBoxSecond}
+                onPress={onPressCancel}
+              >
                 <Text style={styles.redeemNowText}>Keep Going </Text>
               </TouchableOpacity>
               <View style={styles.bottomTextBox}>

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   ///icon view
   closeIcon: {
     position: "absolute",
-    bottom: 400,
+    bottom: Dimensions.get('window').width * 1.14,
     right: -54,
     // backgroundColor: "red",
     resizeMode: "contain",
