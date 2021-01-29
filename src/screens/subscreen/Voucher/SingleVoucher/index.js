@@ -34,9 +34,7 @@ class index extends Component {
     this.props.listenFromDatabase({ voucherID });
   }
 
-  componentDidUpdate() {
-    
-  }
+  componentDidUpdate() {}
 
   componentWillUnmount() {}
 
@@ -96,10 +94,7 @@ class index extends Component {
       voucherStatus,
     } = this.props;
 
-    const { 
-      readLoading,
-      voucher
-    } = this.props.voucherState
+    const { readLoading, voucher } = this.props.voucherState;
 
     let cover;
 
@@ -119,7 +114,9 @@ class index extends Component {
           noImage={noImage}
           image={noImage}
           expiredDate={vocuherExpiredDate}
-          merchantName={readLoading ? voucher.merchant[0].businessName : null}
+          merchantName={
+            voucher.merchant[0].businessName === undefined ? null : voucher.merchant[0].businessName
+          }
           description={readLoading ? voucher.description : null}
           status={voucherStatus}
           OpenCamPress={this.OpenCamPress.bind(this)}

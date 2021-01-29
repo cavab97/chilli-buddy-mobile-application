@@ -61,9 +61,9 @@ const SingleVoucher = ({
   let cover;
 
   if (image === null) {
-    cover = require("../../../../assets/chilliBuddyCheckin/noMerchant.png")
+    cover = require("../../../../assets/chilliBuddyCheckin/noMerchant.png");
   } else {
-    cover = { uri: image }
+    cover = { uri: image };
   }
 
   return (
@@ -135,11 +135,7 @@ const SingleVoucher = ({
       <Card style={cardContainer}>
         <CardSection style={card}>
           <View style={columnOne}>
-            <Image
-              source={noImage}
-              style={styles.logoImage}
-              resizeMode="cover"
-            />
+            <Image source={noImage} style={styles.logoImage} resizeMode="cover" />
           </View>
           <View style={columnTwo}>
             {/* <Text style={{ fontWeight: "bold", fontSize: 18, top: 40 }}>{SalesPoint}</Text> */}
@@ -158,7 +154,7 @@ const SingleVoucher = ({
               </Text> */}
 
             <View style={columnThree}>
-              <Text style={columnTwoText}>{merchantName}</Text>
+              <Text style={columnTwoText}>{merchantName == null ? " " : merchantName}</Text>
               <Text style={styles.columnTwoSubText}>{SalesPoint} Discount</Text>
             </View>
             {status ? (
