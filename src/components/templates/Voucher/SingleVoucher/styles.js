@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     width: size / 6.5,
     height: size / 6.5,
-    color: "grey",
+    //color: "grey",
     backgroundColor: "#fff",
   },
   qrContainer: {

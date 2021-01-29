@@ -1,1 +1,0 @@
-{"ast":null,"code":"export * from \"./config\";","map":{"version":3,"sources":["C:/Gogogain/Gogogain - User/src/marslab-library-react-native/settings/api/index.js"],"names":[],"mappings":"AAAA","sourcesContent":["export * from \"./config\";\r\n"]},"metadata":{},"sourceType":"module"}

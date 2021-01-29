@@ -163,8 +163,6 @@ class index extends Component {
   }
 
   onClose = () => {
-    // console.log("hello");
-    // this.props.toggleModal();
     this.props.toggleModal();
   };
 
@@ -215,6 +213,8 @@ class index extends Component {
     const { tableData24, focusId } = this.state;
     const { submitLoading } = this.props;
     const { checkIn, readLoading, modalVisible } = this.props.checkInState;
+
+    console.log(checkIn.id);
 
     const { checkInRecord } = this.props.checkInState.checkIn;
     if (checkIn.voucher.assignedDate.at == null) {

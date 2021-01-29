@@ -2,18 +2,48 @@ import actions from "./action";
 
 const initialState = {
   readLoading: false,
-  readVoucher: false,
   readError: false,
   submitLoading: false,
   submitError: false,
-  tags: {},
-  categories: {},
 
   vouchers: [],
   voucher: {
     id: null,
-    isBookmark: false,
-    userIds: [],
+    active: false,
+    assigned: false,
+    claimed: false,
+    onHold: false,
+    amount: 0,
+    quantity: 1,
+    title: null,
+    description: null,
+    tnc: null,
+    usedDate: { at: null, by: null },
+    type: null,
+    checkInIds: [null],
+    merchantIds: [null],
+    merchant: {
+      id: null,
+      businessName: null,
+      businessRegistrationNumber: null,
+      email: null,
+      phoneNumber: null,
+      address: { 
+        line1: null,
+        line2: null,
+        postcode: null,
+        state: null,
+        country: null
+      },
+      shops: [null],
+      superadmin: [null],
+      admins: [null],
+      categories: [null],
+      dateJoined: new Date,
+      created: { at: null, by: null },
+      deleted: { at: null, by: null },
+    },
+    userIds: [null],
     user: {
       role: {
         absoluteDeveloper: false,
@@ -51,60 +81,62 @@ const initialState = {
       updated: { at: null, by: null },
       id: null,
     },
-    shopIds: [],
-    promo: [],
-    promotion: {
-      id: null,
-      title: null,
-      coverPhotos: [],
-      images: [],
-      startTime: null,
-      endTime: null,
-      started: { at: null, by: null, boolean: false },
-      ended: { at: null, by: null, boolean: false },
-      shop: [
-        {
-          address: [
-            {
-              line1: null,
-              line2: null,
-              postcode: null,
-              state: null,
-              country: null,
-            },
-          ],
-        },
-        { categories: [] },
-        { created: [{ at: null, by: null, dateJoined: null }] },
-        { displayTitle: null },
-        { images: [{ isPromote: null, l: null }] },
-      ],
-    },
-    tags: [],
-    categories: [],
+    prevUserIds: [{id: null, prevAssignedDate: null}],
+    assignedDate: { at: null, by: null },
+    expiryDate: null,
+    startDate: new Date(),
+    endDate: new Date(),
     created: { at: null, by: null },
     deleted: { at: null, by: null },
     updated: { at: null, by: null },
-    l: { _lat: 0, _long: 0 },
-    g: null,
   },
 };
 
 const voucherReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.READ_FROM_DATABASE:
-      console.log("read database");
-      return { ...state, readLoading: true };
+      return { 
+        ...state,
+        readLoading: true,
+        readError: initialState.readError,
+      };
 
     case actions.READ_FROM_DATABASE_SUCCESS:
-      console.log("read database success");
-      return { ...state, readLoading: false, vouchers: payload.data };
+      return { 
+        ...state,
+        readLoading: false,
+        vouchers: payload.data, 
+      };
 
     case actions.READ_FROM_DATABASE_ERROR:
-      return { ...state, readLoading: false, readError: payload.error };
+      return { 
+        ...state, 
+        readLoading: false,
+        readError: payload.error 
+      };
+    
+    case actions.READ_RECORD:
+      return { 
+        ...state, 
+        readLoading: true, 
+        readError: false 
+      };
+
+    case actions.READ_RECORD_SUCCESS:
+      return {
+        ...state,
+        readLoading: false,
+        voucher: payload.data,
+      };
+
+    case actions.READ_RECORD_ERROR:
+      return { 
+        ...state, 
+        readLoading: false, 
+        readError: payload.error
+      };
 
     case actions.SUBMIT_TO_BACKEND:
-      console.log("submit");
       return {
         ...state,
         submitLoading: true,
@@ -113,7 +145,6 @@ const voucherReducer = (state = initialState, { type, payload }) => {
         submitResult: initialState.submitResult,
       };
     case actions.SUBMIT_TO_BACKEND_SUCCESS:
-      console.log("submitSuccess");
       return {
         ...state,
         submitLoading: false,

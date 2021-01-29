@@ -19,8 +19,25 @@ import { Card, CardSection } from "@components/molecules";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-function Voucher({ title, salesPoint, expiredDate, onPress, merchantName, columnTwoText, status }) {
-  return status ? (
+function Voucher({ 
+  title, 
+  amount, 
+  expiredDate, 
+  onPress, 
+  merchantName, 
+  columnTwoText, 
+  status,
+  image
+}) {
+  let cover
+
+  if (image === undefined) {
+    cover = require("../../../assets/chilliBuddyCheckin/noMerchant.png")
+  } else {
+    cover = { uri: image }
+  }
+  
+  return !status ? (
     <TouchableOpacity onPress={onPress}>
       <Card style={styles.CardListSingleCard}>
         <CardSection style={styles.card}>
@@ -31,13 +48,14 @@ function Voucher({ title, salesPoint, expiredDate, onPress, merchantName, column
             />
             <View style={styles.merchantBorder}>
               <Image
-                source={require("../../../assets/chilliBuddyCheckin/starbucks.png")}
+                source={cover}
                 style={styles.merchantImage}
+                resizeMode="cover"
               />
             </View>
 
             <View style={styles.salesPoint}>
-              <Text style={styles.salesPointText}>{salesPoint}</Text>
+              <Text style={styles.salesPointText}>{amount}</Text>
             </View>
           </View>
           {/* <Text style={styles.columnTwoText}>Provide by {merchantName}</Text> */}
@@ -45,7 +63,7 @@ function Voucher({ title, salesPoint, expiredDate, onPress, merchantName, column
             <View style={styles.columnThree}>
               <Text style={styles.columnTwoText}> {merchantName}</Text>
               <Text style={styles.termNconditionText}>
-                {salesPoint} Discount * with Terms & Conditions
+                {amount} Discount * with Terms & Conditions
               </Text>
             </View>
 
@@ -89,7 +107,7 @@ function Voucher({ title, salesPoint, expiredDate, onPress, merchantName, column
             </View>
 
             <View style={styles.salesPoint2}>
-              <Text style={styles.salesPointText}>{salesPoint}</Text>
+              <Text style={styles.salesPointText}>{amount}</Text>
             </View>
           </View>
           {/* <Text style={styles.columnTwoText}>Provide by {merchantName}</Text> */}
@@ -97,7 +115,7 @@ function Voucher({ title, salesPoint, expiredDate, onPress, merchantName, column
             <View style={styles.columnThree}>
               <Text style={styles.columnTwoText}> {merchantName}</Text>
               <Text style={styles.termNconditionText}>
-                {salesPoint} Discount * with Terms & Conditions
+                {amount} Discount * with Terms & Conditions
               </Text>
             </View>
 
@@ -140,10 +158,11 @@ const VoucherList = ({
           <Voucher
             onPress={() => onVoucherPressed(item)}
             title={item.title}
-            salesPoint={item.salesPoint}
+            amount={item.amount}
             expiredDate={item.expiredDate}
-            merchantName={item.MerchantName}
-            status={item.status}
+            merchantName={item.merchantName}
+            status={item.claim}
+            image={item.merchant ? item.merchant[0].logo[0] : null}
           />
         )}
         keyExtractor={(item) => item.id}

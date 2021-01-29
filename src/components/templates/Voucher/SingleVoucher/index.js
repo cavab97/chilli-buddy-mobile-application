@@ -29,6 +29,7 @@ const SingleVoucher = ({
   onRedeemPress,
   title,
   noImage,
+  image,
   SalesPoint,
   merchantName,
   expiredDate,
@@ -56,6 +57,14 @@ const SingleVoucher = ({
     statusActiveText,
     statusDeactiveText,
   } = styles;
+
+  let cover;
+
+  if (image === null) {
+    cover = require("../../../../assets/chilliBuddyCheckin/noMerchant.png")
+  } else {
+    cover = { uri: image }
+  }
 
   return (
     <View>
@@ -127,8 +136,9 @@ const SingleVoucher = ({
         <CardSection style={card}>
           <View style={columnOne}>
             <Image
-              source={require("../../../../assets/chilliBuddyCheckin/starbucks.png")}
+              source={noImage}
               style={styles.logoImage}
+              resizeMode="cover"
             />
           </View>
           <View style={columnTwo}>
