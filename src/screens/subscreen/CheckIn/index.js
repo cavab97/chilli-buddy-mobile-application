@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { submitToBackend, readFromDatabase, toggleModal } from "@redux/checkIn/action";
+import moment from "moment";
 
 import { CheckIn, CheckInModal } from "@components/templates";
 
@@ -34,7 +35,7 @@ class index extends Component {
     // this.props.toggleModal();
 
     // this.table24();
-    //this.tableData4();
+    // this.props.toggleModal();
 
     await this.props.readFromDatabase();
     await this.table24();
@@ -42,9 +43,14 @@ class index extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     const readError = this.props.checkInState.readError;
+    const voucherID = this.props.checkIn.voucher.id;
+
+    if (prevProps.checkIn.voucher.id !== voucherID && voucherID) {
+      // alert(voucherID);
+    }
 
     if (prevProps.checkInState.readError !== readError && readError !== false) {
-      alert(readError);
+      // alert(readError);
     }
 
     if (
@@ -66,7 +72,7 @@ class index extends Component {
 
   table24 = async () => {
     const { checkInRecord } = this.props.checkInState.checkIn;
-    // console.log("table24 table24");
+    console.log("table24 table24");
     // console.log("table24" + checkInRecord.length);
     let j = 0;
     let k = 1;
@@ -94,7 +100,8 @@ class index extends Component {
           count: i,
           checked: checkInRecord[i - k] ? true : false,
           // reward: checkInRecord[i - k].checked == true ? true : false,
-          submitLoading: this.props.submitLoading,
+          submitLoading: false,
+          time: checkInRecord.date,
         });
       }
     }
@@ -128,38 +135,79 @@ class index extends Component {
     // this.setState({ myState: [] }); //this line must be removed
     //i deliberately leave mystate empty so that i can push new array later
   }
+  catchCondition() {
+    const { checkIn } = this.props.checkInState;
+
+    const { checkInRecord } = this.props.checkInState.checkIn;
+    let countDownOneHour;
+    if (checkIn.voucher.assignedDate.at != null) {
+      countDownOneHour =
+        (new Date() - new Date(checkIn.voucher.assignedDate.at.seconds * 1000)) / 60000;
+    } else {
+      countDownOneHour = 0;
+    }
+
+    const voucherID = this.props.checkIn.voucher.id;
+    let cloundFunction = false;
+    if (checkInRecord !== undefined) {
+      cloundFunction = this.props.checkInState.submitResult.objectName;
+    } else {
+      cloundFunction = false;
+    }
+
+    if ((cloundFunction == "Voucher" || voucherID !== null) && countDownOneHour < 60) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   onClose = () => {
+    // console.log("hello");
     // this.props.toggleModal();
     this.props.toggleModal();
   };
 
   onPressCheckIn = async (item) => {
-    const tableDataTemp = this.state.tableData24;
+    const { submitLoading } = this.props;
     const { checkIn } = this.props.checkInState;
+    const { checkInRecord } = this.props.checkInState.checkIn;
+    const voucherID = this.props.checkIn.voucher.id;
+
+    let cloundFunction = false;
     const uid = this.props.uid;
     const data = {
       uid: uid,
       id: checkIn.id,
     };
+    this.setState({ focusId: item.id });
+    if (checkInRecord !== undefined) {
+      cloundFunction = this.props.checkInState.submitResult.objectName;
+    } else {
+      cloundFunction = false;
+    }
 
-    tableDataTemp.forEach((table24) => {
-      if (table24.id === item.id) {
-        this.setState({ focusId: item.id });
-        if (checkIn.id === null) {
-          this.props.submitToBackend(data, "create");
-        } else {
-          if (checkIn.voucher.id !== null && item.id === 21) {
-            console.log("success");
+    if (checkIn.id === null) {
+      this.props.submitToBackend(data, "create");
+    } else {
+      // this.props.toggleModal();
+
+      if (
+        (cloundFunction == "Voucher" || voucherID !== null) &&
+        (item.value == 21 || item.value == 28)
+      ) {
+        this.props.toggleModal();
+      } else {
+        this.props.submitToBackend(data, "update");
+        // if (item.value == 21 || item.value == 28) {
+        if (cloundFunction == "Voucher") {
+          setTimeout(() => {
             this.props.toggleModal();
-          } else {
-            console.log(checkIn.voucher.id);
-            console.log("fail");
-            this.props.submitToBackend(data, "update");
-          }
+          }, 2000);
         }
+        // }
       }
-    });
+    }
   };
 
   render() {
@@ -169,9 +217,26 @@ class index extends Component {
     const { checkIn, readLoading, modalVisible } = this.props.checkInState;
 
     const { checkInRecord } = this.props.checkInState.checkIn;
-    console.log("modalVisible");
+    if (checkIn.voucher.assignedDate.at == null) {
+      console.log("undefined");
+    } else {
+      console.log("checkIn/assign date");
+      // console.log(checkIn.voucher.id);
 
-    console.log(modalVisible);
+      console.log(
+        moment(checkIn.voucher.assignedDate.at.toString(), "HHmmss").format(
+          "MMMM Do YYYY, h:mm:ss a"
+        )
+      );
+      // 9 years ago
+
+      console.log((new Date() - new Date(checkIn.voucher.assignedDate.at.seconds * 1000)) / 60000);
+
+      // console.log("modalVisible");
+
+      // console.log(modalVisible);
+    }
+
     tableData24.forEach((table24) => {
       if (table24.id === focusId) {
         table24.submitLoading = submitLoading;
@@ -216,21 +281,42 @@ class index extends Component {
         break;
     }
 
+    if (this.props.checkInState.submitResult.objectName == "Voucher") {
+      console.log("here");
+      // console.log(this.props.checkInState.submitResult.message.merchant[0].businessName);
+      // console.log(this.props.checkInState.submitResult.message.amount);
+    } else {
+      console.log("not here");
+      // console.log(this.props.checkInState.submitResult);
+      console.log(this.props.checkInState.submitResult.message);
+    }
     return (
       <CheckIn
         data={tableData24}
         onPressCheckIn={this.onPressCheckIn.bind(this)}
         submitLoading={submitLoading}
         // checkInRecord.length === 21 ? true : false
-        rewardOnceThanOneOption={true}
-        happy={checkIn.voucher.id !== null ? true : false}
+        rewardOnceThanOneOption={checkInRecord.length <= 21 ? true : false}
+        happy={
+          checkIn.voucher.id !== null ||
+          this.props.checkInState.submitResult.objectName == "Voucher"
+            ? true
+            : false
+        }
         message={this.props.checkInState.submitError.message}
+        messageSuccess={
+          this.props.checkInState.submitResult.message != null
+            ? this.props.checkInState.submitResult.message
+            : checkIn.voucher != null
+            ? checkIn.voucher
+            : null
+        }
         isVisible={modalVisible}
         readLoading={readLoading}
         onCLose={this.onClose.bind(this)}
-        checkInRecordLength={
-          checkInRecord === undefined ? console.log(" ") : checkInRecord.length + y
-        }
+        checkInRecordLength={checkInRecord === undefined ? 0 : checkInRecord.length + y}
+        checkInRecordLengths={checkInRecord === undefined ? console.log(" ") : checkInRecord.length}
+        catchCondition={this.catchCondition()}
       />
     );
   }

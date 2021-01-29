@@ -180,7 +180,7 @@ const reducer = (state = initialState, { type, payload }) => {
         submitLoading: true,
         submitError: initialState.submitError,
         submitResult: initialState.submitResult,
-        modalVisible: false,
+        // modalVisible: false,
       };
 
     case actions.SUBMIT_TO_BACKEND_SUCCESS:
