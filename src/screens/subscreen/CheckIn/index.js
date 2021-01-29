@@ -288,7 +288,7 @@ class index extends Component {
     } else {
       console.log("not here");
       // console.log(this.props.checkInState.submitResult);
-      console.log(this.props.checkInState.submitResult.message);
+      // console.log(this.props.checkInState.submitResult.message);
     }
     return (
       <CheckIn

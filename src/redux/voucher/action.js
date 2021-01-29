@@ -78,17 +78,15 @@ export function submitToBackend(data) {
     return new Promise(async (resolve, reject) => {
       let result = {};
 
-      console.log(data)
       const { voucherIds, merchantIds } = data;
+      console.log("voucherIds");
 
-      console.log(voucherIds)
-      console.log(merchantIds)
+      console.log(voucherIds);
+
       data = {
         id: voucherIds,
-        merchantIds: [merchantIds]
-      }
-      
-      console.log(merchantIds)
+        merchantIds: [merchantIds],
+      };
 
       try {
         result = await voucherBackendServices.redeem({ data });
@@ -107,7 +105,7 @@ export function submitToBackend(data) {
         });
       }
     });
-  }
+  };
 }
 
 export default actions;

@@ -1,19 +1,12 @@
 import React from "react";
 import styles from "./styles";
+import moment from "moment";
 
 import { Dimensions, Linking } from "react-native";
 
 import { View, Image, Text, ScrollView, FlatList, TouchableOpacity } from "@components/atoms";
 
 import { Card, CardSection } from "@components/molecules";
-
-import { Collapsible } from "@components/organisms/Collapsible";
-
-import { Ionicons } from "@expo/vector-icons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Colors } from "../../../../settings/styles/theme";
-import moment from "moment";
-import { RedeeemButton } from "@components/molecules/RedeemButton";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
@@ -23,7 +16,7 @@ const windowWidth = Dimensions.get("window").width;
 
 const SingleVoucher = ({
   icon,
-  renderTermAndCondition,
+  tnc,
   viewHeight, //distance calculated from single merchant view
   find_dimensions = () => {},
   onRedeemPress,
@@ -37,6 +30,9 @@ const SingleVoucher = ({
   status,
   OpenCamPress,
   OnInvalidPress,
+  startDate,
+  endDate,
+  readLoading,
 }) => {
   const {
     detailArea,
@@ -92,7 +88,13 @@ const SingleVoucher = ({
               </View>
               {/* col */}
               <View style={styles.col2}>
-                <Text style={styles.col2Text}>11/1/2021-15/2/2021</Text>
+                <Text style={styles.col2Text}>
+                  {startDate == "AnyTime" || endDate == "AnyTime"
+                    ? "AnyTime - AnyTime"
+                    : moment(startDate).format("DD/MM/YYYY")}{" "}
+                  {moment(endDate).format("DD/MM/YYYY")}
+                  {}
+                </Text>
               </View>
             </View>
 
@@ -104,7 +106,7 @@ const SingleVoucher = ({
               </View>
               {/* col */}
               <View style={styles.col2}>
-                <Text style={styles.col2Text}>This is my description for the voucher</Text>
+                <Text style={styles.col2Text}>{description}</Text>
               </View>
             </View>
 
@@ -116,8 +118,7 @@ const SingleVoucher = ({
               </View>
               {/* col */}
               <View style={styles.col2}>
-                <Text style={styles.col2Text}>3. This is my description for the voucher</Text>
-                <Text style={styles.col2Text}>3. This is my description for the voucher</Text>
+                <Text style={styles.col2Text}>{tnc}</Text>
               </View>
             </View>
 
@@ -154,17 +155,18 @@ const SingleVoucher = ({
               </Text> */}
 
             <View style={columnThree}>
-              <Text style={columnTwoText}>{merchantName == null ? " " : merchantName}</Text>
+              <Text style={columnTwoText}>{!readLoading ? merchantName : " "}</Text>
               <Text style={styles.columnTwoSubText}>{SalesPoint} Discount</Text>
             </View>
-            {/* status ? ( */
+            {
+              /* status ? ( */
               <TouchableOpacity style={styles.qrContainer} onPress={OpenCamPress}>
                 <Image
                   source={require("../../../../assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
                   style={styles.qrLogo}
                 />
               </TouchableOpacity>
-            /* ) : (
+              /* ) : (
               <TouchableOpacity style={styles.qrContainer} onPress={OnInvalidPress}>
                 <Image
                   source={require("../../../../assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
@@ -173,13 +175,14 @@ const SingleVoucher = ({
               </TouchableOpacity>
             )} */
 
-            /* <View>
+              /* <View>
               {status ? (
                 <Text style={statusActiveText}> Active</Text>
               ) : (
                 <Text style={statusDeactiveText}>Deactive</Text>
               )}
-            </View> */}
+            </View> */
+            }
 
             {/* <Text>{description}</Text> */}
           </View>

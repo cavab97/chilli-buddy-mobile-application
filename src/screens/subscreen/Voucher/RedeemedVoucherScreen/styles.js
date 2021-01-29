@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     paddingVertical: 35,
   },
   redeemImageStyle: {
-    width: 292,
-    height: 206,
+    width: "50%",
+    height: "75%",
   },
   bodyContainerStyle: {
     flex: 1,
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   claimButtonContainer: {
-    width: 285,
+    width: "50%",
     height: 40,
-    marginVertical: 30,
+    marginVertical: 20,
     backgroundColor: Colors.PRIMARY,
   },
   claimButtonText: {

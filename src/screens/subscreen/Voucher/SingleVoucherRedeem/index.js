@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styles from "./styles";
 import { Actions } from "react-native-router-flux";
-import { Dimensions } from 'react-native';
+import { Dimensions } from "react-native";
 import { SingleVoucherRedeem, SingleVoucherErrorModal } from "@components/templates";
 
 import { BarCodeScanner, Permissions } from "expo-barcode-scanner";
@@ -46,7 +46,7 @@ class index extends Component {
   };
 
   handleSetScanned(scan) {
-    console.log('scanned')
+    console.log("scanned");
     this.setState({ scanned: false });
   }
   errorSubmit() {
@@ -55,21 +55,20 @@ class index extends Component {
     });
   }
 
-  onBarCodeRead({ type, data } ) {
-   /*  if ((type === this.state.scannedItem.type && data === this.state.scannedItem.data) || data === null) {
+  onBarCodeRead({ type, data }) {
+    /*  if ((type === this.state.scannedItem.type && data === this.state.scannedItem.data) || data === null) {
       return;
     } */
 
-    const voucherId = this.props.voucherIds
+    const voucherIds = this.props.voucherIds;
 
     if (data) {
       // Do samething for QRCode
-      console.log(data)
-      Actions.RedeemedVoucherScreen({ data, voucherIds: voucherId });
+      console.log("      Actions.replace(;");
+      console.log(voucherIds);
+      Actions.replace("RedeemedVoucherScreen", { data, voucherIds: voucherIds });
     } else {
-      alert(
-        'No QR Code Detected'
-      );
+      alert("No QR Code Detected");
     }
   }
 
@@ -86,15 +85,15 @@ class index extends Component {
         />
       );
     } else { */
-      return (
-        <SingleVoucherRedeem
-          scanned={scanned}
-          onBarCodeRead={this.onBarCodeRead.bind(this)}
-          handleBarCodeScanned={this.handleBarCodeScanned.bind(this)}
-          hasPermission={hasPermission}
-          handleSetScanned={this.handleSetScanned.bind(this)}
-        />
-      );
+    return (
+      <SingleVoucherRedeem
+        scanned={scanned}
+        onBarCodeRead={this.onBarCodeRead.bind(this)}
+        handleBarCodeScanned={this.handleBarCodeScanned.bind(this)}
+        hasPermission={hasPermission}
+        handleSetScanned={this.handleSetScanned.bind(this)}
+      />
+    );
     //}
   }
 }

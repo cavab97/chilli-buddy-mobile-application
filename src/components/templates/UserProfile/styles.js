@@ -317,17 +317,20 @@ const styles = StyleSheet.create({
     }, */
   image: {
     flex: 1,
-    borderRadius: 60,
-    width: null,
-    //resizeMode: "cover",
+    borderRadius: 100,
+    width: "100%",
+
+    resizeMode: "cover",
     //width: "100%",
-    //height: null
+    // height: "100%",
   },
   profileImageStyle: {
     backgroundColor: Colors.GRAY_DARK,
     height: 100,
     width: 100,
     borderRadius: 80,
+    borderWidth: 1,
+    borderColor: "white",
   },
   scrollBox: {
     flex: 1,

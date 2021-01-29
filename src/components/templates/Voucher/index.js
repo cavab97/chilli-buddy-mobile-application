@@ -19,24 +19,24 @@ import { Card, CardSection } from "@components/molecules";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-function Voucher({ 
-  title, 
-  amount, 
-  expiredDate, 
-  onPress, 
-  merchantName, 
-  columnTwoText, 
+function Voucher({
+  title,
+  amount,
+  expiredDate,
+  onPress,
+  merchantName,
+  columnTwoText,
   status,
-  image
+  image,
 }) {
-  let cover
+  let cover;
 
   if (image === undefined) {
-    cover = require("../../../assets/chilliBuddyCheckin/noMerchant.png")
+    cover = require("../../../assets/chilliBuddyCheckin/noMerchant.png");
   } else {
-    cover = { uri: image }
+    cover = { uri: image };
   }
-  
+
   return !status ? (
     <TouchableOpacity onPress={onPress}>
       <Card style={styles.CardListSingleCard}>
@@ -47,11 +47,7 @@ function Voucher({
               style={styles.borderImage}
             />
             <View style={styles.merchantBorder}>
-              <Image
-                source={cover}
-                style={styles.merchantImage}
-                resizeMode="cover"
-              />
+              <Image source={cover} style={styles.merchantImage} resizeMode="cover" />
             </View>
 
             <View style={styles.salesPoint}>
@@ -155,12 +151,13 @@ const VoucherList = ({
       <FlatList
         data={dataSource}
         renderItem={({ item, index }) => (
+          // console.log(item),
           <Voucher
             onPress={() => onVoucherPressed(item)}
             title={item.title}
             amount={item.amount}
             expiredDate={item.expiredDate}
-            merchantName={item.merchantName}
+            merchantName={item.merchant[0].businessName}
             status={item.claim}
             image={item.merchant ? item.merchant[0].logo[0] : null}
           />

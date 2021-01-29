@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import { Ionicons } from "@expo/vector-icons";
+import { ActivityIndicator } from "../../../../components/atoms";
 import { Dimensions, View, Text } from "react-native";
 import moment from "moment";
 
@@ -54,34 +54,34 @@ class index extends Component {
     this.setState({ errorStatus: false });
   }
 
-  renderTermAndCondition() {
-    const { subIconDetail, operatingContainer } = styles;
+  // renderTermAndCondition() {
+  //   const { subIconDetail, operatingContainer } = styles;
 
-    const { shop } = this.props.shopState;
+  //   const { shop } = this.props.shopState;
 
-    return shop.operatingHour.map((item, key) => {
-      return (
-        <View style={operatingContainer} key={key}>
-          <Ionicons
-            style={(subIconDetail, { paddingRight: "5%", paddingLeft: "6%" })}
-            name="md-attach"
-            size={20}
-            color="grey"
-          />
-          <Text style={{ width: 40, fontFamily: "RobotoRegular" }}>{item.day.toUpperCase()}</Text>
-          {item.operate ? (
-            <Text style={{ marginLeft: 10, fontFamily: "RobotoRegular" }}>
-              {moment(item.open.toString(), "Hmm").format("LT") +
-                " to " +
-                moment(item.close.toString(), "Hmm").format("LT")}
-            </Text>
-          ) : (
-            <Text style={{ marginLeft: 10, fontFamily: "RobotoRegular" }}>Closed</Text>
-          )}
-        </View>
-      );
-    });
-  }
+  //   return shop.operatingHour.map((item, key) => {
+  //     return (
+  //       <View style={operatingContainer} key={key}>
+  //         <Ionicons
+  //           style={(subIconDetail, { paddingRight: "5%", paddingLeft: "6%" })}
+  //           name="md-attach"
+  //           size={20}
+  //           color="grey"
+  //         />
+  //         <Text style={{ width: 40, fontFamily: "RobotoRegular" }}>{item.day.toUpperCase()}</Text>
+  //         {item.operate ? (
+  //           <Text style={{ marginLeft: 10, fontFamily: "RobotoRegular" }}>
+  //             {moment(item.open.toString(), "Hmm").format("LT") +
+  //               " to " +
+  //               moment(item.close.toString(), "Hmm").format("LT")}
+  //           </Text>
+  //         ) : (
+  //           <Text style={{ marginLeft: 10, fontFamily: "RobotoRegular" }}>Closed</Text>
+  //         )}
+  //       </View>
+  //     );
+  //   });
+  // }
 
   render() {
     const {
@@ -101,26 +101,39 @@ class index extends Component {
     const noImage = require("@assets/chilliBuddyCheckin/backgroundIma.png");
     const { errorStatus, errorHeader, errorMessage } = this.state;
 
+    console.log("voucher.startDate");
+    // console.log(voucher.merchant[0].businessName);
+    // console.log(voucher.merchant[0].businessName == undefined);
+    console.log(voucher);
+
     if (!errorStatus) {
-      return (
+      // console.log(voucher);
+
+      return this.props.voucherState.readLoading == true ? (
+        <ActivityIndicator size="large" color="black" style={styles.smallRedeemImageStarStyle} />
+      ) : (
         <SingleVoucher
-          renderTermAndCondition={this.renderTermAndCondition.bind(this)}
           shopPosts={posts}
           onRedeemPress={this.onRedeemPress.bind(this)}
           title={voucher.title}
           SalesPoint={voucher.amount}
           noImage={noImage}
           image={noImage}
-          expiredDate={vocuherExpiredDate}
+          expiredDate={voucher.endDate}
+          tnc={voucher.tnc}
           // merchantName={
           //   voucher.merchant[0].businessName === undefined ? null : voucher.merchant[0].businessName
           // }
           // description={readLoading ? voucher.description : null}
-          merchantName="heelo"
-          description="description"
+
+          merchantName={"hi"}
+          description={voucher.description}
           status={voucherStatus}
           OpenCamPress={this.OpenCamPress.bind(this)}
           OnInvalidPress={this.OnInvalidPress.bind(this)}
+          startDate={voucher.startDate != null ? voucher.startDate : "AnyTime"}
+          endDate={voucher.endDate != null ? voucher.endDate : "AnyTime"}
+          readLoading={this.props.voucherState.readLoading}
         />
       );
     } else {
