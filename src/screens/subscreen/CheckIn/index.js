@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { submitToBackend, readFromDatabase, toggleModal } from "@redux/checkIn/action";
+import {
+  submitToBackend,
+  readFromDatabase,
+  toggleModal,
+  submitCancel,
+} from "@redux/checkIn/action";
 import moment from "moment";
 
 import { CheckIn, CheckInModal } from "@components/templates";
@@ -25,6 +30,7 @@ class index extends Component {
         reward: false,
         submitLoading: false,
       },
+      time: null,
       tableData4: [],
       focusId: "",
       y: 1,
@@ -39,6 +45,10 @@ class index extends Component {
 
     await this.props.readFromDatabase();
     await this.table24();
+    /* this.intervalID = setInterval(
+      () => this.tick(),
+      1000
+    ); */
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -72,7 +82,7 @@ class index extends Component {
 
   table24 = async () => {
     const { checkInRecord } = this.props.checkInState.checkIn;
-    console.log("table24 table24");
+    //console.log("table24 table24");
     // console.log("table24" + checkInRecord.length);
     let j = 0;
     let k = 1;
@@ -127,6 +137,33 @@ class index extends Component {
     this.setState({ tableData24: temp });
   };
 
+  /* tick() {
+    const { checkIn } = this.props.checkInState;
+
+    if (checkIn.resetDate !== undefined && checkIn.created.at !== undefined||
+      checkIn.resetDate === null && checkIn.created.at !== null) 
+    {
+      let day = moment(checkIn.resetDate).diff(checkIn.created.at,'days');
+      let hour = moment(checkIn.resetDate).diff(checkIn.created.at, "hours");
+      let seconds = moment(checkIn.resetDate).diff(checkIn.created.at, "minutes");
+
+      if (day !== 0) {
+        this.setState({
+          time: day + " days"
+        });
+      } else if (hour !== 0){
+        this.setState({
+          time: hour + " hours"
+        });
+      } else {
+        this.setState({
+          time: seconds + " seconds"
+        });
+      }
+      
+    } 
+  } */
+
   componentWillMount() {
     this.table24();
 
@@ -164,6 +201,20 @@ class index extends Component {
 
   onClose = () => {
     this.props.toggleModal();
+  };
+
+  onPressCancel = () => {
+    console.log("i am pressed");
+    let data;
+    const id = this.props.checkIn.id;
+    const voucherIds = this.props.checkIn.voucherIds;
+
+    data = {
+      id,
+      voucherIds,
+    };
+
+    this.props.submitCancel(data);
   };
 
   onPressCheckIn = async (item) => {
@@ -214,12 +265,12 @@ class index extends Component {
     const { submitLoading } = this.props;
     const { checkIn, readLoading, modalVisible } = this.props.checkInState;
 
-    console.log(checkIn.id);
+    //console.log(checkIn.id);
 
     const { checkInRecord } = this.props.checkInState.checkIn;
-    if (checkIn.voucher.assignedDate.at == null) {
+    /*if (checkIn.voucher.assignedDate.at == null) {
       console.log("undefined");
-    } else {
+    }  else {
       console.log("checkIn/assign date");
       // console.log(checkIn.voucher.id);
 
@@ -230,12 +281,9 @@ class index extends Component {
       );
       // 9 years ago
 
-      console.log((new Date() - new Date(checkIn.voucher.assignedDate.at.seconds * 1000)) / 60000);
+      //console.log((new Date() - new Date(checkIn.voucher.assignedDate.at.seconds * 1000)) / 60000);
 
-      // console.log("modalVisible");
-
-      // console.log(modalVisible);
-    }
+    } */
 
     tableData24.forEach((table24) => {
       if (table24.id === focusId) {
@@ -293,6 +341,7 @@ class index extends Component {
     return (
       <CheckIn
         data={tableData24}
+        checkInData={checkIn}
         onPressCheckIn={this.onPressCheckIn.bind(this)}
         submitLoading={submitLoading}
         // checkInRecord.length === 21 ? true : false
@@ -312,11 +361,13 @@ class index extends Component {
             : null
         }
         isVisible={modalVisible}
+        time={this.state.time}
         readLoading={readLoading}
         onCLose={this.onClose.bind(this)}
         checkInRecordLength={checkInRecord === undefined ? 0 : checkInRecord.length + y}
         checkInRecordLengths={checkInRecord === undefined ? console.log(" ") : checkInRecord.length}
         catchCondition={this.catchCondition()}
+        onPressCancel={this.onPressCancel.bind(this)}
       />
     );
   }
@@ -328,6 +379,8 @@ const mapStateToProps = (state) => {
   const checkInState = state.CheckIn;
   const { submitLoading } = state.CheckIn;
   const { checkIn } = state.CheckIn;
+
+  console.log(uid);
 
   return {
     routeTicketState,
@@ -342,4 +395,5 @@ export default connect(mapStateToProps, {
   submitToBackend,
   readFromDatabase,
   toggleModal,
+  submitCancel,
 })(index);

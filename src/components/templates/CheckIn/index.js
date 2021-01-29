@@ -2,6 +2,7 @@ import React from "react";
 import { TouchableHighlight, TouchableOpacity, TouchableNativeFeedback } from "react-native";
 
 // import styles from "./styles";
+import moment from "moment";
 import { StyleSheet, Dimensions } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -183,6 +184,7 @@ function Grid({
           </View>
         )}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 25 }} 
       />
     </View>
   );
@@ -202,6 +204,9 @@ const CheckIn = ({
   checkInRecordLengths,
   messageSuccess,
   catchCondition,
+  checkInData,
+  onPressCancel,
+  time
 }) => {
   /* if (readLoading) {
     return (
@@ -218,6 +223,7 @@ const CheckIn = ({
       </View>
     )
   } */
+  
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -230,6 +236,7 @@ const CheckIn = ({
             onClose={onCLose}
             message={messageSuccess}
             rewardOnceThanOneOption={rewardOnceThanOneOption}
+            onPressCancel={onPressCancel}
           />
         ) : (
           <CheckInModal
@@ -240,6 +247,7 @@ const CheckIn = ({
             onClose={onCLose}
             rewardOnceThanOneOption={rewardOnceThanOneOption}
             message={messageSuccess}
+            onPressCancel={onPressCancel}
           />
         )
       ) : (
@@ -258,7 +266,7 @@ const CheckIn = ({
           <Text style={styles.checkInSubTitle}>
             Stand the chance to win a random a random prize by checking in everyday!
           </Text>
-          <Text style={styles.checkInSubRefreshing}>Refresh in:</Text>
+          <Text style={styles.checkInSubRefreshing}>Refresh in: {time}</Text>
         </View>
         <Grid
           data={data}
