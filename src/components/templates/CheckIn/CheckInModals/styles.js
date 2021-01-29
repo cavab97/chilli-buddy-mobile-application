@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
   },
-  redeemImageCrossStyle: { resizeMode: "contain", width: 100, height: 50 },
+  redeemImageCrossStyle: { resizeMode: "contain", width: 100, height: 50, zIndex: 1 },
 
   ///image view
   imageAnime: {
@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center", // backgroundColor: "red",
     resizeMode: "cover",
-    marginTop: "0%",
+    marginTop: "2%",
+    borderRadius: 100,
     backgroundColor: "#fff",
   },
   redeemImageChilliStyle: {
@@ -87,11 +88,12 @@ const styles = StyleSheet.create({
   redeemImageChilliStyle2: {
     flex: 1,
     resizeMode: "contain",
-    width: size / 2.2,
-    height: size / 2.2,
+    width: size / 2.3,
+    height: size / 2.3,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
+    backgroundColor: "#fff",
     // position: "absolute",
   },
 
@@ -126,13 +128,13 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   emojiText2: {
-    fontSize: size / 15,
+    fontSize: size / 17,
     color: "black",
     fontWeight: "bold",
     marginHorizontal: 0,
     textAlign: "center",
     bottom: 0,
-    paddingBottom: 5,
+    paddingBottom: 0,
   },
   subjectText: {
     fontSize: size / 25,
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
   desciptionBox2: {
     backgroundColor: "#fff",
     alignItems: "center",
-    bottom: 50,
+    bottom: 45,
 
     // position: "absolute",
   },
@@ -175,7 +177,7 @@ const styles = StyleSheet.create({
   },
   restaurantText: {
     color: "black",
-    fontSize: 20,
+    fontSize: size / 20,
     fontWeight: "bold",
   },
   doubleOption: {

@@ -30,7 +30,16 @@ const sadHeader = "Better luck \n next Time!";
 const happyHeader = "Congratulations!";
 const happyDesciption = "You have won a";
 
-function Grid({ data, onPressCheckIn, submitLoading, checkInRecordLength }) {
+function Grid({
+  data,
+  onPressCheckIn,
+  submitLoading,
+  checkInRecordLength,
+  voucher,
+  checkInRecordLengths,
+  twoOneDays,
+  rewardOnceThanOneOption,
+}) {
   const img = require("../../../assets/chilliBuddyCheckin/checkin_part_star.png");
   return (
     <View style={styles.viewPanel}>
@@ -45,12 +54,25 @@ function Grid({ data, onPressCheckIn, submitLoading, checkInRecordLength }) {
                   style={styles.touchContainer}
                   onPress={() => onPressCheckIn(item)}
                   disabled={
-                    (item.checked == false || item.checked) && checkInRecordLength !== item.id
+                    ((item.checked == false || item.checked) && checkInRecordLength !== item.id) ||
+                    voucher
                   }
                 >
-                  <View style={styles.checkInBox}>
+                  <View
+                    style={
+                      rewardOnceThanOneOption && voucher && item.id > 24
+                        ? styles.Checked24
+                        : styles.checkInBox
+                    }
+                  >
                     <Text style={styles.Days}>Day{item.value}</Text>
-                    <View style={styles.checkInBoxWhite}></View>
+                    <View
+                      style={
+                        rewardOnceThanOneOption && voucher && item.id > 24
+                          ? styles.checkInBoxWhite24
+                          : styles.checkInBoxWhite
+                      }
+                    ></View>
                     {item.submitLoading == true ? (
                       <ActivityIndicator
                         size="small"
@@ -77,12 +99,25 @@ function Grid({ data, onPressCheckIn, submitLoading, checkInRecordLength }) {
                   style={styles.touchContainer2}
                   onPress={() => onPressCheckIn(item)}
                   disabled={
-                    (item.checked == false || item.checked) && checkInRecordLength !== item.id
+                    ((item.checked == false || item.checked) && checkInRecordLength !== item.id) ||
+                    voucher
                   }
                 >
-                  <View style={styles.checkInBox2}>
+                  <View
+                    style={
+                      rewardOnceThanOneOption && voucher && item.id > 24
+                        ? styles.checkInBox224
+                        : styles.checkInBox2
+                    }
+                  >
                     <Text style={styles.Days}>Day{item.value}</Text>
-                    <View style={styles.checkInBoxWhite2}>
+                    <View
+                      style={
+                        rewardOnceThanOneOption && voucher && item.id > 24
+                          ? styles.checkInBoxWhite224
+                          : styles.checkInBoxWhite2
+                      }
+                    >
                       {item.submitLoading == true ? (
                         <ActivityIndicator
                           size="large"
@@ -110,7 +145,11 @@ function Grid({ data, onPressCheckIn, submitLoading, checkInRecordLength }) {
                   style={styles.touchContainer2}
                   onPress={() => onPressCheckIn(item)}
                   disabled={
-                    (item.checked == false || item.checked) && checkInRecordLength !== item.id
+                    twoOneDays
+                      ? (item.checked == false || item.checked) && checkInRecordLength !== item.id
+                      : item.id == 24
+                      ? voucher && item.id != 24
+                      : voucher && item.id != 28
                   }
                 >
                   <View style={styles.checkInBoxRed}>
@@ -157,6 +196,9 @@ const CheckIn = ({
   checkInRecordLength,
   onCLose,
   message,
+  checkInRecordLengths,
+  messageSuccess,
+  catchCondition,
 }) => {
   /* if (readLoading) {
     return (
@@ -173,6 +215,7 @@ const CheckIn = ({
       </View>
     )
   } */
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {happy == true ? (
@@ -182,7 +225,7 @@ const CheckIn = ({
             happy={happy}
             isVisible={isVisible}
             onClose={onCLose}
-            message={message}
+            message={messageSuccess}
             rewardOnceThanOneOption={rewardOnceThanOneOption}
           />
         ) : (
@@ -193,23 +236,24 @@ const CheckIn = ({
             isVisible={isVisible}
             onClose={onCLose}
             rewardOnceThanOneOption={rewardOnceThanOneOption}
-            message={message}
+            message={messageSuccess}
           />
         )
       ) : (
         <CheckInModalError
-          Header={sadHeader}
+          Header={message == null ? sadHeader : message}
           isVisible={isVisible}
           onClose={onCLose}
           message={message}
         />
       )}
+      {(console.log("catchCondition"), console.log(catchCondition))}
 
       <View style={styles.CheckinContainer}>
         <View style={styles.CheckInTextContainer}>
           <Text style={styles.checkInTitle}>Check-In</Text>
           <Text style={styles.checkInSubTitle}>
-            Stand the chance to win a random a random prize by checking in everyday!{" "}
+            Stand the chance to win a random a random prize by checking in everyday!
           </Text>
           <Text style={styles.checkInSubRefreshing}>Refresh in:</Text>
         </View>
@@ -218,8 +262,11 @@ const CheckIn = ({
           onPressCheckIn={onPressCheckIn}
           submitLoading={submitLoading}
           checkInRecordLength={checkInRecordLength}
+          voucher={happy}
+          checkInRecordLengths={checkInRecordLengths}
+          twoOneDays={catchCondition}
+          rewardOnceThanOneOption={rewardOnceThanOneOption}
         />
-
         {/* <View style={styles.buttonStyles}>
         <SignoutButton
           style={styles.checkinButton}

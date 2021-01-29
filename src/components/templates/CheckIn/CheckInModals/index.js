@@ -51,12 +51,14 @@ const CheckInModal = ({
           <View style={styles.desciptionBox}>
             <Text style={styles.emojiText}>{Header}</Text>
             <Text style={styles.subjectText}>{happyDesciption}</Text>
-            <Text style={styles.voucherValue}>RM 2</Text>
-            <Text style={styles.restaurantText}>State Cafe Voucher!</Text>
+            <Text style={styles.voucherValue}>{message == null ? " " : message.amount}</Text>
+            <Text style={styles.restaurantText}>
+              {message == null ? " " : message.merchant[0].businessName + " "} Voucher!
+            </Text>
           </View>
           {rewardOnceThanOneOption != true ? (
             <TouchableOpacity style={styles.redeemNowBox}>
-              <Text style={styles.redeemNowText}>hello</Text>
+              <Text style={styles.redeemNowText}>Redeem</Text>
             </TouchableOpacity>
           ) : (
             <View style={styles.doubleOption}>
