@@ -1,9 +1,9 @@
 {
   "expoServerPort": 19000,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://rj-us6.huihannn.chillibuddy-mobile-application.exp.direct",
+  "packagerNgrokUrl": "https://packager.rj-us6.huihannn.chillibuddy-mobile-application.exp.direct",
+  "ngrokPid": 99420,
   "devToolsPort": 19002,
   "packagerPort": 19001,
-  "packagerPid": 95474
+  "packagerPid": 99393
 }

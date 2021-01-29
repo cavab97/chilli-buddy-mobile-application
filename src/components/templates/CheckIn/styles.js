@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
   },
   touchContainer: {
     borderRadius: 15,
+    position: "absolute",
+    bottom: 0,
   },
   Days: {
     fontSize: 15,

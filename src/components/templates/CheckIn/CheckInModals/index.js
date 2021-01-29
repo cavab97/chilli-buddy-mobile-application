@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./styles";
-import { Text, Overlay, TouchableOpacity, View, Image } from "../../../atoms";
+import { Text, Overlay, View, Image } from "../../../atoms";
+import { TouchableHighlight, TouchableOpacity, TouchableNativeFeedback } from "react-native";
+
 import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -21,8 +23,8 @@ const CheckInModal = ({
   return (
     <Overlay
       isVisible={isVisible}
-      width="60%"
-      height="60%"
+      width="65%"
+      height="70%"
       overlayBackgroundColor={"white"}
       overlayStyle={styles.containerOverlay}
     >
