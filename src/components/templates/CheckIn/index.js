@@ -9,7 +9,6 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { CheckInButton } from "../../molecules";
 
 import styles from "./styles";
-import { SignoutButton } from "../../../components/molecules";
 import { CheckInModal, CheckInModalError } from "@components/templates";
 
 import {
@@ -149,7 +148,7 @@ function Grid({
                   style={styles.touchContainer2}
                   onPress={() => onPressCheckIn(item)}
                   disabled={
-                    twoOneDays
+                    !voucher
                       ? (item.checked == false || item.checked) && checkInRecordLength !== item.id
                       : item.id == 24
                       ? voucher && item.id != 24
@@ -184,7 +183,7 @@ function Grid({
           </View>
         )}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingBottom: 25 }} 
+        contentContainerStyle={{ paddingBottom: 25 }}
       />
     </View>
   );
@@ -206,7 +205,9 @@ const CheckIn = ({
   catchCondition,
   checkInData,
   onPressCancel,
-  time
+  time,
+  onPressRedeemNow,
+  redeemed,
 }) => {
   /* if (readLoading) {
     return (
@@ -223,7 +224,6 @@ const CheckIn = ({
       </View>
     )
   } */
-  
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -237,6 +237,10 @@ const CheckIn = ({
             message={messageSuccess}
             rewardOnceThanOneOption={rewardOnceThanOneOption}
             onPressCancel={onPressCancel}
+            timeUps={!redeemed ? catchCondition : redeemed}
+            readLoading={readLoading}
+            onPressRedeemNow={onPressRedeemNow}
+            redeemed={redeemed}
           />
         ) : (
           <CheckInModal
@@ -248,6 +252,10 @@ const CheckIn = ({
             rewardOnceThanOneOption={rewardOnceThanOneOption}
             message={messageSuccess}
             onPressCancel={onPressCancel}
+            timeUps={!redeemed ? catchCondition : redeemed || catchCondition}
+            readLoading={readLoading}
+            onPressRedeemNow={onPressRedeemNow}
+            redeemed={redeemed}
           />
         )
       ) : (
@@ -256,6 +264,7 @@ const CheckIn = ({
           isVisible={isVisible}
           onClose={onCLose}
           message={message}
+          readLoading={readLoading}
         />
       )}
       {(console.log("catchCondition"), console.log(catchCondition))}

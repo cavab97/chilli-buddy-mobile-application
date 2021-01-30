@@ -1,39 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import * as Location from "expo-location";
-
 import { submitToBackend, readFromDatabase } from "@redux/voucher/action";
-
 import styles from "./styles";
-
-import { Image, Text, TouchableOpacity, View } from "@components/atoms";
-
+import { Text, View } from "@components/atoms";
 import { Card, CardSection } from "@components/molecules";
-
 import { VoucherList } from "@components/templates";
-
 import Icon from "react-native-vector-icons/FontAwesome";
-import moment from "moment";
-
 const RADIUS = 50;
-
 class index extends Component {
   constructor(props) {
     super(props);
     this.renderFooter = this.renderFooter.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
   }
-
   componentDidMount() {
     this.props.readFromDatabase();
     this.handleRefresh();
-  };
-
+  }
   handleRefresh = async () => {
     await this.props.readFromDatabase();
   };
-
   renderFooter({ empty }) {
     if (empty) {
       return Platform.OS === "ios" ? (
@@ -55,18 +42,14 @@ class index extends Component {
       return <View style={{ marginBottom: 10 }} />;
     }
   }
-
   onVoucherPressed(item) {
     Actions.SingleVoucher({
       voucherID: item.id,
+      merchantName: item.merchant[0].businessName,
     });
   }
-
   render() {
-    // const readBookmark = this.props.bookmarkState.readBookmark;
-    // const submitLoading = this.props.bookmarkState.submitLoading;
     const vouchers = this.props.vouchers;
-
     return (
       <VoucherList
         readLoading={this.props.readLoading}
@@ -78,7 +61,6 @@ class index extends Component {
     );
   }
 }
-
 const mapStateToProps = (state) => {
   const { categories, tags } = state.Settings;
   const { vouchers } = state.Voucher;
@@ -86,7 +68,6 @@ const mapStateToProps = (state) => {
 
   return { categories, tags, vouchers, readLoading };
 };
-
 export default connect(mapStateToProps, {
   submitToBackend,
   readFromDatabase,

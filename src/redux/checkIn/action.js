@@ -18,6 +18,10 @@ const actions = {
   SUBMIT_CANCEL_SUCCESS: type + "SUBMIT_CANCEL_SUCCESS",
   SUBMIT_CANCEL_ERROR: type + "SUBMIT_CANCEL_ERROR",
 
+  SUBMIT_CLAIM: type + "SUBMIT_CLAIM",
+  SUBMIT_CLAIM_SUCCESS: type + "SUBMIT_CLAIM_SUCCESS",
+  SUBMIT_CLAIM_ERROR: type + "SUBMIT_CLAIM_ERROR",
+
   UPLOAD_TO_STORAGE: type + "UPLOAD_TO_STORAGE",
   UPLOAD_TO_STORAGE_SUCCESS: type + "UPLOAD_TO_STORAGE_SUCCESS",
   UPLOAD_TO_STORAGE_ERROR: type + "UPLOAD_TO_STORAGE_ERROR",
@@ -117,7 +121,6 @@ export function submitCancel(data, actionName) {
       };
 
       try {
-
         result = await checkInBackendServices.cancel({ data });
 
         resolve(result);
@@ -130,6 +133,38 @@ export function submitCancel(data, actionName) {
         reject(error);
         dispatch({
           type: actions.SUBMIT_CANCEL_ERROR,
+          payload: { error },
+        });
+      }
+    });
+  };
+}
+
+export function claim(data, actionName) {
+  return (dispatch, getState) => {
+    dispatch({ type: actions.SUBMIT_CLAIM });
+    return new Promise(async (resolve, reject) => {
+      let result = {};
+      const { voucherIds, id } = data;
+
+      data = {
+        voucherIds: voucherIds,
+        id: id,
+      };
+
+      try {
+        result = await checkInBackendServices.claim({ data });
+
+        resolve(result);
+        dispatch({
+          type: actions.SUBMIT_CLAIM_SUCCESS,
+          payload: { data: result },
+        });
+      } catch (error) {
+        console.log(error);
+        reject(error);
+        dispatch({
+          type: actions.SUBMIT_CLAIM_ERROR,
           payload: { error },
         });
       }

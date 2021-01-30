@@ -34,7 +34,7 @@ export function update({ data }) {
       id,
       userIds,
     };
-    
+
     data = backend.processData({ data });
 
     backend
@@ -56,7 +56,30 @@ export function cancel({ data }) {
 
     data = {
       voucherIds,
-      id
+      id,
+    };
+    data = backend.processData({ data });
+    backend
+      .callApi({ apiName, data })
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((error) => {
+        console.log("error: " + JSON.stringify(error));
+        reject(error);
+      });
+  });
+}
+
+export function claim({ data }) {
+  return new Promise((resolve, reject) => {
+    const apiName = `http${objectName}Claim`;
+
+    const { voucherIds, id } = data;
+
+    data = {
+      voucherIds,
+      id,
     };
     data = backend.processData({ data });
     backend

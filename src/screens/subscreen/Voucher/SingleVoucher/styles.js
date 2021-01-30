@@ -31,6 +31,13 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 250,
   },
+  container: {
+    flex: 1,
+    display: "flex",
+    marginTop: 10,
+    marginHorizontal: 15,
+    paddingVertical: 5,
+  },
   actionDotStyle: {
     // backgroundColor: '#ffffff',
     width: 6,

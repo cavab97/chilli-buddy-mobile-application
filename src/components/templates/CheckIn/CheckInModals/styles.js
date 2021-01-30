@@ -17,6 +17,12 @@ const styles = StyleSheet.create({
     marginVertical: 0,
     bottom: 120,
   },
+  contentContainer2: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 0,
+    bottom: 0,
+  },
 
   text: {
     color: "#fff",
@@ -32,10 +38,14 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 40,
   },
 
-  ///icon view
+  // ///icon view
   closeIcon: {
+    shadowOffset: { width: 0, height: 1 },
+  },
+  //icon error view
+  closeIcon2: {
     position: "absolute",
-    bottom: Dimensions.get('window').width * 1.14,
+    bottom: Platform.OS === "ios" ? 370 : 330,
     right: -54,
     // backgroundColor: "red",
     resizeMode: "contain",
@@ -212,6 +222,13 @@ const styles = StyleSheet.create({
   },
   bottomTextBox: {
     width: size / 2.65,
+  },
+  container: {
+    flex: 1,
+    display: "flex",
+    marginTop: 10,
+    marginHorizontal: 15,
+    paddingVertical: 5,
   },
 });
 

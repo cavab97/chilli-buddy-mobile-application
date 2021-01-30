@@ -199,7 +199,7 @@ const reducer = (state = initialState, { type, payload }) => {
         submitResult: initialState.submitResult,
         modalVisible: true,
       };
-    
+
     case actions.SUBMIT_CANCEL:
       return {
         ...state,
@@ -224,6 +224,33 @@ const reducer = (state = initialState, { type, payload }) => {
         submitError: payload.error,
         submitResult: initialState.submitResult,
         modalVisible: true,
+      };
+
+    case actions.SUBMIT_CLAIM:
+      return {
+        ...state,
+        submitLoading: true,
+        submitError: initialState.submitError,
+        submitResult: initialState.submitResult,
+        // modalVisible: false,
+      };
+
+    case actions.SUBMIT_CLAIM_SUCCESS:
+      return {
+        ...state,
+        submitLoading: true,
+        submitError: initialState.submitError,
+        submitResult: initialState.submitResult,
+        // modalVisible: false,
+      };
+
+    case actions.SUBMIT_CLAIM_ERROR:
+      return {
+        ...state,
+        submitLoading: true,
+        submitError: initialState.submitError,
+        submitResult: initialState.submitResult,
+        // modalVisible: false,
       };
 
     case actions.TOGGLE_MODAL:

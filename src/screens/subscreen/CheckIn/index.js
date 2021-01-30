@@ -1,22 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Dimensions, View, Text } from "react-native";
+import ContentLoader, { Rect } from "react-content-loader/native";
+
 import {
   submitToBackend,
   readFromDatabase,
   toggleModal,
   submitCancel,
+  claim,
 } from "@redux/checkIn/action";
 import moment from "moment";
+import styles from "./styles";
+
+import { ActivityIndicator, ScrollView } from "../../../components/atoms";
 
 import { CheckIn, CheckInModal } from "@components/templates";
 
 const RADIUS = 50;
+const { height } = Dimensions.get("window");
+
 const NUM = 7;
-
-import styles from "./styles";
-
-import { Actions } from "react-native-router-flux";
-
 class index extends Component {
   constructor(props) {
     super(props);
@@ -38,11 +42,6 @@ class index extends Component {
   }
 
   async componentDidMount() {
-    // this.props.toggleModal();
-
-    // this.table24();
-    // this.props.toggleModal();
-
     await this.props.readFromDatabase();
     await this.table24();
     /* this.intervalID = setInterval(
@@ -112,6 +111,7 @@ class index extends Component {
           // reward: checkInRecord[i - k].checked == true ? true : false,
           submitLoading: false,
           time: checkInRecord.date,
+          // reward: checkInRecord[i - k].claim,
         });
       }
     }
@@ -176,6 +176,7 @@ class index extends Component {
     const { checkIn } = this.props.checkInState;
 
     const { checkInRecord } = this.props.checkInState.checkIn;
+
     let countDownOneHour;
     if (checkIn.voucher.assignedDate.at != null) {
       countDownOneHour =
@@ -198,13 +199,45 @@ class index extends Component {
       return true;
     }
   }
+  catchConditionModal() {
+    const { checkIn } = this.props.checkInState;
+
+    let countDownOneHour;
+    if (checkIn.voucher.assignedDate.at != null) {
+      countDownOneHour =
+        (new Date() - new Date(checkIn.voucher.assignedDate.at.seconds * 1000)) / 60000;
+    } else {
+      countDownOneHour = 0;
+    }
+    if (countDownOneHour < 60) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   onClose = () => {
     this.props.toggleModal();
   };
 
-  onPressCancel = () => {
+  onPressRedeemNow = () => {
+    this.props.toggleModal();
+
     console.log("i am pressed");
+    let data;
+    const id = this.props.checkIn.id;
+    const voucherIds = this.props.checkIn.voucherIds;
+    data = {
+      id,
+      voucherIds,
+    };
+
+    this.props.claim(data);
+  };
+
+  onPressCancel = async () => {
+    await this.props.toggleModal();
+
     let data;
     const id = this.props.checkIn.id;
     const voucherIds = this.props.checkIn.voucherIds;
@@ -240,22 +273,33 @@ class index extends Component {
       this.props.submitToBackend(data, "create");
     } else {
       // this.props.toggleModal();
-
       if (
         (cloundFunction == "Voucher" || voucherID !== null) &&
         (item.value == 21 || item.value == 28)
       ) {
         this.props.toggleModal();
+
+        // // if (item.value == 21 || item.value == 28) {
+        // if (cloundFunction == "Voucher") {
+        //   // setTimeout(() => {
+        //   //   this.props.toggleModal();
+        //   // }, 2000);
+        //   this.props.toggleModal();
+        // } else if (item.value == 21 || item.value == 28) {
+        //   this.props.toggleModal();
+        // }
+      } else if (item.value == 21 || item.value == 28) {
+        if ((cloundFunction != "Voucher" || voucherID == null) && item.value == 28) {
+          this.props.submitToBackend(data, "update");
+          this.props.toggleModal();
+        } else if ((cloundFunction != "Voucher" || voucherID == null) && item.value == 21) {
+          this.props.submitToBackend(data, "update");
+          this.props.toggleModal();
+        }
       } else {
         this.props.submitToBackend(data, "update");
-        // if (item.value == 21 || item.value == 28) {
-        if (cloundFunction == "Voucher") {
-          setTimeout(() => {
-            this.props.toggleModal();
-          }, 2000);
-        }
-        // }
       }
+      // }
     }
   };
 
@@ -307,6 +351,28 @@ class index extends Component {
     //   }
     // }
 
+    // console.log(checkInRecord[2] == undefined);
+
+    // this.props.checkInState.submitResult.message != null
+    //   ? this.props.checkInState.submitResult.message
+    //   : checkIn.voucher != null
+    //   ? checkIn.voucher
+    //   : null;
+    // console.log(checkInRecord[20].claim);
+    // console.log("checkInRecord[20].claim");
+
+    // console.log(this.props.checkInState.submitResult.message);
+    // console.log("checkInRecord[21].claim");
+
+    // console.log(checkIn.voucher.merchant.businessName);
+    //undefined
+
+    // try {
+    //   console.log(checkInRecord[20] != undefined);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
     switch (checkInRecord !== undefined) {
       case checkInRecord.length < 3:
         y = 1;
@@ -338,38 +404,61 @@ class index extends Component {
       // console.log(this.props.checkInState.submitResult);
       // console.log(this.props.checkInState.submitResult.message);
     }
-    return (
-      <CheckIn
-        data={tableData24}
-        checkInData={checkIn}
-        onPressCheckIn={this.onPressCheckIn.bind(this)}
-        submitLoading={submitLoading}
-        // checkInRecord.length === 21 ? true : false
-        rewardOnceThanOneOption={checkInRecord.length <= 21 ? true : false}
-        happy={
-          checkIn.voucher.id !== null ||
-          this.props.checkInState.submitResult.objectName == "Voucher"
-            ? true
-            : false
-        }
-        message={this.props.checkInState.submitError.message}
-        messageSuccess={
-          this.props.checkInState.submitResult.message != null
-            ? this.props.checkInState.submitResult.message
-            : checkIn.voucher != null
-            ? checkIn.voucher
-            : null
-        }
-        isVisible={modalVisible}
-        time={this.state.time}
-        readLoading={readLoading}
-        onCLose={this.onClose.bind(this)}
-        checkInRecordLength={checkInRecord === undefined ? 0 : checkInRecord.length + y}
-        checkInRecordLengths={checkInRecord === undefined ? console.log(" ") : checkInRecord.length}
-        catchCondition={this.catchCondition()}
-        onPressCancel={this.onPressCancel.bind(this)}
-      />
-    );
+
+    if (readLoading) {
+      return (
+        <ScrollView>
+          <View style={styles.container}>
+            <ContentLoader speed={1} width={"100%"} height={height} backgroundColor="#d9d9d9">
+              <Rect x="60%" y="0" rx="5" ry="5" width="40%" height="20" />
+              <Rect x="0" y="40" rx="5" ry="5" width="100%" height="200" />
+              <Rect x="0" y="250" rx="5" ry="5" width="50%" height="20" />
+              <Rect x="0" y="275" rx="5" ry="5" width="50%" height="20" />
+              <Rect x="0" y="320" rx="5" ry="5" width="100%" height={height} />
+            </ContentLoader>
+          </View>
+        </ScrollView>
+      );
+    } else {
+      return (
+        <CheckIn
+          data={tableData24}
+          checkInData={checkIn}
+          onPressCheckIn={this.onPressCheckIn.bind(this)}
+          submitLoading={submitLoading}
+          // checkInRecord.length === 21 ? true : false
+          rewardOnceThanOneOption={checkInRecord.length <= 21 ? true : false}
+          happy={
+            checkIn.voucher.id !== null ||
+            this.props.checkInState.submitResult.objectName == "Voucher"
+              ? true
+              : false
+          }
+          message={this.props.checkInState.submitError.message}
+          messageSuccess={checkIn.voucher.id !== null ? checkIn.voucher : null}
+          isVisible={modalVisible}
+          time={this.state.time}
+          readLoading={readLoading}
+          onCLose={this.onClose.bind(this)}
+          checkInRecordLength={checkInRecord === undefined ? 0 : checkInRecord.length + y}
+          checkInRecordLengths={
+            checkInRecord === undefined ? console.log(" ") : checkInRecord.length
+          }
+          catchCondition={this.catchCondition()}
+          onPressCancel={this.onPressCancel.bind(this)}
+          catchConditionModal={this.catchConditionModal()}
+          readLoading={readLoading}
+          onPressRedeemNow={this.onPressRedeemNow.bind(this)}
+          redeemed={
+            checkInRecord.length == 21
+              ? checkInRecord[20].claim
+              : checkInRecord.length == 28
+              ? checkInRecord[27].claim
+              : false
+          }
+        />
+      );
+    }
   }
 }
 
@@ -396,4 +485,5 @@ export default connect(mapStateToProps, {
   readFromDatabase,
   toggleModal,
   submitCancel,
+  claim,
 })(index);
