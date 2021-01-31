@@ -2,8 +2,13 @@ import actions from "./action";
 
 const initialState = {
   submitLoading: false,
+
+  readInitialLoading: false,
+  readInitialError: false,
+
   readLoading: false,
   readError: false,
+  
   modalVisible: false,
   submitError: {
     code: null,
@@ -153,6 +158,27 @@ const initialState = {
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case actions.READ_FROM_DATABASE_INITIAL:
+      return {
+        ...state,
+        readInitialLoading: true,
+        readInitialError: initialState.readError,
+      };
+
+    case actions.READ_FROM_DATABASE_INITIAL_SUCCESS:
+      return {
+        ...state,
+        readInitialLoading: initialState.readLoading,
+        checkIn: payload.data[0] ? payload.data[0] : initialState.checkIn,
+      };
+
+    case actions.READ_FROM_DATABASE_INITIAL_ERROR:
+      return {
+        ...state,
+        readInitialLoading: initialState.readLoading,
+        readInitialError: payload.error,
+      };
+
     case actions.READ_FROM_DATABASE:
       return {
         ...state,

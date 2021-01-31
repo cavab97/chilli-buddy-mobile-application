@@ -9,11 +9,12 @@ import {
   toggleModal,
   submitCancel,
   claim,
+  readFromDatabaseInitial
 } from "@redux/checkIn/action";
 import moment from "moment";
 import styles from "./styles";
 
-import { ActivityIndicator, ScrollView } from "../../../components/atoms";
+import { ActivityIndicator } from "../../../components/atoms";
 
 import { CheckIn, CheckInModal } from "@components/templates";
 
@@ -44,10 +45,10 @@ class index extends Component {
   async componentDidMount() {
     await this.props.readFromDatabase();
     await this.table24();
-    /* this.intervalID = setInterval(
+    this.intervalID = setInterval(
       () => this.tick(),
       1000
-    ); */
+    );
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -137,8 +138,10 @@ class index extends Component {
     this.setState({ tableData24: temp });
   };
 
-  /* tick() {
+  tick() {
     const { checkIn } = this.props.checkInState;
+
+    console.log('tickeing')
 
     if (checkIn.resetDate !== undefined && checkIn.created.at !== undefined||
       checkIn.resetDate === null && checkIn.created.at !== null) 
@@ -146,6 +149,10 @@ class index extends Component {
       let day = moment(checkIn.resetDate).diff(checkIn.created.at,'days');
       let hour = moment(checkIn.resetDate).diff(checkIn.created.at, "hours");
       let seconds = moment(checkIn.resetDate).diff(checkIn.created.at, "minutes");
+
+      console.log(day)
+      console.log(hour)
+      console.log(seconds)
 
       if (day !== 0) {
         this.setState({
@@ -160,9 +167,11 @@ class index extends Component {
           time: seconds + " seconds"
         });
       }
+
+      console.log(this.state.day)
       
     } 
-  } */
+  } 
 
   componentWillMount() {
     this.table24();
@@ -307,9 +316,12 @@ class index extends Component {
     let y = 1;
     const { tableData24, focusId } = this.state;
     const { submitLoading } = this.props;
-    const { checkIn, readLoading, modalVisible } = this.props.checkInState;
-
-    //console.log(checkIn.id);
+    const { 
+      checkIn, 
+      readLoading, 
+      modalVisible,
+      readInitialLoading
+    } = this.props.checkInState;
 
     const { checkInRecord } = this.props.checkInState.checkIn;
     /*if (checkIn.voucher.assignedDate.at == null) {
@@ -395,31 +407,7 @@ class index extends Component {
         break;
     }
 
-    if (this.props.checkInState.submitResult.objectName == "Voucher") {
-      console.log("here");
-      // console.log(this.props.checkInState.submitResult.message.merchant[0].businessName);
-      // console.log(this.props.checkInState.submitResult.message.amount);
-    } else {
-      console.log("not here");
-      // console.log(this.props.checkInState.submitResult);
-      // console.log(this.props.checkInState.submitResult.message);
-    }
-
-    if (readLoading) {
-      return (
-        <ScrollView>
-          <View style={styles.container}>
-            <ContentLoader speed={1} width={"100%"} height={height} backgroundColor="#d9d9d9">
-              <Rect x="60%" y="0" rx="5" ry="5" width="40%" height="20" />
-              <Rect x="0" y="40" rx="5" ry="5" width="100%" height="200" />
-              <Rect x="0" y="250" rx="5" ry="5" width="50%" height="20" />
-              <Rect x="0" y="275" rx="5" ry="5" width="50%" height="20" />
-              <Rect x="0" y="320" rx="5" ry="5" width="100%" height={height} />
-            </ContentLoader>
-          </View>
-        </ScrollView>
-      );
-    } else {
+    
       return (
         <CheckIn
           data={tableData24}
@@ -444,6 +432,7 @@ class index extends Component {
           checkInRecordLengths={
             checkInRecord === undefined ? console.log(" ") : checkInRecord.length
           }
+          readInitialLoading={readInitialLoading}
           catchCondition={this.catchCondition()}
           onPressCancel={this.onPressCancel.bind(this)}
           catchConditionModal={this.catchConditionModal()}
@@ -458,7 +447,6 @@ class index extends Component {
           }
         />
       );
-    }
   }
 }
 
@@ -483,7 +471,8 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   submitToBackend,
   readFromDatabase,
-  toggleModal,
+  toggleModal, 
   submitCancel,
   claim,
+  readFromDatabaseInitial
 })(index);

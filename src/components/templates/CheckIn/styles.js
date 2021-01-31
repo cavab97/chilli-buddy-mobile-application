@@ -8,6 +8,13 @@ const size1w = Dimensions.get("window").width * 0.4;
 const size1h = Dimensions.get("window").width * 0.43;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    display: 'flex',
+    marginTop: 10,
+    marginHorizontal: 15,
+    paddingVertical: 5
+  },
   viewPanel: {
     paddingLeft: 15,
     paddingRight: 15,

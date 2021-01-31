@@ -1,10 +1,10 @@
 {
   "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://5p-p92.calyn.chilli-buddy-mobile-application.exp.direct",
-  "packagerNgrokUrl": "https://packager.5p-p92.calyn.chilli-buddy-mobile-application.exp.direct",
-  "ngrokPid": 21226,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "devToolsPort": 19002,
   "packagerPort": 19001,
-  "packagerPid": 21013,
+  "packagerPid": 33301,
   "webpackServerPort": null
 }
