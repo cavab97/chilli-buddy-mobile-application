@@ -254,9 +254,9 @@ const reducer = (state = initialState, { type, payload }) => {
       };
 
     case actions.TOGGLE_MODAL:
-      console.log("!state.modalVisible");
+/*       console.log("!state.modalVisible");
 
-      console.log(!state.modalVisible);
+      console.log(!state.modalVisible); */
       return {
         ...state,
         modalVisible: !state.modalVisible,

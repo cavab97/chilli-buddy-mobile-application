@@ -155,10 +155,6 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Scene key="Amount" component={Amount} hideNavBar />
       </Stack>
 
-      <Stack key="CheckIn" back>
-        <Scene key="CheckIn" component={CheckIn}/>
-      </Stack>
-
       <Stack key="PaymentDetail" back>
         <Scene
           key="PaymentDetail"
@@ -272,7 +268,12 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="CheckIn" back>
-        <Scene key="CheckIn" component={CheckIn} titleStyle={styles.title} />
+        <Scene 
+          key="CheckIn" 
+          component={CheckIn} 
+          titleStyle={styles.title} 
+          navigationBarStyle = {{ borderBottomColor: 'transparent', elevation: 0 }}
+        />
       </Stack>
 
       <Stack key="Voucher" back>
@@ -280,7 +281,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           component={Voucher} 
           //title="Vouchers" 
           titleStyle={styles.title} 
-          
+          navigationBarStyle = {{ borderBottomColor: 'transparent', elevation: 0 }}
         />
       </Stack>
 
@@ -298,7 +299,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Scene
           key="SingleVoucherRedeem"
           component={SingleVoucherRedeem}
-          title="SingleVoucherRedeem"
+          title="Scan Merchant QR Code"
           titleStyle={styles.title}
         />
       </Stack>
@@ -306,7 +307,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Scene
           key="RedeemedVoucherScreen"
           component={RedeemedVoucherScreen}
-          title="RedeemedVoucherScreen"
+          title="Redeem Voucher"
           titleStyle={styles.title}
         />
       </Stack>
