@@ -158,7 +158,7 @@ const VoucherList = ({
             amount={item.amount}
             expiredDate={item.expiredDate}
             merchantName={item.merchant[0].businessName}
-            status={item.claim}
+            status={item.claimed}
             image={item.merchant ? item.merchant[0].logo[0] : null}
           />
         )}

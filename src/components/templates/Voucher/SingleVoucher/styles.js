@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 30,
     fontWeight: "bold",
+    fontFamily: "HorizontalRounded",
   },
 
   actionDotStyle: {
@@ -97,11 +98,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     fontWeight: "bold",
+    fontFamily: "HorizontalRounded",
   },
   subTitle: {
     fontSize: 18,
     fontWeight: "600",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginTop: 30,
   },
   detail: {
@@ -134,6 +136,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingLeft: 20,
     fontWeight: "bold",
+    fontFamily: "HorizontalRounded",
   },
   postContainer: {
     width: "100%",
@@ -169,8 +172,7 @@ const styles = StyleSheet.create({
   },
   singlePostTitle: {
     fontSize: 18,
-    fontWeight: "bold",
-    fontFamily: Typography.FONT_FAMILY_BOLD,
+    fontFamily: "HorizontalRounded",
     paddingBottom: 10,
   },
   singlePostDescription: {
@@ -216,7 +218,7 @@ const styles = StyleSheet.create({
   promoteTitleTextStyle: {
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginBottom: 7,
     marginTop: 5,
     marginLeft: 10,
@@ -226,7 +228,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 25,
     fontWeight: "700",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginTop: "5%",
     marginBottom: 8,
     marginLeft: 22,
@@ -279,7 +281,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     fontSize: 18,
-    fontFamily: "RobotoBold",
+    fontFamily: "HorizontalRounded",
   },
 
   columnTwoText: {
@@ -287,7 +289,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "black",
     fontSize: Platform.isPad ? 25 : 15,
-    fontFamily: "RobotoBold",
+    fontFamily: "HorizontalRounded",
     justifyContent: "center",
     textAlign: "left",
   },
@@ -350,10 +352,12 @@ const styles = StyleSheet.create({
   statusActiveText: {
     textTransform: "uppercase",
     color: Colors.SUCCESS,
+    fontFamily: "HorizontalRounded",
   },
   statusDeactiveText: {
     textTransform: "uppercase",
     color: Colors.PRIMARY,
+    fontFamily: "HorizontalRounded",
   },
 
   // QR IMage

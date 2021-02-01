@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#f18a22",
     alignSelf: "flex-end",
+    fontFamily: "HorizontalRounded",
   },
   container: {
     paddingBottom: 8,
@@ -46,20 +47,20 @@ const styles = StyleSheet.create({
   userTitle: {
     //justifyContent: "flex-start",
     fontSize: 21,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     color: "#000",
     marginRight: 8,
     marginTop: 15,
   },
   userDesc: {
     fontSize: 14,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginVertical: 2,
     color: "#000",
   },
   titleButton: {
     color: "#ffffff",
-    fontFamily: "RobotoMedium",
+    fontFamily: "HorizontalRounded",
     fontSize: 12,
   },
   editButton: {
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   },
   editProfileText: {
     fontSize: 12,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     color: "#FFF",
   },
   editProfileTextContainer: {
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
   },
   navFontStyle: {
     marginVertical: 6,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
   },
   btmContainer: {
     flex: 1,

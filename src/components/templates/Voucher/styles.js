@@ -18,14 +18,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     fontSize: 18,
-    fontFamily: "RobotoBold",
+    fontFamily: "HorizontalRounded",
   },
   columnTwoText: {
     textTransform: "uppercase",
     fontWeight: "bold",
     color: "black",
     fontSize: Platform.isPad ? 25 : 15,
-    fontFamily: "RobotoBold",
+    fontFamily: "HorizontalRounded",
     justifyContent: "center",
     textAlign: "left",
     resizeMode: "contain",
@@ -236,17 +236,18 @@ const styles = StyleSheet.create({
   },
   salesPointText: {
     fontSize: Platform.isPad ? 50 : 20,
+    fontFamily: "HorizontalRounded",
   },
   VoucherListTitle: {
     color: "#D81212",
     fontSize: 40,
     padding: 10,
-    fontWeight: "bold",
-    fontFamily: "RobotoBold",
+    fontFamily: "HorizontalRounded",
   },
   termNconditionText: {
     color: "grey",
     fontSize: 10,
+    fontFamily: "HorizontalRounded",
   },
   usedBanner: {
     backgroundColor: "grey",
@@ -273,10 +274,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     zIndex: 2,
     opacity: 1,
-    fontSize: 30,
-    top: 70,
+    fontSize: 24,
+    top: 75,
     right: 10,
     textAlign: "right",
+    fontFamily: "HorizontalRounded",
   },
 
   ///Used Banner

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
   },
 
   ///Whole Container
@@ -117,24 +117,23 @@ const styles = StyleSheet.create({
   },
   redeemNowText: {
     color: "#D81212",
-    fontWeight: "bold",
-
+    fontFamily: "HorizontalRounded",
     textAlign: "center",
   },
   emojiText: {
     fontSize: size / 15,
     color: "#D81212",
-    fontWeight: "bold",
     marginHorizontal: 0,
     textAlign: "center",
+    fontFamily: "HorizontalRounded",
     bottom: 0,
     paddingBottom: 5,
   },
   emojiText2: {
     fontSize: size / 17,
     color: "black",
-    fontWeight: "bold",
     marginHorizontal: 0,
+    fontFamily: "HorizontalRounded",
     textAlign: "center",
     bottom: 0,
     paddingBottom: 0,
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
   subjectText: {
     fontSize: size / 25,
     color: "black",
-    fontWeight: "bold",
+    fontFamily: "HorizontalRounded",
     marginHorizontal: 0,
     textAlign: "center",
     bottom: 0,
@@ -151,7 +150,7 @@ const styles = StyleSheet.create({
   subjectText2: {
     fontSize: size / 25,
     color: "black",
-    fontWeight: "bold",
+    fontFamily: "HorizontalRounded",
     marginHorizontal: 0,
     textAlign: "center",
     bottom: 0,
@@ -173,7 +172,7 @@ const styles = StyleSheet.create({
   voucherValue: {
     fontSize: size / 13,
     color: "black",
-    fontWeight: "bold",
+    fontFamily: "HorizontalRounded",
     marginHorizontal: 0,
     textAlign: "center",
     bottom: 0,
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
   restaurantText: {
     color: "black",
     fontSize: size / 20,
-    fontWeight: "bold",
+    fontFamily: "HorizontalRounded",
     textAlign: "center",
   },
   doubleOption: {

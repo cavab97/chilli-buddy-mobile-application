@@ -331,6 +331,13 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     textAlign: "center",
   },
+  floatingCheckInTitle: {
+    fontSize: 9,
+    fontFamily: "HorizontalRounded",
+    color: "white",
+    paddingTop: 4,
+    textAlign: "center",
+  },
   floatingShopButton: {
     borderWidth: 1,
     borderColor: "rgba(0,0,0,0.2)",

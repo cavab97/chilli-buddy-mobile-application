@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     textAlign: "center",
+    fontFamily: "HorizontalRounded",
   },
 
   ///days 7
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "white",
     width: "80%",
-    height: Platform.OS === "ios" ? 100 : Platform.isPad ? "95%" : "90%",
+    height: Platform.OS === "ios" ? "85%" : Platform.isPad ? "95%" : "90%",
     top: Platform.OS === "ios" ? 0 : Platform.isPad ? 10 : -10,
   },
   checkInBoxWhite2: {
@@ -210,21 +211,21 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     color: "#D81212",
-    fontFamily: "MyriadRegular",
+    fontFamily: "HorizontalRounded",
 
     // fontFamily: "Cochin",
   },
   checkInSubTitle: {
     fontSize: 17,
     marginTop: 10,
-    fontFamily: "MyriadRegular",
+    fontFamily: "HorizontalRounded",
   },
   checkInSubRefreshing: {
     paddingTop: 15,
     paddingBottom: 15,
     fontSize: 15,
     color: "grey",
-    fontFamily: "MyriadRegular",
+    fontFamily: "HorizontalRounded",
   },
   CheckInTextContainer: {
     paddingLeft: 15,
