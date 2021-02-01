@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   redeemImageStyle: {
     width: "50%",
     height: "75%",
+    resizeMode: "contain",
   },
   bodyContainerStyle: {
     flex: 1,
@@ -40,6 +41,19 @@ const styles = StyleSheet.create({
   },
   claimButtonText: {
     color: "#fff",
+  },
+  container: {
+    flex: 1,
+    display: "flex",
+    marginTop: 150,
+    marginHorizontal: 15,
+    paddingVertical: 5,
+  },
+  large: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
+    position: "absolute",
   },
 });
 

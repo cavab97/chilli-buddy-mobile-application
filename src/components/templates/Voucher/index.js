@@ -57,7 +57,7 @@ function Voucher({
           {/* <Text style={styles.columnTwoText}>Provide by {merchantName}</Text> */}
           <View style={styles.columnTwo}>
             <View style={styles.columnThree}>
-              <Text style={styles.columnTwoText}> {merchantName}</Text>
+              <Text style={styles.columnTwoText}>{merchantName}</Text>
               <Text style={styles.termNconditionText}>
                 {amount} Discount * with Terms & Conditions
               </Text>

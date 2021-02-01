@@ -221,7 +221,6 @@ const styles = StyleSheet.create({
   columnThree: {
     backgroundColor: "#fff",
     padding: 2,
-
     width: size / 2,
     bottom: 0,
     resizeMode: "contain",
