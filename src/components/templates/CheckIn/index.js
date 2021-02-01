@@ -282,7 +282,7 @@ const CheckIn = ({
                 rewardOnceThanOneOption={rewardOnceThanOneOption}
                 onPressCancel={onPressCancel}
                 timeUps={!redeemed ? catchCondition : redeemed}
-                readLoading={readLoading}
+                readLoading={readInitialLoading}
                 onPressRedeemNow={onPressRedeemNow}
                 redeemed={redeemed}
               />
@@ -297,7 +297,7 @@ const CheckIn = ({
                 message={messageSuccess}
                 onPressCancel={onPressCancel}
                 timeUps={!redeemed ? catchCondition : redeemed || catchCondition}
-                readLoading={readLoading}
+                readLoading={readInitialLoading}
                 onPressRedeemNow={onPressRedeemNow}
                 redeemed={redeemed}
               />
@@ -308,11 +308,10 @@ const CheckIn = ({
               isVisible={isVisible}
               onClose={onCLose}
               message={message}
-              readLoading={readLoading}
+              readLoading={readInitialLoading}
             />
           )}
-          {(console.log("catchCondition"), console.log(catchCondition))}
-
+          {/* {(console.log("catchCondition"), console.log(catchCondition))} */}
           <View style={styles.CheckinContainer}>
             <View style={styles.CheckInTextContainer}>
               <Text style={styles.checkInTitle}>Check-In</Text>

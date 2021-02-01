@@ -38,7 +38,7 @@ const actions = {
 
 export function readFromDatabaseInitial() {
   return (dispatch, getState) => {
-    dispatch({ type: actions.READ_FROM_DATABASE });
+    dispatch({ type: actions.READ_FROM_DATABASE_INITIAL });
     return new Promise(async (resolve, reject) => {
       try {
         const { uid } = getState().Auth.user;

@@ -39,16 +39,20 @@ class index extends Component {
       tableData4: [],
       focusId: "",
       y: 1,
+      days: null,
+      hours: null,
+      minutes: null,
+      seconds: null
     };
   }
 
   async componentDidMount() {
     await this.props.readFromDatabase();
     await this.table24();
-    this.intervalID = setInterval(
+    /* this.intervalID = setInterval(
       () => this.tick(),
       1000
-    );
+    ); */
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -75,7 +79,7 @@ class index extends Component {
         prevProps.checkInState.submitResult.message &&
       this.props.checkInState.submitResult.message
     ) {
-      await this.props.readFromDatabase();
+      await this.props.readFromDatabaseInitial();
       this.table24();
     }
   }
@@ -146,7 +150,15 @@ class index extends Component {
     {
       let day = moment(checkIn.resetDate).diff(checkIn.created.at,'days');
       let hour = moment(checkIn.resetDate).diff(checkIn.created.at, "hours");
-      let seconds = moment(checkIn.resetDate).diff(checkIn.created.at, "minutes");
+      let second = moment(checkIn.resetDate).diff(checkIn.created.at, "minutes");
+
+      const countdown = moment(checkIn.resetDate - checkIn.created.at);
+      const days = countdown.format('D');
+      const hours = countdown.format('HH');
+      const minutes = countdown.format('mm');
+      const seconds = countdown.format('ss');
+
+      this.setState({ days, hours, minutes, seconds });
 
       if (day !== 0) {
         this.setState({
@@ -169,7 +181,6 @@ class index extends Component {
 
   componentWillMount() {
     this.table24();
-
     // this.props.toggleModal();
 
     // this.setState({ myState: [] }); //this line must be removed
