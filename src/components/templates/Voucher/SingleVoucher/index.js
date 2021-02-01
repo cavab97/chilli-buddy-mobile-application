@@ -84,14 +84,14 @@ const SingleVoucher = ({
             <View style={styles.FirstRow}>
               {/* col */}
               <View style={styles.col}>
-                <Text>Valid from</Text>
+                <Text style={styles.textLabel}>Valid from</Text>
               </View>
               {/* col */}
               <View style={styles.col2}>
                 <Text style={styles.col2Text}>
                   {startDate == "AnyTime" || endDate == "AnyTime"
                     ? "AnyTime - AnyTime"
-                    : moment(startDate).format("DD/MM/YYYY")}{" "}
+                    : moment(startDate).format("DD/MM/YYYY")}{" - "}
                   {moment(endDate).format("DD/MM/YYYY")}
                   {}
                 </Text>
@@ -102,7 +102,7 @@ const SingleVoucher = ({
             <View style={styles.FirstRow}>
               {/* col */}
               <View style={styles.col}>
-                <Text>Description</Text>
+                <Text style={styles.textLabel}>Description</Text>
               </View>
               {/* col */}
               <View style={styles.col2}>
@@ -114,7 +114,7 @@ const SingleVoucher = ({
             <View style={styles.FirstRow}>
               {/* col */}
               <View style={styles.col}>
-                <Text>Terms & Condition</Text>
+                <Text style={styles.textLabel}>Terms & Condition</Text>
               </View>
               {/* col */}
               <View style={styles.col2}>

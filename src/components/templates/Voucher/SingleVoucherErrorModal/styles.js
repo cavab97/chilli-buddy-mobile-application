@@ -8,14 +8,15 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     marginHorizontal: 20,
     textAlign: "center",
+    fontFamily: "HorizontalRounded",
   },
   subjectText: {
     fontSize: 20,
     color: "white",
-    fontWeight: "bold",
     paddingTop: 20,
     marginHorizontal: 20,
     textAlign: "center",
+    fontFamily: "HorizontalRounded",
   },
   contentContainer: {
     justifyContent: "center",
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
   },
 });
 

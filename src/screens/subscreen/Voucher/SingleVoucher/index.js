@@ -147,7 +147,7 @@ class index extends Component {
             noImage={noImage}
             image={noImage}
             expiredDate={voucher.endDate}
-            tnc={voucher.tnc}
+            tnc={voucher.tnc === null ? 'No terms and condition found.' : voucher.tnc}
             merchantName={
               voucher.merchant.businessName == null
                 ? this.props.merchantName
@@ -157,7 +157,7 @@ class index extends Component {
             // voucher.merchant[0].businessName == undefined ? null : voucher.merchant[0].businessName
 
             // merchantName={voucher.vouchers[0].merchant[0].businessName}
-            description={voucher.description}
+            description={voucher.description === null ? 'No description found.' : voucher.description}
             status={voucherStatus}
             OpenCamPress={this.OpenCamPress.bind(this)}
             OnInvalidPress={this.OnInvalidPress.bind(this)}

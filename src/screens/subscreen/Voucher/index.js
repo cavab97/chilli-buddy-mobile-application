@@ -18,9 +18,11 @@ class index extends Component {
     this.props.readFromDatabase();
     this.handleRefresh();
   }
+
   handleRefresh = async () => {
     await this.props.readFromDatabase();
   };
+
   renderFooter({ empty }) {
     if (empty) {
       return Platform.OS === "ios" ? (
@@ -42,18 +44,33 @@ class index extends Component {
       return <View style={{ marginBottom: 10 }} />;
     }
   }
+  
   onVoucherPressed(item) {
     Actions.SingleVoucher({
       voucherID: item.id,
       merchantName: item.merchant[0].businessName,
     });
   }
+
   render() {
     const vouchers = this.props.vouchers;
+
+    let voucherList = [];
+
+    const filteredVoucherUsed = vouchers.filter( voucher => 
+      voucher.claimed === true
+    );
+    
+    const voucherAvailable = vouchers.filter( voucher => 
+      voucher.claimed === false
+    );
+
+    voucherList = voucherAvailable.concat(filteredVoucherUsed)
+
     return (
       <VoucherList
         readLoading={this.props.readLoading}
-        dataSource={vouchers}
+        dataSource={voucherList}
         renderFooter={this.renderFooter.bind(this)}
         onVoucherPressed={this.onVoucherPressed.bind(this)}
         handleRefresh={this.handleRefresh.bind(this)}
@@ -61,6 +78,7 @@ class index extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   const { categories, tags } = state.Settings;
   const { vouchers } = state.Voucher;
@@ -68,6 +86,7 @@ const mapStateToProps = (state) => {
 
   return { categories, tags, vouchers, readLoading };
 };
+
 export default connect(mapStateToProps, {
   submitToBackend,
   readFromDatabase,

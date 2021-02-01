@@ -57,7 +57,7 @@ function Voucher({
           {/* <Text style={styles.columnTwoText}>Provide by {merchantName}</Text> */}
           <View style={styles.columnTwo}>
             <View style={styles.columnThree}>
-              <Text style={styles.columnTwoText}> {merchantName}</Text>
+              <Text style={styles.columnTwoText}>{merchantName}</Text>
               <Text style={styles.termNconditionText}>
                 {amount} Discount * with Terms & Conditions
               </Text>
@@ -158,7 +158,7 @@ const VoucherList = ({
             amount={item.amount}
             expiredDate={item.expiredDate}
             merchantName={item.merchant[0].businessName}
-            status={item.claim}
+            status={item.claimed}
             image={item.merchant ? item.merchant[0].logo[0] : null}
           />
         )}
