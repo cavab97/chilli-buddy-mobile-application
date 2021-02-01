@@ -462,6 +462,8 @@ class index extends Component {
         break;
     }
 
+    console.log(this.props.checkInState.checkIn.id);
+
     return (
       <CheckIn
         data={tableData24}
