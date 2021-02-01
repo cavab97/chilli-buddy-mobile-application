@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
   },
   Days: {
     fontSize: 15,
-    fontWeight: "bold",
     color: "white",
     textAlign: "center",
     fontFamily: "HorizontalRounded",
@@ -212,7 +211,6 @@ const styles = StyleSheet.create({
   //title text
   checkInTitle: {
     fontSize: 40,
-    fontWeight: "bold",
     color: "#D81212",
     fontFamily: "HorizontalRounded",
 
