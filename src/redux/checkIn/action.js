@@ -6,6 +6,10 @@ import { checkInBackendServices } from "../../services/backend";
 const type = "checkIn";
 
 const actions = {
+  READ_FROM_DATABASE_INITIAL: type + "READ_FROM_DATABASE_INITIAL",
+  READ_FROM_DATABASE_INITIAL_SUCCESS: type + "READ_FROM_DATABASE_INITIAL_SUCCESS",
+  READ_FROM_DATABASE_INITIAL_ERROR: type + "READ_FROM_DATABASE_INITIAL_ERROR",
+
   READ_FROM_DATABASE: type + "READ_FROM_DATABASE",
   READ_FROM_DATABASE_SUCCESS: type + "READ_FROM_DATABASE_SUCCESS",
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
@@ -32,12 +36,33 @@ const actions = {
   //   UPDATE: type + "UPDATE",
 };
 
-// export const update = (data) => {
-//   return {
-//     type: actions.UPDATE,
-//     payload: { data },
-//   };
-// };
+export function readFromDatabaseInitial() {
+  return (dispatch, getState) => {
+    dispatch({ type: actions.READ_FROM_DATABASE });
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { uid } = getState().Auth.user;
+
+        const checkIN = await checkInDataServices.readObjects({
+          uid: uid,
+        });
+
+        resolve(checkIN);
+        dispatch({
+          type: actions.READ_FROM_DATABASE_INITIAL_SUCCESS,
+          payload: { data: checkIN },
+        });
+      } catch (error) {
+        console.log(error);
+        reject(error);
+        dispatch({
+          type: actions.READ_FROM_DATABASE_INITIAL_ERROR,
+          payload: { error },
+        });
+      }
+    });
+  };
+}
 
 export function readFromDatabase() {
   return (dispatch, getState) => {

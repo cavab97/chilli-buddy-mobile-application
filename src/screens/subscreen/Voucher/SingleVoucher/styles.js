@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     height: 121.2,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    resizeMode: "center",
+    //resizeMode: "center",
   },
   promoteTitleTextStyle: {
     fontSize: 16,

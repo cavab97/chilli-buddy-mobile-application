@@ -2,6 +2,7 @@ import React from "react";
 import { TouchableHighlight, TouchableOpacity, TouchableNativeFeedback } from "react-native";
 
 // import styles from "./styles";
+import ContentLoader, { Rect } from "react-content-loader/native";
 import moment from "moment";
 import { StyleSheet, Dimensions } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -9,7 +10,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { CheckInButton } from "../../molecules";
 
 import styles from "./styles";
+// import SkeletonContent from 'react-native-skeleton-content';
 import { CheckInModal, CheckInModalError } from "@components/templates";
+
+const { height } = Dimensions.get("window");
 
 import {
   ActivityIndicator,
@@ -208,97 +212,133 @@ const CheckIn = ({
   time,
   onPressRedeemNow,
   redeemed,
+  readInitialLoading,
 }) => {
-  /* if (readLoading) {
+  if (readLoading) {
     return (
-      <View style={styles.CheckinContainer}>
-        <View style={styles.CheckInTextContainer}>
-          <Text style={styles.checkInTitle}>
-            Check-In
-          </Text>
-          <Text style={styles.checkInSubTitle}>
-            Stand the chance to win a random a random prize by checking in everyday!{" "}
-          </Text>
-          <ActivityIndicator animating={readLoading}/>
-        </View>
-      </View>
-    )
-  } */
+      <ScrollView>
+        <View style={styles.container}>
+          <ContentLoader speed={1} width={"100%"} height={height} backgroundColor="#d9d9d9">
+            <Rect x="0" y="0" rx="5" ry="5" width="40%" height="40" />
+            <Rect x="0" y="50" rx="5" ry="5" width="100%" height="20" />
+            <Rect x="0" y="75" rx="5" ry="5" width="100%" height="20" />
+            <Rect x="0" y="115" rx="5" ry="5" width="35%" height="20" />
+            {/*square*/}
+            <Rect x="0" y="145" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="70" y="145" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="140" y="145" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="210" y="145" rx="5" ry="5" width="35%" height="145" />
 
-  return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      {happy == true ? (
-        rewardOnceThanOneOption == false ? (
-          <CheckInModal
-            Header={happyHeader}
-            happy={happy}
-            isVisible={isVisible}
-            onClose={onCLose}
-            message={messageSuccess}
-            rewardOnceThanOneOption={rewardOnceThanOneOption}
-            onPressCancel={onPressCancel}
-            timeUps={!redeemed ? catchCondition : redeemed}
-            readLoading={readLoading}
-            onPressRedeemNow={onPressRedeemNow}
-            redeemed={redeemed}
-          />
+            <Rect x="0" y="220" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="70" y="220" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="140" y="220" rx="5" ry="5" width="20%" height="70" />
+
+            <Rect x="0" y="300" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="70" y="300" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="140" y="300" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="210" y="300" rx="5" ry="5" width="35%" height="145" />
+
+            <Rect x="0" y="375" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="70" y="375" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="140" y="375" rx="5" ry="5" width="20%" height="70" />
+
+            <Rect x="0" y="455" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="70" y="455" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="140" y="455" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="210" y="455" rx="5" ry="5" width="35%" height="145" />
+
+            <Rect x="0" y="530" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="70" y="530" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="140" y="530" rx="5" ry="5" width="20%" height="70" />
+
+            <Rect x="0" y="610" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="70" y="610" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="140" y="610" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="210" y="610" rx="5" ry="5" width="35%" height="145" />
+
+            <Rect x="0" y="685" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="70" y="685" rx="5" ry="5" width="20%" height="70" />
+            <Rect x="140" y="685" rx="5" ry="5" width="20%" height="70" />
+          </ContentLoader>
+        </View>
+      </ScrollView>
+    );
+  } else {
+    return (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {happy == true ? (
+          rewardOnceThanOneOption == false ? (
+            <CheckInModal
+              Header={happyHeader}
+              happy={happy}
+              isVisible={isVisible}
+              onClose={onCLose}
+              message={messageSuccess}
+              rewardOnceThanOneOption={rewardOnceThanOneOption}
+              onPressCancel={onPressCancel}
+              timeUps={!redeemed ? catchCondition : redeemed}
+              readLoading={readLoading}
+              onPressRedeemNow={onPressRedeemNow}
+              redeemed={redeemed}
+            />
+          ) : (
+            <CheckInModal
+              Header={happyHeader}
+              happyDesciption={happyDesciption}
+              happy={happy}
+              isVisible={isVisible}
+              onClose={onCLose}
+              rewardOnceThanOneOption={rewardOnceThanOneOption}
+              message={messageSuccess}
+              onPressCancel={onPressCancel}
+              timeUps={!redeemed ? catchCondition : redeemed || catchCondition}
+              readLoading={readLoading}
+              onPressRedeemNow={onPressRedeemNow}
+              redeemed={redeemed}
+            />
+          )
         ) : (
-          <CheckInModal
-            Header={happyHeader}
-            happyDesciption={happyDesciption}
-            happy={happy}
+          <CheckInModalError
+            Header={message == null ? sadHeader : message}
             isVisible={isVisible}
             onClose={onCLose}
-            rewardOnceThanOneOption={rewardOnceThanOneOption}
-            message={messageSuccess}
-            onPressCancel={onPressCancel}
-            timeUps={!redeemed ? catchCondition : redeemed || catchCondition}
+            message={message}
             readLoading={readLoading}
-            onPressRedeemNow={onPressRedeemNow}
-            redeemed={redeemed}
           />
-        )
-      ) : (
-        <CheckInModalError
-          Header={message == null ? sadHeader : message}
-          isVisible={isVisible}
-          onClose={onCLose}
-          message={message}
-          readLoading={readLoading}
-        />
-      )}
-      {(console.log("catchCondition"), console.log(catchCondition))}
+        )}
+        {/* {(console.log("catchCondition"), console.log(catchCondition))} */}
 
-      <View style={styles.CheckinContainer}>
-        <View style={styles.CheckInTextContainer}>
-          <Text style={styles.checkInTitle}>Check-In</Text>
-          <Text style={styles.checkInSubTitle}>
-            Stand the chance to win a random a random prize by checking in everyday!
-          </Text>
-          <Text style={styles.checkInSubRefreshing}>Refresh in: {time}</Text>
+        <View style={styles.CheckinContainer}>
+          <View style={styles.CheckInTextContainer}>
+            <Text style={styles.checkInTitle}>Check-In</Text>
+            <Text style={styles.checkInSubTitle}>
+              Stand the chance to win a random a random prize by checking in everyday!
+            </Text>
+            <Text style={styles.checkInSubRefreshing}>Refresh in: {time}</Text>
+          </View>
+          <Grid
+            data={data}
+            onPressCheckIn={onPressCheckIn}
+            submitLoading={submitLoading}
+            checkInRecordLength={checkInRecordLength}
+            voucher={happy}
+            checkInRecordLengths={checkInRecordLengths}
+            twoOneDays={catchCondition}
+            rewardOnceThanOneOption={rewardOnceThanOneOption}
+          />
+          {/* <View style={styles.buttonStyles}>
+            <SignoutButton
+              style={styles.checkinButton}
+              onPress={onPressCheckIn}
+              loading={submitLoading}
+            >
+              Check in
+            </SignoutButton>
+          </View> */}
         </View>
-        <Grid
-          data={data}
-          onPressCheckIn={onPressCheckIn}
-          submitLoading={submitLoading}
-          checkInRecordLength={checkInRecordLength}
-          voucher={happy}
-          checkInRecordLengths={checkInRecordLengths}
-          twoOneDays={catchCondition}
-          rewardOnceThanOneOption={rewardOnceThanOneOption}
-        />
-        {/* <View style={styles.buttonStyles}>
-        <SignoutButton
-          style={styles.checkinButton}
-          onPress={onPressCheckIn}
-          loading={submitLoading}
-        >
-          Check in
-        </SignoutButton>
-      </View> */}
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  }
 };
 
 export { CheckIn };
