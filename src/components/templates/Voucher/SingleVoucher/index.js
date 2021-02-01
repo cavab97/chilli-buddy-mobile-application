@@ -90,7 +90,7 @@ const SingleVoucher = ({
               <View style={styles.col2}>
                 <Text style={styles.col2Text}>
                   {startDate == "AnyTime" || endDate == "AnyTime"
-                    ? "AnyTime - AnyTime"
+                    ? "Valid anytime."
                     : moment(startDate).format("DD/MM/YYYY")}{" - "}
                   {moment(endDate).format("DD/MM/YYYY")}
                   {}
