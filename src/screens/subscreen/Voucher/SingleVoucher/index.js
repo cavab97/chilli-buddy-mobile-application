@@ -19,7 +19,7 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      errorHeader: "This Voucher is Redeemed",
+      errorHeader: "This Voucher Is Redeemed",
       errorMessage: ":(",
       errorStatus: false,
     };

@@ -59,7 +59,7 @@ const CheckInModal = ({
           {!timeUps ? (
             <View
               position="absolute"
-              bottom={Platform.OS === "ios" ? 430 : 350}
+              bottom={Platform.OS === "ios" ? 430 : 380}
               right={-54}
               resizeMode="contain"
               fontSize={10}
