@@ -46,7 +46,7 @@ class index extends Component {
   };
 
   handleSetScanned(scan) {
-    console.log("scanned");
+    // console.log("scanned");
     this.setState({ scanned: false });
   }
   errorSubmit() {

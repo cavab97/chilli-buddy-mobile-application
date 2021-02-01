@@ -104,13 +104,12 @@ class index extends Component {
     // console.log(voucher.merchant[0].businessName == undefined);
     // console.log(voucher);
     try {
-      console.log("vouchers");
-
-      console.log(voucher.merchant[0].businessName);
+      // console.log("vouchers");
+      // console.log(voucher.merchant[0].businessName);
     } catch (error) {
-      console.log("voucher.startDate");
-      console.log(voucher);
-      console.log(error);
+      // console.log("voucher.startDate");
+      // console.log(voucher);
+      // console.log(error);
     }
 
     if (!errorStatus) {
@@ -134,38 +133,35 @@ class index extends Component {
       return this.props.voucherState.readLoading == true ? (
         <ActivityIndicator size="large" color="black" style={styles.smallRedeemImageStarStyle} />
       ) : (
-        (console.log("voucher"),
-        (console.log(voucher),
-        console.log("voucher.merchant[0]"),
-        console.log(voucher.merchant.businessName == null),
-        (
-          <SingleVoucher
-            shopPosts={posts}
-            onRedeemPress={this.onRedeemPress.bind(this)}
-            title={voucher.title}
-            SalesPoint={voucher.amount}
-            noImage={noImage}
-            image={noImage}
-            expiredDate={voucher.endDate}
-            tnc={voucher.tnc === null ? 'No terms and condition found.' : voucher.tnc}
-            merchantName={
-              voucher.merchant.businessName == null
-                ? this.props.merchantName
-                : voucher.merchant[0].businessName
-            }
-            // description={readLoading ? voucher.description : null}
-            // voucher.merchant[0].businessName == undefined ? null : voucher.merchant[0].businessName
+        // console.log(voucher),
+        // console.log("voucher.merchant[0]"),
+        // console.log(voucher.merchant.businessName == null),
+        <SingleVoucher
+          shopPosts={posts}
+          onRedeemPress={this.onRedeemPress.bind(this)}
+          title={voucher.title}
+          SalesPoint={voucher.amount}
+          noImage={noImage}
+          image={noImage}
+          expiredDate={voucher.endDate}
+          tnc={voucher.tnc === null ? "No terms and condition found." : voucher.tnc}
+          merchantName={
+            voucher.merchant.businessName == null
+              ? this.props.merchantName
+              : voucher.merchant[0].businessName
+          }
+          // description={readLoading ? voucher.description : null}
+          // voucher.merchant[0].businessName == undefined ? null : voucher.merchant[0].businessName
 
-            // merchantName={voucher.vouchers[0].merchant[0].businessName}
-            description={voucher.description === null ? 'No description found.' : voucher.description}
-            status={voucherStatus}
-            OpenCamPress={this.OpenCamPress.bind(this)}
-            OnInvalidPress={this.OnInvalidPress.bind(this)}
-            startDate={voucher.startDate != null ? voucher.startDate : "AnyTime"}
-            endDate={voucher.endDate != null ? voucher.endDate : "AnyTime"}
-            readLoading={this.props.voucherState.readLoading}
-          />
-        )))
+          // merchantName={voucher.vouchers[0].merchant[0].businessName}
+          description={voucher.description === null ? "No description found." : voucher.description}
+          status={voucherStatus}
+          OpenCamPress={this.OpenCamPress.bind(this)}
+          OnInvalidPress={this.OnInvalidPress.bind(this)}
+          startDate={voucher.startDate != null ? voucher.startDate : "AnyTime"}
+          endDate={voucher.endDate != null ? voucher.endDate : "AnyTime"}
+          readLoading={this.props.voucherState.readLoading}
+        />
       );
     } else {
       return (

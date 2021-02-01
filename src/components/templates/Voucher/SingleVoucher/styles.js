@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     marginLeft: 60,
     // marginRight: 50,
     resizeMode: "contain",
-    left: Platform.OS === "ios" ? 170 : Platform.isPad ? 370 : 125,
+    left: Platform.isPad ? 370 : Platform.OS === "ios" ? 170 : 125,
     marginVertical: Platform.isPad ? -20 : -5,
     position: "absolute",
     top: Platform.OS === "ios" ? 10 : 0,

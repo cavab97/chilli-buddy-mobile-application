@@ -44,7 +44,7 @@ class index extends Component {
       return <View style={{ marginBottom: 10 }} />;
     }
   }
-  
+
   onVoucherPressed(item) {
     Actions.SingleVoucher({
       voucherID: item.id,
@@ -57,15 +57,11 @@ class index extends Component {
 
     let voucherList = [];
 
-    const filteredVoucherUsed = vouchers.filter( voucher => 
-      voucher.claimed === true
-    );
-    
-    const voucherAvailable = vouchers.filter( voucher => 
-      voucher.claimed === false
-    );
+    const filteredVoucherUsed = vouchers.filter((voucher) => voucher.claimed === true);
 
-    voucherList = voucherAvailable.concat(filteredVoucherUsed)
+    const voucherAvailable = vouchers.filter((voucher) => voucher.claimed === false);
+
+    voucherList = voucherAvailable.concat(filteredVoucherUsed);
 
     return (
       <VoucherList

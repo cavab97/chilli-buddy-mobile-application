@@ -35,7 +35,7 @@ class index extends Component {
       }
     }
     // console.log(qrData);
-    console.log(voucherIds);
+    // console.log(voucherIds);
 
     data = {
       merchantIds: qrData,
@@ -56,7 +56,7 @@ class index extends Component {
   render() {
     //data
     let object = this.props.submitError;
-    console.log(object.message);
+    // console.log(object.message);
     let gameTitle = "game";
     const { claimed } = this.state;
     const { submitLoading } = this.props;
@@ -65,17 +65,7 @@ class index extends Component {
         <ScrollView>
           <View style={styles.container}>
             <ActivityIndicator size="large" color="black" style={styles.large} />
-            {/* <ContentLoader speed={1} width={"100%"} height={height} backgroundColor="#d9d9d9">
-              <Rect x="60%" y="0" rx="5" ry="5" width="40%" height="20" />
-              <Rect x="0" y="40" rx="5" ry="5" width="100%" height="200" />
-              <Rect x="0" y="250" rx="5" ry="5" width="50%" height="20" />
-              <Rect x="0" y="275" rx="5" ry="5" width="50%" height="20" />
-              <Rect x="0" y="320" rx="5" ry="5" width="100%" height={height} />
-            </ContentLoader> */}
-            {/* <Image
-              source={require("../../../../assets/chilliBuddyCheckin/chilliHappyFace.png")}
-              style={styles.redeemImageStyle}
-            /> */}
+
             <View style={styles.bodyContainerStyle}>
               <Text style={styles.titleStyle}> </Text>
               <Text style={styles.descriptStyle}>Redeeming Voucher....</Text>

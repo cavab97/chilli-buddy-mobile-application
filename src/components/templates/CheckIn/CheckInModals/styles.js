@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
 const size = Dimensions.get("window").width / 1.1;
 
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   //icon error view
   closeIcon2: {
     position: "absolute",
-    bottom: Platform.OS === "ios" ? 370 : 330,
+    bottom: Platform.isPad ? 480 : Platform.OS === "ios" ? 400 : 330,
     right: -54,
     // backgroundColor: "red",
     resizeMode: "contain",

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     fontFamily: "HorizontalRounded",
     justifyContent: "center",
     textAlign: "left",
-    resizeMode: "contain",
+    // resizeMode: "contain",
   },
   columnTwo: {
     paddingHorizontal: 5,
