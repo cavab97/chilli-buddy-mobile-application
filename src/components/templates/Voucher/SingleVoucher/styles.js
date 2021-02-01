@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     borderColor: "black",
     borderWidth: 3,
-    bottom: 0,
+    bottom: Platform.OS === "ios" ? -15 : 0,
     marginVertical: 10,
   },
   columnOneText: {
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
     padding: 0,
     borderRadius: 10,
     width: size / 2.3,
-    bottom: 0,
+    bottom: Platform.OS === "ios" ? -15 : 0,
     marginVertical: 0,
     left: 30,
     // textAlign: "center",
@@ -379,6 +379,7 @@ const styles = StyleSheet.create({
     left: 125,
     marginVertical: -5,
     position: "absolute",
+    top: Platform.OS === "ios" ? 10 : 0,
   },
   FirstRow: {
     paddingTop: 20,
