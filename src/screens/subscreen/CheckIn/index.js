@@ -141,18 +141,12 @@ class index extends Component {
   tick() {
     const { checkIn } = this.props.checkInState;
 
-    console.log('tickeing')
-
     if (checkIn.resetDate !== undefined && checkIn.created.at !== undefined||
       checkIn.resetDate === null && checkIn.created.at !== null) 
     {
       let day = moment(checkIn.resetDate).diff(checkIn.created.at,'days');
       let hour = moment(checkIn.resetDate).diff(checkIn.created.at, "hours");
       let seconds = moment(checkIn.resetDate).diff(checkIn.created.at, "minutes");
-
-      console.log(day)
-      console.log(hour)
-      console.log(seconds)
 
       if (day !== 0) {
         this.setState({
@@ -168,7 +162,7 @@ class index extends Component {
         });
       }
 
-      console.log(this.state.day)
+     /*  console.log(this.state.day) */
       
     } 
   } 
@@ -457,7 +451,7 @@ const mapStateToProps = (state) => {
   const { submitLoading } = state.CheckIn;
   const { checkIn } = state.CheckIn;
 
-  console.log(uid);
+  //console.log(uid);
 
   return {
     routeTicketState,

@@ -201,19 +201,21 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     color: "#D81212",
-    fontFamily: "RobotoBold",
+    fontFamily: "MyriadRegular",
 
     // fontFamily: "Cochin",
   },
   checkInSubTitle: {
     fontSize: 17,
     marginTop: 10,
+    fontFamily: "MyriadRegular",
   },
   checkInSubRefreshing: {
     paddingTop: 15,
     paddingBottom: 15,
     fontSize: 15,
     color: "grey",
+    fontFamily: "MyriadRegular",
   },
   CheckInTextContainer: {
     paddingLeft: 15,
