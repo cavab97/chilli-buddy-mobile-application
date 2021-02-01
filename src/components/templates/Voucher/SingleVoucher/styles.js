@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
 
 const size = Dimensions.get("window").width / 1.1;
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontWeight: "bold",
     color: "black",
-    fontSize: 15,
+    fontSize: Platform.isPad ? 25 : 15,
     fontFamily: "RobotoBold",
     justifyContent: "center",
     textAlign: "left",
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: size / 2.3,
     bottom: Platform.OS === "ios" ? -15 : 0,
-    marginVertical: 0,
+    marginVertical: Platform.isPad ? 15 : 0,
     left: 30,
     // textAlign: "center",
     // alignContent: "center",
@@ -329,8 +329,9 @@ const styles = StyleSheet.create({
   logoImage: {
     resizeMode: "cover",
     // position: "absolute",
-    width: size / 5,
-    height: size / 5,
+
+    width: Platform.isPad ? size / 7 : size / 5,
+    height: Platform.isPad ? size / 7 : size / 5,
     left: 0,
     borderRadius: 80,
   },
@@ -372,8 +373,8 @@ const styles = StyleSheet.create({
     marginLeft: 60,
     // marginRight: 50,
     resizeMode: "contain",
-    left: 125,
-    marginVertical: -5,
+    left: Platform.isPad ? 370 : 125,
+    marginVertical: Platform.isPad ? -20 : -5,
     position: "absolute",
     top: Platform.OS === "ios" ? 10 : 0,
   },
@@ -391,7 +392,7 @@ const styles = StyleSheet.create({
   },
   columnTwoSubText: {
     color: "grey",
-    fontSize: 12,
+    fontSize: Platform.isPad ? 20 : 12,
   },
   ///descriptiontext
 });

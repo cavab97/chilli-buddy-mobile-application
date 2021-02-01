@@ -64,8 +64,8 @@ class index extends Component {
 
     if (data) {
       // Do samething for QRCode
-      console.log("      Actions.replace(;");
-      console.log(voucherIds);
+      // console.log("      Actions.replace(;");
+      // console.log(voucherIds);
       Actions.replace("RedeemedVoucherScreen", { data, voucherIds: voucherIds });
     } else {
       alert("No QR Code Detected");

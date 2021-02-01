@@ -47,9 +47,19 @@ class index extends Component {
   }
 
   async componentDidMount() {
+    const { checkIn } = this.props.checkInState;
+    let day = moment(checkIn.resetDate).diff(moment(), "days");
+    let hour = moment(checkIn.resetDate).diff(moment(), "hours");
+
     await this.props.readFromDatabase();
     await this.table24();
-    this.intervalID = setInterval(() => this.tick(), 1000);
+    if (day < 1) {
+      this.intervalID = setInterval(() => this.tick(), 1000);
+    } else if (hour < 1) {
+      this.intervalID = setInterval(() => this.tick(), 1000);
+    } else {
+      this.intervalID = setInterval(() => this.tick(), 10000);
+    }
     // this.tick();
   }
 
@@ -149,21 +159,52 @@ class index extends Component {
       (checkIn.resetDate !== undefined && checkIn.created.at !== undefined) ||
       (checkIn.resetDate === null && checkIn.created.at !== null)
     ) {
-      let day = moment(checkIn.resetDate).diff(checkIn.created.at, "days");
-      let hour = moment(checkIn.resetDate).diff(checkIn.created.at, "hours");
-      let second = moment(checkIn.resetDate).diff(checkIn.created.at, "minutes");
+      // let hour = moment(checkIn.resetDate).diff(checkIn.created.at, "hours");
+      // let second = moment(checkIn.resetDate).diff(checkIn.created.at, "minutes");
 
-      const countdown = moment(checkIn.resetDate - checkIn.created.at);
-      const days = countdown.format("D");
-      const hours = countdown.format("HH");
-      const minutes = countdown.format("mm");
-      const seconds = countdown.format("ss");
+      // var myDate = new Date(checkIn.resetDate);
+      // var result = myDate.getTime();
+
+      // console.log(new Date(checkIn.created.at.seconds * 1000).toISOString());
+      let day = moment(checkIn.resetDate).diff(moment(), "days");
+      let hour = moment(checkIn.resetDate).diff(moment(), "hours");
+      let minutes = moment(checkIn.resetDate).diff(moment(), "minutes");
+      let seconds = moment(checkIn.resetDate).diff(moment(), "seconds");
+
+      let createIsoDate = new Date(checkIn.created.at.seconds * 1000).toISOString();
+      let resetIsoDate = checkIn.resetDate;
+      let DD;
+      let Hour;
+      let Minutes;
+      let Seconds;
+
+      // let month = new Date(resetIsoDate).getUTCMonth() - new Date().getUTCMonth();
+      // if (month > 0) {
+      //   DD = new Date(resetIsoDate).getUTCDate() + 30 - new Date().getUTCDate();
+      // } else {
+      //   DD = new Date(resetIsoDate).getUTCDate() - new Date().getUTCDate();
+      // }
+
+      // Hour = new Date(resetIsoDate).getUTCHours() - new Date().getUTCHours();
+
+      // Minutes = new Date(resetIsoDate).getUTCMinutes() - new Date().getUTCMinutes();
+      // Seconds = new Date(resetIsoDate).getUTCSeconds() + 60 - new Date().getUTCSeconds();
+
+      // console.log("houminutesr" + (seconds % 60));
+
+      // let DD = new Date(resetIsoDate).getUTCDate() - new Date(createIsoDate).getUTCDate();
+
+      // const countdown = moment(checkIn.resetDate - checkIn.created.at);
+      // const days = countdown.format("D");
+      // const hours = countdown.format("HH");
+      // const minutes = countdown.format("mm");
+      // const seconds = countdown.format("ss");
 
       // console.log(checkIn.created.at.seconds);
       // var d = new Date(checkIn.resetDate);
       // new Date(1434343434 * 1000).toISOString();
       // console.log(d.getUTCDate());
-      console.log((checkIn.created.at.seconds * 1000).toISOString);
+      // console.log((checkIn.created.at.seconds * 1000).toISOString);
       // console.log(d.getUTCHours()); // Hours
       // console.log(d.getUTCMinutes());
       // console.log(d.getUTCSeconds());
@@ -180,11 +221,11 @@ class index extends Component {
         });
       } else if (hour !== 0) {
         this.setState({
-          time: hour + " hours",
+          time: hour + " Hours " + (minutes % 60) + " Minutes",
         });
       } else {
         this.setState({
-          time: seconds + " seconds",
+          time: (minutes % 60) + " Minutes " + (seconds % 60) + " seconds",
         });
       }
 

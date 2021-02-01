@@ -13,6 +13,8 @@ import styles from "./styles";
 // import SkeletonContent from 'react-native-skeleton-content';
 import { CheckInModal, CheckInModalError } from "@components/templates";
 
+const widthDimensions = Dimensions.get("window").width;
+const heightDimensions = Dimensions.get("window").height;
 const { height } = Dimensions.get("window");
 
 import {
@@ -25,6 +27,8 @@ import {
   Text,
   ScrollView,
 } from "@components/atoms";
+console.log("widthDimensions" + widthDimensions);
+console.log("heightDimensions" + widthDimensions);
 
 import { Card, CardSection } from "@components/molecules";
 const calenderEmpty = require("../../../assets/chilliBuddyCheckin/blackColor_background_empty.png");
