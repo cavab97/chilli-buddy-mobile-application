@@ -10,6 +10,7 @@ export function readObjects({ uid }) {
     });
     // if (selectedCategory)
     //   databaseRef = databaseRef.where("shop.categories", "array-contains-any", [selectedCategory]);
+    console.log(uid);
     databaseRef
       .where("userIds", "==", [uid])
       .where("status", "==", true)

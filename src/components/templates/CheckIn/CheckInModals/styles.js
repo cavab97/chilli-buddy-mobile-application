@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   //icon error view
   closeIcon2: {
     position: "absolute",
-    bottom: Platform.OS === "ios" ? 370 : 330,
+    bottom: Platform.OS === "ios" ? 400 : 330,
     right: -54,
     // backgroundColor: "red",
     resizeMode: "contain",
