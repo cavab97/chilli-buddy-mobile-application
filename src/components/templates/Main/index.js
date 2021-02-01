@@ -30,9 +30,8 @@ import { SmallCardList } from "../../organisms/SmallCardList";
 
 import { ImageSwiper } from "../../organisms/ImageSwiper";
 
-import moment from "moment";
 import ContentLoader, { Rect } from "react-content-loader/native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/Ionicons";
 import { CustomIcon } from "@components/atoms/index";
 import Constants from "expo-constants";
 
@@ -70,6 +69,8 @@ export default ({
   fadeWheel,
   fadeResult,
   spinStatus,
+  onCheckInPressed,
+  checkIn,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -127,7 +128,6 @@ export default ({
             </TouchableOpacity>
           </View>
         </View>
-        <View></View>
       </Modal>
     ) : (
       <View />
@@ -373,6 +373,10 @@ export default ({
         onPress={onOpenSpinningWheelModal}
       >
         <Image source={wheelIcon} style={styles.floatingButton} />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
+        <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
+        <Text style={styles.floatingCheckInTitle}>CHECK IN</Text>
       </TouchableOpacity>
     </View>
   );

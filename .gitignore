@@ -63,3 +63,10 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+#git modules
+.gitmodules
+
+#expo modules
+.expo/
+.expo/packager-info.json

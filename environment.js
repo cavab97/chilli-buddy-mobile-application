@@ -72,9 +72,9 @@ const getEnvVars = (env = Constants.manifest.releaseChannel) => {
   // __DEV__ is true when run locally, but false when published.
 
   if (__DEV__ || env === "dev") {
-    console.log("running in development mode");
-    // return ENV.dev;
-    return ENV.staging;
+    console.log("running in xevelopment mode");
+    return ENV.dev;
+    // return ENV.staging;
     // return ENV.prod;
   } else if (env === "staging") {
     console.log("running in staging mode");

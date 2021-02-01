@@ -13,8 +13,7 @@ import {
 
 import clone from "clone";
 import { lessThan } from "react-native-reanimated";
-import { Animated } from 'react-native';
-
+import { Animated } from "react-native";
 
 class index extends Component {
   constructor(props) {
@@ -66,6 +65,17 @@ class index extends Component {
   onPressCategory(id, no) {
     Actions.Shops({ selectedCategory: id, number: no });
   }
+  onCheckInPressed() {
+    Actions.CheckIn();
+  }
+
+  onPressCheckIn() {
+    Actions.CheckIn();
+  }
+
+  onPressCheckIn() {
+    Actions.CheckIn();
+  }
 
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
@@ -77,7 +87,6 @@ class index extends Component {
       this.state.popUpImage = filteredDatasource[index].popUpImage;
     }
   }
-
 
   //close pop up from header
   onClosePopUp() {
@@ -137,74 +146,72 @@ class index extends Component {
   }
 
   //open spinning wheel modal
-  onOpenSpinningWheelModal(){
-    this.setState({ randomCategory: null })
+  onOpenSpinningWheelModal() {
+    this.setState({ randomCategory: null });
     this.props.toggleSpinningWheelModal();
   }
 
   //close pop up from spinning wheel modal
   onCloseSpinningWheelModal() {
-    this.setState({ randomCategory: null })
+    this.setState({ randomCategory: null });
     this.props.toggleSpinningWheelModal();
   }
 
-  spinningWheel(){
+  spinningWheel() {
     let newDeg = Math.random() * 360;
     const curValue = this.state.wheelRotation.__getValue();
-    if ( curValue > 720 ){
-        newDeg = curValue - newDeg - 720;
+    if (curValue > 720) {
+      newDeg = curValue - newDeg - 720;
     } else {
-        newDeg = curValue + newDeg + 720;
+      newDeg = curValue + newDeg + 720;
     }
 
     this.setState({
-      randomCategoryNumber: Math.random( ),
+      randomCategoryNumber: Math.random(),
       spinStatus: true,
-      randomCategory: null
-    })
+      randomCategory: null,
+    });
 
     const randomCategory = this.getRandomCategory();
-    this.setState({ randomCategory: randomCategory}); 
+    this.setState({ randomCategory: randomCategory });
 
     Animated.parallel([
       Animated.decay(this.state.wheelRotation, {
         toValue: newDeg,
         velocity: 200,
-        //deceleration: 0.99915, 
+        //deceleration: 0.99915,
         useNativeDriver: true,
       }).start(({ finished }) => {
         // const randomCategory = this.getRandomCategory();
-        this.setState({  spinStatus: false});   
+        this.setState({ spinStatus: false });
         Animated.timing(this.state.fadeResult, {
           toValue: 1,
           //delay: 2000,
           duration: 1500,
           useNativeDriver: true,
-        }).start()
+        }).start();
       }),
       Animated.timing(this.state.fadeWheel, {
         toValue: 0,
         duration: 6000,
         useNativeDriver: true,
       }).start(),
-      
-    ])
-
+    ]);
   }
-  getRandomCategory(){
+  getRandomCategory() {
     let categoryArray = this.passCategory();
-    var randomCategory = categoryArray[Math.floor(this.state.randomCategoryNumber * categoryArray.length)];
+    var randomCategory =
+      categoryArray[Math.floor(this.state.randomCategoryNumber * categoryArray.length)];
     return randomCategory;
   }
 
   onPressRandomCategory(category) {
     Actions.Shops({ selectedCategory: category });
     this.props.toggleSpinningWheelModal();
-
   }
 
   //Pass category
-  passCategory(){
+  passCategory() {
     let dataSource2 = [];
     let categoriesImage = [
       require("../../../assets/chillibuddy/category1.png"),
@@ -229,7 +236,7 @@ class index extends Component {
     dataSource2.forEach((element, index) => {
       element.image = categoriesImage[index % 5];
       switch (element.title) {
-        case "Chinese | 中餐": 
+        case "Chinese | 中餐":
           element.icon = "chinese";
           break;
         case "Western | 西餐":
@@ -300,7 +307,6 @@ class index extends Component {
 
     let dataSource = [];
     let filteredAdPic = [];
-    
 
     //Sort to show latest
     advertisements.sort((a, b) => b.createAt - a.createAt);
@@ -333,7 +339,7 @@ class index extends Component {
     const casualImage = require("../../../assets/gogogain/Mascot-C.png");
     const luxuryImage = require("../../../assets/gogogain/Mascot-L.png");
 
-    return (      
+    return (
       <MainTemplete
         readFail={readFail}
         slider={this.filteredDatasource()}
@@ -375,6 +381,8 @@ class index extends Component {
         fadeWheel={this.state.fadeWheel}
         fadeResult={this.state.fadeResult}
         spinStatus={this.state.spinStatus}
+        onCheckInPressed={this.onCheckInPressed.bind(this)}
+        checkIn={this.onPressCheckIn.bind(this)}
       />
     );
   }
@@ -413,7 +421,7 @@ const mapStateToProps = (state) => {
     readErrorAdvertisement,
     readErrorHeaderImages,
     openModal,
-    spinningWheelModal
+    spinningWheelModal,
   };
 };
 
@@ -426,5 +434,5 @@ export default connect(mapStateToProps, {
   verifyPermission,
   loadShops,
   readSettingInfo,
-  toggleSpinningWheelModal
+  toggleSpinningWheelModal,
 })(index);

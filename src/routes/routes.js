@@ -23,6 +23,8 @@ import Amount from "../screens/subscreen/payment/Amount";
 import PaymentDetail from "../screens/subscreen/payment/Method";
 import CameraReceipt from "../screens/subscreen/payment/CameraReceipt";
 import SubmitReceipt from "../screens/subscreen/payment/SubmitReceipt";
+import SingleVoucherRedeem from "../screens/subscreen/Voucher/SingleVoucherRedeem";
+import RedeemedVoucherScreen from "../screens/subscreen/Voucher/RedeemedVoucherScreen";
 
 import Rules from "../screens/subscreen/Rules";
 
@@ -36,13 +38,15 @@ import LuckyDrawWinnerRanking from "../screens/subscreen/rank/LuckyDrawWinnerRan
 import RedeemPage from "../screens/subscreen/RedeemPage";
 import HelpCenter from "../screens/subscreen/HelpCenter";
 import Bookmark from "../screens/subscreen/Bookmark";
+import Voucher from "../screens/subscreen/Voucher";
+import SingleVoucher from "../screens/subscreen/Voucher/SingleVoucher";
+import CheckIn from "../screens/subscreen/CheckIn";
 
 import LoginTACScreen from "../screens/auth/TAC";
 
 import styles from "./styles";
 import * as icons from "./icons";
 import { Colors } from "../settings/styles/theme";
-import { StatusBar } from "@components/atoms";
 
 export const authRoute = () => {
   return <Scene key="loginTAC" component={LoginTACScreen} hideNavBar />;
@@ -261,6 +265,51 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
       <Stack key="Bookmark" back>
         <Scene key="Bookmark" component={Bookmark} title="Bookmark" titleStyle={styles.title} />
+      </Stack>
+
+      <Stack key="CheckIn" back>
+        <Scene 
+          key="CheckIn" 
+          component={CheckIn} 
+          titleStyle={styles.title} 
+          navigationBarStyle = {{ borderBottomColor: 'transparent', elevation: 0 }}
+        />
+      </Stack>
+
+      <Stack key="Voucher" back>
+        <Scene key="Voucher" 
+          component={Voucher} 
+          //title="Vouchers" 
+          titleStyle={styles.title} 
+          navigationBarStyle = {{ borderBottomColor: 'transparent', elevation: 0 }}
+        />
+      </Stack>
+
+      <Stack key="SingleVoucher" back>
+        <Scene
+          key="SingleVoucher"
+          navTransparent={true}
+          component={SingleVoucher}
+          title={SingleVoucher.title}
+          titleStyle={styles.title}
+        />
+      </Stack>
+
+      <Stack key="SingleVoucherRedeem" back>
+        <Scene
+          key="SingleVoucherRedeem"
+          component={SingleVoucherRedeem}
+          title="Scan Merchant QR Code"
+          titleStyle={styles.title}
+        />
+      </Stack>
+      <Stack key="RedeemedVoucherScreen">
+        <Scene
+          key="RedeemedVoucherScreen"
+          component={RedeemedVoucherScreen}
+          title="Redeem Voucher"
+          titleStyle={styles.title}
+        />
       </Stack>
     </Stack>
   );

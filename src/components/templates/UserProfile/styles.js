@@ -27,38 +27,40 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#f18a22",
     alignSelf: "flex-end",
+    fontFamily: "HorizontalRounded",
   },
   container: {
-    alignItems: "center",
     paddingBottom: 8,
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 6,
-    borderRadius: 5,
+    /* borderRadius: 5,
     borderColor: "#ddd",
-    borderBottomWidth: 1,
+    borderBottomWidth: 1, */
+    flexDirection: "row",
   },
   avatarContainer: {
     //marginRight: 12,
     marginTop: 80,
+    paddingLeft: 15,
   },
   userTitle: {
-    justifyContent: "flex-start",
+    //justifyContent: "flex-start",
     fontSize: 21,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     color: "#000",
     marginRight: 8,
     marginTop: 15,
   },
   userDesc: {
     fontSize: 14,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginVertical: 2,
     color: "#000",
   },
   titleButton: {
     color: "#ffffff",
-    fontFamily: "RobotoMedium",
+    fontFamily: "HorizontalRounded",
     fontSize: 12,
   },
   editButton: {
@@ -69,14 +71,16 @@ const styles = StyleSheet.create({
   },
   editProfileText: {
     fontSize: 12,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     color: "#FFF",
   },
   editProfileTextContainer: {
-    marginTop: 15,
+    marginTop: 100,
     padding: 3,
     borderRadius: 5,
     backgroundColor: "#D60000",
+    left: 15,
+    bottom: 0,
   },
   editButtonContainer: {
     width: 80,
@@ -85,19 +89,23 @@ const styles = StyleSheet.create({
   },
   textContainer1: {
     flexDirection: "row",
+    marginTop: 80,
+    paddingLeft: 15,
     justifyContent: "center",
     alignItems: "flex-start",
   },
   textContainer2: {
     flexDirection: "row",
-    justifyContent: "center",
+    paddingLeft: 18,
     alignItems: "flex-start",
     marginTop: 10,
+    // backgroundColor: "grey",
   },
   textContainer3: {
     marginTop: 0,
+    paddingLeft: 15,
     flexDirection: "row",
-    justifyContent: "center",
+    //justifyContent: "center",
     alignItems: "flex-start",
   },
   userInfomationIcon: {
@@ -135,7 +143,7 @@ const styles = StyleSheet.create({
   },
   navFontStyle: {
     marginVertical: 6,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
   },
   btmContainer: {
     flex: 1,
@@ -310,17 +318,20 @@ const styles = StyleSheet.create({
     }, */
   image: {
     flex: 1,
-    borderRadius: 60,
-    width: null,
-    //resizeMode: "cover",
+    borderRadius: 100,
+    width: "100%",
+
+    resizeMode: "cover",
     //width: "100%",
-    //height: null
+    // height: "100%",
   },
   profileImageStyle: {
     backgroundColor: Colors.GRAY_DARK,
-    height: 80,
-    width: 80,
-    borderRadius: 60,
+    height: 100,
+    width: 100,
+    borderRadius: 80,
+    borderWidth: 1,
+    borderColor: "white",
   },
   scrollBox: {
     flex: 1,

@@ -11,8 +11,7 @@ const styles = {
     },
     moreTextStyle: {
         fontSize: 16,
-        fontWeight: "bold",
-        fontFamily: "RobotoRegular",
+        fontFamily: "HorizontalRounded",
         color: Colors.GRAY_DARK,
     },
     listButtonStyle: {
@@ -23,18 +22,19 @@ const styles = {
     },
     listTitle: {
         fontSize: 17,
-        fontFamily: "RobotoRegular",
+        fontFamily: "HorizontalRounded",
     },
     versionTextStyle: {
         fontSize: 18,
         color: Colors.PRIMARY,
         fontWeight: "bold",
-        fontFamily: "RobotoRegular",
+        fontFamily: "HorizontalRounded",
     },
     signoutButtonStyle: {
-        alignSelf: "center",
-        padding: Platform.OS === 'ios' ? 20 : 20,
-        marginBottom: Platform.OS === 'ios' ? 30 : 30,
+        //alignSelf: "left",
+        paddingVertical: 35,
+        paddingHorizontal: 30,
+        // marginBottom: Platform.OS === 'ios' ? 30 : 30,
         // position: "absolute",
         // bottom: -130,
     },

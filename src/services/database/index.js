@@ -16,6 +16,8 @@ import * as shopDataServices from "./shop";
 import * as promoDataServices from "./promo";
 import * as shopPostDataServices from "./shopPost";
 import * as bookmarkDataServices from "./bookmark";
+import * as voucherDataServices from "./voucher";
+import * as checkInDataServices from "./checkIn";
 
 export {
   advertisementDataServices,
@@ -31,4 +33,6 @@ export {
   promoDataServices,
   shopPostDataServices,
   bookmarkDataServices,
+  checkInDataServices,
+  voucherDataServices
 };

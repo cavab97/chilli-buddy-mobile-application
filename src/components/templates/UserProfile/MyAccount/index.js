@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Icon, ScrollView, Text, TouchableOpacity, View } from "../../../atoms";
+import { Icon, ScrollView, Text, TouchableOpacity, View, ActivityIndicator } from "../../../atoms";
 
 import { Colors } from "../../../../settings/styles/theme";
 import styles from "./styles";
@@ -33,6 +33,10 @@ export class MyAccount extends Component {
     Actions.HelpCenter();
   }
 
+  onVoucherPress() {
+    Actions.Voucher();
+  }
+
   onSettingsPress() {}
 
   onVersionPress() {}
@@ -43,9 +47,10 @@ export class MyAccount extends Component {
     return (
       <ScrollView style={styles.accountContainer} showsVerticalScrollIndicator={false}>
         <View style={styles.accountMoreContainer}>
-          <Text style={styles.moreTextStyle}>More</Text>
+          {/* <Text style={styles.moreTextStyle}>More</Text> */}
         </View>
         <View>{this.settingListing("Bookmark", this.onBookmarkPress.bind(this), true)}</View>
+        <View>{this.settingListing("Voucher", this.onVoucherPress.bind(this), true)}</View>
         <View>{this.settingListing("Help Center", this.onHelpCenterPress.bind(this), true)}</View>
         {/* <View>
                     {this.settingListing(
@@ -54,12 +59,22 @@ export class MyAccount extends Component {
                         true
                     )}
                 </View> */}
-        <View>{this.settingListing("Version", this.onVersionPress.bind(this), "2.5.4")}</View>
-        <View style={styles.signoutButtonStyle}>
+        <View>{this.settingListing("Version", this.onVersionPress.bind(this), "2.6.0")}</View>
+        {/* <View style={styles.signoutButtonStyle}>xsxs
           <SignoutButton onPress={onSignoutPress} loading={logOutLoading}>
             Sign Out
           </SignoutButton>
-        </View>
+        </View> */}
+        <TouchableOpacity
+          onPress={onSignoutPress}
+          style={styles.signoutButtonStyle}
+          // disabled={props.disabled}
+        >
+          <View style={{ flexDirection: "row" /*  justifyContent: "start" */ }}>
+            {logOutLoading && <ActivityIndicator size="large" color={Colors.GRAY_DARK} />}
+            <Text style={styles.versionTextStyle}>Sign Out</Text>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     );
   }

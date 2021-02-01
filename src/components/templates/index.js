@@ -22,3 +22,12 @@ export * from "./Prizes";
 export * from "./Shop/ShopList";
 export * from "./Shop/SingleMerchant";
 export * from "./Bookmark";
+
+export * from "./CheckIn";
+export * from "./CheckIn/CheckInModals";
+
+export * from "./Voucher";
+export * from "./Voucher/SingleVoucher";
+
+export * from "./Voucher/SingleVoucherRedeem";
+export * from "./Voucher/SingleVoucherErrorModal";

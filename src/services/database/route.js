@@ -69,7 +69,7 @@ export function readObjects({ groupId }) {
           const deleted = database.processData({ data: data.deleted });
           const updated = database.processData({ data: data.updated });
 
-          const processedData = { ...parent, created, deleted, updated,winner };
+          const processedData = { ...parent, created, deleted, updated, winner };
 
           result.push(processedData);
         });
@@ -100,7 +100,7 @@ export function readObject({ id }) {
         const deleted = database.processData({ data: data.deleted });
         const updated = database.processData({ data: data.updated });
 
-        const processedData = { ...parent, created, deleted, updated ,winner};
+        const processedData = { ...parent, created, deleted, updated, winner };
 
         resolve(processedData);
       })
@@ -172,7 +172,7 @@ export function listenObject({ objectId = null, updateListener = () => {} }) {
       const deleted = database.processData({ data: data.deleted });
       const updated = database.processData({ data: data.updated });
 
-      const processedData = { ...parent, created, deleted, updated,winner };
+      const processedData = { ...parent, created, deleted, updated, winner };
 
       updateListener(processedData);
     });
@@ -221,7 +221,7 @@ export function readExpiredRoutes() {
             terminated,
             pending,
             ongoing,
-            ended
+            ended,
           };
 
           result.push(processedData);
@@ -276,7 +276,7 @@ export function readEndedRoutes() {
             terminated,
             pending,
             ongoing,
-            ended
+            ended,
           };
 
           result.push(processedData);

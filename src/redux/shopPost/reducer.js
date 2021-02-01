@@ -35,7 +35,7 @@ const initialState = {
       images: [],
       facebookUrl: null,
       instagramUrl: null,
-      whatsapp:null,
+      whatsapp: null,
       websiteUrl: null,
       phoneNumber: null,
       email: null,
@@ -44,17 +44,9 @@ const initialState = {
         line2: null,
         postcode: null,
         state: null,
-        country: null
+        country: null,
       },
-      operatingHour: [
-        { close: "1800", day: "mon", open: "0600", operate: false },
-        { close: "1800", day: "tue", open: "0600", operate: false },
-        { close: "1800", day: "wed", open: "0600", operate: false },
-        { close: "1800", day: "thu", open: "0600", operate: false },
-        { close: "1800", day: "fri", open: "0600", operate: false },
-        { close: "1800", day: "sat", open: "0600", operate: false },
-        { close: "1800", day: "sun", open: "0600", operate: false }
-      ],
+
       merchants: [],
       manager: [],
       supervisor: [],
@@ -68,22 +60,22 @@ const initialState = {
       deleted: { at: null, by: null },
       updated: { at: null, by: null },
       l: { _lat: 0, _long: 0 },
-      g: null
+      g: null,
     },
 
     created: { at: null, by: null },
     deleted: { at: null, by: null },
     updated: { at: null, by: null },
-  }
+  },
 };
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.READ_FROM_DATABASE:
-      return { 
-        ...state, 
-        readLoading: true, 
-        readError: false 
+      return {
+        ...state,
+        readLoading: true,
+        readError: false,
       };
     case actions.READ_FROM_DATABASE_SUCCESS:
       return {
@@ -92,16 +84,16 @@ const reducer = (state = initialState, { type, payload }) => {
         posts: payload.data,
       };
     case actions.READ_FROM_DATABASE_ERROR:
-      return { 
-        ...state, 
-        readLoading: false, 
-        readError: payload.error 
+      return {
+        ...state,
+        readLoading: false,
+        readError: payload.error,
       };
     case actions.READ_RECORD:
-      return { 
-        ...state, 
-        readLoading: true, 
-        readError: false 
+      return {
+        ...state,
+        readLoading: true,
+        readError: false,
       };
     case actions.READ_RECORD_SUCCESS:
       return {
@@ -110,10 +102,10 @@ const reducer = (state = initialState, { type, payload }) => {
         post: payload.data,
       };
     case actions.READ_RECORD_ERROR:
-      return { 
-        ...state, 
-        readLoading: false, 
-        readError: payload.error 
+      return {
+        ...state,
+        readLoading: false,
+        readError: payload.error,
       };
     case actions.UPDATE:
       return {
