@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#D60000",
     borderRadius: 10,
     minWidth: Platform.OS === "ios" && Platform.isPad === true ? 460 : 300,
-    height: Platform.OS === "ios" && Platform.isPad === true ? 810 : 530,
+    height: Platform.OS === "ios" && Platform.isPad === true ? 950 : 530,
   },
 
   //spinning wheel modal title
@@ -387,13 +387,14 @@ const styles = StyleSheet.create({
   //random Category button
   categoriesButton: {
     backgroundColor: "#D60000",
-    width: Platform.OS === "ios" && Platform.isPad === true ? 390 : 220,
+    width: Platform.OS === "ios" && Platform.isPad === true ? 450 : 220,
     borderRadius: 10,
-    height: 50,
+    height: Platform.isPad ? 70 : 50,
     marginRight: "auto",
     marginLeft: "auto",
     borderWidth: 1,
     borderColor: "#FFFFFF",
+    padding: Platform.isPad ? 0 : 0,
   },
 
   //random category text
