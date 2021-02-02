@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./styles";
-import { Text, Overlay, View, Image } from "../../../atoms";
+import { Text, Overlay, View, Image, ScrollView, ActivityIndicator } from "../../../atoms";
 import { TouchableHighlight, TouchableOpacity, TouchableNativeFeedback } from "react-native";
 import ContentLoader, { Rect } from "react-content-loader/native";
-import { Dimensions } from "react-native";
+import { Dimensions, Platform } from "react-native";
 
 import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -26,50 +26,78 @@ const CheckInModal = ({
   timeUps,
   readLoading,
   onPressRedeemNow,
+  submitLoading,
+  checkInRecordLengths,
+  redeemed,
 }) => {
   // try {
   //   console.log(message.merchant[0]);
   // } catch (error) {
   //   console.log(error);
   // }
-  if (readLoading) {
+
+  if (submitLoading) {
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          <ContentLoader speed={1} width={"100%"} height={height} backgroundColor="#d9d9d9">
-            <Rect x="60%" y="0" rx="5" ry="5" width="40%" height="20" />
-            <Rect x="0" y="40" rx="5" ry="5" width="100%" height="200" />
-            <Rect x="0" y="250" rx="5" ry="5" width="50%" height="20" />
-            <Rect x="0" y="275" rx="5" ry="5" width="50%" height="20" />
-            <Rect x="0" y="320" rx="5" ry="5" width="100%" height={height} />
-          </ContentLoader>
+      <Overlay
+        isVisible={isVisible}
+        width="60%"
+        height="50%"
+        overlayBackgroundColor={"white"}
+        overlayStyle={styles.containerOverlay}
+        onBackdropPress={onClose}
+        backdropOpacity={0.3}
+      >
+        <View style={styles.contentContainer2}>
+          {/* <View style={styles.closeIcon2}>
+            <TouchableOpacity onPress={onClose}>
+              <Image
+                source={require("../../../../assets/chilliBuddyCheckin/closeButton.png")}
+                style={styles.redeemImageCrossStyle}
+              />
+            </TouchableOpacity>
+          </View> */}
+
+          <View style={styles.loadingBox}>
+            <ActivityIndicator size="large" color="black" style={styles.redeemImageCrossStyle} />
+
+            <View style={styles.desciptionBox2}>
+              <Text style={styles.emojiText2}>Loading Submiting</Text>
+              {/* <Text style={styles.subjectText2}>{happyDesciption}</Text> */}
+            </View>
+          </View>
         </View>
-      </ScrollView>
+      </Overlay>
     );
   } else {
     return (
       <Overlay
         isVisible={isVisible}
         width="65%"
-        height={!timeUps ? "70%" : "50%"}
+        height={
+          Platform.isPad ? "65%" : !timeUps ? (checkInRecordLengths == 28 ? "60%" : "70%") : "50%"
+        }
         overlayBackgroundColor={"white"}
         overlayStyle={styles.containerOverlay}
+        onBackdropPress={onClose}
       >
         <View style={styles.contentContainer}>
           {!timeUps ? (
             <View
-              position="absolute"
-              bottom={Platform.OS === "ios" ? 430 : 390}
-              right={-54}
+              // position="absolute"
+              bottom={
+                Platform.OS === "ios" ? (checkInRecordLengths == 28 && !timeUps ? -90 : -100) : -115
+              }
+              right={Platform.isPad ? -230 : Platform.OS === "ios" ? -120 : -110}
               resizeMode="contain"
               fontSize={10}
               shadowColor="#000"
               shadowOpacity={0.22}
               shadowRadius={2.22}
-              zIndex={1}
+              // zIndex={1}
               style={styles.closeIcon}
+              // elevation={5}
             >
-              <TouchableOpacity onPress={onClose}>
+              <TouchableOpacity onPress={onClose} activeOpacity={1}>
                 <Image
                   source={require("../../../../assets/chilliBuddyCheckin/closeButton.png")}
                   style={styles.redeemImageCrossStyle}
@@ -78,18 +106,19 @@ const CheckInModal = ({
             </View>
           ) : (
             <View
-              position="absolute"
-              bottom={Platform.OS === "ios" ? 320 : 200}
-              right={-54}
+              // position="absolute"
+              bottom={Platform.isPad ? -80 : Platform.OS === "ios" ? -110 : -115}
+              right={Platform.isPad ? -220 : Platform.OS === "ios" ? -120 : -105}
               resizeMode="contain"
               fontSize={10}
               shadowColor="#000"
               shadowOpacity={0.22}
               shadowRadius={2.22}
-              zIndex={1}
+              // zIndex={1}
               style={styles.closeIcon}
+              // elevation={5}
             >
-              <TouchableOpacity onPress={onClose}>
+              <TouchableOpacity onPress={onClose} activeOpacity={1}>
                 <Image
                   source={require("../../../../assets/chilliBuddyCheckin/closeButton.png")}
                   style={styles.redeemImageCrossStyle}
@@ -177,22 +206,9 @@ const CheckInModalError = ({
   message,
   rewardOnceThanOneOption,
   readLoading,
+  submitLoading,
 }) => {
-  if (readLoading) {
-    return (
-      <ScrollView>
-        <View style={styles.container}>
-          <ContentLoader speed={1} width={"100%"} height={height} backgroundColor="#d9d9d9">
-            <Rect x="60%" y="0" rx="5" ry="5" width="40%" height="20" />
-            <Rect x="0" y="40" rx="5" ry="5" width="100%" height="200" />
-            <Rect x="0" y="250" rx="5" ry="5" width="50%" height="20" />
-            <Rect x="0" y="275" rx="5" ry="5" width="50%" height="20" />
-            <Rect x="0" y="320" rx="5" ry="5" width="100%" height={height} />
-          </ContentLoader>
-        </View>
-      </ScrollView>
-    );
-  } else {
+  if (submitLoading) {
     return (
       <Overlay
         isVisible={isVisible}
@@ -200,6 +216,38 @@ const CheckInModalError = ({
         height="50%"
         overlayBackgroundColor={"white"}
         overlayStyle={styles.containerOverlay}
+        onBackdropPress={onClose}
+      >
+        <View style={styles.contentContainer2}>
+          {/* <View style={styles.closeIcon2}>
+            <TouchableOpacity onPress={onClose}>
+              <Image
+                source={require("../../../../assets/chilliBuddyCheckin/closeButton.png")}
+                style={styles.redeemImageCrossStyle}
+              />
+            </TouchableOpacity>
+          </View> */}
+
+          <View style={styles.loadingBox}>
+            <ActivityIndicator size="large" color="black" style={styles.redeemImageCrossStyle} />
+
+            <View style={styles.desciptionBox2}>
+              <Text style={styles.emojiText2}>Loading Submiting</Text>
+              {/* <Text style={styles.subjectText2}>{happyDesciption}</Text> */}
+            </View>
+          </View>
+        </View>
+      </Overlay>
+    );
+  } else {
+    return (
+      <Overlay
+        isVisible={isVisible}
+        width="60%"
+        height={Platform.isPad ? "65%" : "50%"}
+        overlayBackgroundColor={"white"}
+        overlayStyle={styles.containerOverlay}
+        onBackdropPress={onClose}
       >
         <View style={styles.contentContainer2}>
           <View style={styles.closeIcon2}>

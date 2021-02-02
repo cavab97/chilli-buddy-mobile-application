@@ -8,7 +8,7 @@ const initialState = {
 
   readLoading: false,
   readError: false,
-  
+
   modalVisible: false,
   submitError: {
     code: null,
@@ -264,7 +264,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.SUBMIT_CLAIM_SUCCESS:
       return {
         ...state,
-        submitLoading: true,
+        submitLoading: false,
         submitError: initialState.submitError,
         submitResult: initialState.submitResult,
         // modalVisible: false,
@@ -280,7 +280,7 @@ const reducer = (state = initialState, { type, payload }) => {
       };
 
     case actions.TOGGLE_MODAL:
-/*       console.log("!state.modalVisible");
+      /*       console.log("!state.modalVisible");
 
       console.log(!state.modalVisible); */
       return {

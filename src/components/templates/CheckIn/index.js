@@ -59,11 +59,15 @@ function Grid({
             {item.count % 80 != 0 ? (
               item.id % 8 != 0 ? (
                 <TouchableNativeFeedback
+                  activeOpacity={1}
                   style={styles.touchContainer}
                   onPress={() => onPressCheckIn(item)}
                   disabled={
-                    ((item.checked == false || item.checked) && checkInRecordLength !== item.id) ||
-                    voucher
+                    submitLoading
+                      ? true
+                      : ((item.checked == false || item.checked) &&
+                          checkInRecordLength !== item.id) ||
+                        voucher
                   }
                 >
                   {/* <TouchableOpacity     style={styles.touchContainer}>
@@ -107,11 +111,15 @@ function Grid({
                 </TouchableNativeFeedback>
               ) : item.checked != true ? (
                 <TouchableOpacity
+                  activeOpacity={1}
                   style={styles.touchContainer2}
                   onPress={() => onPressCheckIn(item)}
                   disabled={
-                    ((item.checked == false || item.checked) && checkInRecordLength !== item.id) ||
-                    voucher
+                    submitLoading
+                      ? true
+                      : ((item.checked == false || item.checked) &&
+                          checkInRecordLength !== item.id) ||
+                        voucher
                   }
                 >
                   <View
@@ -153,15 +161,16 @@ function Grid({
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity
+                  activeOpacity={1}
                   style={styles.touchContainer2}
                   onPress={() => onPressCheckIn(item)}
                   disabled={
                     !voucher
                       ? (item.checked == false || item.checked) && checkInRecordLength !== item.id
-                      : voucher && item.id == 24
+                      : checkInRecordLengths == 28
+                      ? voucher && item.id != 32
+                      : checkInRecordLengths == 21
                       ? voucher && item.id != 24
-                      : voucher && item.id == 28
-                      ? voucher && item.id != 28
                       : (item.checked == false || item.checked) && checkInRecordLength !== item.id
                   }
                 >
@@ -220,9 +229,10 @@ const CheckIn = ({
   redeemed,
   readInitialLoading,
 }) => {
-  if (readLoading) {
+  // console.log(redeemed);
+  if (readInitialLoading) {
     return (
-      <ScrollView>
+      <View>
         <View style={styles.container}>
           <ContentLoader speed={1} width={"100%"} height={height} backgroundColor="#d9d9d9">
             <Rect x="0" y="0" rx="5" ry="5" width="40%" height="40" />
@@ -267,7 +277,7 @@ const CheckIn = ({
             <Rect x="140" y="685" rx="5" ry="5" width="20%" height="70" />
           </ContentLoader>
         </View>
-      </ScrollView>
+      </View>
     );
   } else {
     return (
@@ -286,6 +296,8 @@ const CheckIn = ({
               readLoading={readLoading}
               onPressRedeemNow={onPressRedeemNow}
               redeemed={redeemed}
+              submitLoading={submitLoading}
+              checkInRecordLengths={checkInRecordLengths}
             />
           ) : (
             <CheckInModal
@@ -301,6 +313,8 @@ const CheckIn = ({
               readLoading={readLoading}
               onPressRedeemNow={onPressRedeemNow}
               redeemed={redeemed}
+              submitLoading={submitLoading}
+              checkInRecordLengths={checkInRecordLengths}
             />
           )
         ) : (
@@ -310,6 +324,7 @@ const CheckIn = ({
             onClose={onCLose}
             message={message}
             readLoading={readLoading}
+            submitLoading={submitLoading}
           />
         )}
         {/* {(console.log("catchCondition"), console.log(catchCondition))} */}

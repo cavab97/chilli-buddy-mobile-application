@@ -51,15 +51,9 @@ class index extends Component {
     let day = moment(checkIn.resetDate).diff(moment(), "days");
     let hour = moment(checkIn.resetDate).diff(moment(), "hours");
 
-    await this.props.readFromDatabase();
+    await this.props.readFromDatabaseInitial();
     await this.table24();
-    if (day < 1) {
-      this.intervalID = setInterval(() => this.tick(), 1000);
-    } else if (hour < 1) {
-      this.intervalID = setInterval(() => this.tick(), 1000);
-    } else {
-      this.intervalID = setInterval(() => this.tick(), 10000);
-    }
+    this.intervalID = setInterval(() => this.tick(), 1000);
     // this.tick();
   }
 
@@ -67,27 +61,36 @@ class index extends Component {
     const readError = this.props.checkInState.readError;
     const voucherID = this.props.checkIn.voucher.id;
 
-    if (prevProps.checkIn.voucher.id !== voucherID && voucherID) {
-      // alert(voucherID);
-    }
+    // if (prevProps.checkIn.voucher.id !== voucherID && voucherID) {
+    //   // alert(voucherID);
+    // }
 
-    if (prevProps.checkInState.readError !== readError && readError !== false) {
-      // alert(readError);
-    }
+    // if (prevProps.checkInState.readError !== readError && readError !== false) {
+    //   // await this.props.readFromDatabaseInitial();
+    //   // this.table24();
+    // }
 
     if (
       this.props.checkInState.submitError.message !== prevProps.checkInState.submitError.message &&
       this.props.checkInState.submitError.message
     ) {
-      // alert(this.props.checkInState.submitError.message);
+      await this.props.readFromDatabase();
+      this.table24();
     }
+    // console.log(this.props.checkInState.submitResult.message);
+    // console.log("middle");
+    // console.log(prevProps.checkInState.submitResult);
 
     if (
       this.props.checkInState.submitResult.message !==
         prevProps.checkInState.submitResult.message &&
       this.props.checkInState.submitResult.message
     ) {
-      await this.props.readFromDatabaseInitial();
+      // console.log(this.props.checkInState.submitResult.message);
+
+      console.log("trigger");
+      // console.log(prevProps.checkInState.submitResult);
+      await this.props.readFromDatabase();
       this.table24();
     }
   }
@@ -288,10 +291,7 @@ class index extends Component {
     this.props.toggleModal();
   };
 
-  onPressRedeemNow = () => {
-    this.props.toggleModal();
-
-    console.log("i am pressed");
+  onPressRedeemNow = async () => {
     let data;
     const id = this.props.checkIn.id;
     const voucherIds = this.props.checkIn.voucherIds;
@@ -299,13 +299,14 @@ class index extends Component {
       id,
       voucherIds,
     };
-
-    this.props.claim(data);
+    this.props.toggleModal();
+    await this.props.claim(data);
+    await this.props.readFromDatabase();
+    await this.table24();
+    this.props.toggleModal();
   };
 
   onPressCancel = async () => {
-    await this.props.toggleModal();
-
     let data;
     const id = this.props.checkIn.id;
     const voucherIds = this.props.checkIn.voucherIds;
@@ -315,11 +316,11 @@ class index extends Component {
       voucherIds,
     };
 
-    this.props.submitCancel(data);
+    await this.props.submitCancel(data);
+    await this.props.toggleModal();
   };
 
   onPressCheckIn = async (item) => {
-    const { submitLoading } = this.props;
     const { checkIn } = this.props.checkInState;
     const { checkInRecord } = this.props.checkInState.checkIn;
     const voucherID = this.props.checkIn.voucher.id;
@@ -378,67 +379,13 @@ class index extends Component {
     const { checkIn, readLoading, modalVisible, readInitialLoading } = this.props.checkInState;
 
     const { checkInRecord } = this.props.checkInState.checkIn;
-    /*if (checkIn.voucher.assignedDate.at == null) {
-      console.log("undefined");
-    }  else {
-      console.log("checkIn/assign date");
-      // console.log(checkIn.voucher.id);
 
-      console.log(
-        moment(checkIn.voucher.assignedDate.at.toString(), "HHmmss").format(
-          "MMMM Do YYYY, h:mm:ss a"
-        )
-      );
-      // 9 years ago
-
-      //console.log((new Date() - new Date(checkIn.voucher.assignedDate.at.seconds * 1000)) / 60000);
-
-    } */
-    // console.log("hello");
-
-    tableData24.forEach((table24) => {
+    tableData24.map((table24) => {
       if (table24.id === focusId) {
         table24.submitLoading = submitLoading;
+        // console.log(submitLoading);
       }
     });
-
-    // if (checkInRecord === undefined) {
-    //   console.log("success");
-    // } else {
-    //   if (checkInRecord.length < 3 && checkInRecord) {
-    //     y = 1;
-    //   } else if (checkInRecord.length >= 3 && checkInRecord.length <= 9) {
-    //     y = 2;
-    //   } else if (checkInRecord.length >= 10 && checkInRecord.length <= 16) {
-    //     y = 3;
-    //   } else if (checkInRecord.length >= 17 && checkInRecord.length <= 23) {
-    //     y = 4;
-    //   } else if (checkInRecord.length >= 24 && checkInRecord.length <= 28) {
-    //     y = 5;
-    //   }
-    // }
-
-    // console.log(checkInRecord[2] == undefined);
-
-    // this.props.checkInState.submitResult.message != null
-    //   ? this.props.checkInState.submitResult.message
-    //   : checkIn.voucher != null
-    //   ? checkIn.voucher
-    //   : null;
-    // console.log(checkInRecord[20].claim);
-    // console.log("checkInRecord[20].claim");
-
-    // console.log(this.props.checkInState.submitResult.message);
-    // console.log("checkInRecord[21].claim");
-
-    // console.log(checkIn.voucher.merchant.businessName);
-    //undefined
-
-    // try {
-    //   console.log(checkInRecord[20] != undefined);
-    // } catch (error) {
-    //   console.log(error);
-    // }
 
     switch (checkInRecord !== undefined) {
       case checkInRecord.length < 3:
@@ -462,7 +409,7 @@ class index extends Component {
         break;
     }
 
-    console.log(this.props.checkInState.checkIn.id);
+    // console.log(this.props.checkInState.checkIn.id);
 
     return (
       <CheckIn
@@ -490,7 +437,6 @@ class index extends Component {
         catchCondition={this.catchCondition()}
         onPressCancel={this.onPressCancel.bind(this)}
         catchConditionModal={this.catchConditionModal()}
-        readLoading={readLoading}
         onPressRedeemNow={this.onPressRedeemNow.bind(this)}
         redeemed={
           checkInRecord.length == 21
@@ -499,6 +445,7 @@ class index extends Component {
             ? checkInRecord[27].claim
             : false
         }
+        submitLoading={submitLoading}
       />
     );
   }
@@ -510,8 +457,6 @@ const mapStateToProps = (state) => {
   const checkInState = state.CheckIn;
   const { submitLoading } = state.CheckIn;
   const { checkIn } = state.CheckIn;
-
-  //console.log(uid);
 
   return {
     routeTicketState,

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 0,
     paddingLeft: 0,
-    paddingBottom: Platform.OS === "ios" ? size / 0.9 : Platform.isPad ? size / 0.95 : size / 0.85,
+    paddingBottom: Platform.isPad ? size / 0.9 : Platform.OS === "ios" ? size / 0.9 : size / 0.85,
   },
   itemContainer2: {
     width: size1w,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     paddingLeft: 0,
     paddingTop: 0,
-    paddingBottom: Platform.OS === "ios" ? size / 0.9 : Platform.isPad ? size / 0.95 : size / 0.85,
+    paddingBottom: Platform.isPad ? size / 0.9 : Platform.OS === "ios" ? size / 0.9 : size / 0.85,
   },
 
   checkinButton: {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderColor: "white",
     width: "95%",
-    height: size,
+    height: size - 2,
   },
   Checked24: {
     backgroundColor: "grey",
@@ -138,17 +138,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "white",
     width: "80%",
-    height: Platform.isPad ? "95%" : Platform.OS === "ios" ? "85%" : "90%",
-    top: Platform.isPad ? -10 : Platform.OS === "ios" ? -3 : -10,
+    height: Platform.isPad ? "97%" : Platform.OS === "ios" ? "85%" : "90%",
+    top: Platform.isPad ? -10 : Platform.OS === "ios" ? -2 : -12.5,
   },
   checkInBox224: {
     backgroundColor: "grey",
     borderRadius: 10,
     borderColor: "white",
     width: "80%",
-    height: "85%",
     height: Platform.isPad ? "95%" : Platform.OS === "ios" ? "85%" : "90%",
-    top: Platform.isPad ? -10 : Platform.OS === "ios" ? -3 : -10,
+    top: Platform.isPad ? -10 : Platform.OS === "ios" ? -2 : -12.5,
   },
   checkInBoxRed: {
     backgroundColor: "#D81212",
@@ -156,7 +155,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     width: "80%",
     height: Platform.isPad ? "97%" : Platform.OS === "ios" ? "85%" : "90%",
-    top: Platform.isPad ? -10 : Platform.OS === "ios" ? -2 : -10,
+    top: Platform.isPad ? -10 : Platform.OS === "ios" ? -2 : -12.5,
   },
   checkInBoxWhite2: {
     backgroundColor: "white",
@@ -172,13 +171,13 @@ const styles = StyleSheet.create({
   checkInBoxWhite224: {
     backgroundColor: "grey",
     width: "100%",
-    height: "100%",
+    height: Platform.isPad ? "89%" : "100%",
     justifyContent: "center",
     top: 0,
     borderBottomLeftRadius: 9,
     borderBottomRightRadius: 9,
     borderWidth: 5,
-    top: size / 19,
+    top: Platform.isPad ? size / 10 : size / 19,
   },
   checkInBoxWhite2Red: {
     backgroundColor: "white",
@@ -242,6 +241,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     top: Platform.isPad ? size / 3 : 34,
     position: "absolute",
+    zIndex: 1,
   },
 });
 

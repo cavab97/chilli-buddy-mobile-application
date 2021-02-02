@@ -10,9 +10,6 @@ import { Card, CardSection } from "@components/molecules";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
-// const facebook = require("../../../../assets/icons/facebook.png");      //social media icon
-// const instagram = require("../../../../assets/icons/instagram.png");
-// const whatsapp = require("../../../../assets/icons/whatsapp.png");
 
 const SingleVoucher = ({
   icon,
@@ -91,7 +88,8 @@ const SingleVoucher = ({
                 <Text style={styles.col2Text}>
                   {startDate == "AnyTime" || endDate == "AnyTime"
                     ? "Valid anytime."
-                    : moment(startDate).format("DD/MM/YYYY")}{" - "}
+                    : moment(startDate).format("DD/MM/YYYY")}
+                  {" - "}
                   {moment(endDate).format("DD/MM/YYYY")}
                   {}
                 </Text>
@@ -138,9 +136,9 @@ const SingleVoucher = ({
           <View style={columnOne}>
             <Image source={noImage} style={styles.logoImage} resizeMode="cover" />
           </View>
-          <View style={columnTwo}>
-            {/* <Text style={{ fontWeight: "bold", fontSize: 18, top: 40 }}>{SalesPoint}</Text> */}
-            {/* <Text
+          {/* <View style={columnTwo}> */}
+          {/* <Text style={{ fontWeight: "bold", fontSize: 18, top: 40 }}>{SalesPoint}</Text> */}
+          {/* <Text
                 style={{
                   fontSize: 18,
                   fontWeight: "bold",
@@ -154,19 +152,12 @@ const SingleVoucher = ({
                 {}
               </Text> */}
 
-            <View style={columnThree}>
-              <Text style={columnTwoText}>{!readLoading ? merchantName : " "}</Text>
-              <Text style={styles.columnTwoSubText}>{SalesPoint} Discount</Text>
-            </View>
-            {
-              /* status ? ( */
-              <TouchableOpacity style={styles.qrContainer} onPress={OpenCamPress}>
-                <Image
-                  source={require("../../../../assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
-                  style={styles.qrLogo}
-                />
-              </TouchableOpacity>
-              /* ) : (
+          <View style={columnTwo}>
+            <Text style={columnTwoText}>{!readLoading ? merchantName : " "}</Text>
+            <Text style={styles.columnTwoSubText}>{SalesPoint} Discount</Text>
+          </View>
+          {/* status ? ( */
+          /* ) : (
               <TouchableOpacity style={styles.qrContainer} onPress={OnInvalidPress}>
                 <Image
                   source={require("../../../../assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
@@ -174,17 +165,23 @@ const SingleVoucher = ({
                 />
               </TouchableOpacity>
             )} */
-
-              /* <View>
+          /* <View>
               {status ? (
                 <Text style={statusActiveText}> Active</Text>
               ) : (
                 <Text style={statusDeactiveText}>Deactive</Text>
               )}
-            </View> */
-            }
+            </View> */}
 
-            {/* <Text>{description}</Text> */}
+          {/* <Text>{description}</Text> */}
+          {/* </View> */}
+          <View style={styles.columnThree}>
+            <TouchableOpacity style={styles.qrContainer} onPress={OpenCamPress}>
+              <Image
+                source={require("../../../../assets/chilliBuddyCheckin/QR_Scan_Icon.png")}
+                style={styles.qrLogo}
+              />
+            </TouchableOpacity>
           </View>
         </CardSection>
       </Card>
