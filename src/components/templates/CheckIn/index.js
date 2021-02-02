@@ -158,9 +158,11 @@ function Grid({
                   disabled={
                     !voucher
                       ? (item.checked == false || item.checked) && checkInRecordLength !== item.id
-                      : item.id == 24
+                      : voucher && item.id == 24
                       ? voucher && item.id != 24
-                      : voucher && item.id != 28
+                      : voucher && item.id == 28
+                      ? voucher && item.id != 28
+                      : (item.checked == false || item.checked) && checkInRecordLength !== item.id
                   }
                 >
                   <View style={styles.checkInBoxRed}>
