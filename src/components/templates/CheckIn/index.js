@@ -333,7 +333,7 @@ const CheckIn = ({
           <View style={styles.CheckInTextContainer}>
             <Text style={styles.checkInTitle}>Check-In</Text>
             <Text style={styles.checkInSubTitle}>
-              Stand the chance to win a random a random prize by checking in everyday!
+              Stand the chance to win a random prize by checking in everyday!
             </Text>
             <Text style={styles.checkInSubRefreshing}>Refresh in: {time}</Text>
           </View>
