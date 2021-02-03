@@ -244,7 +244,7 @@ const CheckInModalError = ({
       <Overlay
         isVisible={isVisible}
         width="60%"
-        height={Platform.isPad ? "65%" : "50%"}
+        height={Platform.isPad ? "65%" : Platform.OS === "ios" ? "55%" : "50%"}
         overlayBackgroundColor={"white"}
         overlayStyle={styles.containerOverlay}
         onBackdropPress={onClose}

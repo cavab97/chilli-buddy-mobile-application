@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
   },
   columnTwo: {
     // padding: 25,
-    paddingTop: Platform.isPad ? 30 : Platform.OS === "ios" ? 25 : 5,
+    paddingTop: Platform.isPad ? 30 : Platform.OS === "ios" ? 25 : 13,
     marginLeft: Platform.isPad ? "10%" : Platform.OS === "ios" ? "14%" : "15%",
     // backgroundColor: "black",
     width: Platform.OS === "ios" ? size / 2.2 : size / 2.7,
