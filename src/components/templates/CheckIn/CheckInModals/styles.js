@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     // position: "absolute",
 
     bottom: Platform.isPad ? 30 : Platform.OS === "ios" ? 30 : 35,
-    right: Platform.isPad ? -200 : Platform.OS === "ios" ? -120 : -105,
+    right: Platform.isPad ? -200 : Platform.OS === "ios" ? -115 : -105,
     // backgroundColor: "red",
     resizeMode: "contain",
     fontSize: 10,

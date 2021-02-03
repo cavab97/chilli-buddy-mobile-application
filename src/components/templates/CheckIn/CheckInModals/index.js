@@ -251,7 +251,7 @@ const CheckInModalError = ({
       >
         <View style={styles.contentContainer2}>
           <View style={styles.closeIcon2}>
-            <TouchableOpacity onPress={onClose}>
+            <TouchableOpacity onPress={onClose} activeOpacity={1}>
               <Image
                 source={require("../../../../assets/chilliBuddyCheckin/closeButton.png")}
                 style={styles.redeemImageCrossStyle}
