@@ -59,57 +59,17 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       initial={isLoggedIn && isBooted && !forceUpdate}
       tabBarStyle={{ backgroundColor: Colors.PRIMARY }}
     >
-      <Stack
-        key="main"
-        hideNavBar={true}
-        tabs={true}
-        initial={true}
-        activeTintColor={Colors.SECONDARY}
-        showLabel={false}
-      >
-        <Scene
-          key="mainscreen"
-          component={MainScreen}
-          title="Main"
-          titleStyle={styles.title}
-          initial={true}
-          icon={icons.announce}
-          hideNavBar={true}
-        />
-        {/* <Scene
-                    key="Shops"
-                    component={Shops}
-                    title="Shops"
-                    titleStyle={styles.title}
-                    initial={false}
-                    icon={icons.merchant}
-                /> */}
-        <Scene
-          key="Promo"
-          component={Promo}
-          title="Promo"
-          titleStyle={styles.title}
-          initial={false}
-          icon={icons.promo}
-        />
-        {/* <Scene
-                    key="RouteGroups"
-                    component={RouteGroups}
-                    title="Event"
-                    titleStyle={styles.title}
-                    initial={false}
-                    icon={icons.award}
-                /> */}
-        <Scene
-          key="Profile"
-          component={Profile}
-          title="Profile"
-          titleStyle={styles.title}
-          initial={false}
-          icon={icons.profile}
-          hideNavBar={true}
-        />
+      {/* mainScreen  */}
+      <Stack key="Profile" back>
+        <Scene key="Profile" component={Profile} title="Profile" titleStyle={styles.title} />
       </Stack>
+      {/* <Stack key="Shops" back>
+        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
+      </Stack>
+      <Stack key="Shops" back>
+        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
+      </Stack> */}
+
       <Stack key="Shops" back>
         <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
       </Stack>
@@ -268,20 +228,21 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="CheckIn" back>
-        <Scene 
-          key="CheckIn" 
-          component={CheckIn} 
-          titleStyle={styles.title} 
-          navigationBarStyle = {{ borderBottomColor: 'transparent', elevation: 0 }}
+        <Scene
+          key="CheckIn"
+          component={CheckIn}
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />
       </Stack>
 
       <Stack key="Voucher" back>
-        <Scene key="Voucher" 
-          component={Voucher} 
-          //title="Vouchers" 
-          titleStyle={styles.title} 
-          navigationBarStyle = {{ borderBottomColor: 'transparent', elevation: 0 }}
+        <Scene
+          key="Voucher"
+          component={Voucher}
+          //title="Vouchers"
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />
       </Stack>
 

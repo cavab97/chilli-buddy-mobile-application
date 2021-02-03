@@ -29,7 +29,6 @@ import { InfoBox } from "@components/organisms/InfoBox";
 import { SmallCardList } from "../../organisms/SmallCardList";
 
 import { ImageSwiper } from "../../organisms/ImageSwiper";
-import { SpinningWheel } from "../../organisms/SpinningWheel";
 
 import ContentLoader, { Rect } from "react-content-loader/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -219,156 +218,49 @@ export default ({
 
   return (
     <View>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        //refresh main page function
-        //refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
-      >
-        <View style={styles.container}>
-          {/* The First screen Row */}
-          {readFail && (
-            <InfoBox
-              title="Memo"
-              message={`Your network connection are not healthy`}
-              titleStyle={styles.infoTitle}
-              messageStyle={styles.infoSubtitle}
-              containerStyle={styles.infoContainer}
-            />
-          )}
-          <View style={{ height: Constants.statusBarHeight }} />
-
-          <View>
-            {/* Column 1*/}
-            <View>
-              {/* Row1 for Name*/}
-              <View>
-                <Text>Hi,Darren {/* Name from firebase*/}</Text>
-              </View>
-              {/* Row2 for Good Morning*/}
-              <View>
-                <Text>Good Morning.{/* Follow condition by Time*/}</Text>
-              </View>
-            </View>
-            {/* Column 1*/}
-            <View>
-              {/* Row1 for Profile Button*/}
-
-              <TouchableOpacity></TouchableOpacity>
-            </View>
-          </View>
-
-          {/* The Second screen Row */}
-          <View> {/* Row1 for Search*/}</View>
-
-          {/* The Third screen Row */}
-          <View>
-            {/* The Slider*/}
-            {/* ImageSwiper */}
-            <View style={styles.subContainer1}>
-              {readLoadingHeaderImages ? (
-                <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
-                  <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
-                </ContentLoader>
-              ) : (
-                <ImageSwiper
-                  style={styles}
-                  slider={slider}
-                  autoplayTime={5}
-                  autoplay={true}
-                  noImageSlider={noImageHeaderSlider}
-                  condition={slider.length > 0}
-                  onPressImage={onPressImage}
-                />
-              )}
-            </View>
-            {readLoadingHeaderImages ? (
-              <View />
-            ) : randomAdPic !== undefined ? (
-              <AdvertisementPopUp />
-            ) : (
-              <View />
-            )}
-
-            {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
-
-            <SpinningWheel
-              spinningWheelModal={spinningWheelModal}
-              randomCategory={randomCategory}
-              spinStatus={spinStatus}
-              onPressRandomCategory={onPressRandomCategory}
-              wheelRotation={wheelRotation}
-              onCloseSpinningWheelModal={onCloseSpinningWheelModal}
-            />
-
-            {readLoadingCategoryList ? (
-              <View style={styles.subContainer2}>
-                <View>
-                  <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-                </View>
-                <VirtualizedList
-                  vertical
-                  showsHorizontalScrollIndicator={false}
-                  data={DATA}
-                  renderItem={({ index }) => <CardListLoading index={index} />}
-                  keyExtractor={(item) => item.key}
-                  getItemCount={() => {
-                    return 6;
-                  }}
-                  getItem={getItem}
-                />
-              </View>
-            ) : dataSource2.length != 0 ? (
-              <View style={styles.subContainer2}>
-                {/* {randomAdPic !== undefined && <AdvertisementPopUp />} */}
-                <View>
-                  <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-                </View>
-                <FlatList
-                  vertical
-                  showsHorizontalScrollIndicator={false}
-                  data={dataSource2}
-                  keyExtractor={(item) => item.id}
-                  renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
-                  scrollEnabled={dataSource2.length > 1 ? true : false}
-                />
-                <View style={{ height: 25 }} />
-              </View>
-            ) : (
-              <View style={styles.subContainer2}></View>
-            )}
-          </View>
-          {/* The quarter screen Row */}
-          <View>
-            <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
-              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
-              <Text style={styles.floatingCheckInTitle}>SHOPS</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
-              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
-              <Text style={styles.floatingCheckInTitle}>PROMOTIONS</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.containerForFloatingButton}
-              onPress={onOpenSpinningWheelModal}
-            >
-              <Image source={wheelIcon} style={styles.floatingButton} />
-              <Text>Spin Me</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
-              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
-              <Text style={styles.floatingCheckInTitle}>CHECK IN</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* The Last Row*/}
-          <View>
-            <Text>Hot Pick Today</Text>
-
-            <FlatList></FlatList>
-          </View>
+      {/* The First screen Row */}
+      <View>
+        {/* Column 1*/}
+        <View>
+          {/* Row1 for Name*/}
+          <View></View>
+          {/* Row2 for Good Morning*/}
+          <View></View>
         </View>
-      </ScrollView>
+        {/* Column 1*/}
+        <View>
+          {/* Row1 for Profile Button*/}
+          <View></View>
+        </View>
+      </View>
+
+      {/* The Second screen Row */}
+      <View>
+        {/* The Slider*/}
+        {/* ImageSwiper */}
+      </View>
+      {/* The Third screen Row */}
+      <View>
+        <View>
+          <Text>Shops</Text>
+        </View>
+        <View>
+          <Text>Promotions</Text>
+        </View>
+        <View>
+          <Text>Spin Me</Text>
+        </View>
+        <View>
+          <Text>Check-In</Text>
+        </View>
+      </View>
+
+      {/* The Last Row*/}
+      <View>
+        <Text>Hot Pick Today</Text>
+
+        <FlatList></FlatList>
+      </View>
     </View>
   );
 };
