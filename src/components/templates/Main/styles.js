@@ -17,13 +17,26 @@ const styles = StyleSheet.create({
     //minHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
     //maxHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
     minHeight: (windowWidth / 800) * 300,
-    maxHeight: (windowWidth / 800) * 600,
+    maxHeight: (windowWidth / 800) * 300,
 
-    marginHorizontal: 20,
-    marginVertical: 20,
+    // marginHorizontal: 20,
+    // marginVertical: 20,
     borderRadius: 50,
     backgroundColor: "red",
-    resizeMode: "cover",
+    // resizeMode: "cover",
+  },
+  subContainerOutside: {
+    marginHorizontal: 20,
+    marginVertical: 20,
+
+    minHeight: (windowWidth / 800) * 300,
+    maxHeight: (windowWidth / 800) * 300,
+    borderRadius: 50,
+  },
+  HeaderSlider: {
+    // resizeMode: "cover",
+    // borderRadius: 30,
+    // resizeMode: "cover",
   },
 
   subContainer2: {
@@ -60,6 +73,7 @@ const styles = StyleSheet.create({
   imageTopStyle: {
     width: "100%",
     height: "100%",
+    borderRadius: 25,
   },
   floatingCheckInButton: {
     borderWidth: 1,
@@ -381,13 +395,7 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     textAlign: "center",
   },
-  floatingCheckInTitle: {
-    fontSize: 9,
-    fontFamily: "HorizontalRounded",
-    color: "white",
-    paddingTop: 4,
-    textAlign: "center",
-  },
+
   // floatingShopButton: {
   //   borderWidth: 1,
   //   borderColor: "rgba(0,0,0,0.2)",
@@ -403,21 +411,113 @@ const styles = StyleSheet.create({
   //   borderColor: Colors.SECONDARY,
   // },
 
+  //Top section part
+
   firstSection: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
+
+  firstSectionText1: {
+    fontFamily: "HorizontalRounded",
+  },
+  firstSectionText2: {
+    fontFamily: "HorizontalRounded",
+    fontSize: 30,
+    color: Colors.RED,
+  },
+  firstSectionFirstColumn: {
+    marginHorizontal: 25,
+    marginVertical: 20,
+  },
+  firstSectionSecondColumn: {
+    marginHorizontal: 25,
+    marginVertical: 20,
+  },
+  //second section part
+
+  SecondSection: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    marginHorizontal: 25,
+  },
+  searchBarStyles: {
+    backgroundColor: "#FFF",
+    // borderWidth: 1, //no effect
+    borderRadius: 25,
+    shadowColor: "#000",
+    shadowRadius: 2.22,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 10,
+
+    // height: 25,
+  },
+  searchBarInputStyles: {
+    backgroundColor: "#FFF",
+  },
+  searchBarPlaceHolderStyles: {
+    color: Colors.RED,
+  },
   quarterSection: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 30,
+    marginHorizontal: 25,
+    marginVertical: 10,
   },
-  QuarterContainer1: { backgroundColor: "black", width: windowWidth / 6 },
-  QuarterContainer2: { backgroundColor: "black", width: windowWidth / 6 },
-  QuarterContainer3: { backgroundColor: "black", width: windowWidth / 6 },
-  QuarterContainer4: { backgroundColor: "black", width: windowWidth / 6 },
+  QuarterContainer1: {
+    backgroundColor: "#fff",
+    width: windowWidth / 5.5,
+    height: windowWidth / 6,
+    alignItems: "center",
+    borderWidth: 0.1,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    shadowColor: "#f5f5f5",
+    shadowRadius: 2.22,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 5,
+    // resizeMode: "cover",
+  },
+  //shopIcon
+  quarterIcon: {
+    width: "70%",
+    height: "80%",
+    // position: "relative",
+    resizeMode: "contain",
+    zIndex: 1,
+    paddingTop: 60,
+    bottom: 20,
+    aspectRatio: 70 / 100,
+  },
+
+  floatingCheckInTitle: {
+    fontSize: 10,
+    fontFamily: "HorizontalRounded",
+    color: "black",
+    paddingTop: 3,
+    textAlign: "center",
+  },
+  quarterInnerBox: {
+    marginTop: 0,
+    backgroundColor: Colors.RED,
+    width: "75%",
+    alignItems: "center",
+    height: "60%",
+    borderRadius: 10,
+  },
+  QuarterContainer2: { backgroundColor: "black", width: windowWidth / 6, alignItems: "center" },
+  QuarterContainer3: { backgroundColor: "black", width: windowWidth / 6, alignItems: "center" },
+  QuarterContainer4: { backgroundColor: "black", width: windowWidth / 6, alignItems: "center" },
 
   avatarContainer: {
     //marginRight: 12,
@@ -441,6 +541,14 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     //width: "100%",
     // height: "100%",
+  },
+  //last section
+  lastSection: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 25,
+    marginVertical: 10,
   },
 });
 

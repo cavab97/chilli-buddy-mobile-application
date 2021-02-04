@@ -40,11 +40,7 @@ const ImageSwiper = ({
                 onPress={onPressImage.bind(this, index)}
               >
                 {/* <View key={index} style={style.subContainer1}> */}
-                <Image
-                  source={{ uri: data.imageUri }}
-                  style={style.imageTopStyle}
-                  resizeMode={resizeMode}
-                />
+                <Image source={{ uri: data.imageUri }} resizeMode={resizeMode} />
 
                 {/* </View> */}
               </TouchableOpacity>

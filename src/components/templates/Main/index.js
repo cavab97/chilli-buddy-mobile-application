@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./styles";
 import { Platform, Dimensions, Animated } from "react-native";
+import { Colors } from "../../../settings/styles/theme";
+
 import { Actions } from "react-native-router-flux";
 //import Video  from "react-native-video";
 import { Video } from "expo-av";
@@ -76,6 +78,7 @@ export default ({
   onCheckInPressed,
   onPromotionsPressed,
   onShopsPressed,
+  onProfilePressed,
   user,
 }) => {
   const DATA = [];
@@ -92,6 +95,7 @@ export default ({
       key: "advertisementLoading" + index,
     };
   };
+
   const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
   const wheelIcon = require("../../../assets/icons/wheelIcon.png");
 
@@ -215,6 +219,10 @@ export default ({
 
   const wheelImage = require("../../../assets/categoryWheel.png");
   const resultImage = require("../../../assets/categoryResult.png");
+  const shopsIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/shop_Icon.png");
+  const salesIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/sale_Icon.png");
+  const spinWheel = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/spinWheel_Icon.png");
+  const checkIn = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/checkIn_Icon.png");
 
   let { width } = Dimensions.get("window");
   width = width * 0.7;
@@ -245,23 +253,23 @@ export default ({
 
           <View style={styles.firstSection}>
             {/* Column 1*/}
-            <View>
+            <View style={styles.firstSectionFirstColumn}>
               {/* Row1 for Name*/}
               <View>
                 {/* Name from firebase*/}
-                <Text>Hi,Darren </Text>
+                <Text style={styles.firstSectionText1}>Hi,Darren </Text>
               </View>
               {/* Row2 for Good Morning*/}
               <View>
                 {/* Follow condition by Time*/}
-                <Text>Good Morning.</Text>
+                <Text style={styles.firstSectionText2}>Good Morning.</Text>
               </View>
             </View>
             {/* Column 1*/}
-            <View>
+            <View style={styles.firstSectionSecondColumn}>
               {/* Row1 for Profile Button*/}
 
-              <TouchableOpacity style={styles.avatarContainer}>
+              <TouchableOpacity style={styles.avatarContainer} onPress={onProfilePressed}>
                 <ImageInfo
                   banner={photoURL ? photoURL : require("../../../assets/DefaultAvatar.jpg")}
                   imageContainer={styles.profileImageStyle}
@@ -272,15 +280,23 @@ export default ({
           </View>
 
           {/* The Second screen Row */}
-          <View>
-            <SearchBar placeholder="Type Here..." />
+          <View style={styles.SecondSection}>
+            <SearchBar
+              placeholder="Search"
+              lightTheme={true}
+              searchIcon={true}
+              containerStyle={styles.searchBarStyles}
+              inputContainerStyle={styles.searchBarInputStyles}
+              placeholderTextColor="#f7d0d0"
+              round={true}
+            />
           </View>
 
           {/* The Third screen Row */}
           <View>
             {/* The Slider*/}
             {/* ImageSwiper */}
-            <View style={styles.subContainer1}>
+            <View style={styles.subContainerOutside}>
               {readLoadingHeaderImages ? (
                 <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
                   <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
@@ -318,29 +334,39 @@ export default ({
               spinningWheel={spinningWheel}
             />
           </View>
+
           {/* The quarter screen Row */}
           <View style={styles.quarterSection}>
             <TouchableOpacity style={styles.QuarterContainer1} onPress={onShopsPressed}>
-              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
+              <View style={styles.quarterInnerBox}>
+                <Image source={shopsIcon} transition={false} style={styles.quarterIcon} />
+              </View>
+              {/* <View style={styles.innerRedBackGround}></View> */}
               <Text style={styles.floatingCheckInTitle}>Shops</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.QuarterContainer2} onPress={onPromotionsPressed}>
-              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
+
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onPromotionsPressed}>
+              <View style={styles.quarterInnerBox}>
+                <Image source={salesIcon} transition={false} style={styles.quarterIcon} />
+              </View>
               <Text style={styles.floatingCheckInTitle}>Promotions</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.QuarterContainer3} onPress={onOpenSpinningWheelModal}>
-              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onOpenSpinningWheelModal}>
+              <View style={styles.quarterInnerBox}>
+                <Image source={spinWheel} transition={false} style={styles.quarterIcon} />
+              </View>
               <Text style={styles.floatingCheckInTitle}>Spin Me</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.QuarterContainer4} onPress={onCheckInPressed}>
-              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onCheckInPressed}>
+              <View style={styles.quarterInnerBox}>
+                <Image source={checkIn} transition={false} style={styles.quarterIcon} />
+              </View>
               <Text style={styles.floatingCheckInTitle}>Check In</Text>
             </TouchableOpacity>
           </View>
 
           {/* The Last Row*/}
-          <View>
+          <View style={styles.lastSection}>
             <Text>Hot Pick Today</Text>
 
             {/* <FlatList></FlatList> */}

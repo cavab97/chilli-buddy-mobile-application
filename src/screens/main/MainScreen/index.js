@@ -74,6 +74,9 @@ class index extends Component {
   onPromotionsPressed() {
     Actions.Promo();
   }
+  onProfilePressed() {
+    Actions.Profile();
+  }
 
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
@@ -389,6 +392,7 @@ class index extends Component {
         onCheckInPressed={this.onCheckInPressed.bind(this)}
         onPromotionsPressed={this.onPromotionsPressed.bind(this)}
         onShopsPressed={this.onShopsPressed.bind(this)}
+        onProfilePressed={this.onProfilePressed.bind(this)}
         user={user}
       />
     );
