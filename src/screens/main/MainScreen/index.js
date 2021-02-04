@@ -301,7 +301,14 @@ class index extends Component {
       readErrorAdvertisement,
       readErrorHeaderImages,
     } = this.props;
-
+    let {
+      user,
+      notifications,
+      ownRewards,
+      photo,
+      readLoadingNotification,
+      readLoadingReward,
+    } = this.props;
     const readFail =
       readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
 
@@ -383,6 +390,7 @@ class index extends Component {
         spinStatus={this.state.spinStatus}
         onCheckInPressed={this.onCheckInPressed.bind(this)}
         checkIn={this.onPressCheckIn.bind(this)}
+        user={user}
       />
     );
   }
@@ -406,6 +414,8 @@ const mapStateToProps = (state) => {
 
   const openModal = state.Advertisement.openModal;
 
+  const user = state.Auth.user;
+
   return {
     categories,
     tags,
@@ -422,6 +432,7 @@ const mapStateToProps = (state) => {
     readErrorHeaderImages,
     openModal,
     spinningWheelModal,
+    user,
   };
 };
 

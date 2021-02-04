@@ -6,6 +6,8 @@ import { Actions } from "react-native-router-flux";
 import { Video } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ImageInfo } from "../../molecules";
+
 //import WheelOfFortune from "react-native-wheel-of-fortune";
 
 import {
@@ -20,6 +22,7 @@ import {
   Modal,
   Button,
   RefreshControl,
+  SearchBar,
 } from "../../atoms";
 
 import { Card, CardSection } from "../../molecules";
@@ -72,6 +75,7 @@ export default ({
   spinStatus,
   onCheckInPressed,
   checkIn,
+  user,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -206,6 +210,7 @@ export default ({
       </TouchableOpacity>
     );
   };
+  const { displayName, email, phoneNumber, photoURL } = user;
 
   const wheelImage = require("../../../assets/categoryWheel.png");
   const resultImage = require("../../../assets/categoryResult.png");
@@ -237,28 +242,38 @@ export default ({
           )}
           <View style={{ height: Constants.statusBarHeight }} />
 
-          <View>
+          <View style={styles.firstSection}>
             {/* Column 1*/}
             <View>
               {/* Row1 for Name*/}
               <View>
-                <Text>Hi,Darren {/* Name from firebase*/}</Text>
+                {/* Name from firebase*/}
+                <Text>Hi,Darren </Text>
               </View>
               {/* Row2 for Good Morning*/}
               <View>
-                <Text>Good Morning.{/* Follow condition by Time*/}</Text>
+                {/* Follow condition by Time*/}
+                <Text>Good Morning.</Text>
               </View>
             </View>
             {/* Column 1*/}
             <View>
               {/* Row1 for Profile Button*/}
 
-              <TouchableOpacity></TouchableOpacity>
+              <TouchableOpacity style={styles.avatarContainer}>
+                <ImageInfo
+                  banner={photoURL ? photoURL : require("../../../assets/DefaultAvatar.jpg")}
+                  imageContainer={styles.profileImageStyle}
+                  imageStyle={styles.image}
+                />
+              </TouchableOpacity>
             </View>
           </View>
 
           {/* The Second screen Row */}
-          <View> {/* Row1 for Search*/}</View>
+          <View>
+            <SearchBar placeholder="Type Here..." />
+          </View>
 
           {/* The Third screen Row */}
           <View>
@@ -298,64 +313,26 @@ export default ({
               onPressRandomCategory={onPressRandomCategory}
               wheelRotation={wheelRotation}
               onCloseSpinningWheelModal={onCloseSpinningWheelModal}
+              fadeWheel={fadeWheel}
+              spinningWheel={spinningWheel}
             />
-
-            {readLoadingCategoryList ? (
-              <View style={styles.subContainer2}>
-                <View>
-                  <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-                </View>
-                <VirtualizedList
-                  vertical
-                  showsHorizontalScrollIndicator={false}
-                  data={DATA}
-                  renderItem={({ index }) => <CardListLoading index={index} />}
-                  keyExtractor={(item) => item.key}
-                  getItemCount={() => {
-                    return 6;
-                  }}
-                  getItem={getItem}
-                />
-              </View>
-            ) : dataSource2.length != 0 ? (
-              <View style={styles.subContainer2}>
-                {/* {randomAdPic !== undefined && <AdvertisementPopUp />} */}
-                <View>
-                  <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-                </View>
-                <FlatList
-                  vertical
-                  showsHorizontalScrollIndicator={false}
-                  data={dataSource2}
-                  keyExtractor={(item) => item.id}
-                  renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
-                  scrollEnabled={dataSource2.length > 1 ? true : false}
-                />
-                <View style={{ height: 25 }} />
-              </View>
-            ) : (
-              <View style={styles.subContainer2}></View>
-            )}
           </View>
           {/* The quarter screen Row */}
-          <View>
-            <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
+          <View style={styles.quarterSection}>
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onCheckInPressed}>
               <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
               <Text style={styles.floatingCheckInTitle}>SHOPS</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
+            <TouchableOpacity style={styles.QuarterContainer2} onPress={onCheckInPressed}>
               <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
               <Text style={styles.floatingCheckInTitle}>PROMOTIONS</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.containerForFloatingButton}
-              onPress={onOpenSpinningWheelModal}
-            >
-              <Image source={wheelIcon} style={styles.floatingButton} />
-              <Text>Spin Me</Text>
+            <TouchableOpacity style={styles.QuarterContainer3} onPress={onCheckInPressed}>
+              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
+              <Text style={styles.floatingCheckInTitle}>CHECK IN</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
+            <TouchableOpacity style={styles.QuarterContainer4} onPress={onCheckInPressed}>
               <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
               <Text style={styles.floatingCheckInTitle}>CHECK IN</Text>
             </TouchableOpacity>
@@ -365,7 +342,7 @@ export default ({
           <View>
             <Text>Hot Pick Today</Text>
 
-            <FlatList></FlatList>
+            {/* <FlatList></FlatList> */}
           </View>
         </View>
       </ScrollView>

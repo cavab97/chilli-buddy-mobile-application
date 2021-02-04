@@ -382,19 +382,59 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     textAlign: "center",
   },
-  floatingShopButton: {
+  // floatingShopButton: {
+  //   borderWidth: 1,
+  //   borderColor: "rgba(0,0,0,0.2)",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   width: 70,
+  //   position: "absolute",
+  //   bottom: 10,
+  //   right: 10,
+  //   height: 70,
+  //   backgroundColor: "#D60000",
+  //   borderRadius: 100,
+  //   borderColor: Colors.SECONDARY,
+  // },
+
+  firstSection: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  quarterSection: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 30,
+  },
+  QuarterContainer1: { backgroundColor: "black", width: windowWidth / 6 },
+  QuarterContainer2: { backgroundColor: "black", width: windowWidth / 6 },
+  QuarterContainer3: { backgroundColor: "black", width: windowWidth / 6 },
+  QuarterContainer4: { backgroundColor: "black", width: windowWidth / 6 },
+
+  avatarContainer: {
+    //marginRight: 12,
+    marginTop: 0,
+
+    // paddingLeft: 200,
+  },
+  profileImageStyle: {
+    backgroundColor: Colors.GRAY_DARK,
+    height: 50,
+    width: 50,
+    borderRadius: 80,
     borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.2)",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 70,
-    position: "absolute",
-    bottom: 10,
-    right: 10,
-    height: 70,
-    backgroundColor: "#D60000",
+    borderColor: "white",
+  },
+  image: {
+    flex: 1,
     borderRadius: 100,
-    borderColor: Colors.SECONDARY,
+    width: "100%",
+
+    resizeMode: "cover",
+    //width: "100%",
+    // height: "100%",
   },
 });
 

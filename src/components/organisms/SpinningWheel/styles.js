@@ -1,4 +1,6 @@
 import { StyleSheet, Platform } from "react-native";
+import { Colors } from "../../../settings/styles/theme";
+
 const styles = StyleSheet.create({
   modelBackground: {
     flex: 1,

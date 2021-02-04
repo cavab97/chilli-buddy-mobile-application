@@ -13,9 +13,13 @@ const SpinningWheel = ({
   onPressRandomCategory,
   wheelRotation,
   onCloseSpinningWheelModal,
+  fadeWheel,
+  spinningWheel,
 }) => {
   const resultImage = require("../../../assets/categoryResult.png");
   const wheelImage = require("../../../assets/categoryWheel.png");
+  let { width } = Dimensions.get("window");
+  width = width * 0.7;
   const rotation = wheelRotation.interpolate({
     inputRange: [0, 360],
     outputRange: ["0deg", "360deg"],
@@ -28,8 +32,7 @@ const SpinningWheel = ({
             <View>
               <View style={{ alignItems: "center", paddingTop: 30 }}>
                 <Text style={styles.spinningTitle2}>
-                  {" "}
-                  We have a great choice of Restaurants near you{" "}
+                  We have a great choice of Restaurants near you
                 </Text>
                 <Text style={styles.subTitle}> Let's go! </Text>
               </View>
@@ -74,8 +77,7 @@ const SpinningWheel = ({
               disabled={spinStatus}
             >
               <Text style={styles.buttonText}>
-                {" "}
-                {spinStatus ? "SPINNING..." : randomCategory ? "SPIN AGAIN" : "START"}{" "}
+                {spinStatus ? "SPINNING..." : randomCategory ? "SPIN AGAIN" : "START"}
               </Text>
             </TouchableOpacity>
           </View>

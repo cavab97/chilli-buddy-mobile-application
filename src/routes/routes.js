@@ -60,9 +60,30 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       tabBarStyle={{ backgroundColor: Colors.PRIMARY }}
     >
       {/* mainScreen  */}
+
+      <Stack key="MainScreen">
+        <Scene
+          key="MainScreen"
+          component={MainScreen}
+          title="MainScreen"
+          titleStyle={styles.title}
+          initial={true}
+          icon={icons.announce}
+          hideNavBar={true}
+        />
+      </Stack>
       <Stack key="Profile" back>
         <Scene key="Profile" component={Profile} title="Profile" titleStyle={styles.title} />
       </Stack>
+
+      {/* <Stack key="RedeemedVoucherScreen">
+        <Scene
+          key="RedeemedVoucherScreen"
+          component={RedeemedVoucherScreen}
+          title="Redeem Voucher"
+          titleStyle={styles.title}
+        />
+      </Stack> */}
       {/* <Stack key="Shops" back>
         <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
       </Stack>
