@@ -40,12 +40,15 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 40,
     borderTopRightRadius: 40,
     alignItems: "center",
+    padding: 0,
   },
   containerOverlay2: {
     borderTopLeftRadius: 40,
     borderBottomRightRadius: 40,
     borderBottomLeftRadius: 40,
     borderTopRightRadius: 40,
+
+    padding: 0,
   },
 
   // ///icon view
@@ -65,8 +68,8 @@ const styles = StyleSheet.create({
   closeIcon2: {
     // position: "absolute",
 
-    bottom: Platform.isPad ? 45 : Platform.OS === "ios" ? 25 : 35,
-    left: Platform.isPad ? 340 : Platform.OS === "ios" ? 195 : 175,
+    bottom: Platform.isPad ? 45 : Platform.OS === "ios" ? 25 : 25,
+    left: Platform.isPad ? 340 : Platform.OS === "ios" ? 195 : 185,
     // backgroundColor: "red",
     resizeMode: "contain",
     fontSize: 10,
@@ -196,6 +199,7 @@ const styles = StyleSheet.create({
     // position: "absolute",
     // height: "100%",
     // backgroundColor: "red",
+    // marginBottom: 10,
   },
   voucherValue: {
     fontSize: size / 13,

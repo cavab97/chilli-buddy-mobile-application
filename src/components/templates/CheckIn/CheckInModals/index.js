@@ -90,8 +90,8 @@ const CheckInModal = ({
       >
         <View
           // position="absolute"
-          bottom={Platform.OS === "ios" ? 30 : 30}
-          left={Platform.isPad ? 230 : Platform.OS === "ios" ? 120 : 110}
+          bottom={Platform.OS === "ios" ? 30 : 25}
+          left={Platform.isPad ? 230 : Platform.OS === "ios" ? 120 : 115}
           resizeMode="contain"
           fontSize={10}
           shadowColor="#000"
@@ -217,7 +217,7 @@ const CheckInModalError = ({
       <Overlay
         isVisible={isVisible}
         width={Platform.isPad ? "50%" : "60%"}
-        height={Platform.isPad ? "50%" : Platform.OS === "ios" ? "35%" : "40%"}
+        height={Platform.isPad ? "50%" : Platform.OS === "ios" ? "35%" : "43%"}
         overlayBackgroundColor={"white"}
         overlayStyle={styles.containerOverlay2}
         onBackdropPress={onClose}
