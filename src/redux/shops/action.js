@@ -21,9 +21,15 @@ const actions = {
   READ_FROM_DATABASE_SUCCESS: type + "READ_FROM_DATABASE_SUCCESS",
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
 
+  READ_PROMO_FROM_DATABASE: type + "READ_PROMO_FROM_DATABASE",
+  READ_PROMO_FROM_DATABASE_SUCCESS: type + "READ_PROMO_FROM_DATABASE_SUCCESS",
+  READ_PROMO_FROM_DATABASE_ERROR: type + "READ_PROMO_FROM_DATABASE_ERROR",
+
   READ_RECORD: type + "READ_RECORD",
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
   READ_RECORD_ERROR: type + "READ_RECORD_ERROR",
+
+  TOGGLE_SHOP_FAVOURITE: type + "TOGGLE_SHOP_FAVOURITE"
 };
 
 const { firestore } = firebase;
@@ -59,7 +65,64 @@ export function verifyPermission() {
   };
 }
 
-export function loadShops({ radius, latitude, longtitude, selectedCategory }) {
+export function loadShops({ 
+  radius, 
+  latitude, 
+  longtitude, 
+  selectedCategory = null,
+  selectedTag = null,
+}) {
+  let limit = 0;
+  return (dispatch, getState) => {
+    dispatch({ type: actions.READ_FROM_DATABASE });
+    return new Promise(async (resolve, reject) => {
+      try {
+        radius < 15 ? (limit = 0) : (limit = 100);
+        const shops = await objectDataServices.geoReadObjects({
+          l: { latitude, longtitude },
+          radius,
+          limit,
+          selectedCategory,
+          selectedTag,
+        });
+
+        const { uid } = getState().Auth.user;
+        const { favourites } = getState().Favourite;
+
+        shops.map((shop) => {
+          const isFavourite = favourites.filter((favourite) => {
+            return favourite.shopIds[0] === shop.id;
+          });
+
+          if (isFavourite.length > 0) {
+            shop.isFavourite = isFavourite[0].isFavourite;
+          } else {
+            shop.isFavourite = false;
+          }
+        });
+
+        resolve(shops);
+
+        dispatch({
+          type: actions.READ_FROM_DATABASE_SUCCESS,
+          payload: { data: shops },
+        });
+
+      } catch (error) {
+
+        console.log(error);
+
+        reject(error);
+        dispatch({
+          type: actions.READ_FROM_DATABASE_ERROR,
+          payload: { error },
+        });
+      }
+    });
+  };
+}
+
+/* export function loadShops({ radius, latitude, longtitude, selectedCategory }) {
   let limit = 0;
   return (dispatch) => {
     dispatch({ type: actions.READ_FROM_DATABASE });
@@ -135,23 +198,23 @@ export function loadShops({ radius, latitude, longtitude, selectedCategory }) {
     });
   };
 }
-
+ */
 export function readFromDatabase(groupId) {
   return (dispatch) => {
-    dispatch({ type: actions.READ_FROM_DATABASE });
+    dispatch({ type: actions.READ_PROMO_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
       try {
         const promotions = await objectDataServices.readObjects(groupId);
         resolve(promotions);
         dispatch({
-          type: actions.READ_FROM_DATABASE_SUCCESS,
+          type: actions.READ_PROMO_FROM_DATABASE_SUCCESS,
           payload: { data: promotions },
         });
       } catch (error) {
         console.log(error);
         reject(error);
         dispatch({
-          type: actions.READ_FROM_DATABASE_ERROR,
+          type: actions.READ_PROMO_FROM_DATABASE_ERROR,
           payload: { error },
         });
       }
@@ -187,6 +250,27 @@ export function removeListenerToRecord() {
   return (dispatch) => {
     console.log("Removed shop listener");
     objectDataServices.removeListenerToRecord();
+  };
+}
+
+export function onFavouriteClick(shopId) {
+  return (dispatch, getState) => {
+    return new Promise(async (resolve, reject) => {
+      const shops = getState().Shops.shops;
+      const newShops = shops.map((shop) => {
+        if (shop.id === shopId) {
+          shop.isFavourite = !shop.isFavourite;
+        }
+        return shop;
+      });
+
+
+      resolve(newShops);
+      dispatch({
+        type: actions.TOGGLE_SHOP_FAVOURITE,
+        payload: { data: newShops },
+      });
+    });
   };
 }
 

@@ -4,7 +4,14 @@ import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
 import { Platform } from "react-native";
 
-import { verifyPermission, loadShops } from "@redux/shops/action";
+import { verifyPermission, loadShops, onFavouriteClick } from "@redux/shops/action";
+
+import {
+  update,
+  submitToBackend,
+  readFromDatabase,
+  updateIsFavourite,
+} from "@redux/favourite/action";
 
 import styles from "./styles";
 import clone from "clone";
@@ -18,12 +25,14 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { ShopList } from "@components/templates";
 
 const ITEMS_PER_PAGE = 10;
+const RADIUS = 50;
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      radiusAddition: 1,
       data: [],
       dataSource: [],
       filteredData: [],
@@ -32,10 +41,10 @@ class index extends Component {
       isRefreshing: false,
       tags: props.tags,
       categories: props.categories,
-      selectedCategory: props.selectedCategory,
+      selectedCategory: { id: "", tags: ["All"], title: "All" },
       selectedTag: "All", //default all tag selected
     };
-    this.onSubscribePressed = this.onSubscribePressed.bind(this);
+    //this.onSubscribePressed = this.onSubscribePressed.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
@@ -58,6 +67,43 @@ class index extends Component {
   };
 
   handleRefresh = async () => {
+    let location = await Location.getCurrentPositionAsync({});
+
+    await this.props.loadShops({
+      radius: RADIUS * this.state.radiusAddition,
+      latitude: location.coords.latitude,
+      longtitude: location.coords.longitude,
+      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+    });
+    //await this.props.readFromDatabase();
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    const currentShop = this.props.shopState.shops;
+    const readError = this.props.shopState.readError;
+   // const readLoading = this.props.bookmarkState.readLoading;
+
+    // if no promo in the radius, call handleRefresh read again by increase radiusAddition state
+    if (currentShop.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
+      if (prevState.radiusAddition === this.state.radiusAddition) {
+        this.setState({ radiusAddition: this.state.radiusAddition * 3 });
+      }
+      this.handleRefresh();
+    }
+
+    // if get promo in the radius, reset the radiusAddition to 1 for read next time
+    if (prevProps.shopState.shops !== currentShop && currentShop.length > 0) {
+      this.setState({ radiusAddition: 1 });
+    }
+
+    if (prevProps.shopState.readError !== readError && readError !== false) {
+      alert(readError);
+    }
+
+  }
+
+  /* handleRefresh = async () => {
     const radius = 50;
     let i = 1;
     this.setState({ isRefreshing: true });
@@ -86,7 +132,7 @@ class index extends Component {
       //isLoading:false
     });
     i = 1;
-  };
+  }; */
 
   handleLoadMore() {
     //this.setState({isLoading:true})
@@ -152,68 +198,6 @@ class index extends Component {
     Actions.SingleMerchant({ shopId: item.id, distance: item.distance });
   }
 
-  onSubscribePressed = async (status, shopID, index) => {
-    const data = this.state.data;
-    //console.log(this.props.idToken)
-    let subscribedList = this.props.subscribedList;
-
-    if (!status) {
-      subscribedList.push(shopID);
-      this.props.updateSubscribeList({ subscribedList });
-      data[index].subscribed = true;
-      this.setState({ data: data });
-
-      fetch(`${FIREBASE_CLOUD_FUNCTION}/subscribes/subscribe`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          Accept: "application/json",
-          Authorization: "Bearer" + this.props.idToken,
-        },
-        body: JSON.stringify({ shopID }),
-      })
-        .then(async (response) => {
-          const responseJson = await response.json();
-
-          if (response.status === 200) {
-          } else {
-            console.log("Subscribe error :" + JSON.stringify(responseJson));
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      subscribedList = subscribedList.filter((item) => item !== shopID);
-      this.props.updateSubscribeList({ subscribedList });
-      data[index].subscribed = false;
-      this.setState({ data: data });
-
-      fetch(`${FIREBASE_CLOUD_FUNCTION}/subscribes/unsubscribe`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          Accept: "application/json",
-          Authorization: "Bearer" + this.props.idToken,
-        },
-        body: JSON.stringify({ shopID }),
-      })
-        .then(async (response) => {
-          const responseJson = await response.json();
-
-          if (response.status === 200) {
-          } else {
-            console.log("unSubscribe error :" + JSON.stringify(responseJson));
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  };
-
   onCategoryChange = (value) => {
     this.setState({ selectedCategory: value, selectedTag: "All" });
     this.handleRefresh();
@@ -225,17 +209,51 @@ class index extends Component {
     this.filterData();
   };
 
+  lookingForFavourite({ shopId } = null) {
+    const favourites = this.props.favouriteState.favourites;
+
+    let favouriteId = null;
+
+    favourites.forEach((favourite) => {
+      if (favourite.shopIds[0] === shopId) {
+        favouriteId = favourite.id;
+      }
+    });
+    return favouriteId;
+  }
+
+  onFavouritePressed = async (item) => {
+    const shopId = item.id;
+    const favouriteId = this.lookingForFavourite({ shopId });
+    const isFavourite = !item.isFavourite;
+
+    this.props.onFavouriteClick(shopId);
+    this.props.updateIsFavourite(shopId);
+
+    if (favouriteId === null) {
+      const data = { shopId, isFavourite };
+      await this.props.submitToBackend(data, "create");
+    } else {
+      const data = { favouriteId, isFavourite };
+      await this.props.submitToBackend(data, "update");
+    }
+  };
+
   render() {
+
+    const { shops } = this.props.shopState;
+
     return (
       <ShopList
         handleRefresh={this.handleRefresh.bind(this)}
         handleLoadMore={this.handleLoadMore.bind(this)}
         filterData={this.filterData.bind(this)}
         renderFooter={this.renderFooter.bind(this)}
+        onFavouritePressed={this.onFavouritePressed.bind(this)}
         onMerchantPressed={this.onMerchantPressed.bind(this)}
-        onSubscribePressed={this.onSubscribePressed.bind(this)}
         onCategoryChange={this.onCategoryChange.bind(this)}
         onTagChange={this.onTagChange.bind(this)}
+        shopData={shops}
         state={this.state}
         props={this.props}
         displayCategory={this.props.selectedCategory.id}
@@ -249,8 +267,29 @@ const mapStateToProps = (state) => {
   const { uid } = state.Auth.user;
   const { subscribedList, idToken } = state.Auth;
   const { shops } = state.Shops;
+  const favouriteState = state.Favourite;
+  const shopState = state.Shops;
 
-  return { categories, tags, uid, idToken, subscribedList, shops };
+  return { 
+    categories, 
+    tags, 
+    uid, 
+    idToken, 
+    subscribedList, 
+    shops,
+    favouriteState,
+    shopState
+  };
 };
 
-export default connect(mapStateToProps, { verifyPermission, loadShops })(index);
+export default connect(
+  mapStateToProps, 
+{ 
+  verifyPermission, 
+  loadShops,
+  onFavouriteClick,
+  update,
+  submitToBackend,
+  readFromDatabase,
+  updateIsFavourite,
+})(index);

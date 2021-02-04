@@ -151,8 +151,8 @@ class index extends Component {
     const isBookmark = !item.isBookmark;
     this.props.onBookmarkClick(promoId);
     this.props.updateIsBookmark(promoId);
-    console.log("bookmark" + JSON.stringify(this.props.bookmarkState.bookmarks));
-    console.log("promotion" + JSON.stringify(this.props.promotionState.promo));
+    /* console.log("bookmark" + JSON.stringify(this.props.bookmarkState.bookmarks));
+    console.log("promotion" + JSON.stringify(this.props.promotionState.promo)); */
     if (bookmarkId === null) {
       const data = { shopId, promoId, isBookmark };
       await this.props.submitToBackend(data, "create");
