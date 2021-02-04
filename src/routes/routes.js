@@ -59,64 +59,45 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       initial={isLoggedIn && isBooted && !forceUpdate}
       tabBarStyle={{ backgroundColor: Colors.PRIMARY }}
     >
-      <Stack
-        key="main"
-        hideNavBar={true}
-        tabs={true}
-        initial={true}
-        activeTintColor={Colors.SECONDARY}
-        showLabel={false}
-      >
+      {/* mainScreen  */}
+      <Stack key="MainScreen">
         <Scene
-          key="mainscreen"
+          key="MainScreen"
           component={MainScreen}
-          title="Main"
+          title="MainScreen"
           titleStyle={styles.title}
           initial={true}
           icon={icons.announce}
           hideNavBar={true}
         />
-        {/* <Scene
-                    key="Shops"
-                    component={Shops}
-                    title="Shops"
-                    titleStyle={styles.title}
-                    initial={false}
-                    icon={icons.merchant}
-                /> */}
-        <Scene
-          key="Promo"
-          component={Promo}
-          title="Promo"
-          titleStyle={styles.title}
-          initial={false}
-          icon={icons.promo}
-        />
-        {/* <Scene
-                    key="RouteGroups"
-                    component={RouteGroups}
-                    title="Event"
-                    titleStyle={styles.title}
-                    initial={false}
-                    icon={icons.award}
-                /> */}
-        <Scene
-          key="Profile"
-          component={Profile}
-          title="Profile"
-          titleStyle={styles.title}
-          initial={false}
-          icon={icons.profile}
-          hideNavBar={true}
-        />
       </Stack>
+
+      <Stack key="Promo" back>
+        <Scene key="Promo" component={Promo} title="Promo" titleStyle={styles.title} />
+      </Stack>
+      <Stack key="Profile" back>
+        <Scene key="Profile" component={Profile} title="Profile" titleStyle={styles.title} />
+      </Stack>
+      {/* <Stack key="RedeemedVoucherScreen">
+        <Scene
+          key="RedeemedVoucherScreen"
+          component={RedeemedVoucherScreen}
+          title="Redeem Voucher"
+          titleStyle={styles.title}
+        />
+      </Stack> */}
+      {/* <Stack key="Shops" back>
+        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
+      </Stack>
+      <Stack key="Shops" back>
+        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
+      </Stack> */}
       <Stack key="Shops" back>
         <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
       </Stack>
       <Stack key="SingleMerchant" back>
         <Scene key="SingleMerchant" component={Shop} title="Shop" titleStyle={styles.title} />
       </Stack>
-
       <Stack key="SingleMerchantPromo" back>
         <Scene
           key="SingleMerchantPromo"
@@ -125,11 +106,9 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="EditProfile" back>
         <Scene key="EditProfile" component={userForm} title="Profile" titleStyle={styles.title} />
       </Stack>
-
       <Stack key="CameraProfile" back>
         <Scene
           key="CameraProfile"
@@ -138,23 +117,18 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="Route" back>
         <Scene key="Route" component={Route} title="Route" titleStyle={styles.title} />
       </Stack>
-
       <Stack key="Routes" back>
         <Scene key="Routes" component={Routes} title="Routes" titleStyle={styles.title} />
       </Stack>
-
       <Stack key="Advertisement" back>
         <Scene key="Advertisement" component={Advertisement} title="Advertisement" />
       </Stack>
-
       <Stack key="Amount">
         <Scene key="Amount" component={Amount} hideNavBar />
       </Stack>
-
       <Stack key="PaymentDetail" back>
         <Scene
           key="PaymentDetail"
@@ -163,7 +137,6 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="CameraReceipt" back>
         <Scene
           key="CameraReceipt"
@@ -172,7 +145,6 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="CameraCheckIn" back>
         <Scene
           key="CameraCheckIn"
@@ -181,7 +153,6 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="SubmitReceipt" back>
         <Scene
           key="SubmitReceipt"
@@ -190,15 +161,12 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="Prizes" back>
         <Scene key="Prizes" component={Prizes} title="Prizes" titleStyle={styles.title} />
       </Stack>
-
       <Stack key="Rules" back>
         <Scene key="Rules" component={Rules} title="Rules" titleStyle={styles.title} />
       </Stack>
-
       <Stack key="CompletedUser" back>
         <Scene
           key="CompletedUser"
@@ -207,7 +175,6 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="RouteRanking" back>
         <Scene
           key="RouteRanking"
@@ -216,7 +183,6 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="EventRanking" back>
         <Scene
           key="EventRanking"
@@ -225,7 +191,6 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="LuckyDrawRanking" back>
         <Scene
           key="LuckyDrawRanking"
@@ -234,7 +199,6 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="LuckyDrawWinnerRanking" back>
         <Scene
           key="LuckyDrawWinnerRanking"
@@ -243,7 +207,6 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="EditProfile" back>
         <Scene
           key="EditProfile"
@@ -266,25 +229,23 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       <Stack key="Bookmark" back>
         <Scene key="Bookmark" component={Bookmark} title="Bookmark" titleStyle={styles.title} />
       </Stack>
-
       <Stack key="CheckIn" back>
-        <Scene 
-          key="CheckIn" 
-          component={CheckIn} 
-          titleStyle={styles.title} 
-          navigationBarStyle = {{ borderBottomColor: 'transparent', elevation: 0 }}
+        <Scene
+          key="CheckIn"
+          component={CheckIn}
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />
       </Stack>
-
       <Stack key="Voucher" back>
-        <Scene key="Voucher" 
-          component={Voucher} 
-          //title="Vouchers" 
-          titleStyle={styles.title} 
-          navigationBarStyle = {{ borderBottomColor: 'transparent', elevation: 0 }}
+        <Scene
+          key="Voucher"
+          component={Voucher}
+          //title="Vouchers"
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />
       </Stack>
-
       <Stack key="SingleVoucher" back>
         <Scene
           key="SingleVoucher"
@@ -294,7 +255,6 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-
       <Stack key="SingleVoucherRedeem" back>
         <Scene
           key="SingleVoucherRedeem"

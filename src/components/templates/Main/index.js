@@ -6,6 +6,8 @@ import { Actions } from "react-native-router-flux";
 import { Video } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ImageInfo } from "../../molecules";
+
 //import WheelOfFortune from "react-native-wheel-of-fortune";
 
 import {
@@ -20,6 +22,7 @@ import {
   Modal,
   Button,
   RefreshControl,
+  SearchBar,
 } from "../../atoms";
 
 import { Card, CardSection } from "../../molecules";
@@ -29,6 +32,7 @@ import { InfoBox } from "@components/organisms/InfoBox";
 import { SmallCardList } from "../../organisms/SmallCardList";
 
 import { ImageSwiper } from "../../organisms/ImageSwiper";
+import { SpinningWheel } from "../../organisms/SpinningWheel";
 
 import ContentLoader, { Rect } from "react-content-loader/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -70,7 +74,9 @@ export default ({
   fadeResult,
   spinStatus,
   onCheckInPressed,
-  checkIn,
+  onPromotionsPressed,
+  onShopsPressed,
+  user,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -205,6 +211,7 @@ export default ({
       </TouchableOpacity>
     );
   };
+  const { displayName, email, phoneNumber, photoURL } = user;
 
   const wheelImage = require("../../../assets/categoryWheel.png");
   const resultImage = require("../../../assets/categoryResult.png");
@@ -224,6 +231,7 @@ export default ({
         //refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
       >
         <View style={styles.container}>
+          {/* The First screen Row */}
           {readFail && (
             <InfoBox
               title="Memo"
@@ -234,150 +242,111 @@ export default ({
             />
           )}
           <View style={{ height: Constants.statusBarHeight }} />
-          <View style={styles.subContainer1}>
-            {readLoadingHeaderImages ? (
-              <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
-                <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
-              </ContentLoader>
-            ) : (
-              <ImageSwiper
-                style={styles}
-                slider={slider}
-                autoplayTime={5}
-                autoplay={true}
-                noImageSlider={noImageHeaderSlider}
-                condition={slider.length > 0}
-                onPressImage={onPressImage}
-              />
-            )}
+
+          <View style={styles.firstSection}>
+            {/* Column 1*/}
+            <View>
+              {/* Row1 for Name*/}
+              <View>
+                {/* Name from firebase*/}
+                <Text>Hi,Darren </Text>
+              </View>
+              {/* Row2 for Good Morning*/}
+              <View>
+                {/* Follow condition by Time*/}
+                <Text>Good Morning.</Text>
+              </View>
+            </View>
+            {/* Column 1*/}
+            <View>
+              {/* Row1 for Profile Button*/}
+
+              <TouchableOpacity style={styles.avatarContainer}>
+                <ImageInfo
+                  banner={photoURL ? photoURL : require("../../../assets/DefaultAvatar.jpg")}
+                  imageContainer={styles.profileImageStyle}
+                  imageStyle={styles.image}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
-          {readLoadingHeaderImages ? (
-            <View />
-          ) : randomAdPic !== undefined ? (
-            <AdvertisementPopUp />
-          ) : (
-            <View />
-          )}
+          {/* The Second screen Row */}
+          <View>
+            <SearchBar placeholder="Type Here..." />
+          </View>
 
-          {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
+          {/* The Third screen Row */}
+          <View>
+            {/* The Slider*/}
+            {/* ImageSwiper */}
+            <View style={styles.subContainer1}>
+              {readLoadingHeaderImages ? (
+                <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
+                  <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
+                </ContentLoader>
+              ) : (
+                <ImageSwiper
+                  style={styles}
+                  slider={slider}
+                  autoplayTime={5}
+                  autoplay={true}
+                  noImageSlider={noImageHeaderSlider}
+                  condition={slider.length > 0}
+                  onPressImage={onPressImage}
+                />
+              )}
+            </View>
+            {readLoadingHeaderImages ? (
+              <View />
+            ) : randomAdPic !== undefined ? (
+              <AdvertisementPopUp />
+            ) : (
+              <View />
+            )}
 
-          <Modal transparent={true} visible={spinningWheelModal}>
-            <View style={styles.modelBackground}>
-              <View style={styles.containerForSpinningWheel}>
-                {randomCategory != null && spinStatus === false ? (
-                  <View>
-                    <View style={{ alignItems: "center", paddingTop: 30 }}>
-                      <Text style={styles.spinningTitle2}>
-                        {" "}
-                        We have a great choice of Restaurants near you{" "}
-                      </Text>
-                      <Text style={styles.subTitle}> Let's go! </Text>
-                    </View>
-                    <View style={styles.spinningWheelImage}>
-                      <Animated.View style={{ opacity: fadeResult }}>
-                        <TouchableOpacity onPress={() => onPressRandomCategory(randomCategory)}>
-                          <Animated.Image style={{ width, height: width }} source={resultImage} />
-                          <View style={styles.categoryTextHolder}>
-                            <CustomIcon
-                              name={randomCategory.icon}
-                              size={30}
-                              style={{ color: "#FFFFFF" }}
-                            />
-                            <Text style={styles.categoryText}> {randomCategory.title} </Text>
-                          </View>
-                        </TouchableOpacity>
-                      </Animated.View>
-                    </View>
-                  </View>
-                ) : (
-                  <View>
-                    <View style={{ alignItems: "center", paddingTop: 30 }}>
-                      <Text style={styles.spinningTitle}> Don't know </Text>
-                      <Text style={styles.subTitle}> WHAT TO EAT? </Text>
-                    </View>
-                    <View style={styles.spinningWheelImage}>
-                      <View>
-                        <Animated.View style={{ opacity: fadeWheel }}>
-                          <Animated.Image
-                            style={{ width, height: width, transform: [{ rotate: rotation }] }}
-                            source={wheelImage}
-                          />
-                        </Animated.View>
-                      </View>
-                    </View>
-                  </View>
-                )}
-                <View>
-                  <TouchableOpacity
-                    style={spinStatus ? styles.categoriesButton : styles.categoriesButton}
-                    onPress={spinningWheel}
-                    disabled={spinStatus}
-                  >
-                    <Text style={styles.buttonText}>
-                      {" "}
-                      {spinStatus ? "SPINNING..." : randomCategory ? "SPIN AGAIN" : "START"}{" "}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity
-                  style={styles.closeWheelModal}
-                  onPress={onCloseSpinningWheelModal}
-                >
-                  <MaterialCommunityIcons name="close-circle-outline" size={40} color="#FFFFFF" />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
+            {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
 
-          {readLoadingCategoryList ? (
-            <View style={styles.subContainer2}>
-              <View>
-                <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-              </View>
-              <VirtualizedList
-                vertical
-                showsHorizontalScrollIndicator={false}
-                data={DATA}
-                renderItem={({ index }) => <CardListLoading index={index} />}
-                keyExtractor={(item) => item.key}
-                getItemCount={() => {
-                  return 6;
-                }}
-                getItem={getItem}
-              />
-            </View>
-          ) : dataSource2.length != 0 ? (
-            <View style={styles.subContainer2}>
-              {/* {randomAdPic !== undefined && <AdvertisementPopUp />} */}
-              <View>
-                <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-              </View>
-              <FlatList
-                vertical
-                showsHorizontalScrollIndicator={false}
-                data={dataSource2}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
-                scrollEnabled={dataSource2.length > 1 ? true : false}
-              />
-              <View style={{ height: 25 }} />
-            </View>
-          ) : (
-            <View style={styles.subContainer2}></View>
-          )}
+            <SpinningWheel
+              spinningWheelModal={spinningWheelModal}
+              randomCategory={randomCategory}
+              spinStatus={spinStatus}
+              onPressRandomCategory={onPressRandomCategory}
+              wheelRotation={wheelRotation}
+              onCloseSpinningWheelModal={onCloseSpinningWheelModal}
+              fadeWheel={fadeWheel}
+              spinningWheel={spinningWheel}
+            />
+          </View>
+          {/* The quarter screen Row */}
+          <View style={styles.quarterSection}>
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onShopsPressed}>
+              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
+              <Text style={styles.floatingCheckInTitle}>Shops</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.QuarterContainer2} onPress={onPromotionsPressed}>
+              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
+              <Text style={styles.floatingCheckInTitle}>Promotions</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.QuarterContainer3} onPress={onOpenSpinningWheelModal}>
+              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
+              <Text style={styles.floatingCheckInTitle}>Spin Me</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.QuarterContainer4} onPress={onCheckInPressed}>
+              <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
+              <Text style={styles.floatingCheckInTitle}>Check In</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* The Last Row*/}
+          <View>
+            <Text>Hot Pick Today</Text>
+
+            {/* <FlatList></FlatList> */}
+          </View>
         </View>
       </ScrollView>
-      <TouchableOpacity
-        style={styles.containerForFloatingButton}
-        onPress={onOpenSpinningWheelModal}
-      >
-        <Image source={wheelIcon} style={styles.floatingButton} />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
-        <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
-        <Text style={styles.floatingCheckInTitle}>CHECK IN</Text>
-      </TouchableOpacity>
     </View>
   );
 };
