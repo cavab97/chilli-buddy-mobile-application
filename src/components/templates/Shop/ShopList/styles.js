@@ -106,6 +106,22 @@ const styles = StyleSheet.create({
     height: 20,
   },
 
+  favourite: {
+    //backgroundColor: Colors.PRIMARY,
+    //borderRadius: 30,
+    position: "absolute",
+    backgroundColor: "#d60000",
+    width: 60,  
+    height: 60,   
+    borderRadius: 30,   
+    right: 20,
+    top: 20,
+    alignItems:'center',
+    justifyContent:'center',
+    textShadowColor: Colors.SECONDARY,
+    //textShadow: "0 0 3px #000",
+  },
+
   promotionTag: {
     fontSize: 13,
     color: "white",

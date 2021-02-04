@@ -1,10 +1,18 @@
 import React from "react";
 import styles from "./styles";
 
-import { FlatList, Image, ModalSelector, Text, TouchableOpacity, View } from "@components/atoms";
+import { 
+  FlatList, 
+  Image, 
+  ModalSelector, 
+  Text, 
+  TouchableOpacity, 
+  View 
+} from "@components/atoms";
 
 import { Card, CardSection } from "@components/molecules";
 
+import FavouriteIcon from "react-native-vector-icons/Ionicons"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Label, { Orientation } from "react-native-label";
@@ -20,9 +28,10 @@ function Item({
   endDate,
   index,
   onPress,
-  onSubscribePress,
   subscribed,
   isPromote,
+  onFavouritePress,
+  isFavourite,
 }) {
   const { image, title, detail, subscribe, profile } = styles;
 
@@ -82,20 +91,6 @@ function Item({
             {address.line1} {address.line2}
           </Text>
         </CardSection>
-        {/* <TouchableOpacity
-            style={subscribe}
-            onPress={() => onSubscribePress(subscribed, shopID, index)}
-          >
-            <Text
-              style={{
-                color: "#fff",
-                fontSize: 16,
-                fontWeight: "bold"
-              }}
-            >
-              {subscribed ? "Unsubscribe" : "Subscribe"}
-            </Text>
-          </TouchableOpacity> */}
         <TouchableOpacity style={profile}>
           <Image
             style={{
@@ -112,6 +107,47 @@ function Item({
             </View>
           )}
         </TouchableOpacity>
+        <TouchableOpacity style={styles.favourite} onPress={onFavouritePress}>
+          {isFavourite ? (
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 50,
+                backgroundColor: "#fff",
+                alignItems:'center',
+                justifyContent:'center',
+              }}
+            >
+              <FavouriteIcon
+                size={30}
+                iconStyle={{ borderWidth: 0 }}
+                containerStyle={{ justifyContent: "center" }}
+                name="ios-heart"
+                color="#d60000"
+              />
+            </View>
+          ) : (
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 50,
+                backgroundColor: "#fff",
+                alignItems:'center',
+                justifyContent:'center',
+              }}
+            >
+              <FavouriteIcon
+                size={30}
+                iconStyle={{ borderWidth: 0 }}
+                containerStyle={{ justifyContent: "center", }}
+                name="ios-heart-empty"
+                color="#d60000"
+              />
+            </View>
+          )}
+        </TouchableOpacity>
         {/* </Label> */}
       </Card>
     </TouchableOpacity>
@@ -124,10 +160,11 @@ const ShopList = ({
   filterData,
   renderFooter,
   onMerchantPressed,
-  onSubscribePressed,
+  onFavouritePressed,
   onCategoryChange,
   onTagChange,
   state,
+  shopData,
   props,
   isPromote,
   displayCategory,
@@ -179,11 +216,11 @@ const ShopList = ({
       </View>
 
       <FlatList
-        data={state.data}
+        data={shopData}
         renderItem={({ item, index }) => (
           <Item
             onPress={() => onMerchantPressed(item)}
-            onSubscribePress={onSubscribePressed}
+            onFavouritePress={() => onFavouritePressed(item)}
             name={item.displayTitle}
             logo={item.logo}
             picture={item.images}
@@ -193,6 +230,7 @@ const ShopList = ({
             distance={item.distance}
             shopID={item.id}
             index={index}
+            isFavourite={item.isFavourite}
             isPromote={item.isPromote}
           />
         )}

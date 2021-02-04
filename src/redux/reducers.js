@@ -20,6 +20,7 @@ import bookmarkReducer from "./bookmark/reducer";
 import voucherReducer from "./voucher/reducer";
 
 import checkInReducer from "./checkIn/reducer";
+import favouriteReducer from "./favourite/reducer";
 
 export default combineReducers = {
   Advertisement: advertisementsReducer,
@@ -37,4 +38,5 @@ export default combineReducers = {
   Bookmark: bookmarkReducer,
   Voucher: voucherReducer,
   CheckIn: checkInReducer,
+  Favourite: favouriteReducer
 };
