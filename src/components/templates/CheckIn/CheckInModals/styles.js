@@ -20,8 +20,10 @@ const styles = StyleSheet.create({
   contentContainer2: {
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 0,
-    bottom: 0,
+    // marginVertical: 0,
+    // bottom: 0,
+    backgroundColor: "red",
+    padding: 10,
   },
 
   text: {
@@ -36,6 +38,14 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 40,
     borderBottomRightRadius: 40,
     borderBottomLeftRadius: 40,
+    borderTopRightRadius: 40,
+    alignItems: "center",
+  },
+  containerOverlay2: {
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    borderBottomLeftRadius: 40,
+    borderTopRightRadius: 40,
   },
 
   // ///icon view
@@ -55,8 +65,8 @@ const styles = StyleSheet.create({
   closeIcon2: {
     // position: "absolute",
 
-    bottom: Platform.isPad ? 30 : Platform.OS === "ios" ? 30 : 35,
-    right: Platform.isPad ? -200 : Platform.OS === "ios" ? -115 : -105,
+    bottom: Platform.isPad ? 45 : Platform.OS === "ios" ? 25 : 35,
+    left: Platform.isPad ? 340 : Platform.OS === "ios" ? 195 : 175,
     // backgroundColor: "red",
     resizeMode: "contain",
     fontSize: 10,
@@ -72,8 +82,8 @@ const styles = StyleSheet.create({
   },
   redeemImageCrossStyle: {
     resizeMode: "cover",
-    width: Platform.isPad ? 100 : 50,
-    height: Platform.isPad ? 100 : 50,
+    width: Platform.isPad ? 70 : 50,
+    height: Platform.isPad ? 70 : 50,
     zIndex: 0,
   },
 
@@ -92,12 +102,12 @@ const styles = StyleSheet.create({
     alignSelf: "center", // backgroundColor: "red",
     resizeMode: "cover",
     // marginTop: "2%",
+    marginBottom: "10%",
     // height: "%",
     borderRadius: 100,
-    backgroundColor: "#fff",
+    // backgroundColor: "yellow",
   },
   redeemImageChilliStyle: {
-    flex: 0,
     resizeMode: "contain",
     width: Platform.isPad ? size / 3 : size / 2.2,
     height: size / 2.2,
@@ -108,12 +118,12 @@ const styles = StyleSheet.create({
   redeemImageChilliStyle2: {
     // flex: 1,
     resizeMode: "contain",
-    width: Platform.isPad ? size / 3 : size / 2.2,
-    height: size / 1.5,
+    width: Platform.isPad ? size / 3.5 : size / 2.2,
+    height: size / 2.5,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
-    backgroundColor: "#fff",
+    // backgroundColor: "grey",
     // position: "absolute",
   },
 
@@ -127,11 +137,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 100,
     width: size / 3,
-    color: "red",
+    // color: "red",
     alignItems: "center",
     top: 10,
     position: "relative",
     borderColor: "grey",
+    justifyContent: "center",
     borderWidth: 1,
   },
   redeemNowText: {
@@ -149,9 +160,9 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   emojiText2: {
-    fontSize: size / 17,
+    fontSize: size / 18,
     color: "black",
-    marginHorizontal: 0,
+    // marginHorizontal: 0,
     fontFamily: "HorizontalRounded",
     textAlign: "center",
     bottom: 0,
@@ -176,17 +187,15 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
   },
   desciptionBox: {
-    backgroundColor: "#fff",
     alignItems: "center",
     top: 0,
     paddingBottom: 0,
   },
   desciptionBox2: {
-    backgroundColor: "#fff",
     alignItems: "center",
-    bottom: 0,
-
     // position: "absolute",
+    // height: "100%",
+    // backgroundColor: "red",
   },
   voucherValue: {
     fontSize: size / 13,
@@ -204,7 +213,7 @@ const styles = StyleSheet.create({
   },
   doubleOption: {
     alignItems: "center",
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     top: 0,
     marginVertical: 0,
     marginTop: 10,
@@ -249,7 +258,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   loadingBox: {
-    marginVertical: "89%",
+    marginVertical: "80%",
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center", // backgroundColor: "red",
