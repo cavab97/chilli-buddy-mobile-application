@@ -74,7 +74,8 @@ export default ({
   fadeResult,
   spinStatus,
   onCheckInPressed,
-  checkIn,
+  onPromotionsPressed,
+  onShopsPressed,
   user,
 }) => {
   const DATA = [];
@@ -319,22 +320,22 @@ export default ({
           </View>
           {/* The quarter screen Row */}
           <View style={styles.quarterSection}>
-            <TouchableOpacity style={styles.QuarterContainer1} onPress={onCheckInPressed}>
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onShopsPressed}>
               <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
-              <Text style={styles.floatingCheckInTitle}>SHOPS</Text>
+              <Text style={styles.floatingCheckInTitle}>Shops</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.QuarterContainer2} onPress={onCheckInPressed}>
+            <TouchableOpacity style={styles.QuarterContainer2} onPress={onPromotionsPressed}>
               <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
-              <Text style={styles.floatingCheckInTitle}>PROMOTIONS</Text>
+              <Text style={styles.floatingCheckInTitle}>Promotions</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.QuarterContainer3} onPress={onCheckInPressed}>
+            <TouchableOpacity style={styles.QuarterContainer3} onPress={onOpenSpinningWheelModal}>
               <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
-              <Text style={styles.floatingCheckInTitle}>CHECK IN</Text>
+              <Text style={styles.floatingCheckInTitle}>Spin Me</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.QuarterContainer4} onPress={onCheckInPressed}>
               <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
-              <Text style={styles.floatingCheckInTitle}>CHECK IN</Text>
+              <Text style={styles.floatingCheckInTitle}>Check In</Text>
             </TouchableOpacity>
           </View>
 

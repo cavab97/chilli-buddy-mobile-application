@@ -68,13 +68,11 @@ class index extends Component {
   onCheckInPressed() {
     Actions.CheckIn();
   }
-
-  onPressCheckIn() {
-    Actions.CheckIn();
+  onShopsPressed() {
+    Actions.Shops();
   }
-
-  onPressCheckIn() {
-    Actions.CheckIn();
+  onPromotionsPressed() {
+    Actions.Promo();
   }
 
   // View shop from clicking image swiper advertisements
@@ -389,7 +387,8 @@ class index extends Component {
         fadeResult={this.state.fadeResult}
         spinStatus={this.state.spinStatus}
         onCheckInPressed={this.onCheckInPressed.bind(this)}
-        checkIn={this.onPressCheckIn.bind(this)}
+        onPromotionsPressed={this.onPromotionsPressed.bind(this)}
+        onShopsPressed={this.onShopsPressed.bind(this)}
         user={user}
       />
     );
