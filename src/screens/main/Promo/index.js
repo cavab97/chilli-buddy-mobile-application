@@ -164,6 +164,7 @@ class index extends Component {
 
   render() {
     const { readLoading, promo, bookmark } = this.props.promotionState;
+
     const readBookmark = this.props.bookmarkState.readLoading;
     const submitLoading = this.props.bookmarkState.submitLoading;
 
