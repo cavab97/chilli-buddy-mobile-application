@@ -82,7 +82,7 @@ class index extends Component {
   componentDidUpdate(prevProps, prevState) {
     const currentShop = this.props.shopState.shops;
     const readError = this.props.shopState.readError;
-   // const readLoading = this.props.bookmarkState.readLoading;
+    // const readLoading = this.props.bookmarkState.readLoading;
 
     // if no promo in the radius, call handleRefresh read again by increase radiusAddition state
     if (currentShop.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
@@ -100,7 +100,6 @@ class index extends Component {
     if (prevProps.shopState.readError !== readError && readError !== false) {
       alert(readError);
     }
-
   }
 
   /* handleRefresh = async () => {
@@ -240,7 +239,6 @@ class index extends Component {
   };
 
   render() {
-
     const { shops } = this.props.shopState;
 
     return (
@@ -256,7 +254,7 @@ class index extends Component {
         shopData={shops}
         state={this.state}
         props={this.props}
-        displayCategory={this.props.selectedCategory.id}
+        // displayCategory={this.props.selectedCategory.id}
       />
     );
   }
@@ -270,22 +268,20 @@ const mapStateToProps = (state) => {
   const favouriteState = state.Favourite;
   const shopState = state.Shops;
 
-  return { 
-    categories, 
-    tags, 
-    uid, 
-    idToken, 
-    subscribedList, 
+  return {
+    categories,
+    tags,
+    uid,
+    idToken,
+    subscribedList,
     shops,
     favouriteState,
-    shopState
+    shopState,
   };
 };
 
-export default connect(
-  mapStateToProps, 
-{ 
-  verifyPermission, 
+export default connect(mapStateToProps, {
+  verifyPermission,
   loadShops,
   onFavouriteClick,
   update,

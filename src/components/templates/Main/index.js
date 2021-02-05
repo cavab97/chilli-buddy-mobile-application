@@ -8,7 +8,7 @@ import { Actions } from "react-native-router-flux";
 import { Video } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { ImageInfo } from "../../molecules";
+import { ImageInfo, SearchBar } from "../../molecules";
 
 //import WheelOfFortune from "react-native-wheel-of-fortune";
 
@@ -24,7 +24,7 @@ import {
   Modal,
   Button,
   RefreshControl,
-  SearchBar,
+  Icon as Icon2,
 } from "../../atoms";
 
 import { Card, CardSection } from "../../molecules";
@@ -80,6 +80,9 @@ export default ({
   onShopsPressed,
   onProfilePressed,
   user,
+  promoSource,
+  onMerchantPressed,
+  promotions,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -101,7 +104,12 @@ export default ({
 
   const AdvertisementPopUp = (url) => {
     return type === "image" ? (
-      <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isAdvertisementModelShow}
+        onBackdropPress={onCloseAdvertisementModal}
+      >
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
             <TouchableOpacity onPress={() => onPressPopUp(getShopId)}>
@@ -111,15 +119,27 @@ export default ({
                 //resizeMode="contain"
               />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
-              <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={onCloseAdvertisementModal}
+              activeOpacity={1}
+            >
+              <Image
+                source={require("../../../assets/chilliBuddyCheckin/closeButton.png")}
+                style={styles.videoImageCrossStyle}
+              />
             </TouchableOpacity>
           </View>
         </View>
         <View></View>
       </Modal>
     ) : type === "video" ? (
-      <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isAdvertisementModelShow}
+        onBackdropPress={onCloseAdvertisementModal}
+      >
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
             <Video
@@ -133,8 +153,15 @@ export default ({
               positionMillis={0}
               useNativeControls={true}
             />
-            <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
-              <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={onCloseAdvertisementModal}
+              activeOpacity={1}
+            >
+              <Image
+                source={require("../../../assets/chilliBuddyCheckin/closeButton.png")}
+                style={styles.videoImageCrossStyle}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -215,6 +242,73 @@ export default ({
       </TouchableOpacity>
     );
   };
+  function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance }) {
+    const { image } = styles;
+
+    let cover = "";
+    if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
+    else cover = { uri: picture[0] };
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <Card style={{ width: "98%" }}>
+          <CardSection
+            style={{
+              borderBottomWidth: 0,
+            }}
+          >
+            <Image style={image} resizeMode="cover" source={cover} />
+          </CardSection>
+          <View style={styles.floatingDistanceIndicator}>
+            <MaterialCommunityIcons name="map-marker-distance" color="white" size={20} />
+            <Text style={styles.distanceIndicatorTitle}>
+              {
+                +(distance != undefined
+                  ? Math.round(distance + "e+2") + "e-2"
+                  : Math.round(calculatedDistance + "e+2") + "e-2")
+              }
+              KM Away
+            </Text>
+          </View>
+          {/* <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
+            {gotBookmark ? (
+              <View
+                style={{
+                  borderRadius: 100,
+                  borderWidth: 0,
+                  borderColor: "#ffd30f",
+                  backgroundColor: "#ffd30f",
+                }}
+              >
+                <Icon2
+                  size={50}
+                  iconStyle={{ borderWidth: 0 }}
+                  containerStyle={{ justifyContent: "center" }}
+                  name={"stars"}
+                  color="#d60000"
+                />
+              </View>
+            ) : (
+              <View
+                style={{
+                  borderRadius: 100,
+                  backgroundColor: "#ffffff",
+                }}
+              >
+                <Icon2
+                  size={50}
+                  iconStyle={{ borderWidth: 0 }}
+                  containerStyle={{ justifyContent: "center" }}
+                  name={"stars"}
+                  color="#d60000"
+                />
+              </View>
+            )}
+          </TouchableOpacity> */}
+          {/* )} */}
+        </Card>
+      </TouchableOpacity>
+    );
+  }
   const { displayName, email, phoneNumber, photoURL } = user;
 
   const wheelImage = require("../../../assets/categoryWheel.png");
@@ -223,6 +317,7 @@ export default ({
   const salesIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/sale_Icon.png");
   const spinWheel = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/spinWheel_Icon.png");
   const checkIn = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/checkIn_Icon.png");
+  const hotPickIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/fireHotText_Icon.png");
 
   let { width } = Dimensions.get("window");
   width = width * 0.7;
@@ -230,7 +325,6 @@ export default ({
     inputRange: [0, 360],
     outputRange: ["0deg", "360deg"],
   });
-
   return (
     <View>
       <ScrollView
@@ -257,7 +351,7 @@ export default ({
               {/* Row1 for Name*/}
               <View>
                 {/* Name from firebase*/}
-                <Text style={styles.firstSectionText1}>Hi,Darren </Text>
+                <Text style={styles.firstSectionText1}>Hi, Darren </Text>
               </View>
               {/* Row2 for Good Morning*/}
               <View>
@@ -281,7 +375,7 @@ export default ({
 
           {/* The Second screen Row */}
           <View style={styles.SecondSection}>
-            <SearchBar
+            {/* <SearchBar
               placeholder="Search"
               lightTheme={true}
               searchIcon={true}
@@ -289,16 +383,18 @@ export default ({
               inputContainerStyle={styles.searchBarInputStyles}
               placeholderTextColor="#f7d0d0"
               round={true}
-            />
+            /> */}
+            <SearchBar placeholder="Search" />
           </View>
 
           {/* The Third screen Row */}
           <View>
             {/* The Slider*/}
             {/* ImageSwiper */}
+
             <View style={styles.subContainerOutside}>
               {readLoadingHeaderImages ? (
-                <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
+                <ContentLoader speed={1} height={150} backgroundColor="#d9d9d9">
                   <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
                 </ContentLoader>
               ) : (
@@ -367,9 +463,48 @@ export default ({
 
           {/* The Last Row*/}
           <View style={styles.lastSection}>
-            <Text>Hot Pick Today</Text>
+            <View style={styles.lastSectionFirstRow}>
+              <Text style={styles.lastSectionText}>Hot Pick Today </Text>
+              <Image source={hotPickIcon} transition={false} style={styles.lastSectionIcon} />
+            </View>
+            <View style={styles.lastSectionFlatListRow}>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={promoSource}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity onPress={() => onMerchantPressed(item)}>
+                    <Card
+                      key={item.id}
+                      style={index === 0 ? styles.firstPromoteCardStyle : styles.promoteCardStyle}
+                    >
+                      {item.coverPhotos.length > 0 ? (
+                        <Image
+                          source={{ uri: item.coverPhotos[0] }}
+                          style={styles.promoteImage}
+                          resizeMode="cover"
+                        />
+                      ) : (
+                        <Image source={noPromoteImage} style={promoteNoImage} resizeMode="cover" />
+                      )}
+                      <View style={styles.lastSectionTextContainer}>
+                        <Text numberOfLines={2} style={styles.promoteTitleTextStyle}>
+                          {item.title}
+                        </Text>
+                      </View>
+                    </Card>
+                  </TouchableOpacity>
+                )}
+                keyExtractor={(item) => item.id}
+                onRefresh={handleRefresh}
+                refreshing={false}
+                scrollEnabled={promoSource.length > 1}
 
-            {/* <FlatList></FlatList> */}
+                // ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
+                // style={styles.flatList}
+              />
+            </View>
           </View>
         </View>
       </ScrollView>

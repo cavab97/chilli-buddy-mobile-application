@@ -11,9 +11,13 @@ import {
   removeListenerFromDatabase as removeListenerFromRouteTickets,
 } from "@redux/routeTicket/action";
 
+import * as Location from "expo-location";
+import { loadShopsPromo } from "@redux/promo/action";
+
 import clone from "clone";
 import { lessThan } from "react-native-reanimated";
 import { Animated } from "react-native";
+const RADIUS = 50;
 
 class index extends Component {
   constructor(props) {
@@ -33,6 +37,9 @@ class index extends Component {
       randomCategoryNumber: null,
       randomCategory: null,
       spinStatus: false,
+      selectedCategory: { id: "", tags: ["All"], title: "All" },
+      selectedTag: "All",
+      radiusAddition: 1,
     };
   }
 
@@ -41,6 +48,7 @@ class index extends Component {
     this.props.readAllRoute();
     this.props.readAdvertisements();
     this.props.readSettingInfo();
+    this.handleRefresh();
   }
 
   componentWillUnmount() {
@@ -52,10 +60,20 @@ class index extends Component {
   // }
 
   handleRefresh = async () => {
+    let location = await Location.getCurrentPositionAsync({});
     this.setState({ refreshing: true });
     await this.props.readAdvertisements();
     await this.props.readSettingInfo();
+    await this.props.loadShopsPromo({
+      radius: RADIUS * this.state.radiusAddition,
+      latitude: location.coords.latitude,
+      longtitude: location.coords.longitude,
+      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+    });
     this.setState({ refreshing: false });
+
+    //await this.props.readFromDatabase();
   };
 
   handleVideoRef = (component) => {
@@ -107,8 +125,8 @@ class index extends Component {
   //Filtered Data Source from empty shopId and empty cover pic
   filteredDatasource() {
     const advertisements = this.props.advertisements;
-    let dataSourceAds = [];
 
+    let dataSourceAds = [];
     //Map image URL and Shop ID to array
     dataSourceAds = advertisements.map((item) => {
       return {
@@ -210,6 +228,10 @@ class index extends Component {
     Actions.Shops({ selectedCategory: category });
     this.props.toggleSpinningWheelModal();
   }
+  //merchant Pressed
+  onMerchantPressed(item) {
+    Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
+  }
 
   //Pass category
   passCategory() {
@@ -310,6 +332,8 @@ class index extends Component {
       readLoadingNotification,
       readLoadingReward,
     } = this.props;
+    const { readLoading, promo, bookmark, promotions } = this.props.promotionState;
+
     const readFail =
       readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
 
@@ -394,6 +418,9 @@ class index extends Component {
         onShopsPressed={this.onShopsPressed.bind(this)}
         onProfilePressed={this.onProfilePressed.bind(this)}
         user={user}
+        promoSource={promo}
+        promotions={promotions}
+        onMerchantPressed={this.onMerchantPressed.bind(this)}
       />
     );
   }
@@ -419,6 +446,8 @@ const mapStateToProps = (state) => {
 
   const user = state.Auth.user;
 
+  const promotionState = state.Promotion;
+
   return {
     categories,
     tags,
@@ -436,6 +465,7 @@ const mapStateToProps = (state) => {
     openModal,
     spinningWheelModal,
     user,
+    promotionState,
   };
 };
 
@@ -449,4 +479,5 @@ export default connect(mapStateToProps, {
   loadShops,
   readSettingInfo,
   toggleSpinningWheelModal,
+  loadShopsPromo,
 })(index);

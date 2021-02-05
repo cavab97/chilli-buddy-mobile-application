@@ -11,6 +11,7 @@ export * from "./SignoutButton";
 export * from "./TACTextInput";
 export * from "./RedeemButton";
 export * from "./CheckInButton";
+export * from "./SearchBar";
 
 export { default as Nav } from "./Nav";
 export { default as Tab } from "./Tab";

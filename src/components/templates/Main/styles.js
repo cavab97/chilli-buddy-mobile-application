@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 import { Dimensions } from "react-native";
-import { Colors } from "../../../settings/styles/theme";
+import { Colors, Mixins } from "../../../settings/styles/theme";
+
 import Constants from "expo-constants";
 
 const windowWidth = Dimensions.get("window").width;
@@ -10,35 +11,47 @@ const ratio = windowWidth / 800;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAFAFA",
+    // height: windowHeight / 20,
+    marginHorizontal: 20,
   },
   subContainer1: {
     flex: 1,
     //minHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
     //maxHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
-    minHeight: (windowWidth / 800) * 300,
-    maxHeight: (windowWidth / 800) * 300,
+    minHeight: (windowWidth / 800) * 400,
+    maxHeight: (windowWidth / 800) * 400,
 
     // marginHorizontal: 20,
     // marginVertical: 20,
     borderRadius: 50,
     backgroundColor: "red",
+    borderWidth: 0,
     // resizeMode: "cover",
   },
   subContainerOutside: {
-    marginHorizontal: 20,
-    marginVertical: 20,
-
-    minHeight: (windowWidth / 800) * 300,
-    maxHeight: (windowWidth / 800) * 300,
+    marginVertical: 25,
+    minHeight: (windowWidth / 800) * 400,
+    maxHeight: (windowWidth / 800) * 400,
     borderRadius: 50,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+
+    elevation: 10,
   },
   HeaderSlider: {
     // resizeMode: "cover",
     // borderRadius: 30,
     // resizeMode: "cover",
   },
-
+  //modal v2
+  modalStyleV2: {
+    borderRadius: 30,
+  },
   subContainer2: {
     alignItems: "center",
     flex: 1,
@@ -73,7 +86,7 @@ const styles = StyleSheet.create({
   imageTopStyle: {
     width: "100%",
     height: "100%",
-    borderRadius: 25,
+    borderRadius: 40,
   },
   floatingCheckInButton: {
     borderWidth: 1,
@@ -327,6 +340,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -20,
     right: -20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  videoImageCrossStyle: {
+    width: Platform.isPad ? 100 : 50,
+    height: Platform.isPad ? 100 : 50,
+    zIndex: 0,
   },
   adsImageStyle: {
     // width: "100%",
@@ -335,10 +358,10 @@ const styles = StyleSheet.create({
     minWidth: Platform.OS === "ios" && Platform.isPad === true ? 460 : 300, //windowWidth - 150,
     //maxWidth: (windowWidth * 85) / 100, //windowWidth - 100,
     height: Platform.OS === "ios" && Platform.isPad === true ? 810 : 530, //(windowHeight * 80) / 100,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    borderTopLeftRadius: 45,
+    borderTopRightRadius: 45,
+    borderBottomLeftRadius: 45,
+    borderBottomRightRadius: 45,
   },
   adsImageContainer: {
     //borderWidth: 1,
@@ -421,18 +444,18 @@ const styles = StyleSheet.create({
 
   firstSectionText1: {
     fontFamily: "HorizontalRounded",
+    color: "#979797",
   },
   firstSectionText2: {
     fontFamily: "HorizontalRounded",
-    fontSize: 30,
+    fontSize: 40,
     color: Colors.RED,
+    paddingTop: 0,
   },
   firstSectionFirstColumn: {
-    marginHorizontal: 25,
     marginVertical: 20,
   },
   firstSectionSecondColumn: {
-    marginHorizontal: 25,
     marginVertical: 20,
   },
   //second section part
@@ -441,7 +464,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
-    marginHorizontal: 25,
   },
   searchBarStyles: {
     backgroundColor: "#FFF",
@@ -466,7 +488,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 25,
     marginVertical: 10,
   },
   QuarterContainer1: {
@@ -492,6 +513,7 @@ const styles = StyleSheet.create({
   quarterIcon: {
     width: "70%",
     height: "80%",
+
     // position: "relative",
     resizeMode: "contain",
     zIndex: 1,
@@ -527,8 +549,8 @@ const styles = StyleSheet.create({
   },
   profileImageStyle: {
     backgroundColor: Colors.GRAY_DARK,
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
     borderRadius: 80,
     borderWidth: 1,
     borderColor: "white",
@@ -544,11 +566,78 @@ const styles = StyleSheet.create({
   },
   //last section
   lastSection: {
+    // justifyContent: "space-between",
+    marginVertical: 20,
+    // backgroundColor: "grey",
+  },
+  lastSectionFirstRow: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 25,
-    marginVertical: 10,
+    // justifyContent: "space-between",
+  },
+  scrollUi: {
+    backgroundColor: "black",
+  },
+  lastSectionIcon: {
+    width: 30,
+    height: 30,
+    // backgroundColor: "black",
+  },
+  lastSectionText: {
+    color: Colors.RED,
+    paddingTop: 7,
+    fontSize: 18,
+    // backgroundColor: "black",
+    fontFamily: "HorizontalRounded",
+  },
+  firstPromoteCardStyle: {
+    width: 181.2,
+    // marginLeft: 20,
+    marginRight: 20,
+    elevation: 3,
+    borderRadius: 30,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    marginBottom: 6,
+    paddingTop: 10,
+    alignItems: "center",
+  },
+  promoteCardStyle: {
+    width: 181.2,
+    // marginLeft: 20,
+    marginRight: 20,
+    elevation: 3,
+    borderRadius: 30,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    marginBottom: 6,
+    paddingTop: 10,
+    alignItems: "center",
+  },
+  promoteTitleTextStyle: {
+    fontSize: 13,
+    fontFamily: "HorizontalRounded",
+    paddingBottom: 25,
+    paddingTop: 10,
+  },
+  promoteImage: {
+    width: 165,
+    height: 121.2,
+    borderRadius: 20,
+  },
+  flatList: {
+    minHeight: Mixins.WINDOW_HEIGHT - 300,
+  },
+  lastSectionFlatListRow: {
+    marginTop: 10,
+  },
+  lastSectionTextContainer: {
+    alignSelf: "flex-start",
+    marginLeft: 20,
   },
 });
 
