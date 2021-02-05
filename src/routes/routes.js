@@ -1,5 +1,5 @@
 import React from "react";
-import { Scene, Stack } from "react-native-router-flux";
+import { Scene, Stack, Tabs } from "react-native-router-flux";
 
 import MainScreen from "../screens/main/MainScreen";
 import Shops from "../screens/main/Shops";
@@ -78,23 +78,19 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       <Stack key="Profile" back>
         <Scene key="Profile" component={Profile} title="Profile" titleStyle={styles.title} />
       </Stack>
-      {/* <Stack key="RedeemedVoucherScreen">
-        <Scene
-          key="RedeemedVoucherScreen"
-          component={RedeemedVoucherScreen}
-          title="Redeem Voucher"
-          titleStyle={styles.title}
-        />
-      </Stack> */}
-      {/* <Stack key="Shops" back>
-        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
-      </Stack>
+
       <Stack key="Shops" back>
-        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
-      </Stack> */}
-      <Stack key="Shops" back>
-        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
+        <Scene 
+          key="Shops" 
+          component={Shops} 
+          //title="Shops"
+          navigationBarStyle={{ 
+            borderBottomColor: "transparent", 
+            elevation: 0 
+          }}
+        /> 
       </Stack>
+      
       <Stack key="SingleMerchant" back>
         <Scene key="SingleMerchant" component={Shop} title="Shop" titleStyle={styles.title} />
       </Stack>

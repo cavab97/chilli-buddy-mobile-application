@@ -21,6 +21,7 @@ export const GRAY_MEDIUM = "#cacaca";
 export const GRAY_DARK = "#8a8a8a";
 export const GRAY = "#ccc";
 export const GRAY_LIGHT_MEDIUM = "#ebebeb";
+export const GREY = "#979797"
 
 //version 2
 //red
