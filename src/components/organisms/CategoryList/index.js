@@ -5,6 +5,7 @@ import {
     Text,
     TouchableOpacity, 
     View,
+    Image
 } from "../../atoms";
 
 import ContentLoader, { Rect } from 'react-content-loader/native'
@@ -14,45 +15,43 @@ import styles from "./styles";
 function Category ({
     title
 }) {
+    let icon;
+
+    switch (title) {
+        case "Chinese 中餐":
+            icon = require("../../../assets/categories/chinese.png")
+            break;
+        case "Western 西餐":
+            icon = require("../../../assets/categories/western.png")
+            break;
+        case "Cafe 咖啡馆":
+            icon = require("../../../assets/categories/cafe.png")
+            break;
+        default:
+            icon = require("../../../assets/chilliBuddyCheckin/noMerchant.png")
+            break;
+      }
+
     return (
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            backgroundColor: '#ecf0f1',
-            padding: 8,
-            alignItems:"center"
-          }}>
-            <TouchableOpacity style={{
-                height: 150,
-                width: 100,
-                borderRadius: 30,
-                backgroundColor:"white",
-                elevation:10,
-                padding:10
-            }}>
-                <View
-                    style={{
-                        height: 80,
-                        width: 80,
-                        borderRadius: 30,
-                        backgroundColor:"black",
-                        elevation:10,
-                        padding:15
-                    }}
-                >
-                    <Text style={{marginTop: 150}}>
-                        {title}
-                    </Text>
-                </View>
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.card}>
+            <View style={styles.iconContainer}>
+                <Image 
+                    source={icon} 
+                    style={styles.icon}
+                />
+            </View>
+            <View >
+                <Text style={styles.title}>
+                    {title}
+                </Text>
+            </View>
+        </TouchableOpacity>
     )
 }
 
 const CategoryList = ({
     categories
 }) => {
-
     return(
         <FlatList
             data={categories}
@@ -63,6 +62,7 @@ const CategoryList = ({
                 />
             )}
             horizontal
+            showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id}
         />
     );

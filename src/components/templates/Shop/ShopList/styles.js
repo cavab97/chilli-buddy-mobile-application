@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
   },
   flatList: {
     minHeight: Mixins.WINDOW_HEIGHT - 300,
+    marginBottom: Mixins.WINDOW_HEIGHT / 15
   },
   title: {
     fontSize: 16,

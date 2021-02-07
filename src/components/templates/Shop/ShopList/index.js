@@ -7,7 +7,8 @@ import {
   ModalSelector, 
   Text, 
   TouchableOpacity, 
-  View 
+  View ,
+  ScrollView
 } from "@components/atoms";
 
 import { 
@@ -143,7 +144,10 @@ const ShopList = ({
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
 
   return (
-    <View style={styles.shopContainer}>
+    <ScrollView 
+      showsVerticalScrollIndicator={false}
+      style={styles.shopContainer}
+    >
       <View style={styles.shopTitleContainer}>
         <Text style={styles.pageTitle}>
           Shops
@@ -207,11 +211,11 @@ const ShopList = ({
         refreshing={state.isRefreshing}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={renderFooter({ empty: state.data.length === 0 ? true : false })}
+        //ListFooterComponent={renderFooter({ empty: state.data.length === 0 ? true : false })}
         style={styles.flatList}
         extraData={state}
       />
-    </View>
+    </ScrollView>
   );
 };
 
