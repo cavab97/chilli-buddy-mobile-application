@@ -4,9 +4,10 @@ import { Scene, Stack, Tabs } from "react-native-router-flux";
 import MainScreen from "../screens/main/MainScreen";
 import Shops from "../screens/main/Shops";
 import Promo from "../screens/main/Promo";
+import Profile from "../screens/main/Profile";
+import SpinningWheel from "../screens/subscreen/SpinningWheel";
 
 import RouteGroups from "../screens/main/RouteGroups";
-import Profile from "../screens/main/Profile";
 
 import userForm from "../screens/auth/UserForm";
 import CameraProfile from "../screens/subscreen/CameraProfile";
@@ -75,24 +76,65 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       <Stack key="Promo" back>
         <Scene key="Promo" component={Promo} title="Promo" titleStyle={styles.title} />
       </Stack>
-      <Stack key="Profile" back>
-        <Scene key="Profile" component={Profile} title="Profile" titleStyle={styles.title} />
-      </Stack>
 
-      <Stack key="Shops" back>
-        <Scene 
-          key="Shops" 
-          component={Shops} 
-          //title="Shops"
-          navigationBarStyle={{ 
-            borderBottomColor: "transparent", 
-            elevation: 0 
-          }}
-        /> 
+      <Stack key="Profile" back>
+        <Scene
+          key="Profile"
+          component={Profile}
+          // title="Profile"
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+        />
       </Stack>
-      
+      <Stack key="SpinningWheel" back>
+        <Scene
+          key="SpinningWheel"
+          component={SpinningWheel}
+          // title="dsdsdsds"
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+        />
+      </Stack>
+      {/* 
+      <Stack key="CheckIn" back>
+        <Scene
+          key="CheckIn"
+          component={CheckIn}
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+        />
+      </Stack> */}
+      {/* <Stack key="RedeemedVoucherScreen">
+        <Scene
+          key="RedeemedVoucherScreen"
+          component={RedeemedVoucherScreen}
+          title="Redeem Voucher"
+          titleStyle={styles.title}
+        />
+      </Stack> */}
+      {/* <Stack key="Shops" back>
+        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
+      </Stack>
+      <Stack key="Shops" back>
+        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
+      </Stack> */}
+      <Stack key="Shops" back>
+        <Scene
+          key="Shops"
+          component={Shops}
+          title="Shops"
+          titleStyle={styles.title}
+          // navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+        />
+      </Stack>
       <Stack key="SingleMerchant" back>
-        <Scene key="SingleMerchant" component={Shop} title="Shop" titleStyle={styles.title} />
+        <Scene
+          key="SingleMerchant"
+          component={Shop}
+          // title="Shop"
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+        />
       </Stack>
       <Stack key="SingleMerchantPromo" back>
         <Scene

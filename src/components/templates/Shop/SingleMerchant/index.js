@@ -25,9 +25,13 @@ import moment from "moment";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
-// const facebook = require("../../../../assets/icons/facebook.png");      //social media icon
-// const instagram = require("../../../../assets/icons/instagram.png");
-// const whatsapp = require("../../../../assets/icons/whatsapp.png");
+const facebook = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/Facebook_Icon.png"); //social media icon
+const instagram = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/Instagram_Icon.png");
+const whatsapp = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/Whatsapp_Icon.png");
+const webSite = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/websiteGlobal_Icon.png");
+const distanceIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/Distance_Icon.png");
+const newsIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/news_Icon.png");
+const fillLessLove = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/favorLove_Icon.png");
 
 const SingleMerchant = ({
   dataSource,
@@ -152,25 +156,25 @@ const SingleMerchant = ({
                 slider={dataSource.images}
             /> */}
 
-        <MaterialCommunityIcons
+        {/* <MaterialCommunityIcons
           style={coverImageSwapLeft}
           name="chevron-left-circle"
           size={30}
-          onPress={onClickToSwip.bind(this, "back")}
+          // onPress={onClickToSwip.bind(this, "back")}
         />
         <MaterialCommunityIcons
           style={coverImageSwapRight}
           name="chevron-right-circle"
           size={30}
           onPress={onClickToSwip.bind(this, "next")}
-        />
+        /> */}
       </View>
 
       <View style={logoPosition}>
         <Image style={logo} source={icon} />
       </View>
 
-      <Collapsible
+      {/* <Collapsible
         isOpen={isOpenPost}
         onPress={onPostTitleClick}
         title={"Post"}
@@ -187,244 +191,357 @@ const SingleMerchant = ({
         animeTime={Platform.OS == "ios" ? 200 : 1000}
         animeTo={Platform.OS == "ios" ? windowHeight - 360 : viewHeight}
         animeContent={<PostList data={shopPosts} />}
-      />
+      /> */}
 
       {!isOpenPost ? (
         <View>
           <View style={detailArea}>
-            <Text style={title}>{dataSource.displayTitle}</Text>
-            <View>
-              <View style={setRow}>
-                <Ionicons style={{}} name="md-calendar" size={26} color={Colors.PRIMARY} />
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "bold",
-                    fontFamily: "RobotoRegular",
-                    marginLeft: 10.5,
-                    //marginRight: 10.5,
-                    marginTop: 3,
-                    color: Colors.PRIMARY,
-                    marginBottom: 5,
-                  }}
-                >
-                  Operating Hour
-                </Text>
-              </View>
-              {renderOperatingHour()}
-              <View style={setRow}>
-                <Ionicons
-                  style={subIconDetailMain}
-                  name="ios-call"
-                  size={26}
-                  color={Colors.PRIMARY}
-                />
+            <View style={styles.TopRow}>
+              <View style={styles.Topcol}>
+                <Text style={styles.TopTitle}>{dataSource.displayTitle}</Text>
+                <View style={styles.SubTopcol}>
+                  <Text style={styles.TopSubTitle}>Western 西餐 · </Text>
 
-                <Text
-                  style={{ marginTop: 20, fontFamily: "RobotoRegular" }}
+                  <Image style={{ width: 15, height: 15, marginLeft: 2 }} source={distanceIcon} />
+                  <Text style={styles.TopSubTitle}> Just 3.5Km away</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: "25%",
+                  backgroundColor: "#fff",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginTop: 10,
+                  marginLeft: 5,
+                }}
+              >
+                <TouchableOpacity //uncomment social media icon
                   onPress={() => {
-                    Linking.openURL(`tel:${dataSource.phoneNumber}`);
+                    if (!dataSource.facebookUrl) {
+                      return Alert.alert("Sorry, we don't have Posts.");
+                    }
+                    Linking.openURL(dataSource.facebookUrl);
                   }}
                 >
-                  {dataSource.phoneNumber}
-                </Text>
+                  <Image style={{ width: 35, height: 30 }} source={fillLessLove} />
+                </TouchableOpacity>
+                <TouchableOpacity //uncomment social media icon
+                  onPress={() => {
+                    if (!dataSource.facebookUrl) {
+                      return Alert.alert("Sorry, we don't have Posts.");
+                    }
+                    Linking.openURL(dataSource.facebookUrl);
+                  }}
+                >
+                  <Image style={{ width: 35, height: 30 }} source={newsIcon} />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View>
+              <View style={styles.FirstRow}>
+                <View style={styles.col}>
+                  <Text style={styles.textLabel}> Operating Hour</Text>
+                </View>
+                <View style={styles.col2}>
+                  {/* <Text style={styles.col2Text}>{tnc}</Text> */}
+                  {renderOperatingHour()}
+                </View>
+              </View>
+
+              <View style={styles.FirstRow}>
+                <View style={styles.col}>
+                  <Text style={styles.textLabel}> Contact Number</Text>
+                </View>
+                <View style={styles.col2}>
+                  {/* <Text style={styles.col2Text}>{tnc}</Text> */}
+                  <Text
+                    style={{ marginTop: 0, fontFamily: "RobotoRegular" }}
+                    onPress={() => {
+                      Linking.openURL(`tel:${dataSource.phoneNumber}`);
+                    }}
+                  >
+                    {" "}
+                    {dataSource.phoneNumber}
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.FirstRow}>
+                <View style={styles.col}>
+                  <Text style={styles.textLabel}> Address</Text>
+                </View>
+                <View style={styles.col2}>
+                  {/* <Text style={styles.col2Text}>{tnc}</Text> */}
+                  <Text
+                    style={{
+                      marginTop: 0,
+                      marginRight: "10%",
+                      fontFamily: "RobotoRegular",
+                    }}
+                    onPress={() => {
+                      const latitude = dataSource.l.latitude;
+                      const longitude = dataSource.l.longitude;
+                      Linking.openURL(`http://www.google.com/maps/place/${latitude},${longitude}`);
+                    }}
+                  >
+                    {dataSource.address.line1} {dataSource.address.line2}{" "}
+                    {dataSource.address.postcode} {dataSource.address.state}
+                  </Text>
+                </View>
               </View>
               <View style={setRow}>
-                <Ionicons
+                {/* <Ionicons
                   style={subIconDetailMain}
                   name="ios-pin"
                   size={26}
                   color={Colors.PRIMARY}
-                />
-                <Text
-                  style={{
-                    marginTop: 20,
-                    marginRight: "10%",
-                    fontFamily: "RobotoRegular",
-                  }}
-                  onPress={() => {
-                    const latitude = dataSource.l.latitude;
-                    const longitude = dataSource.l.longitude;
-                    Linking.openURL(`http://www.google.com/maps/place/${latitude},${longitude}`);
-                  }}
-                >
-                  {dataSource.address.line1} {dataSource.address.line2}{" "}
-                  {dataSource.address.postcode} {dataSource.address.state}
-                </Text>
+                /> */}
               </View>
             </View>
 
-            {dataSource.description ? (
-              <View>
-                <Text style={subTitle}>DESCRIPTION</Text>
+            {/* {dataSource.description ? (    ) : (
+              []
+            )} */}
+
+            <View style={styles.FirstRow}>
+              <View style={styles.col}>
+                <Text style={styles.textLabel}> Description</Text>
+              </View>
+              <View style={styles.col2}>
+                {/* <Text style={styles.col2Text}>{tnc}</Text> */}
                 <Text
                   style={{
-                    marginTop: 20,
-                    fontSize: 18,
-                    textAlign: "justify",
+                    marginTop: 0,
+                    marginRight: "10%",
                     fontFamily: "RobotoRegular",
-                    width: "95%",
-                    paddingBottom: 10,
                   }}
                 >
                   {dataSource.description}
                 </Text>
               </View>
-            ) : (
-              []
-            )}
-            <View
-              style={{
-                marginTop: 25,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignSelf: "center",
-                width: "50%",
-                // borderWidth:1,
-              }}
-            >
-              {
-                //dataSource.facebookUrl !== "" && dataSource.facebookUrl &&
-                <Ionicons
-                  style={{}}
-                  name="logo-facebook"
-                  size={30}
-                  color={Colors.PRIMARY}
-                  onPress={() => {
-                    if (!dataSource.facebookUrl) {
-                      return Alert.alert("Sorry, we don't have facebook.");
-                    }
-                    Linking.openURL(dataSource.facebookUrl);
+            </View>
+
+            <View style={styles.FirstRowSocialMedia}>
+              <View style={styles.colSocialMedia}>
+                <Text style={styles.textLabel}> Social Media</Text>
+              </View>
+              <View style={styles.col2}>
+                {/* <Text style={styles.col2Text}>{tnc}</Text> */}
+                <View
+                  style={{
+                    // paddingBottom: 100,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    backgroundColor: "#FFF",
+                    // borderWidth:1,
                   }}
-                />
-                // <TouchableOpacity      //uncomment social media icon
-                //   onPress={() => {
-                //     if (!dataSource.facebookUrl) {
-                //       return Alert.alert("Sorry, we don't have facebook.");
-                //     }
-                //     Linking.openURL(dataSource.facebookUrl);
-                //   }}
-                // >
-                //   <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={facebook} />
-                // </TouchableOpacity>
-              }
-              {
-                //dataSource.instagramUrl !== "" && dataSource.instagramUrl &&
-                <Ionicons
-                  style={{}}
-                  name="logo-instagram"
-                  size={30}
-                  color={Colors.PRIMARY}
-                  onPress={() => {
-                    if (!dataSource.instagramUrl) {
-                      return Alert.alert("Sorry, we don't have instagram.");
-                    }
-                    Linking.openURL(
-                      "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
-                    );
-                  }}
-                />
-                // <TouchableOpacity   //uncomment social media icon
-                //   onPress={() => {
-                //     if (!dataSource.instagramUrl) {
-                //       return Alert.alert("Sorry, we don't have instagram.");
-                //     }
-                //     Linking.openURL(
-                //       "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
-                //     );
-                //   }}
-                // >
-                //   <Image style={{ width: 30, height: 30 }} source={instagram} />
-                // </TouchableOpacity>
-              }
-              {
-                //dataSource.whatsapp !== "" && dataSource.whatsapp   &&
-                <Ionicons
-                  style={{}}
-                  name="logo-whatsapp"
-                  size={30}
-                  color={Colors.PRIMARY}
-                  onPress={() => {
-                    if (!dataSource.whatsapp) {
-                      return Alert.alert("Sorry, we don't have whatsapp.");
-                    }
-                    Linking.openURL("https://wa.me/" + dataSource.whatsapp);
-                  }}
-                />
-                // <TouchableOpacity   //uncomment social media icon
-                //   onPress={() => {
-                //     if (!dataSource.whatsapp) {
-                //       return Alert.alert("Sorry, we don't have whatsapp.");
-                //     }
-                //     Linking.openURL("https://wa.me/" + dataSource.whatsapp);
-                //   }}
-                // >
-                //   <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={whatsapp} />
-                // </TouchableOpacity>
-              }
-              {
-                //dataSource.websiteUrl !=='' && dataSource.websiteUrl &&
-                // <View    //UNCOMMENT VIEW
-                //   style={{
-                //     backgroundColor: Colors.PRIMARY,
-                //     borderRadius: 7,
-                //     width: 30,
-                //     height: 30,
-                //   }}
-                // >
-                <Ionicons
-                  style={{}} //{{ marginLeft: "auto", marginRight: "auto", top: "15%" }}  //uncomment social media icon
-                  name="md-link"
-                  size={30} //{20}  uncomment social media icon
-                  color={Colors.PRIMARY} //{Colors.WHITE} UNCOMMENT
-                  onPress={() => {
-                    if (!dataSource.websiteUrl) {
-                      return Alert.alert("Sorry, we don't have website.");
-                    }
-                    dataSource.websiteUrl.substring(0,4) === 'http'
-                      ? Linking.openURL(dataSource.websiteUrl)
-                      : Linking.openURL("https://" + dataSource.websiteUrl)
-                  }}
-                />
-                // </View>  UNCOMMENT VIEW‹
-              }
+                >
+                  {
+                    //dataSource.facebookUrl !== "" && dataSource.facebookUrl &&
+                    // <Ionicons
+                    //   style={{}}
+                    //   name="logo-facebook"
+                    //   size={30}
+                    //   color={Colors.PRIMARY}
+                    //   onPress={() => {
+                    //     if (!dataSource.facebookUrl) {
+                    //       return Alert.alert("Sorry, we don't have facebook.");
+                    //     }
+                    //     Linking.openURL(dataSource.facebookUrl);
+                    //   }}
+                    // />
+                    <TouchableOpacity //uncomment social media icon
+                      onPress={() => {
+                        if (!dataSource.facebookUrl) {
+                          return Alert.alert("Sorry, we don't have facebook.");
+                        }
+                        Linking.openURL(dataSource.facebookUrl);
+                      }}
+                    >
+                      <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={facebook} />
+                    </TouchableOpacity>
+                  }
+                  {
+                    //dataSource.instagramUrl !== "" && dataSource.instagramUrl &&
+                    // <Ionicons
+                    //   style={{}}
+                    //   name="logo-instagram"
+                    //   size={30}
+                    //   color={Colors.PRIMARY}
+                    //   onPress={() => {
+                    //     if (!dataSource.instagramUrl) {
+                    //       return Alert.alert("Sorry, we don't have instagram.");
+                    //     }
+                    //     Linking.openURL(
+                    //       "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
+                    //     );
+                    //   }}
+                    // />
+                    <TouchableOpacity //uncomment social media icon
+                      onPress={() => {
+                        if (!dataSource.instagramUrl) {
+                          return Alert.alert("Sorry, we don't have instagram.");
+                        }
+                        Linking.openURL(
+                          "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
+                        );
+                      }}
+                    >
+                      <Image style={{ width: 30, height: 30 }} source={instagram} />
+                    </TouchableOpacity>
+                  }
+                  {
+                    //dataSource.whatsapp !== "" && dataSource.whatsapp   &&
+                    // <Ionicons
+                    //   style={{}}
+                    //   name="logo-whatsapp"
+                    //   size={30}
+                    //   color={Colors.PRIMARY}
+                    //   onPress={() => {
+                    //     if (!dataSource.whatsapp) {
+                    //       return Alert.alert("Sorry, we don't have whatsapp.");
+                    //     }
+                    //     Linking.openURL("https://wa.me/" + dataSource.whatsapp);
+                    //   }}
+                    // />
+                    <TouchableOpacity //uncomment social media icon
+                      onPress={() => {
+                        if (!dataSource.whatsapp) {
+                          return Alert.alert("Sorry, we don't have whatsapp.");
+                        }
+                        Linking.openURL("https://wa.me/" + dataSource.whatsapp);
+                      }}
+                    >
+                      <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={whatsapp} />
+                    </TouchableOpacity>
+                  }
+                  {
+                    //dataSource.websiteUrl !=='' && dataSource.websiteUrl &&
+                    // <View    //UNCOMMENT VIEW
+                    //   style={{
+                    //     backgroundColor: Colors.PRIMARY,
+                    //     borderRadius: 7,
+                    //     width: 30,
+                    //     height: 30,
+                    //   }}
+                    // >
+
+                    <TouchableOpacity //uncomment social media icon
+                      onPress={() => {
+                        if (!dataSource.websiteUrl) {
+                          return Alert.alert("Sorry, we don't have website.");
+                        }
+                        dataSource.websiteUrl.substring(0, 4) === "http"
+                          ? Linking.openURL(dataSource.websiteUrl)
+                          : Linking.openURL("https://" + dataSource.websiteUrl);
+                      }}
+                    >
+                      <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={webSite} />
+                    </TouchableOpacity>
+                    // <Ionicons
+                    //   style={{}} //{{ marginLeft: "auto", marginRight: "auto", top: "15%" }}  //uncomment social media icon
+                    //   name="md-link"
+                    //   size={30} //{20}  uncomment social media icon
+                    //   color={Colors.PRIMARY} //{Colors.WHITE} UNCOMMENT
+                    // onPress={() => {
+                    //   if (!dataSource.websiteUrl) {
+                    //     return Alert.alert("Sorry, we don't have website.");
+                    //   }
+                    //   dataSource.websiteUrl.substring(0, 4) === "http"
+                    //     ? Linking.openURL(dataSource.websiteUrl)
+                    //     : Linking.openURL("https://" + dataSource.websiteUrl);
+                    // }}
+                    // />
+                    // </View>  UNCOMMENT VIEW‹
+                  }
+                </View>
+              </View>
             </View>
           </View>
 
-          {promotions.length > 0 ? (
-            <View>
-              <Text style={sectionTitle}>Promote</Text>
-
+          {/* 
+          <View style={styles.lastSectionFlatListRow}>
               <FlatList
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                data={promotions}
+                data={promoSource}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
-                  <TouchableOpacity
-                    onPress={onPromoteClick.bind(this, item, distance, calculatedDistance)}
-                  >
+                  <TouchableOpacity onPress={() => onMerchantPressed(item)}>
                     <Card
                       key={item.id}
-                      style={index === 0 ? firstPromoteCardStyle : promoteCardStyle}
+                      style={index === 0 ? styles.firstPromoteCardStyle : styles.promoteCardStyle}
                     >
                       {item.coverPhotos.length > 0 ? (
                         <Image
                           source={{ uri: item.coverPhotos[0] }}
-                          style={promoteImage}
+                          style={styles.promoteImage}
                           resizeMode="cover"
                         />
                       ) : (
                         <Image source={noPromoteImage} style={promoteNoImage} resizeMode="cover" />
                       )}
-                      <Text numberOfLines={2} style={promoteTitleTextStyle}>
-                        {item.title}
-                      </Text>
+                      <View style={styles.lastSectionTextContainer}>
+                        <Text numberOfLines={2} style={styles.promoteTitleTextStyle}>
+                          {item.title}
+                        </Text>
+                      </View>
                     </Card>
                   </TouchableOpacity>
                 )}
-                scrollEnabled={promotions.length > 1}
+                keyExtractor={(item) => item.id}
+                onRefresh={handleRefresh}
+                refreshing={false}
+                scrollEnabled={promoSource.length > 1}
+
+                // ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
+                // style={styles.flatList}
               />
+            </View> */}
+
+          {promotions.length > 0 ? (
+            <View>
+              <Text style={sectionTitle}>Promotions</Text>
+              <View style={styles.lastSectionFlatListRow}>
+                <FlatList
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  data={promotions}
+                  keyExtractor={(item) => item.id}
+                  renderItem={({ item, index }) => (
+                    <TouchableOpacity
+                      onPress={onPromoteClick.bind(this, item, distance, calculatedDistance)}
+                    >
+                      <Card
+                        key={item.id}
+                        style={index === 0 ? firstPromoteCardStyle : promoteCardStyle}
+                      >
+                        {item.coverPhotos.length > 0 ? (
+                          <Image
+                            source={{ uri: item.coverPhotos[0] }}
+                            style={promoteImage}
+                            resizeMode="cover"
+                          />
+                        ) : (
+                          <Image
+                            source={noPromoteImage}
+                            style={promoteNoImage}
+                            resizeMode="cover"
+                          />
+                        )}
+                        <View style={styles.lastSectionTextContainer}>
+                          <Text numberOfLines={2} style={promoteTitleTextStyle}>
+                            {item.title}
+                          </Text>
+                        </View>
+                      </Card>
+                    </TouchableOpacity>
+                  )}
+                  scrollEnabled={promotions.length > 1}
+                />
+              </View>
             </View>
           ) : (
             []

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   subContainer1: {
     flex: 1,
-    height: 250,
+    // height: 200,
   },
   actionDotStyle: {
     // backgroundColor: '#ffffff',
@@ -57,10 +57,22 @@ const styles = StyleSheet.create({
   logoPosition: {
     width: 70,
     height: 70,
-    alignSelf: "center",
+    // alignSelf: "center",
     position: "absolute",
     top: 210,
     zIndex: 5,
+    flex: 1,
+    marginLeft: 20,
+    borderColor: "white",
+    borderWidth: 3.5,
+    borderRadius: 35,
+    elevation: 10,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
   },
   logo: {
     width: "100%",
@@ -68,7 +80,7 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
   detailArea: {
-    width: "100%",
+    width: "98%",
     paddingLeft: "5%",
     //paddingRight: "5%", uncomment this at social media icon
     paddingTop: "5%",
@@ -76,18 +88,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignSelf: "center",
     backgroundColor: "white",
+    // marginHorizontal: 100,
   },
   title: {
     fontSize: 25,
     fontWeight: "700",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginBottom: 10,
     marginTop: 10,
   },
   subTitle: {
     fontSize: 18,
     fontWeight: "600",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginTop: 30,
   },
   detail: {
@@ -104,6 +117,7 @@ const styles = StyleSheet.create({
   },
   setRow: {
     flexDirection: "row",
+    backgroundColor: "white",
   },
   operatingHour: {},
   operatingContainer: {
@@ -161,33 +175,38 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   firstPromoteCardStyle: {
-    width: 181.2,
-    marginLeft: 20,
+    width: 180,
+
+    // marginLeft: 20,
     marginRight: 20,
     elevation: 3,
-    borderRadius: 10,
+    borderRadius: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     marginBottom: 6,
+    paddingTop: 10,
+    alignItems: "center",
   },
   promoteCardStyle: {
     width: 181.2,
+    // marginLeft: 20,
     marginRight: 20,
     elevation: 3,
-    borderRadius: 10,
+    borderRadius: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     marginBottom: 6,
+    paddingTop: 10,
+    alignItems: "center",
   },
   promoteImage: {
-    width: 179.2,
+    width: 165,
     height: 121.2,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
+    borderRadius: 20,
   },
   promoteNoImage: {
     width: 179.2,
@@ -199,7 +218,7 @@ const styles = StyleSheet.create({
   promoteTitleTextStyle: {
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginBottom: 7,
     marginTop: 5,
     marginLeft: 10,
@@ -207,13 +226,66 @@ const styles = StyleSheet.create({
     height: 55,
   },
   sectionTitle: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "700",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginTop: "5%",
     marginBottom: 8,
     marginLeft: 22,
+    color: Colors.RED,
   },
+
+  FirstRow: {
+    paddingTop: 20,
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+  },
+  TopRow: {
+    paddingTop: 20,
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+  },
+  TopTitle: {
+    fontSize: 25,
+    fontWeight: "700",
+    fontFamily: "HorizontalRounded",
+    paddingBottom: 3,
+    // marginBottom: 10,
+    // marginTop: 10,
+  },
+  TopSubTitle: {
+    fontSize: 10,
+    // fontWeight: "700",
+    fontFamily: "HorizontalRounded",
+    // marginBottom: 10,
+    // marginTop: 10,
+  },
+  SubTopcol: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  Topcol: { width: "65%", backgroundColor: "#fff" },
+  lastSectionTextContainer: {
+    alignSelf: "flex-start",
+    marginLeft: 20,
+  },
+  FirstRowSocialMedia: {
+    paddingTop: 20,
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    backgroundColor: "#FFF",
+    width: "100%",
+  },
+  col: { width: "35%", backgroundColor: "#fff" },
+  colSocialMedia: { width: "35%", backgroundColor: "#fff", marginTop: 8 },
+
+  col2: { width: "50%", backgroundColor: "#fff", textAlign: "left" },
 });
 
 export default styles;
