@@ -114,13 +114,15 @@ class index extends Component {
     return shop.operatingHour.map((item, key) => {
       return (
         <View style={operatingContainer} key={key}>
-          <Ionicons
+          {/* <Ionicons
             style={(subIconDetail, { paddingRight: "5%", paddingLeft: "6%" })}
             name="md-time"
             size={20}
             color="grey"
-          />
-          <Text style={{ width: 40, fontFamily: "RobotoRegular" }}>{item.day.toUpperCase()}</Text>
+          /> */}
+          <Text style={{ width: "40%", fontFamily: "RobotoRegular" }}>
+            {item.day.toUpperCase()}
+          </Text>
           {item.operate ? (
             <Text style={{ marginLeft: 10, fontFamily: "RobotoRegular" }}>
               {moment(item.open.toString(), "Hmm").format("LT") +

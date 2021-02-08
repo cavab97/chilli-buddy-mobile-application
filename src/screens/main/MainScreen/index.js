@@ -32,11 +32,11 @@ class index extends Component {
       refreshing: false,
       popUpImage: "",
       wheelRotation: new Animated.Value(0),
-      fadeWheel: new Animated.Value(1),
+      // fadeWheel: new Animated.Value(1),
       fadeResult: new Animated.Value(0),
       randomCategoryNumber: null,
       randomCategory: null,
-      spinStatus: false,
+      // spinStatus: false,
       selectedCategory: { id: "", tags: ["All"], title: "All" },
       selectedTag: "All",
       radiusAddition: 1,
@@ -94,6 +94,10 @@ class index extends Component {
   }
   onProfilePressed() {
     Actions.Profile();
+  }
+  //open spinning wheel screen
+  onOpenSpinningWheel() {
+    Actions.SpinningWheel();
   }
 
   // View shop from clicking image swiper advertisements
@@ -176,54 +180,6 @@ class index extends Component {
     this.props.toggleSpinningWheelModal();
   }
 
-  spinningWheel() {
-    let newDeg = Math.random() * 360;
-    const curValue = this.state.wheelRotation.__getValue();
-    if (curValue > 720) {
-      newDeg = curValue - newDeg - 720;
-    } else {
-      newDeg = curValue + newDeg + 720;
-    }
-
-    this.setState({
-      randomCategoryNumber: Math.random(),
-      spinStatus: true,
-      randomCategory: null,
-    });
-
-    const randomCategory = this.getRandomCategory();
-    this.setState({ randomCategory: randomCategory });
-
-    Animated.parallel([
-      Animated.decay(this.state.wheelRotation, {
-        toValue: newDeg,
-        velocity: 200,
-        //deceleration: 0.99915,
-        useNativeDriver: true,
-      }).start(({ finished }) => {
-        // const randomCategory = this.getRandomCategory();
-        this.setState({ spinStatus: false });
-        Animated.timing(this.state.fadeResult, {
-          toValue: 1,
-          //delay: 2000,
-          duration: 1500,
-          useNativeDriver: true,
-        }).start();
-      }),
-      Animated.timing(this.state.fadeWheel, {
-        toValue: 0,
-        duration: 6000,
-        useNativeDriver: true,
-      }).start(),
-    ]);
-  }
-  getRandomCategory() {
-    let categoryArray = this.passCategory();
-    var randomCategory =
-      categoryArray[Math.floor(this.state.randomCategoryNumber * categoryArray.length)];
-    return randomCategory;
-  }
-
   onPressRandomCategory(category) {
     Actions.Shops({ selectedCategory: category });
     this.props.toggleSpinningWheelModal();
@@ -233,83 +189,83 @@ class index extends Component {
     Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
   }
 
-  //Pass category
-  passCategory() {
-    let dataSource2 = [];
-    let categoriesImage = [
-      require("../../../assets/chillibuddy/category1.png"),
-      require("../../../assets/chillibuddy/category2.png"),
-      require("../../../assets/chillibuddy/category3.png"),
-      require("../../../assets/chillibuddy/category4.png"),
-      require("../../../assets/chillibuddy/category5.png"),
-    ];
-    let size = 30;
-    dataSource2 = this.state.categories.slice(1, size).map((category) => {
-      return {
-        key: category.id,
-        id: category.id,
-        no: category.no,
-        title: category.title,
-        tags: category.tags,
-        //image: require("../../../assets/chillibuddy/category1.png"),
-      };
-    });
+  // //Pass category
+  // passCategory() {
+  //   let dataSource2 = [];
+  //   let categoriesImage = [
+  //     require("../../../assets/chillibuddy/category1.png"),
+  //     require("../../../assets/chillibuddy/category2.png"),
+  //     require("../../../assets/chillibuddy/category3.png"),
+  //     require("../../../assets/chillibuddy/category4.png"),
+  //     require("../../../assets/chillibuddy/category5.png"),
+  //   ];
+  //   let size = 30;
+  //   dataSource2 = this.state.categories.slice(1, size).map((category) => {
+  //     return {
+  //       key: category.id,
+  //       id: category.id,
+  //       no: category.no,
+  //       title: category.title,
+  //       tags: category.tags,
+  //       //image: require("../../../assets/chillibuddy/category1.png"),
+  //     };
+  //   });
 
-    //Assigning background pictures
-    dataSource2.forEach((element, index) => {
-      element.image = categoriesImage[index % 5];
-      switch (element.title) {
-        case "Chinese | 中餐":
-          element.icon = "chinese";
-          break;
-        case "Western | 西餐":
-          element.icon = "western";
-          break;
-        case "Cafe | 咖啡馆":
-          element.icon = "cafe";
-          break;
-        case "China | 中国菜":
-          element.icon = "china";
-          break;
-        case "Japanese | 日本餐":
-          element.icon = "japanese";
-          break;
-        case "Korean | 韩国餐":
-          element.icon = "korean";
-          break;
-        case "Thai | 泰国餐":
-          element.icon = "thai";
-          break;
-        case "TAIWAN | 台湾":
-          element.icon = "taiwan";
-          break;
-        case "Bistro | 小酒馆":
-          element.icon = "bistro";
-          break;
-        case "Steamboat | 火锅":
-          element.icon = "steamboat";
-          break;
-        case "Local Cuisine | 本地美食":
-          element.icon = "localcuisine";
-          break;
-        case "Beverage | 饮料店":
-          element.icon = "beverage";
-          break;
-        case "Food Truck | 餐车":
-          element.icon = "foodtruck";
-          break;
-        case "LOK LOK | 碌碌":
-          element.icon = "loklok";
-          break;
-        case "Special Cuisine | 特色美食":
-          element.icon = "cuisine";
-          break;
-        default:
-          element.icon = "others";
-      }
-    });
-    return dataSource2;
-  }
+  //   //Assigning background pictures
+  //   dataSource2.forEach((element, index) => {
+  //     element.image = categoriesImage[index % 5];
+  //     switch (element.title) {
+  //       case "Chinese | 中餐":
+  //         element.icon = "chinese";
+  //         break;
+  //       case "Western | 西餐":
+  //         element.icon = "western";
+  //         break;
+  //       case "Cafe | 咖啡馆":
+  //         element.icon = "cafe";
+  //         break;
+  //       case "China | 中国菜":
+  //         element.icon = "china";
+  //         break;
+  //       case "Japanese | 日本餐":
+  //         element.icon = "japanese";
+  //         break;
+  //       case "Korean | 韩国餐":
+  //         element.icon = "korean";
+  //         break;
+  //       case "Thai | 泰国餐":
+  //         element.icon = "thai";
+  //         break;
+  //       case "TAIWAN | 台湾":
+  //         element.icon = "taiwan";
+  //         break;
+  //       case "Bistro | 小酒馆":
+  //         element.icon = "bistro";
+  //         break;
+  //       case "Steamboat | 火锅":
+  //         element.icon = "steamboat";
+  //         break;
+  //       case "Local Cuisine | 本地美食":
+  //         element.icon = "localcuisine";
+  //         break;
+  //       case "Beverage | 饮料店":
+  //         element.icon = "beverage";
+  //         break;
+  //       case "Food Truck | 餐车":
+  //         element.icon = "foodtruck";
+  //         break;
+  //       case "LOK LOK | 碌碌":
+  //         element.icon = "loklok";
+  //         break;
+  //       case "Special Cuisine | 特色美食":
+  //         element.icon = "cuisine";
+  //         break;
+  //       default:
+  //         element.icon = "others";
+  //     }
+  //   });
+  //   return dataSource2;
+  // }
 
   render() {
     const {
@@ -379,7 +335,7 @@ class index extends Component {
         randomAdPic={randomAdPic}
         getShopId={getShopId}
         dataSource={dataSource}
-        dataSource2={this.passCategory()}
+        // dataSource2={this.passCategory()}
         sectionTitle1="Category"
         //routeTickets={routeTickets}
         casualImage={casualImage}
@@ -404,15 +360,15 @@ class index extends Component {
         popUpImage={this.state.popUpImage}
         onClosePopUp={this.onClosePopUp.bind(this)}
         spinningWheelModal={this.props.spinningWheelModal}
-        onOpenSpinningWheelModal={this.onOpenSpinningWheelModal.bind(this)}
-        onCloseSpinningWheelModal={this.onCloseSpinningWheelModal.bind(this)}
-        spinningWheel={this.spinningWheel.bind(this)}
+        // onOpenSpinningWheelModal={this.onOpenSpinningWheelModal.bind(this)}
+        // onCloseSpinningWheelModal={this.onCloseSpinningWheelModal.bind(this)}
+        // spinningWheel={this.spinningWheel.bind(this)}
         wheelRotation={this.state.wheelRotation}
         randomCategory={this.state.randomCategory}
         onPressRandomCategory={this.onPressRandomCategory.bind(this)}
         fadeWheel={this.state.fadeWheel}
         fadeResult={this.state.fadeResult}
-        spinStatus={this.state.spinStatus}
+        // spinStatus={this.state.spinStatus}
         onCheckInPressed={this.onCheckInPressed.bind(this)}
         onPromotionsPressed={this.onPromotionsPressed.bind(this)}
         onShopsPressed={this.onShopsPressed.bind(this)}
@@ -421,6 +377,7 @@ class index extends Component {
         promoSource={promo}
         promotions={promotions}
         onMerchantPressed={this.onMerchantPressed.bind(this)}
+        onOpenSpinningWheel={this.onOpenSpinningWheel.bind(this)}
       />
     );
   }

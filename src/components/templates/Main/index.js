@@ -83,6 +83,7 @@ export default ({
   promoSource,
   onMerchantPressed,
   promotions,
+  onOpenSpinningWheel,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -418,17 +419,6 @@ export default ({
             )}
 
             {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
-
-            <SpinningWheel
-              spinningWheelModal={spinningWheelModal}
-              randomCategory={randomCategory}
-              spinStatus={spinStatus}
-              onPressRandomCategory={onPressRandomCategory}
-              wheelRotation={wheelRotation}
-              onCloseSpinningWheelModal={onCloseSpinningWheelModal}
-              fadeWheel={fadeWheel}
-              spinningWheel={spinningWheel}
-            />
           </View>
 
           {/* The quarter screen Row */}
@@ -447,7 +437,7 @@ export default ({
               </View>
               <Text style={styles.floatingCheckInTitle}>Promotions</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.QuarterContainer1} onPress={onOpenSpinningWheelModal}>
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onOpenSpinningWheel}>
               <View style={styles.quarterInnerBox}>
                 <Image source={spinWheel} transition={false} style={styles.quarterIcon} />
               </View>
