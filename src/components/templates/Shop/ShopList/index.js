@@ -134,6 +134,10 @@ const ShopList = ({
   onTagChange,
   state,
   shopData,
+  selectedCategory,
+  toggleFavourite,
+  favourite,
+  tags,
   props,
   isPromote,
   displayCategory,
@@ -142,6 +146,7 @@ const ShopList = ({
 
   const filterIcon = require("../../../../assets/icons/filter.png");
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
+  const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
   return (
     <ScrollView 
@@ -154,16 +159,20 @@ const ShopList = ({
         </Text>
 
         <View style={styles.iconContainer}>
-          <Image 
-            source={emptyHeartIcon} 
-            style={styles.emptyHeartIcon}
-          />
+          <TouchableOpacity
+            onPress={toggleFavourite}
+          >
+            <Image 
+              source={favourite ? filledHeartIcon : emptyHeartIcon} 
+              style={styles.emptyHeartIcon}
+            />
+          </TouchableOpacity>
   
           <ModalSelector
-            data={state.selectedCategory.tags}
-            keyExtractor={(item) => item}
+            data={tags}
+            keyExtractor={(item) => item.id }
             labelExtractor={(item) =>
-              state.tags.filter((tag) => tag.id === item).map(({ title }) => title)[0]
+              tags.filter((tag) => tag.id === item.id).map(({ title }) => title)[0]
             }
             onChange={onTagChange.bind(this)}
             selectStyle={styles.categoriesSelect}
@@ -184,6 +193,8 @@ const ShopList = ({
         </Text>
         <CategoryList
           categories={categories}
+          onCategoryChange={onCategoryChange}
+          selectedCategory={selectedCategory}
         />
       </View>
 

@@ -29,7 +29,10 @@ const actions = {
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
   READ_RECORD_ERROR: type + "READ_RECORD_ERROR",
 
-  TOGGLE_SHOP_FAVOURITE: type + "TOGGLE_SHOP_FAVOURITE"
+  TOGGLE_SHOP_FAVOURITE: type + "TOGGLE_SHOP_FAVOURITE",
+  TOGGLE_CATEGORY: type + "TOGGLE_CATEGORY",
+  TOGGLE_FAVOURITE: type + "TOGGLE_FAVOURITE",
+  TOGGLE_TAG: type + "TOGGLE_TAG"
 };
 
 const { firestore } = firebase;
@@ -272,6 +275,26 @@ export function onFavouriteClick(shopId) {
       });
     });
   };
+}
+
+export const toggleCategory = (data = null) => {
+  return{
+    type: actions.TOGGLE_CATEGORY,
+    payload: { data }
+  }
+}
+
+export const toggleFavourite = () => {
+  return{
+    type: actions.TOGGLE_FAVOURITE,
+  }
+}
+
+export const toggleTag = (data = null) => {
+  return{
+    type: actions.TOGGLE_TAG,
+    payload: { data }
+  }
 }
 
 export default actions;
