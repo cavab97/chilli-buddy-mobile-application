@@ -241,6 +241,15 @@ class index extends Component {
   render() {
     const { shops } = this.props.shopState;
 
+    const { categories } = this.props
+
+    // Get Shop Category
+    shops.map(shop => {
+      let shopCategory = categories.filter(category => category.id === shop.categories[0])
+
+      shopCategory ? shop.category = shopCategory[0].title : ''
+    }) 
+
     return (
       <ShopList
         handleRefresh={this.handleRefresh.bind(this)}
@@ -254,7 +263,8 @@ class index extends Component {
         shopData={shops}
         state={this.state}
         props={this.props}
-        // displayCategory={this.props.selectedCategory.id}
+        categories={categories}
+        //displayCategory={this.props.selectedCategory ? "" : this.props.selectedCategory.id}
       />
     );
   }

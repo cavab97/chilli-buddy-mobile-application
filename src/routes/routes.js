@@ -1,5 +1,5 @@
 import React from "react";
-import { Scene, Stack } from "react-native-router-flux";
+import { Scene, Stack, Tabs } from "react-native-router-flux";
 
 import MainScreen from "../screens/main/MainScreen";
 import Shops from "../screens/main/Shops";

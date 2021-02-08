@@ -2,9 +2,87 @@ import { StyleSheet, ColorPropType, Platform } from "react-native";
 import { Colors, Mixins } from "../../../../settings/styles/theme";
 
 const styles = StyleSheet.create({
+  shopContainer: {
+    height: "100%"
+  },
+  shopTitleContainer: {
+    flexDirection: "row", 
+    justifyContent: "space-between",
+    width: "90%",
+    alignSelf: "center"
+  },
+  iconContainer: {
+    flexDirection: "row", 
+    paddingTop: 5
+  },
+  emptyHeartIcon: {
+    width: 30, 
+    height: 30, 
+    resizeMode: 'contain',
+    marginRight: 15
+  },
+  filterIcon: {
+    width: 30, 
+    height: 30, 
+    resizeMode: 'contain',
+  },
+  categoryTitleContainer: {
+    width: "90%",
+    alignSelf: "center",
+    marginTop: 10
+  },
+  categoryTitle: { 
+    fontFamily: "HorizontalRounded", 
+    fontSize: 18 
+  },
+  cardContainer: {
+    width: "90%",
+    marginTop: 30,
+    backgroundColor: "#fff",
+    alignSelf: "center",
+    height: "auto",
+  },
+  favouriteIcon: { 
+    width: 20, 
+    height: 20, 
+    resizeMode: "contain",
+  },
+  imageContainer: {
+    borderBottomWidth: 0,
+    padding:0,
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  pageTitle: {
+    fontSize: 36,
+    color: Colors.PRIMARY,
+    fontFamily: "HorizontalRounded"
+  },
   image: {
     width: "100%",
-    height: 250,
+    height: 200,
+    borderRadius: 20,
+  },
+  textContainer: {
+    paddingTop: 15,
+    paddingHorizontal: 5,
+    borderBottomWidth: 0,
+  },
+  descriptionContainer: {
+    paddingHorizontal: 5,
+    paddingVertical: 0,
+    borderBottomWidth: 0,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  distanceIcon: { 
+    height: 15, 
+    width: 15,
+    marginRight: 5
   },
   emptySection: {
     alignContent: "center",
@@ -23,34 +101,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: Platform.OS === "ios" ? Colors.GRAY_LIGHTEST : "#F4F4F4",
   },
+  promotionWrapper: { 
+    width: 100, 
+    height: 40, 
+    resizeMode: "contain"
+  },
   flatList: {
     minHeight: Mixins.WINDOW_HEIGHT - 300,
+    marginBottom: Mixins.WINDOW_HEIGHT / 15
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "RobotoRegular",
-    color: Colors.PRIMARY,
+    fontFamily: "HorizontalRounded",
   },
   detail: {
-    marginLeft: 10,
     fontSize: 12,
-    color: Colors.BLACK,
-    fontFamily: "RobotoRegular",
+    color: Colors.GREY,
+    fontFamily: "HorizontalRounded",
   },
   checkbox: {
     backgroundColor: Colors.GRAY_LIGHT,
-  },
-  subscribe: {
-    backgroundColor: Colors.PRIMARY,
-    width: 120,
-    height: 40,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    right: 10,
-    top: 200,
   },
   profile: {
     //backgroundColor: Colors.PRIMARY,
@@ -58,8 +129,8 @@ const styles = StyleSheet.create({
     //justifyContent: "center",
     //alignItems: "center",
     position: "absolute",
-    left: 10,
-    top: 20,
+    top: 15,
+    left: -3,
   },
   tagsButton: {
     marginLeft: 10,
@@ -76,7 +147,6 @@ const styles = StyleSheet.create({
   categoriesSelect: {
     backgroundColor: Colors.PRIMARY,
     borderWidth: 1.2,
-    marginTop: 3,
     borderColor: Colors.PRIMARY, //"#373737",
   },
   categoriesButton: {
@@ -110,12 +180,10 @@ const styles = StyleSheet.create({
     //backgroundColor: Colors.PRIMARY,
     //borderRadius: 30,
     position: "absolute",
-    backgroundColor: "#d60000",
     width: 60,  
-    height: 60,   
-    borderRadius: 30,   
-    right: 20,
-    top: 20,
+    height: 60,    
+    right: 0,
+    bottom: 0,
     alignItems:'center',
     justifyContent:'center',
     textShadowColor: Colors.SECONDARY,
