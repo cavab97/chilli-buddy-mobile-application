@@ -374,10 +374,10 @@ export default ({
       >
         <Image source={wheelIcon} style={styles.floatingButton} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
+      {/* <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
         <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
         <Text style={styles.floatingCheckInTitle}>CHECK IN</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

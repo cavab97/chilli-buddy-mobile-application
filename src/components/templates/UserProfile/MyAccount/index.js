@@ -50,7 +50,7 @@ export class MyAccount extends Component {
           {/* <Text style={styles.moreTextStyle}>More</Text> */}
         </View>
         <View>{this.settingListing("Bookmark", this.onBookmarkPress.bind(this), true)}</View>
-        <View>{this.settingListing("Voucher", this.onVoucherPress.bind(this), true)}</View>
+        {/* <View>{this.settingListing("Voucher", this.onVoucherPress.bind(this), true)}</View> */}
         <View>{this.settingListing("Help Center", this.onHelpCenterPress.bind(this), true)}</View>
         {/* <View>
                     {this.settingListing(
@@ -59,7 +59,7 @@ export class MyAccount extends Component {
                         true
                     )}
                 </View> */}
-        <View>{this.settingListing("Version", this.onVersionPress.bind(this), "2.6.8")}</View>
+        <View>{this.settingListing("Version", this.onVersionPress.bind(this), "2.6.9")}</View>
         {/* <View style={styles.signoutButtonStyle}>xsxs
           <SignoutButton onPress={onSignoutPress} loading={logOutLoading}>
             Sign Out
