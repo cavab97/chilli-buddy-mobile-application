@@ -230,9 +230,13 @@ class index extends Component {
       ? filteredShop = filteredShop.filter(shop => shop.isFavourite === true)
       : filteredShop
 
-    /* selectedTag
-      ? filteredShop = filteredShop.filter(shop => shop.tag)
- */
+    /* if (selectedTag) {
+      filteredShop.forEach((shop) =>
+        shop.tags.forEach((tag) =>
+          tag 
+        )
+      )  
+    } */
  
     if (selectedCategory) {
       selectedCategoryTag = filteredCategories.filter(category => category.id === selectedCategory)

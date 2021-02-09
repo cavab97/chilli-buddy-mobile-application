@@ -74,7 +74,12 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="Promo" back>
-        <Scene key="Promo" component={Promo} title="Promo" titleStyle={styles.title} />
+        <Scene 
+          key="Promo" 
+          component={Promo} 
+          //title="Promo" 
+          titleStyle={styles.title} 
+        />
       </Stack>
 
       <Stack key="Profile" back>
