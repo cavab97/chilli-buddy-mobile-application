@@ -115,16 +115,14 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       {/* <Stack key="Shops" back>
         <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
       </Stack>
-      <Stack key="Shops" back>
-        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
-      </Stack> */}
+      */}
       <Stack key="Shops" back>
         <Scene
           key="Shops"
           component={Shops}
-          title="Shops"
+          //title="Shops"
           titleStyle={styles.title}
-          // navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />
       </Stack>
       <Stack key="SingleMerchant" back>
