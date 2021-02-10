@@ -12,7 +12,6 @@ import {
 } from "@components/atoms";
 
 import { 
-  Card, 
   CardSection,
 } from "@components/molecules";
 
@@ -20,10 +19,24 @@ import {
   CategoryList
 } from "@components/organisms/CategoryList";
 
-import FavouriteIcon from "react-native-vector-icons/Ionicons"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Icon from "react-native-vector-icons/FontAwesome";
-import Label, { Orientation } from "react-native-label";
+
+function RenderFooter({
+  
+}) {
+  return (
+    <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
+      <Image
+        source={require("../../../../assets/chilliBuddyCheckin/chilliSadFace.png")}
+        style={{ width: 200, height: 250 }}
+        resizeMode="contain"
+      />
+      <Text style={{ fontFamily: 'HorizontalRounded', fontSize: 16 }}>
+        No shop found
+      </Text>
+    </View>
+  );
+}
 
 function Item({
   name,
@@ -222,7 +235,7 @@ const ShopList = ({
         refreshing={state.isRefreshing}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
-        //ListFooterComponent={renderFooter({ empty: state.data.length === 0 ? true : false })}
+        ListFooterComponent={shopData.length === 0 && <RenderFooter/>}
         style={styles.flatList}
         extraData={state}
       />

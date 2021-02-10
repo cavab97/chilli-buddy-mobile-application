@@ -130,8 +130,17 @@ const PromoList = ({
         textTwo="Tags"
         onPressBack={onBackPressed}
       />
-      <Modal>
-
+      <Modal style={{
+        flex: 1,
+        backgroundColor: 'white', 
+        marginHorizontal: 0,
+        marginBottom: 0,
+      }}
+        isVisible={false}
+      >
+        <View style={{height: 300, width: "100%"}}>
+          <Text>Testing</Text>
+        </View>
       </Modal>
 
       <View style={styles.promoTitleContainer}>
