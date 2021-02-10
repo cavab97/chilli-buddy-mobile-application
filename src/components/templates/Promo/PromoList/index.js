@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
+import Modal from 'react-native-modal';
 import {
   ActivityIndicator,
   Icon as Icon2,
@@ -27,7 +27,7 @@ function Item({
   name,
   shopName,
 }) {
-  const { image, detail, title, subtitle } = styles;
+  const { image, detail, title, subtitle, bookmarkIcon } = styles;
 
   let cover = "";
   if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
@@ -49,95 +49,52 @@ function Item({
             />
           </CardSection>
         </View>
-        <View style={{ width: "65%", height: 100 }}>
+        <View style={{ 
+          width: "65%", 
+          height: 100, 
+          flex: 1, 
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          paddingBottom: 10
+        }}>
           <CardSection style={styles.textContainer}>
-            <Text style={title}>
-              {name}
+            <Text style={title} numberOfLines={2}>
+              {name} 
             </Text>
           </CardSection>
-          {/* <CardSection style={styles.textContainer}>
-            <Text style={subtitle}>
-              Valid from {date} to {date}
-            </Text>
-          </CardSection> */}
-          <CardSection style={styles.textContainer}>
-            <Text style={subtitle}>
-              {shopName}  
-            </Text>
-          </CardSection>
-        <CardSection style={styles.descriptionContainer}>
-          {/* <Text style={detail}>
-            {category}
-          </Text> */}
-          {/* <MaterialCommunityIcons
-            name="checkbox-blank-circle"
-            size={5}
-            color="#979797"
-            style={{ marginHorizontal: 8 }}
-          /> */}
-          <Image 
-            source={distanceIcon} 
-            style={styles.distanceIcon}
-          />
-          <Text style={detail}>
-            Just {+(Math.round(distance + "e+2") + "e-2")} Km away
-          </Text>
-          <View style={{ position: 'absolute', right: 5, bottom:0 }}>
-            <TouchableOpacity 
-
-              onPress={onBookmarkPressed}
-            >
-              {gotBookmark ? (
-                <Image 
-                  source={filledHeartIcon} 
-                  style={styles.favouriteIcon}
-                />
-              ) : (
-                <Image 
-                  source={emptyHeartIcon} 
-                  style={styles.favouriteIcon}
-                />
-              )}
-            </TouchableOpacity> 
+          <View>
+            <CardSection style={styles.textContainer}>
+              <Text style={subtitle} numberOfLines={1}>
+                {shopName}
+              </Text>
+            </CardSection>
+            <CardSection style={styles.descriptionContainer}>
+              <Image 
+                source={distanceIcon} 
+                style={styles.distanceIcon}
+              />
+              <Text style={detail}>
+                Just {+(Math.round(distance + "e+2") + "e-2")}km away
+              </Text>
+              <View style={bookmarkIcon}>
+                <TouchableOpacity 
+                  onPress={onBookmarkPressed}
+                >
+                  {gotBookmark ? (
+                    <Image 
+                      source={filledHeartIcon} 
+                      style={styles.favouriteIcon}
+                    />
+                  ) : (
+                    <Image 
+                      source={emptyHeartIcon} 
+                      style={styles.favouriteIcon}
+                    />
+                  )}
+                </TouchableOpacity> 
+              </View>
+            </CardSection>
           </View>
-        </CardSection>
-
-       {/*  <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
-          {gotBookmark ? (
-            <View
-              style={{
-                borderRadius: 100,
-                borderWidth: 0,
-                borderColor: "#ffd30f",
-                backgroundColor: "#ffd30f",
-              }}
-            >
-              <Icon2
-                size={50}
-                iconStyle={{ borderWidth: 0 }}
-                containerStyle={{ justifyContent: "center" }}
-                name={"stars"}
-                color="#d60000"
-              />
-            </View>
-          ) : (
-            <View
-              style={{
-                borderRadius: 100,
-                backgroundColor: "#ffffff",
-              }}
-            >
-              <Icon2
-                size={50}
-                iconStyle={{ borderWidth: 0 }}
-                containerStyle={{ justifyContent: "center" }}
-                name={"stars"}
-                color="#d60000"
-              />
-            </View>
-          )}
-        </TouchableOpacity> */}
-        {/* )} */}
         </View>
       </View>
     </TouchableOpacity>
@@ -173,6 +130,9 @@ const PromoList = ({
         textTwo="Tags"
         onPressBack={onBackPressed}
       />
+      <Modal>
+
+      </Modal>
 
       <View style={styles.promoTitleContainer}>
         <Text style={styles.pageTitle}>

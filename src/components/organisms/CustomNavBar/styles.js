@@ -20,13 +20,13 @@ const styles = StyleSheet.create({
     button: {
         shadowColor: Colors.GREY, 
         shadowOffset: { 
-            height: 1, 
+            height: 0, 
             width: 0 
         }, 
         shadowOpacity: 0.4,
         shadowRadius: 1.5, 
         backgroundColor: Colors.WHITE,
-        elevation: 3,  
+        elevation: 2,  
         borderRadius: 30,
         paddingVertical: 8,
         paddingHorizontal: 15,

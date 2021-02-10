@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: "auto",
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   flatList: {
     minHeight: Mixins.WINDOW_HEIGHT - 300,
@@ -197,6 +197,11 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
     fontFamily: "RobotoBold",
   },
+  bookmarkIcon: { 
+    position: 'absolute', 
+    right: 5, 
+    bottom:0 
+  }
 });
 
 export default styles;
