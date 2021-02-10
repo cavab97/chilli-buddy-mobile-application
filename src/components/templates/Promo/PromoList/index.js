@@ -15,36 +15,94 @@ import {
 
 import { Card, CardSection } from "@components/molecules";
 
-import Icon from "react-native-vector-icons/FontAwesome";
+import { CustomNavBar } from "@components/organisms/CustomNavBar";
+import moment from "moment";
 
-function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance }) {
-  const { image } = styles;
+function Item({ 
+  picture = [], 
+  onPress, 
+  onBookmarkPressed, 
+  gotBookmark, 
+  distance,
+  name,
+  shopName,
+}) {
+  const { image, detail, title, subtitle } = styles;
 
   let cover = "";
   if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
   else cover = { uri: picture[0] };
+
+  const distanceIcon = require("../../../../assets/icons/distance.png");
+  const emptyHeartIcon = require("../../../../assets/icons/emptyHeart.png");
+  const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
+
   return (
     <TouchableOpacity onPress={onPress}>
-      <Card style={{ width: "98%" }}>
-        <CardSection
-          style={{
-            borderBottomWidth: 0,
-          }}
-        >
-          <Image style={image} resizeMode="cover" source={cover} />
-        </CardSection>
-        <View style={styles.floatingDistanceIndicator}>
-          <MaterialCommunityIcons name="map-marker-distance" color="white" size={20} />
-          <Text style={styles.distanceIndicatorTitle}>
-            {
-              +(distance != undefined
-                ? Math.round(distance + "e+2") + "e-2"
-                : Math.round(calculatedDistance + "e+2") + "e-2")
-            }
-            KM Away
-          </Text>
+      <View style={styles.cardContainer}>
+        <View style={{ width: "35%" }}>
+          <CardSection style={styles.imageContainer}>
+            <Image 
+              style={image} 
+              resizeMode="cover" 
+              source={cover} 
+            />
+          </CardSection>
         </View>
-        <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
+        <View style={{ width: "65%", height: 100 }}>
+          <CardSection style={styles.textContainer}>
+            <Text style={title}>
+              {name}
+            </Text>
+          </CardSection>
+          {/* <CardSection style={styles.textContainer}>
+            <Text style={subtitle}>
+              Valid from {date} to {date}
+            </Text>
+          </CardSection> */}
+          <CardSection style={styles.textContainer}>
+            <Text style={subtitle}>
+              {shopName}  
+            </Text>
+          </CardSection>
+        <CardSection style={styles.descriptionContainer}>
+          {/* <Text style={detail}>
+            {category}
+          </Text> */}
+          {/* <MaterialCommunityIcons
+            name="checkbox-blank-circle"
+            size={5}
+            color="#979797"
+            style={{ marginHorizontal: 8 }}
+          /> */}
+          <Image 
+            source={distanceIcon} 
+            style={styles.distanceIcon}
+          />
+          <Text style={detail}>
+            Just {+(Math.round(distance + "e+2") + "e-2")} Km away
+          </Text>
+          <View style={{ position: 'absolute', right: 5, bottom:0 }}>
+            <TouchableOpacity 
+
+              onPress={onBookmarkPressed}
+            >
+              {gotBookmark ? (
+                <Image 
+                  source={filledHeartIcon} 
+                  style={styles.favouriteIcon}
+                />
+              ) : (
+                <Image 
+                  source={emptyHeartIcon} 
+                  style={styles.favouriteIcon}
+                />
+              )}
+            </TouchableOpacity> 
+          </View>
+        </CardSection>
+
+       {/*  <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
           {gotBookmark ? (
             <View
               style={{
@@ -78,9 +136,10 @@ function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance 
               />
             </View>
           )}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {/* )} */}
-      </Card>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -90,6 +149,7 @@ const PromoList = ({
   readBookmark,
   submitLoading,
   dataSource,
+  toggleBookmark,
   categories,
   tags,
   selectedCategory,
@@ -99,10 +159,39 @@ const PromoList = ({
   onCategoryChange,
   onTagChange,
   onBookmarkPressed,
+  onBackPressed,
+  bookmark
 }) => {
+
+  const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
+  const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
+
   return (
-    <View style={{ height: "100%" }}>
-      <View
+    <View style={{ flex: 1 /*height: 100%*/ }}>
+      <CustomNavBar
+        textOne="Category"
+        textTwo="Tags"
+        onPressBack={onBackPressed}
+      />
+
+      <View style={styles.promoTitleContainer}>
+        <Text style={styles.pageTitle}>
+          Promotions
+        </Text>
+
+        <View style={styles.iconContainer}>
+          <TouchableOpacity
+            onPress={toggleBookmark}
+          >
+            <Image 
+              source={bookmark ? filledHeartIcon : emptyHeartIcon} 
+              style={styles.emptyHeartIcon}
+            />
+          </TouchableOpacity>
+
+        </View>
+      </View>
+      {/* <View
         style={{
           flexDirection: "row",
           justifyContent: "flex-end",
@@ -143,7 +232,7 @@ const PromoList = ({
         >
           <Icon name="filter" size={20} style={styles.tagsButton} />
         </ModalSelector>
-      </View>
+      </View> */}
 
       <FlatList
         data={dataSource}
@@ -151,10 +240,11 @@ const PromoList = ({
           <Item
             onPress={() => onMerchantPressed(item)}
             onBookmarkPressed={() => onBookmarkPressed(item)}
-            name={item.displayTitle}
+            name={item.title}
             picture={item.coverPhotos}
             distance={item.distance}
             promoID={item.id}
+            shopName={item.shop.displayTitle}
             gotBookmark={item.isBookmark} //{gotBookmark}
             index={index}
             readBookmark={readBookmark}
@@ -164,7 +254,7 @@ const PromoList = ({
         keyExtractor={(item) => item.id}
         onRefresh={handleRefresh}
         refreshing={false}
-        ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
+        //ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
         style={styles.flatList}
       />
     </View>

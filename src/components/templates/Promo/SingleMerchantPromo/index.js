@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles";
 
-import { Dimensions } from "react-native";
+import { Dimensions, Platform } from "react-native";
 
 import {
   View,
@@ -9,7 +9,7 @@ import {
   Text,
   ScrollView,
   CustomIcon,
-  FlatList,
+  Modal,
   Carousel,
   TouchableOpacity,
 } from "@components/atoms";
@@ -33,26 +33,97 @@ const SingleMerchantPromo = ({
   onMerchantPressed,
   onPressedSwipe,
   setSwiperRef,
-  distance,
-  calculatedDistance,
+  isVisible,
+  onClose
 }) => {
   const {
-    posterArea,
-    poster,
-    imageTopStyle,
-    subContainer1,
-    promoImageSwapLeft,
-    promoImageSwapRight,
+    modelBackground,
+    adsImageStyle,
+    closeButton,
+    cross,
+    caption,
+    subContainer1
   } = styles;
 
+  const closeIcon = require("../../../../assets/chilliBuddyCheckin/closeButton.png");
+  const width = Platform.OS === "ios" && Platform.isPad === true ? 460 : 300;
+
+  const date = moment().format('DD-MM-YYYY')
+
   return (
-    <ScrollView>
+    <Modal
+      transparent={true}
+      visible={isVisible}
+      onBackdropPress={onClose}
+    >
+      <View style={modelBackground}>
+        <View style={{ width: width }}>
+            {/* <TouchableOpacity onPress={onMerchantPressed}> */}
+            {/* <Image
+                source={{ uri: dataSource.images[0] }}
+                style={adsImageStyle}
+                //resizeMode="contain"
+            /> */}
+              <Carousel
+                ref={setSwiperRef}
+                data={dataSource.images}
+                renderItem={({ item, index }) => {
+                  return (
+                    <TouchableOpacity onPress={onMerchantPressed}>
+                      {dataSource.images.length > 0 ? (
+                        <Image source={{ uri: item }} style={adsImageStyle} resizeMode={"cover"} />
+                      ) : (
+                        <Image
+                          source={noImage}
+                          style={adsImageStyle}
+                          //resizeMode={"cover"}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  );
+                }}
+                loop={true}
+                sliderWidth={width}
+                itemWidth={width}
+                contentContainerCustomStyle={{ alignItems: 'center' }}
+              />
+            
+            {/* </TouchableOpacity> */}
+            <TouchableOpacity
+              style={closeButton}
+              onPress={onClose}
+              activeOpacity={1}
+            >
+              <Image
+                source={closeIcon}
+                style={cross}
+              />
+            </TouchableOpacity>
+            <View style={{ backgroundColor: 'white', marginTop: 10, borderRadius: 30, marginHorizontal: 20 }}>
+              <Text style={styles.distanceIndicatorTitle}>  
+                Valid from {date} to {date}
+              </Text>
+            </View>
+            <Text style={caption}>
+              slide for more
+            </Text>
+        </View>
+        
+      </View>
+    </Modal> 
+  );
+};
+
+export { SingleMerchantPromo };
+
+
+{/* <ScrollView>
       <View style={posterArea}>
-        {/* <Image
+            <Image
                 style={poster}
                 source={cover}
-            /> */}
-        {/* <ImageSwiper 
+            /> 
+        <ImageSwiper 
             autoplay={false}
             style={styles}
             condition={dataSource.images.length > 0 }
@@ -63,7 +134,7 @@ const SingleMerchantPromo = ({
             setSwiperRef={setSwiperRef}
             nextButton={<MaterialCommunityIcons name="chevron-right-circle" size={30} onPress={onPressedSwipe.bind(this, "next")} />}
             prevButton={<MaterialCommunityIcons name="chevron-left-circle" size={30} onPress={onPressedSwipe.bind(this, "back")} />}
-        /> */}
+        />
         <Carousel
           ref={setSwiperRef}
           data={dataSource.images}
@@ -114,8 +185,4 @@ const SingleMerchantPromo = ({
         <CustomIcon name="merchant" size={20} color="white" />
         <Text style={styles.floatingShopButtonTitle}>View Shop</Text>
       </TouchableOpacity>
-    </ScrollView>
-  );
-};
-
-export { SingleMerchantPromo };
+    </ScrollView> */}

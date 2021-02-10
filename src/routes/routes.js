@@ -78,7 +78,9 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           key="Promo" 
           component={Promo} 
           //title="Promo" 
+          hideNavBar={true}
           titleStyle={styles.title} 
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />
       </Stack>
 
@@ -143,7 +145,8 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Scene
           key="SingleMerchantPromo"
           component={ShopPromo}
-          title="Promo"
+          overlay
+          //title="Promo"
           titleStyle={styles.title}
         />
       </Stack>
