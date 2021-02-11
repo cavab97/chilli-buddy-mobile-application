@@ -45,6 +45,7 @@ import CheckIn from "../screens/subscreen/CheckIn";
 
 import LoginTACScreen from "../screens/auth/TAC";
 
+import ShopsSinglePost from "../screens/main/Shops/ShopsSinglePost";
 import styles from "./styles";
 import * as icons from "./icons";
 import { Colors } from "../settings/styles/theme";
@@ -95,6 +96,16 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />
       </Stack>
+
+      <Stack key="ShopsSinglePost" back>
+        <Scene
+          key="ShopsSinglePost"
+          component={ShopsSinglePost}
+          // title="dsdsdsds"
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+        />
+      </Stack>
       {/* 
       <Stack key="CheckIn" back>
         <Scene
@@ -132,6 +143,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           key="SingleMerchant"
           component={Shop}
           // title="Shop"
+          navTransparent={true}
           titleStyle={styles.title}
           navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />

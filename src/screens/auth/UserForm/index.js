@@ -139,7 +139,7 @@ export class Index extends Component {
           placeholderTextColor="#CCCCCC"
           inputStyle={styles.inputTextStyle}
           value={detail}
-          onChangeText={onChangeText}
+          onChangeText={InputTextField}
           keyboardType={
             title === "IC Number" ? "numeric" : title === "Email" ? "email-address" : "default"
           }

@@ -194,7 +194,12 @@ class index extends Component {
   }
 
   onMerchantPressed(item) {
-    Actions.SingleMerchant({ shopId: item.id, distance: item.distance });
+    console.log(item.category);
+    Actions.SingleMerchant({
+      shopId: item.id,
+      distance: item.distance,
+      categoryName: item.category,
+    });
   }
 
   onCategoryChange = (value) => {
@@ -241,14 +246,14 @@ class index extends Component {
   render() {
     const { shops } = this.props.shopState;
 
-    const { categories } = this.props
+    const { categories } = this.props;
 
     // Get Shop Category
-    shops.map(shop => {
-      let shopCategory = categories.filter(category => category.id === shop.categories[0])
+    shops.map((shop) => {
+      let shopCategory = categories.filter((category) => category.id === shop.categories[0]);
 
-      shopCategory ? shop.category = shopCategory[0].title : ''
-    }) 
+      shopCategory ? (shop.category = shopCategory[0].title) : "";
+    });
 
     return (
       <ShopList

@@ -316,15 +316,15 @@ const styles = StyleSheet.create({
     rankingContainer: {
         flex:1
     }, */
-  image: {
-    flex: 1,
-    borderRadius: 100,
-    width: "100%",
-
-    resizeMode: "cover",
-    //width: "100%",
-    // height: "100%",
-  },
+    image: {
+      flex: 1,
+      borderRadius: 100,
+      width: "100%",
+  
+      resizeMode: "cover",
+      //width: "100%",
+      // height: "100%",
+    },
   profileImageStyle: {
     backgroundColor: Colors.GRAY_DARK,
     height: 100,

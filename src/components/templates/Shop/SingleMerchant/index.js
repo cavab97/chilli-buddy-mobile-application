@@ -12,7 +12,11 @@ import {
   Carousel,
   TouchableOpacity,
   Button,
+  Overlay,
+  Modal,
+  ImageBackground,
 } from "@components/atoms";
+import HTML from "react-native-render-html";
 
 import { Card } from "@components/molecules";
 
@@ -32,12 +36,18 @@ const webSite = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingle
 const distanceIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/Distance_Icon.png");
 const newsIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/news_Icon.png");
 const fillLessLove = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/favorLove_Icon.png");
+const shareIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/shareArrow_Icon.png");
+const chatBox = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/ChatBox_background.png");
+const noImageV2 = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/noImageBackground.jpeg");
 
 const SingleMerchant = ({
+  // alterData,
   dataSource,
   shopPosts,
+  categoryName,
   promotions,
   icon,
+  postImage,
   noImage,
   noPromoteImage,
   isOpenPost,
@@ -49,6 +59,7 @@ const SingleMerchant = ({
   viewHeight,
   distance,
   calculatedDistance, //distance calculated from single merchant view
+  onPostPress,
   find_dimensions = () => {},
 }) => {
   const {
@@ -78,6 +89,10 @@ const SingleMerchant = ({
     imageTopStyle,
   } = styles;
 
+  console.log("category");
+
+  console.log(categoryName);
+
   const PostList = ({ data }) => {
     if (data.length !== 0) {
       return (
@@ -93,13 +108,63 @@ const SingleMerchant = ({
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                   <ScrollView>
-                    <View style={singlePostContainer}>
+                    {/* <View style={singlePostContainer}>
                       <Text style={singlePostTitle}>{item.title}</Text>
-                      <Text style={singlePostDescription}>{item.description}</Text>
+
+                      <HTML
+                        source={{ html: `<div>` + item.description + `</div>` }}
+                        tagsStyles={{
+                          p: {
+                            padding: 0,
+                            margin: 0,
+                          },
+                          ol: {
+                            padding: 0,
+                            margin: 0,
+                          },
+                        }}
+
+                        // tagsStyles={ p}
+                      />
+                 
+
                       <Text style={{ paddingTop: 5 }}>
                         {moment(item.created.at).format("DD/MM/YYYY")}
                       </Text>
-                      {/* <Text>create at: {item.created.at}</Text> */}
+                    </View> */}
+                    {console.log(item.images[0] == undefined)}
+
+                    <View style={styles.postsTopRow}>
+                      <View style={styles.logoPositionInModal}>
+                        <Image style={logo} source={icon} />
+                      </View>
+                      <TouchableOpacity
+                        style={styles.chatBoxContainer}
+                        onPress={() => onPostPress(item)}
+                      >
+                        <ImageBackground style={styles.chatBoxImg} source={chatBox}>
+                          <View style={styles.chatBoxTopText}>
+                            <Text style={styles.chatBoxText} numberOfLines={2}>
+                              {item.title}{" "}
+                            </Text>
+                            <TouchableOpacity>
+                              <Image style={styles.shareIcon} source={shareIcon} />
+                            </TouchableOpacity>
+                          </View>
+                          {/* <Image style={styles.shareIcon} source={item.shop.image} /> */}
+                          {item.images[0] === undefined ? (
+                            <Image style={styles.chatBoxInnerImage} source={noImageV2} />
+                          ) : (
+                            <Image
+                              style={styles.chatBoxInnerImage}
+                              source={{
+                                uri: item.images[0],
+                              }}
+                            />
+                          )}
+                          <Text style={styles.daysText}> {moment(item.created.at).fromNow()}</Text>
+                        </ImageBackground>
+                      </TouchableOpacity>
                     </View>
                   </ScrollView>
                 )}
@@ -169,11 +234,63 @@ const SingleMerchant = ({
           onPress={onClickToSwip.bind(this, "next")}
         /> */}
       </View>
-
       <View style={logoPosition}>
         <Image style={logo} source={icon} />
       </View>
+      <Overlay
+        // onBackdropPress={() => missionPress(null)}
+        isVisible={isOpenPost}
+        width="auto"
+        height="100%"
+        animationType="slide"
+        overlayStyle={styles.modalContainer}
+        presentationStyle="pageSheet"
+      >
+        <Text style={styles.postText}>Whiteboard</Text>
 
+        <ScrollView style={styles.outPostContainer} showsVerticalScrollIndicator={false}>
+          {/* <View style={styles.postsTopRow}>
+            <View style={styles.logoPositionInModal}>
+              <Image style={logo} source={icon} />
+            </View>
+            <View style={styles.postsTopRowNameContainer}>
+              <Text style={styles.ShopPostTopTitle}>{dataSource.displayTitle}</Text>
+              <Text style={styles.ShopPostSubTitle}>2 days Ago</Text>
+            </View>
+            <TouchableOpacity style={styles.shareContainer}>
+              <Text style={styles.shareText}>Share</Text>
+              <Image style={styles.shareIcon} source={shareIcon} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.shopPostsContainer}>
+            <PostList data={shopPosts} />
+          </View> */}
+          <View style={styles.shopPostsContainer}>
+            <PostList data={shopPosts} />
+          </View>
+
+          {/* <View style={styles.postsTopRow}>
+            <View style={styles.logoPositionInModal}>
+              <Image style={logo} source={icon} />
+            </View>
+            <TouchableOpacity style={styles.chatBoxContainer}>
+              <Text style={styles.chatBoxText}>Testsdasdasdssdsadsdsadaaing </Text>
+
+              <Image style={styles.chatBoxImg} source={chatBox} />
+            </TouchableOpacity>
+          </View> */}
+          {/* <View style={styles.postsTopRow}>
+            <View style={styles.logoPositionInModal}>
+              <Image style={logo} source={icon} />
+            </View>
+            <TouchableOpacity style={styles.chatBoxContainer}>
+              <Text style={styles.chatBoxText}>Testsdasdasdssdsadsdsadaaing </Text>
+
+              <Image style={styles.chatBoxImg} source={chatBox} />
+            </TouchableOpacity>
+          </View> */}
+        </ScrollView>
+      </Overlay>
       {/* <Collapsible
         isOpen={isOpenPost}
         onPress={onPostTitleClick}
@@ -192,121 +309,74 @@ const SingleMerchant = ({
         animeTo={Platform.OS == "ios" ? windowHeight - 360 : viewHeight}
         animeContent={<PostList data={shopPosts} />}
       /> */}
-
-      {!isOpenPost ? (
-        <View>
-          <View style={detailArea}>
-            <View style={styles.TopRow}>
-              <View style={styles.Topcol}>
-                <Text style={styles.TopTitle}>{dataSource.displayTitle}</Text>
-                <View style={styles.SubTopcol}>
-                  <Text style={styles.TopSubTitle}>Western 西餐 · </Text>
-
-                  <Image style={{ width: 15, height: 15, marginLeft: 2 }} source={distanceIcon} />
-                  <Text style={styles.TopSubTitle}> Just 3.5Km away</Text>
-                </View>
+      {/* {!isOpenPost ? ( */}
+      <View>
+        <View style={detailArea}>
+          <View style={styles.TopRow}>
+            <View style={styles.Topcol}>
+              <Text style={styles.TopTitle}>{dataSource.displayTitle}</Text>
+              <View style={styles.SubTopcol}>
+                <Text style={styles.TopSubTitle}>
+                  {categoryName} ·{" "}
+                  <Image style={{ width: 15, height: 15, marginLeft: 2 }} source={distanceIcon} />{" "}
+                  Just {+(Math.round(distance + "e+2") + "e-2")}Km away
+                </Text>
               </View>
-              <View
-                style={{
-                  width: "25%",
-                  backgroundColor: "#fff",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: 10,
-                  marginLeft: 5,
-                }}
+            </View>
+            <View
+              style={{
+                width: "23%",
+                backgroundColor: "#FFF",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 15,
+                marginLeft: 5,
+              }}
+            >
+              <TouchableOpacity //uncomment social media icon
+                onPress={onPostTitleClick}
               >
-                <TouchableOpacity //uncomment social media icon
-                  onPress={() => {
-                    if (!dataSource.facebookUrl) {
-                      return Alert.alert("Sorry, we don't have Posts.");
-                    }
-                    Linking.openURL(dataSource.facebookUrl);
-                  }}
-                >
-                  <Image style={{ width: 35, height: 30 }} source={fillLessLove} />
-                </TouchableOpacity>
-                <TouchableOpacity //uncomment social media icon
-                  onPress={() => {
-                    if (!dataSource.facebookUrl) {
-                      return Alert.alert("Sorry, we don't have Posts.");
-                    }
-                    Linking.openURL(dataSource.facebookUrl);
-                  }}
-                >
-                  <Image style={{ width: 35, height: 30 }} source={newsIcon} />
-                </TouchableOpacity>
+                <Image style={{ width: 27, height: 25 }} source={fillLessLove} />
+              </TouchableOpacity>
+              <TouchableOpacity //uncomment social media icon
+                onPress={onPostTitleClick}
+              >
+                <Image style={{ width: 30, height: 25 }} source={newsIcon} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View>
+            <View style={styles.FirstRow}>
+              <View style={styles.col}>
+                <Text style={styles.textLabel}> Operating Hour</Text>
+              </View>
+              <View style={styles.col2}>
+                {/* <Text style={styles.col2Text}>{tnc}</Text> */}
+                {renderOperatingHour()}
               </View>
             </View>
-            <View>
-              <View style={styles.FirstRow}>
-                <View style={styles.col}>
-                  <Text style={styles.textLabel}> Operating Hour</Text>
-                </View>
-                <View style={styles.col2}>
-                  {/* <Text style={styles.col2Text}>{tnc}</Text> */}
-                  {renderOperatingHour()}
-                </View>
-              </View>
-
-              <View style={styles.FirstRow}>
-                <View style={styles.col}>
-                  <Text style={styles.textLabel}> Contact Number</Text>
-                </View>
-                <View style={styles.col2}>
-                  {/* <Text style={styles.col2Text}>{tnc}</Text> */}
-                  <Text
-                    style={{ marginTop: 0, fontFamily: "RobotoRegular" }}
-                    onPress={() => {
-                      Linking.openURL(`tel:${dataSource.phoneNumber}`);
-                    }}
-                  >
-                    {" "}
-                    {dataSource.phoneNumber}
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.FirstRow}>
-                <View style={styles.col}>
-                  <Text style={styles.textLabel}> Address</Text>
-                </View>
-                <View style={styles.col2}>
-                  {/* <Text style={styles.col2Text}>{tnc}</Text> */}
-                  <Text
-                    style={{
-                      marginTop: 0,
-                      marginRight: "10%",
-                      fontFamily: "RobotoRegular",
-                    }}
-                    onPress={() => {
-                      const latitude = dataSource.l.latitude;
-                      const longitude = dataSource.l.longitude;
-                      Linking.openURL(`http://www.google.com/maps/place/${latitude},${longitude}`);
-                    }}
-                  >
-                    {dataSource.address.line1} {dataSource.address.line2}{" "}
-                    {dataSource.address.postcode} {dataSource.address.state}
-                  </Text>
-                </View>
-              </View>
-              <View style={setRow}>
-                {/* <Ionicons
-                  style={subIconDetailMain}
-                  name="ios-pin"
-                  size={26}
-                  color={Colors.PRIMARY}
-                /> */}
-              </View>
-            </View>
-
-            {/* {dataSource.description ? (    ) : (
-              []
-            )} */}
 
             <View style={styles.FirstRow}>
               <View style={styles.col}>
-                <Text style={styles.textLabel}> Description</Text>
+                <Text style={styles.textLabel}> Contact Number</Text>
+              </View>
+              <View style={styles.col2}>
+                {/* <Text style={styles.col2Text}>{tnc}</Text> */}
+                <Text
+                  style={{ marginTop: 0, fontFamily: "HorizontalRounded", color: "grey" }}
+                  onPress={() => {
+                    Linking.openURL(`tel:${dataSource.phoneNumber}`);
+                  }}
+                >
+                  {" "}
+                  {dataSource.phoneNumber}
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.FirstRow}>
+              <View style={styles.col}>
+                <Text style={styles.textLabel}> Address</Text>
               </View>
               <View style={styles.col2}>
                 {/* <Text style={styles.col2Text}>{tnc}</Text> */}
@@ -315,153 +385,191 @@ const SingleMerchant = ({
                     marginTop: 0,
                     marginRight: "10%",
                     fontFamily: "RobotoRegular",
+                    color: "grey",
+                  }}
+                  onPress={() => {
+                    const latitude = dataSource.l.latitude;
+                    const longitude = dataSource.l.longitude;
+                    Linking.openURL(`http://www.google.com/maps/place/${latitude},${longitude}`);
                   }}
                 >
-                  {dataSource.description}
+                  {dataSource.address.line1} {dataSource.address.line2}{" "}
+                  {dataSource.address.postcode} {dataSource.address.state}
                 </Text>
               </View>
             </View>
-
-            <View style={styles.FirstRowSocialMedia}>
-              <View style={styles.colSocialMedia}>
-                <Text style={styles.textLabel}> Social Media</Text>
-              </View>
-              <View style={styles.col2}>
-                {/* <Text style={styles.col2Text}>{tnc}</Text> */}
-                <View
-                  style={{
-                    // paddingBottom: 100,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    backgroundColor: "#FFF",
-                    // borderWidth:1,
-                  }}
-                >
-                  {
-                    //dataSource.facebookUrl !== "" && dataSource.facebookUrl &&
-                    // <Ionicons
-                    //   style={{}}
-                    //   name="logo-facebook"
-                    //   size={30}
-                    //   color={Colors.PRIMARY}
-                    //   onPress={() => {
-                    //     if (!dataSource.facebookUrl) {
-                    //       return Alert.alert("Sorry, we don't have facebook.");
-                    //     }
-                    //     Linking.openURL(dataSource.facebookUrl);
-                    //   }}
-                    // />
-                    <TouchableOpacity //uncomment social media icon
-                      onPress={() => {
-                        if (!dataSource.facebookUrl) {
-                          return Alert.alert("Sorry, we don't have facebook.");
-                        }
-                        Linking.openURL(dataSource.facebookUrl);
-                      }}
-                    >
-                      <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={facebook} />
-                    </TouchableOpacity>
-                  }
-                  {
-                    //dataSource.instagramUrl !== "" && dataSource.instagramUrl &&
-                    // <Ionicons
-                    //   style={{}}
-                    //   name="logo-instagram"
-                    //   size={30}
-                    //   color={Colors.PRIMARY}
-                    //   onPress={() => {
-                    //     if (!dataSource.instagramUrl) {
-                    //       return Alert.alert("Sorry, we don't have instagram.");
-                    //     }
-                    //     Linking.openURL(
-                    //       "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
-                    //     );
-                    //   }}
-                    // />
-                    <TouchableOpacity //uncomment social media icon
-                      onPress={() => {
-                        if (!dataSource.instagramUrl) {
-                          return Alert.alert("Sorry, we don't have instagram.");
-                        }
-                        Linking.openURL(
-                          "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
-                        );
-                      }}
-                    >
-                      <Image style={{ width: 30, height: 30 }} source={instagram} />
-                    </TouchableOpacity>
-                  }
-                  {
-                    //dataSource.whatsapp !== "" && dataSource.whatsapp   &&
-                    // <Ionicons
-                    //   style={{}}
-                    //   name="logo-whatsapp"
-                    //   size={30}
-                    //   color={Colors.PRIMARY}
-                    //   onPress={() => {
-                    //     if (!dataSource.whatsapp) {
-                    //       return Alert.alert("Sorry, we don't have whatsapp.");
-                    //     }
-                    //     Linking.openURL("https://wa.me/" + dataSource.whatsapp);
-                    //   }}
-                    // />
-                    <TouchableOpacity //uncomment social media icon
-                      onPress={() => {
-                        if (!dataSource.whatsapp) {
-                          return Alert.alert("Sorry, we don't have whatsapp.");
-                        }
-                        Linking.openURL("https://wa.me/" + dataSource.whatsapp);
-                      }}
-                    >
-                      <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={whatsapp} />
-                    </TouchableOpacity>
-                  }
-                  {
-                    //dataSource.websiteUrl !=='' && dataSource.websiteUrl &&
-                    // <View    //UNCOMMENT VIEW
-                    //   style={{
-                    //     backgroundColor: Colors.PRIMARY,
-                    //     borderRadius: 7,
-                    //     width: 30,
-                    //     height: 30,
-                    //   }}
-                    // >
-
-                    <TouchableOpacity //uncomment social media icon
-                      onPress={() => {
-                        if (!dataSource.websiteUrl) {
-                          return Alert.alert("Sorry, we don't have website.");
-                        }
-                        dataSource.websiteUrl.substring(0, 4) === "http"
-                          ? Linking.openURL(dataSource.websiteUrl)
-                          : Linking.openURL("https://" + dataSource.websiteUrl);
-                      }}
-                    >
-                      <Image style={{ width: 30, height: 30, borderRadius: 7 }} source={webSite} />
-                    </TouchableOpacity>
-                    // <Ionicons
-                    //   style={{}} //{{ marginLeft: "auto", marginRight: "auto", top: "15%" }}  //uncomment social media icon
-                    //   name="md-link"
-                    //   size={30} //{20}  uncomment social media icon
-                    //   color={Colors.PRIMARY} //{Colors.WHITE} UNCOMMENT
-                    // onPress={() => {
-                    //   if (!dataSource.websiteUrl) {
-                    //     return Alert.alert("Sorry, we don't have website.");
-                    //   }
-                    //   dataSource.websiteUrl.substring(0, 4) === "http"
-                    //     ? Linking.openURL(dataSource.websiteUrl)
-                    //     : Linking.openURL("https://" + dataSource.websiteUrl);
-                    // }}
-                    // />
-                    // </View>  UNCOMMENT VIEW‹
-                  }
-                </View>
-              </View>
+            <View style={setRow}>
+              {/* <Ionicons
+                  style={subIconDetailMain}
+                  name="ios-pin"
+                  size={26}
+                  color={Colors.PRIMARY}
+                /> */}
             </View>
           </View>
 
-          {/* 
+          {/* {dataSource.description ? (    ) : (
+              []
+            )} */}
+
+          <View style={styles.FirstRow}>
+            <View style={styles.col}>
+              <Text style={styles.textLabel}> Description</Text>
+            </View>
+            <View style={styles.col2}>
+              {/* <Text style={styles.col2Text}>{tnc}</Text> */}
+              <Text
+                style={{
+                  marginTop: 0,
+                  marginRight: "10%",
+                  fontFamily: "RobotoRegular",
+                }}
+              >
+                {dataSource.description}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.FirstRowSocialMedia}>
+            <View style={styles.colSocialMedia}>
+              <Text style={styles.textLabel}> Social Media</Text>
+            </View>
+            <View style={styles.col2}>
+              {/* <Text style={styles.col2Text}>{tnc}</Text> */}
+              <View
+                style={{
+                  // paddingBottom: 100,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  backgroundColor: "#FFF",
+                  // borderWidth:1,
+                }}
+              >
+                {
+                  //dataSource.facebookUrl !== "" && dataSource.facebookUrl &&
+                  // <Ionicons
+                  //   style={{}}
+                  //   name="logo-facebook"
+                  //   size={30}
+                  //   color={Colors.PRIMARY}
+                  //   onPress={() => {
+                  //     if (!dataSource.facebookUrl) {
+                  //       return Alert.alert("Sorry, we don't have facebook.");
+                  //     }
+                  //     Linking.openURL(dataSource.facebookUrl);
+                  //   }}
+                  // />
+                  <TouchableOpacity //uncomment social media icon
+                    onPress={() => {
+                      if (!dataSource.facebookUrl) {
+                        return Alert.alert("Sorry, we don't have facebook.");
+                      }
+                      Linking.openURL(dataSource.facebookUrl);
+                    }}
+                  >
+                    <Image style={{ width: 30, height: 30 }} source={facebook} />
+                  </TouchableOpacity>
+                }
+                {
+                  //dataSource.instagramUrl !== "" && dataSource.instagramUrl &&
+                  // <Ionicons
+                  //   style={{}}
+                  //   name="logo-instagram"
+                  //   size={30}
+                  //   color={Colors.PRIMARY}
+                  //   onPress={() => {
+                  //     if (!dataSource.instagramUrl) {
+                  //       return Alert.alert("Sorry, we don't have instagram.");
+                  //     }
+                  //     Linking.openURL(
+                  //       "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
+                  //     );
+                  //   }}
+                  // />
+                  <TouchableOpacity //uncomment social media icon
+                    onPress={() => {
+                      if (!dataSource.instagramUrl) {
+                        return Alert.alert("Sorry, we don't have instagram.");
+                      }
+                      Linking.openURL(
+                        "instagram://user?username=" + dataSource.instagramUrl.replace(/ /g, "")
+                      );
+                    }}
+                  >
+                    <Image style={{ width: 30, height: 30 }} source={instagram} />
+                  </TouchableOpacity>
+                }
+                {
+                  //dataSource.whatsapp !== "" && dataSource.whatsapp   &&
+                  // <Ionicons
+                  //   style={{}}
+                  //   name="logo-whatsapp"
+                  //   size={30}
+                  //   color={Colors.PRIMARY}
+                  //   onPress={() => {
+                  //     if (!dataSource.whatsapp) {
+                  //       return Alert.alert("Sorry, we don't have whatsapp.");
+                  //     }
+                  //     Linking.openURL("https://wa.me/" + dataSource.whatsapp);
+                  //   }}
+                  // />
+                  <TouchableOpacity //uncomment social media icon
+                    onPress={() => {
+                      if (!dataSource.whatsapp) {
+                        return Alert.alert("Sorry, we don't have whatsapp.");
+                      }
+                      Linking.openURL("https://wa.me/" + dataSource.whatsapp);
+                    }}
+                  >
+                    <Image style={{ width: 30, height: 30 }} source={whatsapp} />
+                  </TouchableOpacity>
+                }
+                {
+                  //dataSource.websiteUrl !=='' && dataSource.websiteUrl &&
+                  // <View    //UNCOMMENT VIEW
+                  //   style={{
+                  //     backgroundColor: Colors.PRIMARY,
+                  //     borderRadius: 7,
+                  //     width: 30,
+                  //     height: 30,
+                  //   }}
+                  // >
+
+                  <TouchableOpacity //uncomment social media icon
+                    onPress={() => {
+                      if (!dataSource.websiteUrl) {
+                        return Alert.alert("Sorry, we don't have website.");
+                      }
+                      dataSource.websiteUrl.substring(0, 4) === "http"
+                        ? Linking.openURL(dataSource.websiteUrl)
+                        : Linking.openURL("https://" + dataSource.websiteUrl);
+                    }}
+                  >
+                    <Image style={{ width: 26, height: 26 }} source={webSite} />
+                  </TouchableOpacity>
+                  // <Ionicons
+                  //   style={{}} //{{ marginLeft: "auto", marginRight: "auto", top: "15%" }}  //uncomment social media icon
+                  //   name="md-link"
+                  //   size={30} //{20}  uncomment social media icon
+                  //   color={Colors.PRIMARY} //{Colors.WHITE} UNCOMMENT
+                  // onPress={() => {
+                  //   if (!dataSource.websiteUrl) {
+                  //     return Alert.alert("Sorry, we don't have website.");
+                  //   }
+                  //   dataSource.websiteUrl.substring(0, 4) === "http"
+                  //     ? Linking.openURL(dataSource.websiteUrl)
+                  //     : Linking.openURL("https://" + dataSource.websiteUrl);
+                  // }}
+                  // />
+                  // </View>  UNCOMMENT VIEW‹
+                }
+              </View>
+            </View>
+          </View>
+        </View>
+
+        {/* 
           <View style={styles.lastSectionFlatListRow}>
               <FlatList
                 horizontal
@@ -501,57 +609,55 @@ const SingleMerchant = ({
               />
             </View> */}
 
-          {promotions.length > 0 ? (
-            <View>
-              <Text style={sectionTitle}>Promotions</Text>
-              <View style={styles.lastSectionFlatListRow}>
-                <FlatList
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  data={promotions}
-                  keyExtractor={(item) => item.id}
-                  renderItem={({ item, index }) => (
-                    <TouchableOpacity
-                      onPress={onPromoteClick.bind(this, item, distance, calculatedDistance)}
+        {promotions.length > 0 ? (
+          <View>
+            <Text style={sectionTitle}>Promotions</Text>
+            <View style={styles.lastSectionFlatListRow}>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={promotions}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity
+                    onPress={onPromoteClick.bind(this, item, distance, calculatedDistance)}
+                  >
+                    <Card
+                      key={item.id}
+                      style={index === 0 ? firstPromoteCardStyle : promoteCardStyle}
                     >
-                      <Card
-                        key={item.id}
-                        style={index === 0 ? firstPromoteCardStyle : promoteCardStyle}
-                      >
-                        {item.coverPhotos.length > 0 ? (
-                          <Image
-                            source={{ uri: item.coverPhotos[0] }}
-                            style={promoteImage}
-                            resizeMode="cover"
-                          />
-                        ) : (
-                          <Image
-                            source={noPromoteImage}
-                            style={promoteNoImage}
-                            resizeMode="cover"
-                          />
-                        )}
-                        <View style={styles.lastSectionTextContainer}>
-                          <Text numberOfLines={2} style={promoteTitleTextStyle}>
-                            {item.title}
-                          </Text>
-                        </View>
-                      </Card>
-                    </TouchableOpacity>
-                  )}
-                  scrollEnabled={promotions.length > 1}
-                />
-              </View>
+                      {item.coverPhotos.length > 0 ? (
+                        <Image
+                          source={{ uri: item.coverPhotos[0] }}
+                          style={promoteImage}
+                          resizeMode="cover"
+                        />
+                      ) : (
+                        <Image source={noPromoteImage} style={promoteNoImage} resizeMode="cover" />
+                      )}
+                      <View style={styles.lastSectionTextContainer}>
+                        <Text numberOfLines={1} style={promoteTitleTextStyle}>
+                          {item.title}
+                        </Text>
+                      </View>
+                    </Card>
+                  </TouchableOpacity>
+                )}
+                scrollEnabled={promotions.length > 1}
+              />
             </View>
-          ) : (
-            []
-          )}
+          </View>
+        ) : (
+          []
+        )}
 
-          <View style={{ height: 50 }} />
-        </View>
-      ) : (
-        []
-      )}
+        <View style={{ height: 50 }} />
+      </View>
+      {/* ) : (
+      <View>
+        <Text>Trigger</Text>
+      </View>
+      )} */}
     </ScrollView>
   );
 };

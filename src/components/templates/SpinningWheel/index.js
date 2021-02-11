@@ -74,11 +74,11 @@ const SpinningWheel = ({
                     style={{ width, height: width * 1, transform: [{ rotate: rotation }] }}
                     source={wheelImage}
                   />
-                  <Image
-                    source={require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/spinWheelHolder_Icon.png")}
-                    style={styles.holderPng}
-                  />
                 </Animated.View>
+                <Image
+                  source={require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/spinWheelHolder_Icon.png")}
+                  style={styles.holderPng}
+                />
               </View>
             </View>
           </View>

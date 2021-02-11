@@ -10,7 +10,7 @@ import {
   verifyPermission,
 } from "@redux/shops/action";
 
-import { readFromDatabase as readShopPost } from "@redux/shopPost/action";
+import { readObjects as readShopPost } from "@redux/shopPost/action";
 
 import {
   //readFromDatabase as readPromotion,
@@ -79,6 +79,17 @@ class index extends Component {
     this.props.removeListenerFromDatabase();
   }
 
+  // alterData = (node) => {
+  //   let { parent, data } = node;
+  //   console.log(data);
+  //   if (parent && parent.name === "p") {
+  //     // Texts elements are always children of wrappers, this is why we check the tag
+  //     // with "parent.name" and not "name"
+  //     return data.toUpperCase();
+  //   }
+  //   // Don't return anything (eg a falsy value) for anything else than the <h1> tag so nothing is altered
+  // };
+
   //Calculate distance from logitude and latitude
   calculateDistance = async (destinationLocation) => {
     //console.log("calculatedistance");
@@ -120,17 +131,19 @@ class index extends Component {
             size={20}
             color="grey"
           /> */}
-          <Text style={{ width: "40%", fontFamily: "RobotoRegular" }}>
-            {item.day.toUpperCase()}
+          <Text style={{ width: "40%", fontFamily: "HorizontalRounded", color: "grey" }}>
+            {item.day.charAt(0).toUpperCase() + item.day.slice(1)}
           </Text>
           {item.operate ? (
-            <Text style={{ marginLeft: 10, fontFamily: "RobotoRegular" }}>
+            <Text style={{ marginLeft: 10, fontFamily: "HorizontalRounded", color: "grey" }}>
               {moment(item.open.toString(), "Hmm").format("LT") +
                 " to " +
                 moment(item.close.toString(), "Hmm").format("LT")}
             </Text>
           ) : (
-            <Text style={{ marginLeft: 10, fontFamily: "RobotoRegular" }}>Closed</Text>
+            <Text style={{ marginLeft: 10, fontFamily: "HorizontalRounded", color: "grey" }}>
+              Closed
+            </Text>
           )}
         </View>
       );
@@ -148,6 +161,20 @@ class index extends Component {
       promoId: item.id,
       distance: distance,
       calculatedDistance: calculatedDistance,
+    });
+  };
+
+  onPostPress = async (item) => {
+    //const promoId = this.props.promotions[0].id;
+    //console.log("singlemerchant: " + calculatedDistance);
+    console.log("item.id");
+    console.log(item.id);
+    this.setState({ isOpenPost: !this.state.isOpenPost });
+
+    Actions.ShopsSinglePost({
+      postId: item.id,
+      distance: item.distance,
+      categoryName: item.category,
     });
   };
 
@@ -174,8 +201,14 @@ class index extends Component {
     const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
 
     let icon = [];
+    let postImage = [];
     if (shop.logo.length === 0) icon = require("@assets/logo.png");
     else icon = { uri: shop.logo[0] };
+
+    if (shop.images.length === 0) postImage = require("@assets/logo.png");
+    else {
+      postImage = { uri: shop.images[1] };
+    }
 
     if (readLoading || readPostLoading || readPromotionLoading || this.state.getLocationLoading) {
       return (
@@ -192,20 +225,24 @@ class index extends Component {
         <SingleMerchant
           dataSource={shop}
           icon={icon}
+          postImage={postImage}
           noImage={noImage}
           noPromoteImage={noPromoteImage}
           isOpenPost={this.state.isOpenPost}
           shopPosts={posts}
           promotions={promotions}
           renderOperatingHour={this.renderOperatingHour.bind(this)}
-          onPostTitleClick={this.onPostTitleClick}
+          onPostTitleClick={this.onPostTitleClick.bind(this)}
           onPromoteClick={this.onPromoteClick.bind(this)}
           setSwiperRef={this.setSwiperRef.bind(this)}
           onClickToSwip={this.onClickToSwip.bind(this)}
           find_dimensions={this.find_dimensions}
           viewHeight={this.state.viewHeight}
           distance={this.props.distance}
+          categoryName={this.props.categoryName}
           calculatedDistance={this.state.calculatedDistance}
+          onPostPress={this.onPostPress.bind(this)}
+          // alterData={this.alterData.bind(this)}
         />
       );
     }

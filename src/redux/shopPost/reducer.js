@@ -112,6 +112,27 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         post: payload.data,
       };
+
+    case actions.READ_FROM_DATABASE_SINGLEPOST:
+      return {
+        ...state,
+        readLoading: true,
+        readError: false,
+      };
+    case actions.READ_FROM_DATABASE_SINGLEPOST_SUCCESS:
+      console.log(payload.data);
+      return {
+        ...state,
+        readLoading: false,
+        post: payload.data,
+      };
+    case actions.READ_FROM_DATABASE_SINGLEPOST_ERROR:
+      return {
+        ...state,
+        readLoading: false,
+        readError: payload.error,
+      };
+
     default:
       return state;
   }

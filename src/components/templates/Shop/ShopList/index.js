@@ -1,26 +1,21 @@
 import React from "react";
 import styles from "./styles";
 
-import { 
-  FlatList, 
-  Image, 
-  ModalSelector, 
-  Text, 
-  TouchableOpacity, 
-  View ,
-  ScrollView
+import {
+  FlatList,
+  Image,
+  ModalSelector,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
 } from "@components/atoms";
 
-import { 
-  Card, 
-  CardSection,
-} from "@components/molecules";
+import { Card, CardSection } from "@components/molecules";
 
-import {
-  CategoryList
-} from "@components/organisms/CategoryList";
+import { CategoryList } from "@components/organisms/CategoryList";
 
-import FavouriteIcon from "react-native-vector-icons/Ionicons"
+import FavouriteIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Label, { Orientation } from "react-native-label";
@@ -39,7 +34,7 @@ function Item({
   isPromote,
   onFavouritePress,
   isFavourite,
-  item
+  item,
 }) {
   const { image, title, detail, profile } = styles;
   let cover = "";
@@ -58,65 +53,37 @@ function Item({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.cardContainer}>
-
         <CardSection style={styles.imageContainer}>
-          <Image 
-            style={image} 
-            resizeMode="cover" 
-            source={cover} 
-          />
+          <Image style={image} resizeMode="cover" source={cover} />
         </CardSection>
 
         <CardSection style={styles.textContainer}>
-          <Text style={title}>
-            {name}
-          </Text>
+          <Text style={title}>{name}</Text>
         </CardSection>
 
         <CardSection style={styles.descriptionContainer}>
-          <Text style={detail}>
-            {category}
-          </Text>
+          <Text style={detail}>{category}</Text>
           <MaterialCommunityIcons
             name="checkbox-blank-circle"
             size={5}
             color="#979797"
             style={{ marginHorizontal: 8 }}
           />
-          <Image 
-            source={distanceIcon} 
-            style={styles.distanceIcon}
-          />
-          <Text style={detail}>
-            Just {+(Math.round(distance + "e+2") + "e-2")} Km away
-          </Text>
-          <View style={{ position: 'absolute', right: 5, bottom:0 }}>
-            <TouchableOpacity 
-              
-              onPress={onFavouritePress}
-            >
+          <Image source={distanceIcon} style={styles.distanceIcon} />
+          <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")} Km away</Text>
+          <View style={{ position: "absolute", right: 5, bottom: 0 }}>
+            <TouchableOpacity onPress={onFavouritePress}>
               {isFavourite ? (
-                <Image 
-                  source={filledHeartIcon} 
-                  style={styles.favouriteIcon}
-                />
+                <Image source={filledHeartIcon} style={styles.favouriteIcon} />
               ) : (
-                <Image 
-                  source={emptyHeartIcon} 
-                  style={styles.favouriteIcon}
-                />
+                <Image source={emptyHeartIcon} style={styles.favouriteIcon} />
               )}
-            </TouchableOpacity> 
-            </View>
+            </TouchableOpacity>
+          </View>
         </CardSection>
 
         <TouchableOpacity style={profile}>
-          {isPromote === true && (
-            <Image 
-              source={promotionTag} 
-              style={styles.promotionWrapper}
-            />
-          )}
+          {isPromote === true && <Image source={promotionTag} style={styles.promotionWrapper} />}
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -139,26 +106,17 @@ const ShopList = ({
   displayCategory,
   categories,
 }) => {
-
   const filterIcon = require("../../../../assets/icons/filter.png");
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
 
   return (
-    <ScrollView 
-      showsVerticalScrollIndicator={false}
-      style={styles.shopContainer}
-    >
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.shopContainer}>
       <View style={styles.shopTitleContainer}>
-        <Text style={styles.pageTitle}>
-          Shops
-        </Text>
+        <Text style={styles.pageTitle}>Shops</Text>
 
         <View style={styles.iconContainer}>
-          <Image 
-            source={emptyHeartIcon} 
-            style={styles.emptyHeartIcon}
-          />
-  
+          <Image source={emptyHeartIcon} style={styles.emptyHeartIcon} />
+
           <ModalSelector
             data={state.selectedCategory.tags}
             keyExtractor={(item) => item}
@@ -170,21 +128,14 @@ const ShopList = ({
             selectTextStyle={styles.modalSelectTextStyle}
             optionTextStyle={styles.modalOptionTextStyle}
           >
-            <Image 
-              source={filterIcon} 
-              style={styles.filterIcon}
-            />
+            <Image source={filterIcon} style={styles.filterIcon} />
           </ModalSelector>
         </View>
       </View>
 
       <View style={styles.categoryTitleContainer}>
-        <Text style={styles.categoryTitle}>
-          Category
-        </Text>
-        <CategoryList
-          categories={categories}
-        />
+        <Text style={styles.categoryTitle}>Category</Text>
+        <CategoryList categories={categories} />
       </View>
 
       <FlatList
