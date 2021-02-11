@@ -9,6 +9,10 @@ const initialState = {
   tags: {},
   categories: {},
 
+  selectedCategory: null,
+  selectedTag: null,
+  favouriteControl: false,
+
   readLoading: false,
   readError: false,
   promo: [],
@@ -176,6 +180,24 @@ const shopsReducer = (state = initialState, { type, payload }) => {
         ...state, 
         shop: payload.data 
       };
+
+    case actions.TOGGLE_CATEGORY:
+      return {
+        ...state,
+        selectedCategory: payload.data
+      }
+
+    case actions.TOGGLE_FAVOURITE:
+      return {
+        ...state,
+        favouriteControl: !state.favouriteControl
+      }
+
+    case actions.TOGGLE_TAG:
+      return {
+        ...state,
+        selectedTag: payload.data
+      }
 
     default:
       return state;

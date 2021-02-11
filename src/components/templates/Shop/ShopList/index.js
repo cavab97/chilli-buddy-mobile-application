@@ -17,8 +17,19 @@ import { CategoryList } from "@components/organisms/CategoryList";
 
 import FavouriteIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Icon from "react-native-vector-icons/FontAwesome";
-import Label, { Orientation } from "react-native-label";
+
+function RenderFooter({}) {
+  return (
+    <View style={{ justifyContent: "center", alignItems: "center", marginTop: 30 }}>
+      <Image
+        source={require("../../../../assets/chilliBuddyCheckin/chilliSadFace.png")}
+        style={{ width: 200, height: 250 }}
+        resizeMode="contain"
+      />
+      <Text style={{ fontFamily: "HorizontalRounded", fontSize: 16 }}>No shop found</Text>
+    </View>
+  );
+}
 
 function Item({
   name,
@@ -101,6 +112,10 @@ const ShopList = ({
   onTagChange,
   state,
   shopData,
+  selectedCategory,
+  toggleFavourite,
+  favourite,
+  tags,
   props,
   isPromote,
   displayCategory,
@@ -108,6 +123,7 @@ const ShopList = ({
 }) => {
   const filterIcon = require("../../../../assets/icons/filter.png");
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
+  const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.shopContainer}>
@@ -115,13 +131,18 @@ const ShopList = ({
         <Text style={styles.pageTitle}>Shops</Text>
 
         <View style={styles.iconContainer}>
-          <Image source={emptyHeartIcon} style={styles.emptyHeartIcon} />
+          <TouchableOpacity onPress={toggleFavourite}>
+            <Image
+              source={favourite ? filledHeartIcon : emptyHeartIcon}
+              style={styles.emptyHeartIcon}
+            />
+          </TouchableOpacity>
 
           <ModalSelector
-            data={state.selectedCategory.tags}
-            keyExtractor={(item) => item}
+            data={tags}
+            keyExtractor={(item) => item.id}
             labelExtractor={(item) =>
-              state.tags.filter((tag) => tag.id === item).map(({ title }) => title)[0]
+              tags.filter((tag) => tag.id === item.id).map(({ title }) => title)[0]
             }
             onChange={onTagChange.bind(this)}
             selectStyle={styles.categoriesSelect}
@@ -135,7 +156,11 @@ const ShopList = ({
 
       <View style={styles.categoryTitleContainer}>
         <Text style={styles.categoryTitle}>Category</Text>
-        <CategoryList categories={categories} />
+        <CategoryList
+          categories={categories}
+          onCategoryChange={onCategoryChange}
+          selectedCategory={selectedCategory}
+        />
       </View>
 
       <FlatList
@@ -162,7 +187,7 @@ const ShopList = ({
         refreshing={state.isRefreshing}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
-        //ListFooterComponent={renderFooter({ empty: state.data.length === 0 ? true : false })}
+        ListFooterComponent={shopData.length === 0 && <RenderFooter />}
         style={styles.flatList}
         extraData={state}
       />

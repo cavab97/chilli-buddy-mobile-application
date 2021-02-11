@@ -21,7 +21,7 @@ const noImageV2 = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySing
 
 const ShopsSinglePost = ({ shopPosts, icon, dataSource, find_dimensions = () => {} }) => {
   const ImageLoop = ({ rowData }) => {
-    console.log(shopPosts.created.at.seconds);
+    // console.log("rowData: ", shopPosts.created.at.seconds);
 
     const data = [];
 
@@ -113,7 +113,8 @@ const ShopsSinglePost = ({ shopPosts, icon, dataSource, find_dimensions = () => 
         <View style={styles.postsTopRowNameContainer}>
           <Text style={styles.ShopPostTopTitle}>{dataSource.displayTitle}</Text>
           <Text style={styles.ShopPostSubTitle}>
-            {new Date(shopPosts.created.at.seconds * 1000).toISOString()}
+            {/* {moment(shopPosts.created.at).format("DD/MM/YYYY")} */}
+            {/* {shopPosts.created.at.seconds == null ? "no date" : shopPosts.created.at.seconds} */}
           </Text>
         </View>
         <TouchableOpacity style={styles.shareContainer}>

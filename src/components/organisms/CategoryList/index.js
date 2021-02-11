@@ -13,7 +13,10 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
 
 function Category ({
-    title
+    id,
+    title,
+    onCategoryChange,
+    selectedCategory
 }) {
     let icon;
 
@@ -33,7 +36,10 @@ function Category ({
       }
 
     return (
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity 
+            style={selectedCategory === id ? styles.cardSelected : styles.card}
+            onPress={() => onCategoryChange(id)}
+        >
             <View style={styles.iconContainer}>
                 <Image 
                     source={icon} 
@@ -41,7 +47,7 @@ function Category ({
                 />
             </View>
             <View >
-                <Text style={styles.title}>
+                <Text style={selectedCategory === id ? styles.titleSelected : styles.title}>
                     {title}
                 </Text>
             </View>
@@ -50,15 +56,20 @@ function Category ({
 }
 
 const CategoryList = ({
-    categories
+    categories,
+    onCategoryChange,
+    selectedCategory
 }) => {
     return(
         <FlatList
             data={categories}
             renderItem={({ item, index }) => (
                 <Category
+                    id={item.id}
                     title={item.title}
                     index={index}
+                    onCategoryChange={onCategoryChange}
+                    selectedCategory={selectedCategory}
                 />
             )}
             horizontal

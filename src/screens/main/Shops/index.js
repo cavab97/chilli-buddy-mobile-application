@@ -4,7 +4,14 @@ import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
 import { Platform } from "react-native";
 
-import { verifyPermission, loadShops, onFavouriteClick } from "@redux/shops/action";
+import {
+  toggleCategory,
+  toggleFavourite,
+  toggleTag,
+  verifyPermission,
+  loadShops,
+  onFavouriteClick,
+} from "@redux/shops/action";
 
 import {
   update,
@@ -47,7 +54,7 @@ class index extends Component {
     //this.onSubscribePressed = this.onSubscribePressed.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
-    this.renderFooter = this.renderFooter.bind(this);
+    //this.renderFooter = this.renderFooter.bind(this);
     this.filterData = this.filterData.bind(this);
   }
 
@@ -67,6 +74,9 @@ class index extends Component {
   };
 
   handleRefresh = async () => {
+    const { categories } = this.props;
+    let filteredCategories = categories.filter((category) => category.title !== "All");
+
     let location = await Location.getCurrentPositionAsync({});
 
     await this.props.loadShops({
@@ -76,6 +86,8 @@ class index extends Component {
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
+
+    await this.props.toggleCategory(filteredCategories[0].id);
     //await this.props.readFromDatabase();
   };
 
@@ -84,7 +96,7 @@ class index extends Component {
     const readError = this.props.shopState.readError;
     // const readLoading = this.props.bookmarkState.readLoading;
 
-    // if no promo in the radius, call handleRefresh read again by increase radiusAddition state
+    // if no shop in the radius, call handleRefresh read again by increase radiusAddition state
     if (currentShop.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
       if (prevState.radiusAddition === this.state.radiusAddition) {
         this.setState({ radiusAddition: this.state.radiusAddition * 3 });
@@ -92,7 +104,7 @@ class index extends Component {
       this.handleRefresh();
     }
 
-    // if get promo in the radius, reset the radiusAddition to 1 for read next time
+    // if get shop in the radius, reset the radiusAddition to 1 for read next time
     if (prevProps.shopState.shops !== currentShop && currentShop.length > 0) {
       this.setState({ radiusAddition: 1 });
     }
@@ -101,37 +113,6 @@ class index extends Component {
       alert(readError);
     }
   }
-
-  /* handleRefresh = async () => {
-    const radius = 50;
-    let i = 1;
-    this.setState({ isRefreshing: true });
-    //this.setState({ selectedCategory: this.props.selectedCategory });
-    let location = await Location.getCurrentPositionAsync({});
-    do {
-      await this.props
-        .loadShops({
-          radius: radius * i,
-          latitude: location.coords.latitude,
-          longtitude: location.coords.longitude,
-          //selectedCategory: this.props.selectedCategory ? this.props.selectedCategory : null,
-          selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
-        })
-        .then((Data) => {
-          this.setState({ dataSource: Data, page: 0, data: [] });
-          Data.length !== 0 && this.filterData();
-        })
-        .catch((error) => {
-          alert(error);
-        });
-      i = i * 3;
-    } while (this.state.dataSource.length === 0 && radius * i < 1000);
-    this.setState({
-      isRefreshing: false,
-      //isLoading:false
-    });
-    i = 1;
-  }; */
 
   handleLoadMore() {
     //this.setState({isLoading:true})
@@ -165,32 +146,12 @@ class index extends Component {
     this.handleLoadMore();
   }
 
-  renderFooter({ empty }) {
-    if (empty) {
-      return (
-        // this.state.isLoading?
-        // <View style={styles.loader}>
-        //     <ActivityIndicator size="large"/>
-        // </View> :null
-        Platform.OS === "ios" ? (
-          <Card style={{ backgroundColor: "transparent" }}>
-            <CardSection style={styles.emptySection}>
-              <Icon name="inbox" size={64} style={styles.emptyIcon} />
-              <Text style={styles.emptyText}>NO MERCHANT FOUND</Text>
-            </CardSection>
-          </Card>
-        ) : (
-          <Card style={{ backgroundColor: "transparent", elevation: 0 }}>
-            <CardSection style={[styles.emptySection, { elevation: 0 }]}>
-              <Icon name="inbox" size={64} style={styles.emptyIcon} />
-              <Text style={styles.emptyText}>NO MERCHANT FOUND</Text>
-            </CardSection>
-          </Card>
-        )
-      );
-    } else {
-      return <View style={{ marginBottom: 10 }} />;
-    }
+  onCategorySelected(id = null) {
+    this.props.toggleCategory(id);
+  }
+
+  onFavouriteFiltered() {
+    this.props.toggleFavourite();
   }
 
   onMerchantPressed(item) {
@@ -207,10 +168,11 @@ class index extends Component {
     this.handleRefresh();
   };
 
-  onTagChange = (value) => {
-    this.setState({ selectedTag: value });
+  onTagChange = (tag) => {
+    /* this.setState({ selectedTag: value });
     this.handleRefresh();
-    this.filterData();
+    this.filterData(); */
+    this.props.toggleTag(tag.id);
   };
 
   lookingForFavourite({ shopId } = null) {
@@ -244,9 +206,14 @@ class index extends Component {
   };
 
   render() {
-    const { shops } = this.props.shopState;
+    const { shops, selectedCategory, favouriteControl, selectedTag } = this.props.shopState;
 
-    const { categories } = this.props;
+    const { categories, tags } = this.props;
+
+    let filteredShop;
+    let filteredCategories;
+    let selectedCategoryTag;
+    let filteredTags = [];
 
     // Get Shop Category
     shops.map((shop) => {
@@ -255,20 +222,61 @@ class index extends Component {
       shopCategory ? (shop.category = shopCategory[0].title) : "";
     });
 
+    // Remove all category
+    filteredCategories = categories.filter((category) => category.title !== "All");
+
+    // On toggle category get category shop
+    selectedCategory
+      ? (filteredShop = shops.filter((shop) => shop.categories[0] === selectedCategory))
+      : (filteredShop = shops.filter((shop) => shop.categories[0] === filteredCategories[0].id));
+
+    // On toggle favourite get favourite shop
+    favouriteControl
+      ? (filteredShop = filteredShop.filter((shop) => shop.isFavourite === true))
+      : filteredShop;
+
+    /* if (selectedTag) {
+      filteredShop.forEach((shop) =>
+        shop.tags.forEach((tag) =>
+          tag 
+        )
+      )  
+    } */
+
+    if (selectedCategory) {
+      selectedCategoryTag = filteredCategories.filter(
+        (category) => category.id === selectedCategory
+      );
+      selectedCategoryTag = selectedCategoryTag[0].tags.filter((tags) => tags !== "All");
+
+      tags.forEach((tag) =>
+        selectedCategoryTag.forEach((categoryTag) => {
+          if (tag.id === categoryTag) {
+            filteredTags.push(tag);
+          }
+        })
+      );
+    }
+
     return (
       <ShopList
         handleRefresh={this.handleRefresh.bind(this)}
         handleLoadMore={this.handleLoadMore.bind(this)}
         filterData={this.filterData.bind(this)}
-        renderFooter={this.renderFooter.bind(this)}
+        //renderFooter={this.renderFooter.bind(this)}
         onFavouritePressed={this.onFavouritePressed.bind(this)}
         onMerchantPressed={this.onMerchantPressed.bind(this)}
-        onCategoryChange={this.onCategoryChange.bind(this)}
+        onCategoryChange={this.onCategorySelected.bind(this)}
+        //onCategoryChange={this.onCategoryChange.bind(this)}
         onTagChange={this.onTagChange.bind(this)}
-        shopData={shops}
+        selectedCategory={selectedCategory}
+        toggleFavourite={this.onFavouriteFiltered.bind(this)}
+        favourite={favouriteControl}
+        shopData={filteredShop}
         state={this.state}
         props={this.props}
-        categories={categories}
+        categories={filteredCategories}
+        tags={filteredTags}
         //displayCategory={this.props.selectedCategory ? "" : this.props.selectedCategory.id}
       />
     );
@@ -298,9 +306,71 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   verifyPermission,
   loadShops,
+  toggleCategory,
+  toggleTag,
+  toggleFavourite,
   onFavouriteClick,
   update,
   submitToBackend,
   readFromDatabase,
   updateIsFavourite,
 })(index);
+
+/* handleRefresh = async () => {
+    const radius = 50;
+    let i = 1;
+    this.setState({ isRefreshing: true });
+    //this.setState({ selectedCategory: this.props.selectedCategory });
+    let location = await Location.getCurrentPositionAsync({});
+    do {
+      await this.props
+        .loadShops({
+          radius: radius * i,
+          latitude: location.coords.latitude,
+          longtitude: location.coords.longitude,
+          //selectedCategory: this.props.selectedCategory ? this.props.selectedCategory : null,
+          selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+        })
+        .then((Data) => {
+          this.setState({ dataSource: Data, page: 0, data: [] });
+          Data.length !== 0 && this.filterData();
+        })
+        .catch((error) => {
+          alert(error);
+        });
+      i = i * 3;
+    } while (this.state.dataSource.length === 0 && radius * i < 1000);
+    this.setState({
+      isRefreshing: false,
+      //isLoading:false
+    });
+    i = 1;
+  }; */
+
+/*   renderFooter({ empty }) {
+    if (empty) {
+      return (
+        // this.state.isLoading?
+        // <View style={styles.loader}>
+        //     <ActivityIndicator size="large"/>
+        // </View> :null
+        Platform.OS === "ios" ? (
+          <Card style={{ backgroundColor: "transparent" }}>
+            <CardSection style={styles.emptySection}>
+              <Icon name="inbox" size={64} style={styles.emptyIcon} />
+              <Text style={styles.emptyText}>NO MERCHANT FOUND</Text>
+            </CardSection>
+          </Card>
+        ) : (
+          <Card style={{ backgroundColor: "transparent", elevation: 0 }}>
+            <CardSection style={[styles.emptySection, { elevation: 0 }]}>
+              <Icon name="inbox" size={64} style={styles.emptyIcon} />
+              <Text style={styles.emptyText}>NO MERCHANT FOUND</Text>
+            </CardSection>
+          </Card>
+        )
+      );
+    } else {
+      return <View style={{ marginBottom: 10 }} />;
+    }
+  } */

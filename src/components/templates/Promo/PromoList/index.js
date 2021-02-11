@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
+import Modal from "react-native-modal";
 import {
   ActivityIndicator,
   Icon as Icon2,
@@ -15,72 +15,65 @@ import {
 
 import { Card, CardSection } from "@components/molecules";
 
-import Icon from "react-native-vector-icons/FontAwesome";
+import { CustomNavBar } from "@components/organisms/CustomNavBar";
+import moment from "moment";
 
-function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance }) {
-  const { image } = styles;
+function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance, name, shopName }) {
+  const { image, detail, title, subtitle, bookmarkIcon } = styles;
 
   let cover = "";
   if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
   else cover = { uri: picture[0] };
+
+  const distanceIcon = require("../../../../assets/icons/distance.png");
+  const emptyHeartIcon = require("../../../../assets/icons/emptyHeart.png");
+  const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
+
   return (
     <TouchableOpacity onPress={onPress}>
-      <Card style={{ width: "98%" }}>
-        <CardSection
+      <View style={styles.cardContainer}>
+        <View style={{ width: "35%" }}>
+          <CardSection style={styles.imageContainer}>
+            <Image style={image} resizeMode="cover" source={cover} />
+          </CardSection>
+        </View>
+        <View
           style={{
-            borderBottomWidth: 0,
+            width: "65%",
+            height: 100,
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "space-between",
+            paddingBottom: 10,
           }}
         >
-          <Image style={image} resizeMode="cover" source={cover} />
-        </CardSection>
-        <View style={styles.floatingDistanceIndicator}>
-          <MaterialCommunityIcons name="map-marker-distance" color="white" size={20} />
-          <Text style={styles.distanceIndicatorTitle}>
-            {
-              +(distance != undefined
-                ? Math.round(distance + "e+2") + "e-2"
-                : Math.round(calculatedDistance + "e+2") + "e-2")
-            }
-            KM Away
-          </Text>
+          <CardSection style={styles.textContainer}>
+            <Text style={title} numberOfLines={2}>
+              {name}
+            </Text>
+          </CardSection>
+          <View>
+            <CardSection style={styles.textContainer}>
+              <Text style={subtitle} numberOfLines={1}>
+                {shopName}
+              </Text>
+            </CardSection>
+            <CardSection style={styles.descriptionContainer}>
+              <Image source={distanceIcon} style={styles.distanceIcon} />
+              <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")}km away</Text>
+              <View style={bookmarkIcon}>
+                <TouchableOpacity onPress={onBookmarkPressed}>
+                  {gotBookmark ? (
+                    <Image source={filledHeartIcon} style={styles.favouriteIcon} />
+                  ) : (
+                    <Image source={emptyHeartIcon} style={styles.favouriteIcon} />
+                  )}
+                </TouchableOpacity>
+              </View>
+            </CardSection>
+          </View>
         </View>
-        <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
-          {gotBookmark ? (
-            <View
-              style={{
-                borderRadius: 100,
-                borderWidth: 0,
-                borderColor: "#ffd30f",
-                backgroundColor: "#ffd30f",
-              }}
-            >
-              <Icon2
-                size={50}
-                iconStyle={{ borderWidth: 0 }}
-                containerStyle={{ justifyContent: "center" }}
-                name={"stars"}
-                color="#d60000"
-              />
-            </View>
-          ) : (
-            <View
-              style={{
-                borderRadius: 100,
-                backgroundColor: "#ffffff",
-              }}
-            >
-              <Icon2
-                size={50}
-                iconStyle={{ borderWidth: 0 }}
-                containerStyle={{ justifyContent: "center" }}
-                name={"stars"}
-                color="#d60000"
-              />
-            </View>
-          )}
-        </TouchableOpacity>
-        {/* )} */}
-      </Card>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -90,6 +83,7 @@ const PromoList = ({
   readBookmark,
   submitLoading,
   dataSource,
+  toggleBookmark,
   categories,
   tags,
   selectedCategory,
@@ -99,10 +93,42 @@ const PromoList = ({
   onCategoryChange,
   onTagChange,
   onBookmarkPressed,
+  onBackPressed,
+  bookmark,
 }) => {
+  const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
+  const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
+
   return (
-    <View style={{ height: "100%" }}>
-      <View
+    <View style={{ flex: 1 /*height: 100%*/ }}>
+      <CustomNavBar textOne="Category" textTwo="Tags" onPressBack={onBackPressed} />
+      <Modal
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+          marginHorizontal: 0,
+          marginBottom: 0,
+        }}
+        isVisible={false}
+      >
+        <View style={{ height: 300, width: "100%" }}>
+          <Text>Testing</Text>
+        </View>
+      </Modal>
+
+      <View style={styles.promoTitleContainer}>
+        <Text style={styles.pageTitle}>Promotions</Text>
+
+        <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={toggleBookmark}>
+            <Image
+              source={bookmark ? filledHeartIcon : emptyHeartIcon}
+              style={styles.emptyHeartIcon}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* <View
         style={{
           flexDirection: "row",
           justifyContent: "flex-end",
@@ -143,7 +169,7 @@ const PromoList = ({
         >
           <Icon name="filter" size={20} style={styles.tagsButton} />
         </ModalSelector>
-      </View>
+      </View> */}
 
       <FlatList
         data={dataSource}
@@ -151,10 +177,11 @@ const PromoList = ({
           <Item
             onPress={() => onMerchantPressed(item)}
             onBookmarkPressed={() => onBookmarkPressed(item)}
-            name={item.displayTitle}
+            name={item.title}
             picture={item.coverPhotos}
             distance={item.distance}
             promoID={item.id}
+            shopName={item.shop.displayTitle}
             gotBookmark={item.isBookmark} //{gotBookmark}
             index={index}
             readBookmark={readBookmark}
@@ -164,7 +191,7 @@ const PromoList = ({
         keyExtractor={(item) => item.id}
         onRefresh={handleRefresh}
         refreshing={false}
-        ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
+        //ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
         style={styles.flatList}
       />
     </View>

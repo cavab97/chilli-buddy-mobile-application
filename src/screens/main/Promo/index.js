@@ -118,6 +118,10 @@ class index extends Component {
     }
   }
 
+  onBackPressed() {
+    Actions.MainScreen();
+  }
+
   onMerchantPressed(item) {
     Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
   }
@@ -165,6 +169,8 @@ class index extends Component {
   render() {
     const { readLoading, promo, bookmark } = this.props.promotionState;
 
+    const { categories, tags } = this.props
+
     const readBookmark = this.props.bookmarkState.readLoading;
     const submitLoading = this.props.bookmarkState.submitLoading;
 
@@ -183,6 +189,7 @@ class index extends Component {
         onBookmarkPressed={this.onBookmarkPressed.bind(this)}
         onCategoryChange={this.onCategoryChange.bind(this)}
         onTagChange={this.onTagChange.bind(this)}
+        onBackPressed={this.onBackPressed.bind(this)}
       />
     );
   }

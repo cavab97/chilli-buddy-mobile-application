@@ -75,7 +75,14 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="Promo" back>
-        <Scene key="Promo" component={Promo} title="Promo" titleStyle={styles.title} />
+        <Scene 
+          key="Promo" 
+          component={Promo} 
+          //title="Promo" 
+          hideNavBar={true}
+          titleStyle={styles.title} 
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+        />
       </Stack>
 
       <Stack key="Profile" back>
@@ -126,16 +133,14 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       {/* <Stack key="Shops" back>
         <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
       </Stack>
-      <Stack key="Shops" back>
-        <Scene key="Shops" component={Shops} title="Shops" titleStyle={styles.title} />
-      </Stack> */}
+      */}
       <Stack key="Shops" back>
         <Scene
           key="Shops"
           component={Shops}
-          title="Shops"
+          //title="Shops"
           titleStyle={styles.title}
-          // navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />
       </Stack>
       <Stack key="SingleMerchant" back>
@@ -152,7 +157,8 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Scene
           key="SingleMerchantPromo"
           component={ShopPromo}
-          title="Promo"
+          overlay
+          //title="Promo"
           titleStyle={styles.title}
         />
       </Stack>
