@@ -1,25 +1,39 @@
 import React from "react";
 import styles from "./styles";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Modal from "react-native-modal";
+
 import {
   ActivityIndicator,
-  Icon as Icon2,
   FlatList,
   Image,
-  ModalSelector,
   TouchableOpacity,
   View,
   Text,
 } from "@components/atoms";
 
-import { Card, CardSection } from "@components/molecules";
+import { CardSection } from "@components/molecules";
 
 import { CustomNavBar } from "@components/organisms/CustomNavBar";
+import { SwipeableModal } from "@components/organisms/SwipeableModal";
+import { SingleMerchantPromo } from "../SingleMerchantPromo";
+
 import moment from "moment";
 
-function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance, name, shopName }) {
-  const { image, detail, title, subtitle, bookmarkIcon } = styles;
+function Item({ 
+  picture = [], 
+  onPress, 
+  onBookmarkPressed, 
+  gotBookmark, 
+  distance,
+  name, 
+  shopName 
+}) {
+  const { 
+    image, 
+    detail, 
+    title, 
+    subtitle, 
+    bookmarkIcon 
+  } = styles;
 
   let cover = "";
   if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
@@ -32,42 +46,47 @@ function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance,
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.cardContainer}>
-        <View style={{ width: "35%" }}>
+        <View style={styles.leftCardContainer}>
           <CardSection style={styles.imageContainer}>
-            <Image style={image} resizeMode="cover" source={cover} />
+            <Image 
+              style={image} 
+              resizeMode="cover" 
+              source={cover} 
+            />
           </CardSection>
         </View>
-        <View
-          style={{
-            width: "65%",
-            height: 100,
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "space-between",
-            paddingBottom: 10,
-          }}
-        >
+        <View style={styles.rightCardContainer}>
           <CardSection style={styles.textContainer}>
-            <Text style={title} numberOfLines={2}>
+            <Text 
+              style={title} 
+              numberOfLines={2}
+            >
               {name}
             </Text>
           </CardSection>
           <View>
             <CardSection style={styles.textContainer}>
-              <Text style={subtitle} numberOfLines={1}>
+              <Text 
+                style={subtitle} 
+                numberOfLines={1}
+              >
                 {shopName}
               </Text>
             </CardSection>
             <CardSection style={styles.descriptionContainer}>
-              <Image source={distanceIcon} style={styles.distanceIcon} />
-              <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")}km away</Text>
+              <Image 
+                source={distanceIcon} 
+                style={styles.distanceIcon} 
+              />
+              <Text style={detail}>
+                Just {+(Math.round(distance + "e+2") + "e-2")}km away
+              </Text>
               <View style={bookmarkIcon}>
                 <TouchableOpacity onPress={onBookmarkPressed}>
-                  {gotBookmark ? (
-                    <Image source={filledHeartIcon} style={styles.favouriteIcon} />
-                  ) : (
-                    <Image source={emptyHeartIcon} style={styles.favouriteIcon} />
-                  )}
+                  <Image
+                    source={gotBookmark ? filledHeartIcon : emptyHeartIcon} 
+                    style={styles.favouriteIcon} 
+                  />
                 </TouchableOpacity>
               </View>
             </CardSection>
@@ -89,32 +108,62 @@ const PromoList = ({
   selectedCategory,
   handleRefresh,
   renderFooter,
-  onMerchantPressed,
+  onCarouselPressed,
+  onPromoPressed,
   onCategoryChange,
   onTagChange,
   onBookmarkPressed,
   onBackPressed,
   bookmark,
+  onSwipeFullScreen,
+  tagModal,
+  categoryModal,
+  onCategoryPressed,
+  onTagPressed,
+  promotion,
+  promotionModal,
+  onPromoPressedClose
 }) => {
+  
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
   return (
     <View style={{ flex: 1 /*height: 100%*/ }}>
-      <CustomNavBar textOne="Category" textTwo="Tags" onPressBack={onBackPressed} />
-      <Modal
-        style={{
-          flex: 1,
-          backgroundColor: "white",
-          marginHorizontal: 0,
-          marginBottom: 0,
-        }}
-        isVisible={false}
-      >
-        <View style={{ height: 300, width: "100%" }}>
-          <Text>Testing</Text>
-        </View>
-      </Modal>
+      <CustomNavBar 
+        textOne="Category" 
+        textTwo="Tags" 
+        onPressBack={onBackPressed} 
+        onPressButton1={onCategoryPressed}
+        onPressButton2={onTagPressed}
+      />
+
+      <SwipeableModal
+        modalVisible={categoryModal}
+        dataSource={categories}
+        modalTitle="Category"
+        type='category'
+        full={false}
+        onSwipeFullScreen={onSwipeFullScreen}
+        onBackDropPressed={onCategoryPressed}
+      />
+
+      <SwipeableModal
+        modalVisible={tagModal}
+        dataSource={tags}
+        modalTitle="Tags"
+        type='tag'
+        full={false}
+        onSwipeFullScreen={onSwipeFullScreen}
+        onBackDropPressed={onTagPressed}
+      />
+
+      <SingleMerchantPromo
+        promotionModal={promotionModal}
+        dataSource={promotion}
+        onCarouselPressed={onCarouselPressed}
+        onPromoPressedClose={onPromoPressedClose}
+      />
 
       <View style={styles.promoTitleContainer}>
         <Text style={styles.pageTitle}>Promotions</Text>
@@ -128,7 +177,37 @@ const PromoList = ({
           </TouchableOpacity>
         </View>
       </View>
-      {/* <View
+    
+      <FlatList
+        data={dataSource}
+        renderItem={({ item, index }) => (
+          <Item
+            onPress={() => onPromoPressed(item)}
+            onBookmarkPressed={() => onBookmarkPressed(item)}
+            name={item.title}
+            picture={item.coverPhotos}
+            distance={item.distance}
+            promoID={item.id}
+            shopName={item.shop.displayTitle}
+            gotBookmark={item.isBookmark} //{gotBookmark}
+            index={index}
+            readBookmark={readBookmark}
+            submitLoading={submitLoading}
+          />
+        )}
+        keyExtractor={(item) => item.id}
+        onRefresh={handleRefresh}
+        refreshing={false}
+        //ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
+        style={styles.flatList}
+      />
+    </View>
+  );
+};
+
+export { PromoList };
+
+  {/* <View
         style={{
           flexDirection: "row",
           justifyContent: "flex-end",
@@ -171,31 +250,3 @@ const PromoList = ({
         </ModalSelector>
       </View> */}
 
-      <FlatList
-        data={dataSource}
-        renderItem={({ item, index }) => (
-          <Item
-            onPress={() => onMerchantPressed(item)}
-            onBookmarkPressed={() => onBookmarkPressed(item)}
-            name={item.title}
-            picture={item.coverPhotos}
-            distance={item.distance}
-            promoID={item.id}
-            shopName={item.shop.displayTitle}
-            gotBookmark={item.isBookmark} //{gotBookmark}
-            index={index}
-            readBookmark={readBookmark}
-            submitLoading={submitLoading}
-          />
-        )}
-        keyExtractor={(item) => item.id}
-        onRefresh={handleRefresh}
-        refreshing={false}
-        //ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
-        style={styles.flatList}
-      />
-    </View>
-  );
-};
-
-export { PromoList };

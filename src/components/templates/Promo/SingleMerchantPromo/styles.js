@@ -119,6 +119,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'HorizontalRounded'
   },
+  dateContainer: {
+    backgroundColor: 'white', 
+    marginTop: 10, 
+    borderRadius: 30, 
+    marginHorizontal: 20
+  },
   // actionDotStyle: {
   //     backgroundColor: '#ffffff',
   //     width: 6,

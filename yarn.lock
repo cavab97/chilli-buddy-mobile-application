@@ -13618,10 +13618,10 @@ react-native-reanimated@~1.9.0:
   dependencies:
     fbjs "^1.0.0"
 
-react-native-render-html@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-render-html/-/react-native-render-html-5.0.1.tgz#89078c91d547e292a444a38f175cbc978b5ab431"
-  integrity sha512-dGBDlzAZjGmoO6Tv8C3oeah/ljZd5rUKrVFIyfyq6JstS6sY6KaT+i1zM13eC5QaCY9ML1H8VTkoWuY6yC6smQ==
+react-native-render-html@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-render-html/-/react-native-render-html-5.1.0.tgz#049591d9a72f39634877991c33d546f277103520"
+  integrity sha512-zMExybt9n6oUGTusN2wIfr+nI+VSOZ5Yevru2+7+Rs7gyzT4rxGoD+Gv/AKWwnHMs1U4L8YOA9U1ZzCmHKR/1Q==
   dependencies:
     deprecated-prop-type "^1.0.0"
     htmlparser2 "5.0.1"

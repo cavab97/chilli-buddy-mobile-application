@@ -15,6 +15,10 @@ const actions = {
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
 
   TOGGLE_PROMO_BOOKMARK: type + "TOGGLE_PROMO_BOOKMARK",
+  TOGGLE_SWIPEABLE: type + 'TOGGLE_SWIPEABLE',
+  TOGGLE_CATEGORY_MODAL: type + 'TOGGLE_CATEGORY_MODAL',
+  TOGGLE_TAG_MODAL: type + 'TOGGLE_TAG_MODAL',
+  TOGGLE_PROMOTION_MODAL: type + 'TOGGLE_PROMOTION_MODAL',
 
   READ_RECORD: type + "READ_RECORD",
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
@@ -147,6 +151,30 @@ export function removeListenerToRecord() {
     console.log("Removed promo listener");
     objectDataServices.removeListenerToRecord();
   };
+}
+
+export const toggleSwipeable = () => {
+  return {
+    type: actions.TOGGLE_SWIPEABLE,
+  };
+};
+
+export const toggleCategoryModal = () => {
+  return {
+    type: actions.TOGGLE_CATEGORY_MODAL
+  }
+}
+
+export const toggleTagModal = () => {
+  return {
+    type: actions.TOGGLE_TAG_MODAL
+  }
+}
+
+export const togglePromotionModal = () => {
+  return {
+    type: actions.TOGGLE_PROMOTION_MODAL
+  }
 }
 
 export default actions;

@@ -201,6 +201,17 @@ const styles = StyleSheet.create({
     position: 'absolute', 
     right: 5, 
     bottom:0 
+  },
+  leftCardContainer: {
+    width: "35%"
+  },
+  rightCardContainer: {
+    width: "65%",
+    height: 100,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    paddingBottom: 10,
   }
 });
 

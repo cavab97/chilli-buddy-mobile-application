@@ -33,8 +33,7 @@ const ShopsSinglePost = ({ shopPosts, icon, dataSource, find_dimensions = () => 
   };
 
   const PostList = ({ data }) => {
-    console.log(data.images.length);
-    console.log(data.images[0]);
+
     if (data.length !== 0) {
       return (
         <View>

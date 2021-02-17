@@ -5,11 +5,12 @@ import { Colors, Mixins } from "../../../settings/styles/theme";
 const styles = StyleSheet.create({
     container: {
         marginTop: Constants.statusBarHeight, 
-        height: Platform.OS === 'ios' ? 44 : 34,
-        flex: 1,
+        height: Platform.OS === 'ios' ? Constants.statusBarHeight * 1.2 : Constants.statusBarHeight,
+       /*  flex: 1, */
         alignItems:'flex-start',
         flexDirection: 'row',
         paddingTop: 10,
+        paddingRight: 1,
         marginHorizontal: 15,
         justifyContent: 'space-between',
     },

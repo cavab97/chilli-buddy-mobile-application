@@ -14,11 +14,7 @@ import {
   TouchableOpacity,
 } from "@components/atoms";
 
-import { ImageSwiper } from "../../../../components/organisms/ImageSwiper";
 
-import { Ionicons } from "@expo/vector-icons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Colors } from "../../../../settings/styles/theme";
 import moment from "moment";
 
 const windowHeight = Dimensions.get("window").height;
@@ -26,11 +22,11 @@ const windowWidth = Dimensions.get("window").width;
 
 const SingleMerchantPromo = ({
   dataSource,
-  promotions,
+  promotionModal,
   noImage,
-  noPromoteImage,
+  onPromoPressedClose,
   onPromoteClick,
-  onMerchantPressed,
+  onCarouselPressed,
   onPressedSwipe,
   setSwiperRef,
   isVisible,
@@ -42,36 +38,36 @@ const SingleMerchantPromo = ({
     closeButton,
     cross,
     caption,
-    subContainer1
+    dateContainer,
+    distanceIndicatorTitle
   } = styles;
 
   const closeIcon = require("../../../../assets/chilliBuddyCheckin/closeButton.png");
   const width = Platform.OS === "ios" && Platform.isPad === true ? 460 : 300;
 
-  const date = moment().format('DD-MM-YYYY')
+  const startDate = moment(dataSource.startTime).format('DD-MM-YYYY')
+  const endDate = moment(dataSource.endTime).format('DD-MM-YYYY')
 
   return (
     <Modal
       transparent={true}
-      visible={isVisible}
+      visible={promotionModal}
       onBackdropPress={onClose}
     >
       <View style={modelBackground}>
         <View style={{ width: width }}>
-            {/* <TouchableOpacity onPress={onMerchantPressed}> */}
-            {/* <Image
-                source={{ uri: dataSource.images[0] }}
-                style={adsImageStyle}
-                //resizeMode="contain"
-            /> */}
               <Carousel
                 ref={setSwiperRef}
                 data={dataSource.images}
                 renderItem={({ item, index }) => {
                   return (
-                    <TouchableOpacity onPress={onMerchantPressed}>
+                    <TouchableOpacity onPress={onCarouselPressed}>
                       {dataSource.images.length > 0 ? (
-                        <Image source={{ uri: item }} style={adsImageStyle} resizeMode={"cover"} />
+                        <Image 
+                          source={{ uri: item }} 
+                          style={adsImageStyle} 
+                          resizeMode={"cover"} 
+                        />
                       ) : (
                         <Image
                           source={noImage}
@@ -87,11 +83,9 @@ const SingleMerchantPromo = ({
                 itemWidth={width}
                 contentContainerCustomStyle={{ alignItems: 'center' }}
               />
-            
-            {/* </TouchableOpacity> */}
             <TouchableOpacity
               style={closeButton}
-              onPress={onClose}
+              onPress={onPromoPressedClose}
               activeOpacity={1}
             >
               <Image
@@ -99,9 +93,9 @@ const SingleMerchantPromo = ({
                 style={cross}
               />
             </TouchableOpacity>
-            <View style={{ backgroundColor: 'white', marginTop: 10, borderRadius: 30, marginHorizontal: 20 }}>
-              <Text style={styles.distanceIndicatorTitle}>  
-                Valid from {date} to {date}
+            <View style={dateContainer}>
+              <Text style={distanceIndicatorTitle}>  
+                Valid from {startDate} to {endDate}
               </Text>
             </View>
             <Text style={caption}>
