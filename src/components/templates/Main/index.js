@@ -88,7 +88,9 @@ export default ({
 }) => {
   const DATA = [];
   const DATA2 = [];
+  // console.log("slider");
 
+  // console.log(slider);
   const getItem = (data, index) => {
     return {
       key: "routeTicketsOrRoutesLoading" + index,

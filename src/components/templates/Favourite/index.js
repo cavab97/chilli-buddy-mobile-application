@@ -109,10 +109,12 @@ const FavouriteList = ({
   onBackPressed,
   toggleBookmark,
   bookmark,
+  onShopsPressed,
+  onPromotionsPressed,
 }) => {
   const emptyHeartIcon = require("../../../assets/icons/emptyHeartRed.png");
   const filledHeartIcon = require("../../../assets/icons/filledHeart.png");
-  console.log(dataSource[0]);
+  // console.log(dataSource[0].promotion.title);
   return (
     // <View style={{ height: "100%" }}>
     //   {/* <View
@@ -185,7 +187,13 @@ const FavouriteList = ({
     // </View>
 
     <View style={{ flex: 1 /*height: 100%*/ }}>
-      <CustomNavBar textOne="Shops" textTwo="Promotions" onPressBack={onBackPressed} />
+      <CustomNavBar
+        textOne="Shops"
+        textTwo="Promotions"
+        onPressBack={onBackPressed}
+        onPressButton1={onShopsPressed}
+        onPressButton2={onPromotionsPressed}
+      />
       <Modal
         style={{
           flex: 1,
@@ -201,7 +209,7 @@ const FavouriteList = ({
       </Modal>
 
       <View style={styles.promoTitleContainer}>
-        <Text style={styles.pageTitle}>Promotions</Text>
+        <Text style={styles.pageTitle}>Favourite</Text>
 
         <View style={styles.iconContainer}>
           <TouchableOpacity onPress={toggleBookmark}>
@@ -212,17 +220,19 @@ const FavouriteList = ({
           </TouchableOpacity>
         </View>
       </View>
+      <Text style={styles.topSubText}>Promotions</Text>
+
       <FlatList
         data={dataSource}
         renderItem={({ item, index }) => (
           <Item
             onPress={() => onMerchantPressed(item)}
             onBookmarkPressed={() => onBookmarkPressed(item)}
-            name={item.displayTitle}
-            picture={item.coverPhotos}
+            name={item.promotion.title}
+            picture={item.promotion.coverPhotos}
             distance={item.distance}
             promoID={item.id}
-            shopName={item.title}
+            shopName={item.promotion.shop.displayTitle}
             gotBookmark={item.isBookmark} //{gotBookmark}
             index={index}
             readBookmark={readBookmark}

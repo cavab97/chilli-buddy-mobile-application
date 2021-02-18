@@ -163,6 +163,8 @@ class index extends Component {
   onBackPressed() {
     Actions.pop("Favourite");
   }
+  onShopsPressed() {}
+  onPromotionsPressed() {}
 
   render() {
     const { readLoading, promo, bookmark } = this.props.promotionState;
@@ -198,6 +200,8 @@ class index extends Component {
         onCategoryChange={this.onCategoryChange.bind(this)}
         onTagChange={this.onTagChange.bind(this)}
         onBackPressed={this.onBackPressed.bind(this)}
+        onShopsPressed={this.onShopsPressed.bind(this)}
+        onPromotionsPressed={this.onPromotionsPressed.bind(this)}
       />
     );
   }

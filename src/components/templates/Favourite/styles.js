@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "90%",
     alignSelf: "center",
+    // backgroundColor: "yellow",
   },
   iconContainer: {
     flexDirection: "row",
@@ -201,6 +202,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 5,
     bottom: 0,
+  },
+  topSubText: {
+    fontFamily: "HorizontalRounded",
+    fontSize: 15,
+    width: "90%",
+    // backgroundColor: "red",
+    alignSelf: "center",
   },
 });
 

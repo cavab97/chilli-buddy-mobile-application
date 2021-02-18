@@ -14,7 +14,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     top: 20,
     alignItems: "center",
-    marginHorizontal: 10,
+    alignSelf: "center",
+    // marginHorizontal: 10,
+    // backgroundColor: "yellow",
+    width: "90%",
   },
   logoPositionInModal: {
     width: 50,

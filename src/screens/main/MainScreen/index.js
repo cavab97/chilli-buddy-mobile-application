@@ -6,6 +6,8 @@ import { readAllFromDatabase as readAllRoute } from "@redux/route/action";
 import { readFromDatabase as readAdvertisements, toggleModal } from "@redux/advertisement/action";
 import { readInfo as readSettingInfo, toggleSpinningWheelModal } from "@redux/settings/action";
 import { verifyPermission, loadShops } from "@redux/shops/action";
+import { readObjects as readShopPostMain } from "@redux/shopPostMain/action";
+
 import {
   listenFromDatabase as listenToRouteTickets,
   removeListenerFromDatabase as removeListenerFromRouteTickets,
@@ -49,6 +51,7 @@ class index extends Component {
     this.props.readAdvertisements();
     this.props.readSettingInfo();
     this.handleRefresh();
+    this.props.readShopPostMain();
   }
 
   componentWillUnmount() {
@@ -129,29 +132,57 @@ class index extends Component {
   //Filtered Data Source from empty shopId and empty cover pic
   filteredDatasource() {
     const advertisements = this.props.advertisements;
-
+    const posts = this.props.posts;
+    console.log(posts[0].description);
+    // console.log(posts[0].d.shop.id);
     let dataSourceAds = [];
     //Map image URL and Shop ID to array
-    dataSourceAds = advertisements.map((item) => {
+    dataSourceAds = posts.map((item) => {
+      // console.log(item.d.coverPhoto);
       return {
-        imageUri: item.coverPic,
-        shopId: item.shopID,
-        popUpImage: item.popUpImage,
+        imageUri: item.shop.images[0],
+        shopId: item.shop.id,
+        // popUpImage: item.popUpImage,
       };
     });
 
     //Filter empty shopID and Cover pic ads
     var filteredDatasource = dataSourceAds.filter(
-      (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
+      (value) => value.imageUri !== undefined && value.shopId !== undefined
     );
-
-    //check pop up image type in slider
-    filteredDatasource.forEach((data) => {
-      data.adsType = this.checkType(data.popUpImage);
-    });
+    // //check pop up image type in slider
+    // filteredDatasource.forEach((data) => {
+    //   data.adsType = this.checkType(data.popUpImage);
+    // });
 
     return filteredDatasource;
   }
+
+  // filteredDatasource() {
+  //   const advertisements = this.props.posts;
+  //   console.log(advertisements.d.images[0]);
+  //   let dataSourceAds = [];
+  //   //Map image URL and Shop ID to array
+  //   dataSourceAds = advertisements.map((item) => {
+  //     return {
+  //       imageUri: item.coverPic,
+  //       shopId: item.shopID,
+  //       popUpImage: item.popUpImage,
+  //     };
+  //   });
+
+  //   //Filter empty shopID and Cover pic ads
+  //   var filteredDatasource = dataSourceAds.filter(
+  //     (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
+  //   );
+
+  //   //check pop up image type in slider
+  //   filteredDatasource.forEach((data) => {
+  //     data.adsType = this.checkType(data.popUpImage);
+  //   });
+
+  //   return filteredDatasource;
+  // }
 
   //Check the type of url is image or video
   checkType(imageUrl) {
@@ -188,7 +219,7 @@ class index extends Component {
   returnGreetings() {
     let hour = new Date().getHours();
     // let offsetInHours = date.getTimezoneOffset() / 60;
-    console.log(hour);
+    // console.log(hour);
     if ((hour >= 5 && hour <= 12) || hour <= 12) {
       return "Good Morning.";
     } else if (hour >= 12 && hour <= 18) {
@@ -292,7 +323,9 @@ class index extends Component {
       readErrorRouteTicket,
       readErrorAdvertisement,
       readErrorHeaderImages,
+      posts,
     } = this.props;
+    // console.log(posts);
     let {
       user,
       notifications,
@@ -310,6 +343,7 @@ class index extends Component {
 
     //Sort to show latest
     advertisements.sort((a, b) => b.createAt - a.createAt);
+    // console.log(advertisements);
 
     //Push ads popup cover pic into array
     advertisements.forEach((advertisement) => {
@@ -418,6 +452,8 @@ const mapStateToProps = (state) => {
 
   const promotionState = state.Promotion;
 
+  const posts = state.ShopPostMain.posts;
+
   return {
     categories,
     tags,
@@ -436,6 +472,7 @@ const mapStateToProps = (state) => {
     spinningWheelModal,
     user,
     promotionState,
+    posts,
   };
 };
 
@@ -450,4 +487,5 @@ export default connect(mapStateToProps, {
   readSettingInfo,
   toggleSpinningWheelModal,
   loadShopsPromo,
+  readShopPostMain,
 })(index);

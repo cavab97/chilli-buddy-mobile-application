@@ -147,7 +147,7 @@ class index extends Component {
 
       //console.log(result);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
