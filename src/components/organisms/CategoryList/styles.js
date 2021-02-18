@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
       height: 170,
       width: 90,
       borderRadius: 30,
-      backgroundColor: "white",
+      backgroundColor: Colors.WHITE,
       padding: 15,
       shadowColor: "#979797",
       shadowOffset: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
       height: 60,
       width: 60,
       borderRadius: 23,
-      backgroundColor:"white",
+      backgroundColor: Colors.WHITE,
       //padding: 15,
       shadowColor: "#979797",
       shadowOffset: {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     titleSelected: {
       fontFamily: 'HorizontalRounded',
       marginTop: 20,
-      color: 'white'
+      color: Colors.WHITE
     },
     icon: {
       width: 40, 

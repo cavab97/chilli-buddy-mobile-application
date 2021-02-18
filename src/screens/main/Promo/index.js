@@ -2,8 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
+import { getDistance } from "geolib";
 
-import { verifyPermission, loadShopsPromo, onBookmarkClick } from "@redux/promo/action";
+import { 
+  verifyPermission, 
+  loadShopsPromo, 
+  onBookmarkClick,
+  toggleSwipeable,
+  toggleCategoryModal,
+  toggleTagModal,
+  togglePromotionModal,
+  listenToRecord,
+} from "@redux/promo/action";
+
 import {
   update,
   submitToBackend,
@@ -12,7 +23,7 @@ import {
 } from "@redux/bookmark/action";
 import styles from "./styles";
 
-import { Image, Text, TouchableOpacity, View } from "@components/atoms";
+import { Text, View } from "@components/atoms";
 
 import { Card, CardSection } from "@components/molecules";
 
@@ -122,8 +133,14 @@ class index extends Component {
     Actions.MainScreen();
   }
 
-  onMerchantPressed(item) {
-    Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
+  onPromoPressedClose() {
+    this.props.togglePromotionModal()
+  }
+
+  onPromoPressed(item) {
+    //Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
+    this.props.listenToRecord({ promoId: item.id })
+    this.props.togglePromotionModal()
   }
 
   onCategoryChange = (value) => {
@@ -135,6 +152,18 @@ class index extends Component {
     this.setState({ selectedTag: value });
     this.handleRefresh();
   };
+  
+  onSwipeFullScreen = () => {
+    this.props.toggleSwipeable()
+  }
+
+  onCategoryPressed = () => {
+    this.props.toggleCategoryModal()
+  }
+
+  onTagPressed = () => {
+    this.props.toggleTagModal()
+  }
 
   lookingForBookmark({ promoId } = null) {
     const bookmarks = this.props.bookmarks;
@@ -166,8 +195,43 @@ class index extends Component {
     }
   };
 
+  onCarouselPressed() {
+    const location = this.props.promotionState.promotion.shop.l;
+    this.calculateDistance(location);
+    this.props.togglePromotionModal();
+  }
+
+  calculateDistance = async (destinationLocation) => {
+    const promo = this.props.promotionState;
+    var distance;
+    let location = await Location.getCurrentPositionAsync({});
+    distance =
+      getDistance(
+        { latitude: destinationLocation.U, longitude: destinationLocation.k },
+        {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }
+      ) / 1000;
+
+    Actions.SingleMerchant({
+      shopId: promo.promotion.shop.id,
+      distance: distance,
+      calculatedDistance: distance,
+    });
+  };
+
   render() {
-    const { readLoading, promo, bookmark } = this.props.promotionState;
+    const { 
+      readLoading, 
+      promo, 
+      bookmark, 
+      promotion,
+      swipeable,
+      categoryModalVisible,
+      tagModalVisible,
+      promotionModalVisible
+    } = this.props.promotionState;
 
     const { categories, tags } = this.props
 
@@ -180,16 +244,26 @@ class index extends Component {
         readBookmark={readBookmark}
         submitLoading={submitLoading}
         dataSource={promo}
-        categories={this.state.categories}
-        tags={this.state.tags}
+        tagModal={tagModalVisible}
+        categoryModal={categoryModalVisible}
+        categories={categories}
+        promotion={promotion}
+        promotionModal={promotionModalVisible}
+        tags={tags}
         selectedCategory={this.state.selectedCategory}
+        swipeable={swipeable}
         handleRefresh={this.handleRefresh.bind(this)}
         renderFooter={this.renderFooter.bind(this)}
-        onMerchantPressed={this.onMerchantPressed.bind(this)}
+        onCarouselPressed={this.onCarouselPressed.bind(this)}
+        onPromoPressed={this.onPromoPressed.bind(this)}
         onBookmarkPressed={this.onBookmarkPressed.bind(this)}
         onCategoryChange={this.onCategoryChange.bind(this)}
         onTagChange={this.onTagChange.bind(this)}
         onBackPressed={this.onBackPressed.bind(this)}
+        onCategoryPressed={this.onCategoryPressed.bind(this)}
+        onTagPressed={this.onTagPressed.bind(this)}
+        onSwipeFullScreen={this.onSwipeFullScreen.bind(this)}
+        onPromoPressedClose={this.onPromoPressedClose.bind(this)}
       />
     );
   }
@@ -209,7 +283,12 @@ export default connect(mapStateToProps, {
   loadShopsPromo,
   onBookmarkClick,
   updateIsBookmark,
+  toggleCategoryModal,
+  toggleTagModal,
+  togglePromotionModal,
+  listenToRecord,
   update,
   submitToBackend,
   readFromDatabase,
+  toggleSwipeable
 })(index);
