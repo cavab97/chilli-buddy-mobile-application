@@ -14,21 +14,25 @@ const styles = StyleSheet.create({
   },
   ProfileImageStyle: {
     backgroundColor: Colors.GRAY_DARK, //delete this at profile picture
-    height: 114,
-    width: 114,
+    height: 100,
+    width: 100,
     borderRadius: 60,
     //borderRadius: 150,  uncomment this at profile picture
   },
   ProfileContatiner: {
-    justifyContent: "center",
-    height: 186,
-    alignItems: "center",
+    // justifyContent: "center",
+    height: 120,
+    // alignItems: "center",
+    // backgroundColor: "red",
+    paddingHorizontal: 20,
   },
   image: {
     flex: 1,
     borderRadius: 60,
     //borderRadius: 150, uncomment this at profile picture
     width: null,
+    resizeMode: "cover",
+
     //resizeMode: "cover", uncomment this line need cover
   },
   BodyContatiner: {
@@ -40,9 +44,11 @@ const styles = StyleSheet.create({
     height: 34,
     width: 34,
     borderRadius: 60,
-    position: "absolute",
-    top: 120,
-    right: 140,
+    // position: "absolute",
+    // top: 120,
+    // right: 140,
+    left: 70,
+    bottom: 30,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -69,29 +75,35 @@ const styles = StyleSheet.create({
   },
   infoTitleStyle: {
     fontSize: 13,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     color: "#A2A2A2",
+    // backgroundColor: "grey",
+    fontFamily: "HorizontalRounded",
   },
   infoDetailStyle: {
     fontSize: 18,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     paddingTop: 6,
+    fontFamily: "HorizontalRounded",
   },
   inputTextStyle: {
     color: "#000",
     fontSize: 18,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     paddingLeft: 0,
     paddingTop: 0,
     //paddingVertical: 5,
     borderBottomColor: "#D1D1D1",
     borderBottomWidth: 1,
     backgroundColor: "white",
+    fontFamily: "HorizontalRounded",
   },
   inputErrorTextStyle: {
     color: "#000",
     fontSize: 18,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily: "HorizontalRounded",
+
     paddingLeft: 0,
     paddingTop: 0,
     //paddingVertical: 5,
@@ -112,7 +124,8 @@ const styles = StyleSheet.create({
   countryStyle: {
     color: "#000",
     fontSize: 18,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily: "HorizontalRounded",
     marginTop: 20,
     marginLeft: 10,
     paddingBottom: 13,
@@ -132,27 +145,44 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   genderButtonContainerStyle: {
-    width: "100%",
-    //height: 35,
-    marginTop: 10,
-    backgroundColor: "#fff",
+    width: 130,
+    height: 35,
+    // marginTop: 10,
+    // backgroundColor: "#fff",
     borderColor: "#707070",
-    justifyContent: "flex-end",
-    //marginRight: 0,
+    borderRadius: 50,
+    borderWidth: 1,
+    // justifyContent: "flex-end",
+    marginLeft: 15,
+    fontFamily: "HorizontalRounded",
+
     //paddingLeft: 10,
-    flex: 2,
+    // backgroundColor: "yellow",
   },
   buttonTextStyle: {
     color: "#CCCCCC",
   },
   saveContainerStyle: {
     alignSelf: "center",
+    height: 30,
     //marginTop: 20,
-    backgroundColor: Colors.PRIMARY,
+    width: 180,
+    backgroundColor: "#FFF",
     marginBottom: 30,
+    borderRadius: 50,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   saveTextStyle: {
-    color: Colors.WHITE,
+    color: Colors.RED,
+    fontFamily: "HorizontalRounded",
+    fontSize: 15,
   },
 
   containerOverlay: {
@@ -184,6 +214,48 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     marginHorizontal: 20,
     textAlign: "center",
+  },
+  topTextContainer: {
+    // backgroundColor: "black",
+    marginHorizontal: 20,
+    paddingBottom: 15,
+  },
+  topText: {
+    color: Colors.RED,
+    fontSize: 40,
+    paddingBottom: 10,
+    paddingTop: 15,
+    fontFamily: "HorizontalRounded",
+  },
+  infoDetailGenderSection: {
+    // paddingTop: 10,
+    paddingBottom: 25,
+    marginHorizontal: 20,
+    borderBottomColor: "#D1D1D1",
+    // justifyContent: "space-between",
+    flexDirection: "row",
+    // backgroundColor: "blue",
+    flex: 1,
+  },
+  infoTitleGenderStyle: {
+    fontSize: 13,
+    // fontWeight: "bold",
+    color: "#A2A2A2",
+    fontFamily: "HorizontalRounded",
+    // backgroundColor: "grey",
+    paddingTop: 10,
+  },
+  touchableStyle: {
+    borderWidth: 0,
+    fontFamily: "HorizontalRounded",
+  },
+  topSubText: {
+    fontFamily: "HorizontalRounded",
+    fontSize: 15,
+  },
+  cameraIcon: {
+    width: 50,
+    height: 50,
   },
 });
 

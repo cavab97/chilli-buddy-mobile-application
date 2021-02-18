@@ -20,6 +20,7 @@ export * from "./CameraProfile";
 export * from "./CompletedUser";
 export * from "./Prizes";
 export * from "./Bookmark";
+export * from "./Favourite";
 
 export * from "./Shop/ShopList";
 export * from "./Shop/SingleMerchant";

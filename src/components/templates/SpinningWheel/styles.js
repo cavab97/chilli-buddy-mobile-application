@@ -11,13 +11,14 @@ const styles = StyleSheet.create({
   holderPng: {
     // height: "",
     // aspectRatio: 50 / 100,
-    width: 90,
-    height: "21%",
+    width: 95,
+    height: 95,
     // position: "absolute",
     // marginBottom: 1000,
     // resizeMode: "cover",
     alignSelf: "center",
-    bottom: 59,
+    bottom: 100,
+    // backgroundColor: "red",
   },
   holderContainer: {
     backgroundColor: "#D60000",
@@ -102,12 +103,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
+    fontFamily: "HorizontalRounded",
+    // backgroundColor: "red",
   },
   //category Text
   categoryText: {
     fontSize: Platform.OS === "ios" && Platform.isPad === true ? 23 : 15,
     color: "#ffffff",
-    fontFamily: "ZiTiQuanXinYiGuanHeiTi",
+    fontFamily: "HorizontalRounded",
     marginVertical: 16,
     textAlign: "center",
   },
@@ -141,7 +144,15 @@ const styles = StyleSheet.create({
   //start and spin again contain
   buttonContain: {
     // marginTop: 35,
-    paddingTop: 35,
+    paddingTop: 0,
+    marginBottom: 0,
+    // backgroundColor: "red",
+  },
+  wheelIcon: {
+    width: 50,
+    height: 50,
+    // color: "white",
+    // backgroundColor: "white",
   },
 });
 export default styles;

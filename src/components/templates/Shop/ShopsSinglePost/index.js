@@ -19,7 +19,14 @@ import {
 const shareIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/shareArrow_Icon.png");
 const noImageV2 = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/noImageBackground.jpeg");
 
-const ShopsSinglePost = ({ shopPosts, icon, dataSource, find_dimensions = () => {} }) => {
+const ShopsSinglePost = ({
+  shopPosts,
+  icon,
+  dataSource,
+  readPostLoading,
+  catchCondition,
+  find_dimensions = () => {},
+}) => {
   const ImageLoop = ({ rowData }) => {
     // console.log("rowData: ", shopPosts.created.at.seconds);
 
@@ -33,8 +40,8 @@ const ShopsSinglePost = ({ shopPosts, icon, dataSource, find_dimensions = () => 
   };
 
   const PostList = ({ data }) => {
-    console.log(data.images.length);
-    console.log(data.images[0]);
+    // console.log(data.images.length);
+    // console.log(data.images[0]);
     if (data.length !== 0) {
       return (
         <View>
@@ -57,17 +64,24 @@ const ShopsSinglePost = ({ shopPosts, icon, dataSource, find_dimensions = () => 
                         padding: 0,
                         margin: 0,
                       },
+                      // li: (firstChild = {
+                      //   marginTop: 0,
+                      // }),
                       ol: {
                         padding: 0,
-                        margin: 0,
                         // backgroundColor: "grey",
                       },
                       li: {
                         padding: 0,
-                        margin: 0,
-
                         // backgroundColor: "red",
                       },
+                      // ol: {
+                      //   padding: 0,
+                      //   marginTop: 100,
+                      //   backgroundColor: "blue",
+
+                      //   // backgroundColor: "red",
+                      // },
                     }}
 
                     // tagsStyles={ p}
@@ -103,30 +117,45 @@ const ShopsSinglePost = ({ shopPosts, icon, dataSource, find_dimensions = () => 
     }
   };
 
-  return (
-    <ScrollView style={styles.outPostContainer} showsVerticalScrollIndicator={false}>
-      <View style={styles.postsTopRow}>
-        <View style={styles.logoPositionInModal}>
-          <Image style={styles.logo} source={icon} />
-          {/* <Image source={} style={} resizeMode={"cover"} /> */}
-        </View>
-        <View style={styles.postsTopRowNameContainer}>
-          <Text style={styles.ShopPostTopTitle}>{dataSource.displayTitle}</Text>
-          <Text style={styles.ShopPostSubTitle}>
-            {/* {moment(shopPosts.created.at).format("DD/MM/YYYY")} */}
-            {/* {shopPosts.created.at.seconds == null ? "no date" : shopPosts.created.at.seconds} */}
-          </Text>
-        </View>
-        <TouchableOpacity style={styles.shareContainer}>
-          <Text style={styles.shareText}>Share</Text>
-          <Image style={styles.shareIcon} source={shareIcon} />
-        </TouchableOpacity>
+  if (readPostLoading) {
+    return (
+      <View>
+        <Text>no available</Text>
       </View>
-      <View style={styles.shopPostsContainer}>
-        <PostList data={shopPosts} />
-      </View>
-    </ScrollView>
-  );
+    );
+  } else {
+    return (
+      <ScrollView style={styles.outPostContainer} showsVerticalScrollIndicator={false}>
+        <View style={styles.postsTopRow}>
+          <View style={styles.logoPositionInModal}>
+            <Image style={styles.logo} source={icon} />
+            {/* <Image source={} style={} resizeMode={"cover"} /> */}
+          </View>
+          <View style={styles.postsTopRowNameContainer}>
+            <Text style={styles.ShopPostTopTitle}>{dataSource.displayTitle}</Text>
+            <Text style={styles.ShopPostSubTitle}>
+              {/* {moment(shopPosts.created.at).format("DD/MM/YYYY")} */}
+              {/* {console.log(readPostLoading)} */}
+
+              {/* {console.log("shopPosts.created.at")} */}
+              {/* {console.log(shopPosts.created.at == null)} */}
+              {/* {console.log(shopPosts.created.at)} */}
+              {/* {shopPosts.created.at.seconds == null} */}
+              {/* {shopPosts.created.at.seconds} */}
+              {catchCondition}
+            </Text>
+          </View>
+          <TouchableOpacity style={styles.shareContainer}>
+            <Text style={styles.shareText}>Share</Text>
+            <Image style={styles.shareIcon} source={shareIcon} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.shopPostsContainer}>
+          <PostList data={shopPosts} />
+        </View>
+      </ScrollView>
+    );
+  }
 };
 
 export { ShopsSinglePost };

@@ -84,6 +84,7 @@ export default ({
   onMerchantPressed,
   promotions,
   onOpenSpinningWheel,
+  returnGreetings,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -352,12 +353,12 @@ export default ({
               {/* Row1 for Name*/}
               <View>
                 {/* Name from firebase*/}
-                <Text style={styles.firstSectionText1}>Hi, Darren </Text>
+                <Text style={styles.firstSectionText1}>Hi, {user.displayName} </Text>
               </View>
               {/* Row2 for Good Morning*/}
               <View>
                 {/* Follow condition by Time*/}
-                <Text style={styles.firstSectionText2}>Good Morning.</Text>
+                <Text style={styles.firstSectionText2}>{returnGreetings}</Text>
               </View>
             </View>
             {/* Column 1*/}
@@ -375,8 +376,8 @@ export default ({
           </View>
 
           {/* The Second screen Row */}
-          <View style={styles.SecondSection}>
-            {/* <SearchBar
+          {/* <View style={styles.SecondSection}>
+            <SearchBar
               placeholder="Search"
               lightTheme={true}
               searchIcon={true}
@@ -384,9 +385,9 @@ export default ({
               inputContainerStyle={styles.searchBarInputStyles}
               placeholderTextColor="#f7d0d0"
               round={true}
-            /> */}
+            />
             <SearchBar placeholder="Search" />
-          </View>
+          </View> */}
 
           {/* The Third screen Row */}
           <View>
@@ -466,7 +467,7 @@ export default ({
                 renderItem={({ item, index }) => (
                   <TouchableOpacity onPress={() => onMerchantPressed(item)}>
                     <Card
-                      key={item.id}
+                      key={item.id + index}
                       style={index === 0 ? styles.firstPromoteCardStyle : styles.promoteCardStyle}
                     >
                       {item.coverPhotos.length > 0 ? (

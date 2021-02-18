@@ -184,6 +184,19 @@ class index extends Component {
     Actions.Shops({ selectedCategory: category });
     this.props.toggleSpinningWheelModal();
   }
+
+  returnGreetings() {
+    let hour = new Date().getHours();
+    // let offsetInHours = date.getTimezoneOffset() / 60;
+    console.log(hour);
+    if ((hour >= 5 && hour <= 12) || hour <= 12) {
+      return "Good Morning.";
+    } else if (hour >= 12 && hour <= 18) {
+      return "Good Afternoon.";
+    } else if (hour >= 18 && hour <= 5) {
+      return "Good Evening";
+    }
+  }
   //merchant Pressed
   onMerchantPressed(item) {
     Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
@@ -289,7 +302,6 @@ class index extends Component {
       readLoadingReward,
     } = this.props;
     const { readLoading, promo, bookmark, promotions } = this.props.promotionState;
-
     const readFail =
       readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
 
@@ -378,6 +390,7 @@ class index extends Component {
         promotions={promotions}
         onMerchantPressed={this.onMerchantPressed.bind(this)}
         onOpenSpinningWheel={this.onOpenSpinningWheel.bind(this)}
+        returnGreetings={this.returnGreetings()}
       />
     );
   }
