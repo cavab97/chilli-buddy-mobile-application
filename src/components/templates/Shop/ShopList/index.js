@@ -113,9 +113,14 @@ const ShopList = ({
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.shopContainer}>
+    <ScrollView 
+      showsVerticalScrollIndicator={false} 
+      style={styles.shopContainer}
+    >
       <View style={styles.shopTitleContainer}>
-        <Text style={styles.pageTitle}>Shops</Text>
+        <Text style={styles.pageTitle}>
+          Shops
+        </Text>
 
         <View style={styles.iconContainer}>
           <TouchableOpacity onPress={toggleFavourite}>
@@ -142,7 +147,9 @@ const ShopList = ({
       </View>
 
       <View style={styles.categoryTitleContainer}>
-        <Text style={styles.categoryTitle}>Category</Text>
+        <Text style={styles.categoryTitle}>
+          Category
+        </Text>
         <CategoryList
           categories={categories}
           onCategoryChange={onCategoryChange}
