@@ -29,6 +29,10 @@ const ImageSwiper = ({
       showsButtons={showsButtons}
       nextButton={nextButton}
       prevButton={prevButton}
+      showsPagination={true}
+      // containerStyle={styles.container}
+      // removeClippedSubviews={false}
+      // showsHorizontalScrollIndicator={true}
       // style={styles.wrapper}
     >
       {condition ? (

@@ -392,7 +392,7 @@ export default ({
           </View> */}
 
           {/* The Third screen Row */}
-          <View>
+          <View style={styles.thirdSection}>
             {/* The Slider*/}
             {/* ImageSwiper */}
 
@@ -404,7 +404,7 @@ export default ({
                   style={styles.subContainerOutsideShadow}
                   backgroundColor="#d9d9d9"
                 >
-                  <Rect x="0" y="0" rx="0" ry="0" width="100%" height="100%" />
+                  <Rect x="0" y="0" rx="50" ry="50" width="100%" height="100%" />
                 </ContentLoader>
               ) : (
                 <ImageSwiper
@@ -415,6 +415,8 @@ export default ({
                   noImageSlider={noImageHeaderSlider}
                   condition={slider.length > 0}
                   onPressImage={onPressImage}
+                  x="0"
+                  y="0"
                 />
               )}
             </View>
