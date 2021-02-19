@@ -44,6 +44,7 @@ import SingleVoucher from "../screens/subscreen/Voucher/SingleVoucher";
 import CheckIn from "../screens/subscreen/CheckIn";
 
 import LoginTACScreen from "../screens/auth/TAC";
+import Favourite from "../screens/subscreen/Favourite";
 
 import ShopsSinglePost from "../screens/main/Shops/ShopsSinglePost";
 import styles from "./styles";
@@ -75,12 +76,12 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       </Stack>
 
       <Stack key="Promo" back>
-        <Scene 
-          key="Promo" 
-          component={Promo} 
-          //title="Promo" 
+        <Scene
+          key="Promo"
+          component={Promo}
+          //title="Promo"
           hideNavBar={true}
-          titleStyle={styles.title} 
+          titleStyle={styles.title}
           navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />
       </Stack>
@@ -162,9 +163,9 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
-      <Stack key="EditProfile" back>
+      {/* <Stack key="EditProfile" back>
         <Scene key="EditProfile" component={userForm} title="Profile" titleStyle={styles.title} />
-      </Stack>
+      </Stack> */}
       <Stack key="CameraProfile" back>
         <Scene
           key="CameraProfile"
@@ -263,14 +264,36 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           titleStyle={styles.title}
         />
       </Stack>
+      {/* <Stack key="EditProfile" back>
+        <Scene
+          key="EditProfile"
+          component={userForm}
+          // title="Edit Profile"
+          titleStyle={styles.title}
+          // hideNavBar={true}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+        />
+      </Stack> */}
+
       <Stack key="EditProfile" back>
         <Scene
           key="EditProfile"
           component={userForm}
-          title="Edit Profile"
+          title=" "
           titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
         />
       </Stack>
+      {/* <Stack key="Promo" back>
+        <Scene
+          key="Promo"
+          component={Promo}
+          //title="Promo"
+          hideNavBar={true}
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+        />
+      </Stack> */}
       <Stack key="RedeemPage" back>
         <Scene key="RedeemPage" component={RedeemPage} title="Redeem" titleStyle={styles.title} />
       </Stack>
@@ -285,6 +308,17 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
       <Stack key="Bookmark" back>
         <Scene key="Bookmark" component={Bookmark} title="Bookmark" titleStyle={styles.title} />
       </Stack>
+      <Stack key="Favourite" back>
+        <Scene
+          key="Favourite"
+          component={Favourite}
+          title="Favourite"
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          hideNavBar={true}
+        />
+      </Stack>
+
       <Stack key="CheckIn" back>
         <Scene
           key="CheckIn"

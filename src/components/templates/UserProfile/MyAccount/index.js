@@ -26,7 +26,7 @@ export class MyAccount extends Component {
   };
 
   onBookmarkPress() {
-    Actions.Bookmark();
+    Actions.Favourite();
   }
 
   onHelpCenterPress() {
@@ -49,8 +49,8 @@ export class MyAccount extends Component {
         <View style={styles.accountMoreContainer}>
           {/* <Text style={styles.moreTextStyle}>More</Text> */}
         </View>
-        <View>{this.settingListing("Bookmark", this.onBookmarkPress.bind(this), true)}</View>
-        <View>{this.settingListing("Voucher", this.onVoucherPress.bind(this), true)}</View>
+        <View>{this.settingListing("Favourite", this.onBookmarkPress.bind(this), true)}</View>
+        {/* <View>{this.settingListing("Voucher", this.onVoucherPress.bind(this), true)}</View> */}
         <View>{this.settingListing("Help Center", this.onHelpCenterPress.bind(this), true)}</View>
         {/* <View>
                     {this.settingListing(

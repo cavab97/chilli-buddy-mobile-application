@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import { Dimensions } from "react-native";
+import moment from "moment";
 
 import {
   listenToRecord as listenFromDatabase,
@@ -25,15 +26,15 @@ class index extends Component {
     super(props);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const postId = this.props.postId;
-    console.log("shopId");
+    // console.log("shopId");
 
-    console.log(postId);
+    // console.log(postId);
     // this.props.readPromotion(shopId);
     // this.props.listenFromDatabase({ shopId });
     // this.props.readShopPost(shopId);
-    this.props.readSinglePost(postId);
+    await this.props.readSinglePost(postId);
     this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
         if (permissions.location.permissions.location.foregroundGranted === undefined) {
@@ -53,6 +54,34 @@ class index extends Component {
   componentWillUnmount() {
     // this.props.removeListenerFromDatabase();
   }
+  catchCondition() {
+    const { post } = this.props;
+    // console.log(post.created.at.seconds);
+    let countDownOneHour;
+    let returnTime;
+    if (post.created.at != null) {
+      countDownOneHour = post.created.at.seconds;
+    } else {
+      countDownOneHour = 0;
+    }
+    let createIsoDate = new Date(countDownOneHour * 1000).toISOString();
+
+    let day = moment(createIsoDate).diff(moment(), "days");
+    let hour = moment(createIsoDate).diff(moment(), "hours");
+    let minutes = moment(createIsoDate).diff(moment(), "minutes");
+    let seconds = moment(createIsoDate).diff(moment(), "seconds");
+    if (-seconds < 60) {
+      returnTime = -seconds + " second ago";
+    } else if (-minutes < 60) {
+      returnTime = -minutes + " minute ago";
+    } else if (-hour < 24) {
+      returnTime = -hour + " hour ago";
+    } else {
+      returnTime = -day + " day ago";
+    }
+
+    return returnTime;
+  }
 
   onPostPressed() {
     // const location = this.props.promotion.promotion.shop.l;
@@ -68,8 +97,6 @@ class index extends Component {
     const { shop, readLoading } = this.props.shopState;
     const { post, readPostLoading, promotions, readPromotionLoading } = this.props;
     // console.log("posts.id");
-
-    // console.log(post);
 
     let icon = [];
     let postImage = [];
@@ -97,6 +124,8 @@ class index extends Component {
     // } else {
     return (
       <ShopsSinglePost
+        readPostLoading={readPostLoading}
+        catchCondition={this.catchCondition()}
         shopPosts={post}
         icon={icon}
         dataSource={shop}

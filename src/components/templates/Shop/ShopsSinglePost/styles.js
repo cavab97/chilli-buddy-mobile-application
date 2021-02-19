@@ -14,7 +14,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     top: 20,
     alignItems: "center",
-    marginHorizontal: 10,
+    alignSelf: "center",
+    // marginHorizontal: 10,
+    // backgroundColor: "yellow",
+    width: "90%",
   },
   logoPositionInModal: {
     width: 50,
@@ -47,7 +50,8 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
   postsTopRowNameContainer: {
-    marginRight: 40,
+    marginRight: 10,
+    // backgroundColor: "red",
   },
   ShopPostTopTitle: {
     fontSize: 17,
@@ -68,10 +72,15 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     flexDirection: "row",
     paddingHorizontal: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 0 },
+    shadowColor: Colors.GREY,
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
     shadowOpacity: 0.4,
-    shadowRadius: 2.22,
+    shadowRadius: 1.5,
+    backgroundColor: Colors.WHITE,
+    elevation: 2,
     padding: 2,
   },
   shareText: {

@@ -3,7 +3,7 @@ import { StyleSheet, Platform } from "react-native";
 
 const styles = StyleSheet.create({
   scroll: {
-    backgroundColor: "#FFFFFF",
+    // backgroundColor: "yellow",
     height: "100%",
   },
   listItemContainer: {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     //marginRight: 12,
-    marginTop: 80,
+    marginTop: 15,
     paddingLeft: 15,
   },
   userTitle: {
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     color: "#000",
     marginRight: 8,
     marginTop: 15,
+    // backgroundColor: "red",
   },
   userDesc: {
     fontSize: 14,
@@ -89,16 +90,17 @@ const styles = StyleSheet.create({
   },
   textContainer1: {
     flexDirection: "row",
-    marginTop: 80,
+    marginTop: 15,
     paddingLeft: 15,
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "flex-start",
+    // backgroundColor: "blue",
   },
   textContainer2: {
     flexDirection: "row",
-    paddingLeft: 18,
+    paddingLeft: 15,
     alignItems: "flex-start",
-    marginTop: 10,
+    marginTop: 2,
     // backgroundColor: "grey",
   },
   textContainer3: {
@@ -107,9 +109,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     //justifyContent: "center",
     alignItems: "flex-start",
+    // backgroundColor: "yellow",
   },
   userInfomationIcon: {
-    textAlign: "center",
+    // textAlign: "center",
     textAlignVertical: "center",
     alignSelf: "center",
     justifyContent: "center",
@@ -117,11 +120,14 @@ const styles = StyleSheet.create({
     alignContent: "center",
     borderRadius: 5,
     borderColor: "#F55C22",
-    borderWidth: 2,
+    // borderWidth: 2,
     padding: 2,
-    position: "absolute",
-    top: 6,
+    // position: "absolute",
+    top: 10,
     left: -12,
+    width: 15,
+    height: 15,
+    // backgroundColor: "black",
   },
   userEditIcon: {
     //textAlign: "center",
@@ -130,12 +136,14 @@ const styles = StyleSheet.create({
     //justifyContent: "center",
     //alignItems: "center",
     //alignContent: "center",
-    borderRadius: 5,
-    borderColor: "#919191",
-    borderWidth: 2,
+    // borderRadius: 5,
+    // borderColor: "#919191",
+    // borderWidth: 2,
     //marginTop: 16,
     opacity: 0.6,
     position: "absolute",
+    width: 15,
+    height: 15,
   },
   multitabContainer: {
     marginTop: 60,
@@ -150,7 +158,7 @@ const styles = StyleSheet.create({
   },
   pencilIconTouchableOpacityStyle: {
     padding: 12,
-    top: 18,
+    top: 22,
   },
 
   //Notification Style
@@ -316,15 +324,15 @@ const styles = StyleSheet.create({
     rankingContainer: {
         flex:1
     }, */
-    image: {
-      flex: 1,
-      borderRadius: 100,
-      width: "100%",
-  
-      resizeMode: "cover",
-      //width: "100%",
-      // height: "100%",
-    },
+  image: {
+    flex: 1,
+    borderRadius: 100,
+    width: "100%",
+
+    resizeMode: "cover",
+    //width: "100%",
+    // height: "100%",
+  },
   profileImageStyle: {
     backgroundColor: Colors.GRAY_DARK,
     height: 100,

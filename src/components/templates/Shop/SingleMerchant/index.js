@@ -13,10 +13,10 @@ import {
   TouchableOpacity,
   Button,
   Overlay,
-  Modal,
   ImageBackground,
 } from "@components/atoms";
 import HTML from "react-native-render-html";
+import Modal from "react-native-modal";
 
 import { Card } from "@components/molecules";
 
@@ -162,10 +162,11 @@ const SingleMerchant = ({
                               }}
                             />
                           )}
-                          <Text style={styles.daysText}> {moment(item.created.at).fromNow()}</Text>
+                          {/* {console.log(item.created)} */}
                         </ImageBackground>
                       </TouchableOpacity>
                     </View>
+                    <Text style={styles.daysText}> {moment(item.created.at).fromNow()}</Text>
                   </ScrollView>
                 )}
               />
@@ -237,18 +238,23 @@ const SingleMerchant = ({
       <View style={logoPosition}>
         <Image style={logo} source={icon} />
       </View>
-      <Overlay
+      <Modal
         // onBackdropPress={() => missionPress(null)}
         isVisible={isOpenPost}
-        width="auto"
+        width="100%"
         height="100%"
-        animationType="slide"
-        overlayStyle={styles.modalContainer}
-        presentationStyle="pageSheet"
+        // animationType="slide"
+        onSwipeComplete={(e) => {
+          onPostTitleClick();
+        }}
+        style={styles.modalContainer}
+        // presentationStyle="pageSheet"
+        swipeDirection="down"
+        propagateSwipe
       >
         <Text style={styles.postText}>Whiteboard</Text>
 
-        <ScrollView style={styles.outPostContainer} showsVerticalScrollIndicator={false}>
+        <ScrollView style={styles.outPostContainer}>
           {/* <View style={styles.postsTopRow}>
             <View style={styles.logoPositionInModal}>
               <Image style={logo} source={icon} />
@@ -290,7 +296,7 @@ const SingleMerchant = ({
             </TouchableOpacity>
           </View> */}
         </ScrollView>
-      </Overlay>
+      </Modal>
       {/* <Collapsible
         isOpen={isOpenPost}
         onPress={onPostTitleClick}
