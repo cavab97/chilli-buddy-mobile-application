@@ -53,6 +53,7 @@ const SingleMerchant = ({
   isOpenPost,
   renderOperatingHour,
   onPostTitleClick,
+  onFavouriteClick,
   onPromoteClick,
   setSwiperRef,
   onClickToSwip,
@@ -340,7 +341,7 @@ const SingleMerchant = ({
               }}
             >
               <TouchableOpacity //uncomment social media icon
-                onPress={onPostTitleClick}
+                onPress={onFavouriteClick}
               >
                 <Image style={{ width: 27, height: 25 }} source={fillLessLove} />
               </TouchableOpacity>

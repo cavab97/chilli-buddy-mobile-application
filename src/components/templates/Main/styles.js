@@ -381,6 +381,7 @@ const styles = StyleSheet.create({
   adsImageStyle: {
     // width: "100%",
     // height: "100%",
+    backgroundColor: "#d9d9d9",
 
     minWidth: Platform.OS === "ios" && Platform.isPad === true ? 460 : 300, //windowWidth - 150,
     //maxWidth: (windowWidth * 85) / 100, //windowWidth - 100,

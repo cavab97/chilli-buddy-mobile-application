@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     // justifyContent: "flex-end",
     marginLeft: 15,
-    fontFamily: "HorizontalRounded",
+    // fontFamily: "HorizontalRounded",
 
     //paddingLeft: 10,
     // backgroundColor: "yellow",
@@ -247,7 +247,6 @@ const styles = StyleSheet.create({
   },
   touchableStyle: {
     borderWidth: 0,
-    fontFamily: "HorizontalRounded",
   },
   topSubText: {
     fontFamily: "HorizontalRounded",

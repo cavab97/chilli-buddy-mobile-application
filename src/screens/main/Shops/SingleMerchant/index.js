@@ -27,6 +27,12 @@ import styles from "./styles";
 import { Actions } from "react-native-router-flux";
 import { getDistance } from "geolib";
 import { Platform } from "react-native";
+import {
+  update,
+  submitToBackend,
+  readFromDatabase,
+  updateIsFavourite,
+} from "@redux/favourite/action";
 class index extends Component {
   constructor(props) {
     super(props);
@@ -178,6 +184,36 @@ class index extends Component {
     });
   };
 
+  lookingForFavourite({ shopId } = null) {
+    const favourites = this.props.favouriteState.favourites;
+    console.log(favourites);
+
+    let favouriteId = null;
+
+    favourites.forEach((favourite) => {
+      if (favourite.shopIds[0] === shopId) {
+        favouriteId = favourite.id;
+      }
+    });
+    return favouriteId;
+  }
+  onFavouriteClick = async (item) => {
+    const shopId = item.id;
+    const favouriteId = this.lookingForFavourite({ shopId });
+    const isFavourite = !item.isFavourite;
+
+    this.props.onFavouriteClick(shopId);
+    this.props.updateIsFavourite(shopId);
+
+    if (favouriteId === null) {
+      const data = { shopId, isFavourite };
+      await this.props.submitToBackend(data, "create");
+    } else {
+      const data = { favouriteId, isFavourite };
+      await this.props.submitToBackend(data, "update");
+    }
+  };
+
   onClickToSwip = (value) => {
     if (value === "next") this.swiperRef.snapToNext();
 
@@ -242,6 +278,7 @@ class index extends Component {
           categoryName={this.props.categoryName}
           calculatedDistance={this.state.calculatedDistance}
           onPostPress={this.onPostPress.bind(this)}
+          onFavouriteClick={this.onFavouriteClick.bind(this)}
           // alterData={this.alterData.bind(this)}
         />
       );
@@ -257,6 +294,8 @@ const mapStateToProps = (state) => {
   //const promotions = state.Promotion.promo;
   const promotionState = state.Promotion;
   const readPromotionLoading = state.Promotion.readLoading;
+  const favouriteState = state.Favourite;
+
   return {
     shopState,
     posts,
@@ -274,4 +313,5 @@ export default connect(mapStateToProps, {
   readPromotion,
   listenPromotion,
   verifyPermission,
+  readFromDatabase,
 })(index);
