@@ -21,15 +21,8 @@ import {
   readFromDatabase,
   updateIsBookmark,
 } from "@redux/bookmark/action";
-import styles from "./styles";
-
-import { Text, View } from "@components/atoms";
-
-import { Card, CardSection } from "@components/molecules";
 
 import { PromoList } from "@components/templates";
-
-import Icon from "react-native-vector-icons/FontAwesome";
 
 const RADIUS = 50;
 
