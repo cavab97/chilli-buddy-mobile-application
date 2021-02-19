@@ -133,7 +133,6 @@ class index extends Component {
   filteredDatasource() {
     const advertisements = this.props.advertisements;
     const posts = this.props.posts;
-    console.log(posts[0].description);
     // console.log(posts[0].d.shop.id);
     let dataSourceAds = [];
     //Map image URL and Shop ID to array
