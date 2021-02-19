@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
   },
   editProfileTextContainer: {
-    marginTop: 100,
+    marginTop: 50,
     padding: 3,
     borderRadius: 5,
     backgroundColor: "#D60000",

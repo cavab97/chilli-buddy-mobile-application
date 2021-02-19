@@ -90,7 +90,7 @@ export default ({
   promotion,
   onCarouselPressed,
   onPromoPressed,
-  onPromoPressedClose
+  onPromoPressedClose,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -113,7 +113,7 @@ export default ({
   const AdvertisementPopUp = (url) => {
     return type === "image" ? (
       <Modal
-        animationType="fade"
+        // animationType="fade"
         transparent={true}
         visible={isAdvertisementModelShow}
         onBackdropPress={onCloseAdvertisementModal}
@@ -426,8 +426,6 @@ export default ({
                   noImageSlider={noImageHeaderSlider}
                   condition={slider.length > 0}
                   onPressImage={onPressImage}
-                  x="0"
-                  y="0"
                 />
               )}
             </View>

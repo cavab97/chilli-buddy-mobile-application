@@ -51,67 +51,55 @@ const SingleMerchantPromo = ({
 
   return (
     <Modal transparent={true} visible={promotionModal} onBackdropPress={onClose}>
-      {readDataStatus
-        ? (console.log("treiiger"),
-          (
-            <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="white">
-              <Rect
-                x="10"
-                y="20"
-                rx="10"
-                ry="10"
-                width={windowWidth - 20}
-                height={windowHeight - 110}
-              />
-            </ContentLoader>
-          ))
-        : (console.log("helllllll"),
-          (
-            <View style={modelBackground}>
-              <View style={{ width: width }}>
-                <Carousel
-                  ref={setSwiperRef}
-                  data={dataSource.images}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <TouchableOpacity onPress={onCarouselPressed}>
-                        {dataSource.images.length > 0 ? (
-                          <Image
-                            source={{ uri: item }}
-                            style={adsImageStyle}
-                            resizeMode={"cover"}
-                          />
-                        ) : (
-                          <Image
-                            source={noImage}
-                            style={adsImageStyle}
-                            //resizeMode={"cover"}
-                          />
-                        )}
-                      </TouchableOpacity>
-                    );
-                  }}
-                  loop={true}
-                  sliderWidth={width}
-                  itemWidth={width}
-                  contentContainerCustomStyle={{ alignItems: "center" }}
-                />
-                <TouchableOpacity
-                  style={closeButton}
-                  onPress={onPromoPressedClose}
-                  activeOpacity={1}
-                >
-                  <Image source={closeIcon} style={cross} />
-                </TouchableOpacity>
-                <View style={dateContainer}>
-                  <Text style={distanceIndicatorTitle}>
-                    Valid from {startDate} to {endDate}
-                  </Text>
-                </View>
-                <Text style={caption}>slide for more</Text>
-              </View>
+      {readDataStatus ? (
+        <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="white">
+          <Rect
+            x="10"
+            y="20"
+            rx="10"
+            ry="10"
+            width={windowWidth - 20}
+            height={windowHeight - 110}
+          />
+        </ContentLoader>
+      ) : (
+        <View style={modelBackground}>
+          <View style={{ width: width }}>
+            <Carousel
+              ref={setSwiperRef}
+              data={dataSource.images}
+              renderItem={({ item, index }) => {
+                return (
+                  <TouchableOpacity onPress={onCarouselPressed}>
+                    {dataSource.images.length > 0 ? (
+                      <Image source={{ uri: item }} style={adsImageStyle} resizeMode={"cover"} />
+                    ) : (
+                      <Image
+                        source={noImage}
+                        style={adsImageStyle}
+                        //resizeMode={"cover"}
+                      />
+                    )}
+                  </TouchableOpacity>
+                );
+              }}
+              loop={true}
+              sliderWidth={width}
+              itemWidth={width}
+              contentContainerCustomStyle={{ alignItems: "center" }}
+            />
+            <TouchableOpacity style={closeButton} onPress={onPromoPressedClose} activeOpacity={1}>
+              <Image source={closeIcon} style={cross} />
+            </TouchableOpacity>
+            <View style={dateContainer}>
+              <Text style={distanceIndicatorTitle}>
+                Valid from {startDate} to {endDate}
+              </Text>
             </View>
-          ))}
+            <Text style={caption}>slide for more</Text>
+          </View>
+        </View>
+      )}
     </Modal>
   );
 };
