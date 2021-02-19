@@ -6,12 +6,12 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
     // flexDirection: "column",
     // justifyContent: "space-between",
-    // alignItems: "center",
+    alignItems: "center",
     // resizeMode: "cover",
     // height: 100,
     // width: 200,
     // marginVertical: 100,
-    resizeMode: "contain",
+    // resizeMode: "contain",
   },
   restaurant: {
     width: 200,
@@ -27,6 +27,11 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     resizeMode: "contain",
+  },
+  image: {
+    resizeMode: "contain",
+    width: "100%",
+    height: "100%",
   },
 });
 

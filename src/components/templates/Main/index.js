@@ -398,8 +398,13 @@ export default ({
 
             <View style={styles.subContainerOutside}>
               {readLoadingHeaderImages ? (
-                <ContentLoader speed={1} height={150} backgroundColor="#d9d9d9">
-                  <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
+                <ContentLoader
+                  speed={1}
+                  height={"100%"}
+                  style={styles.subContainerOutsideShadow}
+                  backgroundColor="#d9d9d9"
+                >
+                  <Rect x="0" y="0" rx="0" ry="0" width="100%" height="100%" />
                 </ContentLoader>
               ) : (
                 <ImageSwiper
