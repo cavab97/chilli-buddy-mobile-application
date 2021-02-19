@@ -117,7 +117,8 @@ const styles = StyleSheet.create({
     color: 'white', 
     paddingTop: 15, 
     alignSelf: 'center',
-    fontFamily: 'HorizontalRounded'
+    fontFamily: 'HorizontalRounded',
+    opacity: 0.6,
   },
   dateContainer: {
     backgroundColor: 'white', 
