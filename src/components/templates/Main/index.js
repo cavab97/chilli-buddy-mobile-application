@@ -9,6 +9,7 @@ import { Video } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ImageInfo, SearchBar } from "../../molecules";
+import { SingleMerchantPromo } from "../../templates/Promo/SingleMerchantPromo";
 
 //import WheelOfFortune from "react-native-wheel-of-fortune";
 
@@ -85,12 +86,15 @@ export default ({
   promotions,
   onOpenSpinningWheel,
   returnGreetings,
+  promotionModal,
+  promotion,
+  onCarouselPressed,
+  onPromoPressed,
+  onPromoPressedClose
 }) => {
   const DATA = [];
   const DATA2 = [];
-  // console.log("slider");
 
-  // console.log(slider);
   const getItem = (data, index) => {
     return {
       key: "routeTicketsOrRoutesLoading" + index,
@@ -349,6 +353,13 @@ export default ({
           )}
           <View style={{ height: Constants.statusBarHeight }} />
 
+          <SingleMerchantPromo
+            promotionModal={promotionModal}
+            dataSource={promotion}
+            onCarouselPressed={onCarouselPressed}
+            onPromoPressedClose={onPromoPressedClose}
+          />
+
           <View style={styles.firstSection}>
             {/* Column 1*/}
             <View style={styles.firstSectionFirstColumn}>
@@ -467,7 +478,7 @@ export default ({
                 data={promoSource}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
-                  <TouchableOpacity onPress={() => onMerchantPressed(item)}>
+                  <TouchableOpacity onPress={() => onPromoPressed(item)}>
                     <Card
                       key={item.id + index}
                       style={index === 0 ? styles.firstPromoteCardStyle : styles.promoteCardStyle}

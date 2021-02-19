@@ -1,20 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import MainTemplete from "@components/templates/Main";
+import MainTemplate from "@components/templates/Main";
 import { Actions } from "react-native-router-flux";
 import { readAllFromDatabase as readAllRoute } from "@redux/route/action";
 import { readFromDatabase as readAdvertisements, toggleModal } from "@redux/advertisement/action";
 import { readInfo as readSettingInfo, toggleSpinningWheelModal } from "@redux/settings/action";
 import { verifyPermission, loadShops } from "@redux/shops/action";
 import { readObjects as readShopPostMain } from "@redux/shopPostMain/action";
+import * as Location from "expo-location";
+import { getDistance } from "geolib";
 
 import {
   listenFromDatabase as listenToRouteTickets,
   removeListenerFromDatabase as removeListenerFromRouteTickets,
 } from "@redux/routeTicket/action";
 
-import * as Location from "expo-location";
-import { loadShopsPromo } from "@redux/promo/action";
+import { 
+  loadShopsPromo,
+  togglePromotionModal,
+  listenToRecord,
+} from "@redux/promo/action";
 
 import clone from "clone";
 import { lessThan } from "react-native-reanimated";
@@ -101,6 +106,12 @@ class index extends Component {
   //open spinning wheel screen
   onOpenSpinningWheel() {
     Actions.SpinningWheel();
+  }
+
+  onPromoPressed(item) {
+    //Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
+    this.props.listenToRecord({ promoId: item.id })
+    this.props.togglePromotionModal()
   }
 
   // View shop from clicking image swiper advertisements
@@ -244,6 +255,36 @@ class index extends Component {
     Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
   }
 
+  onPromoPressedClose() {
+    this.props.togglePromotionModal()
+  }
+
+  onCarouselPressed() {
+    const location = this.props.promotionState.promotion.shop.l;
+    this.calculateDistance(location);
+    this.props.togglePromotionModal();
+  }
+
+  calculateDistance = async (destinationLocation) => {
+    const promo = this.props.promotionState;
+    var distance;
+    let location = await Location.getCurrentPositionAsync({});
+    distance =
+      getDistance(
+        { latitude: destinationLocation.U, longitude: destinationLocation.k },
+        {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }
+      ) / 1000;
+
+    Actions.SingleMerchant({
+      shopId: promo.promotion.shop.id,
+      distance: distance,
+      calculatedDistance: distance,
+    });
+  };
+
   // //Pass category
   // passCategory() {
   //   let dataSource2 = [];
@@ -345,7 +386,16 @@ class index extends Component {
       readLoadingNotification,
       readLoadingReward,
     } = this.props;
-    const { readLoading, promo, bookmark, promotions } = this.props.promotionState;
+
+    const { 
+      readLoading, 
+      promo, 
+      bookmark, 
+      promotions, 
+      promotionModalVisible,
+      promotion
+    } = this.props.promotionState;
+    
     const readFail =
       readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
 
@@ -385,13 +435,13 @@ class index extends Component {
     const luxuryImage = require("../../../assets/gogogain/Mascot-L.png");
 
     return (
-      <MainTemplete
+      <MainTemplate
         readFail={readFail}
         slider={this.filteredDatasource()}
         filteredAdPic={filteredAdPic}
         randomAdPic={randomAdPic}
         getShopId={getShopId}
-        dataSource={dataSource}
+        promotion={promotion}
         // dataSource2={this.passCategory()}
         sectionTitle1="Category"
         //routeTickets={routeTickets}
@@ -432,10 +482,15 @@ class index extends Component {
         onProfilePressed={this.onProfilePressed.bind(this)}
         user={user}
         promoSource={promo}
+        dataSource
         promotions={promotions}
+        promotionModal={promotionModalVisible}
         onMerchantPressed={this.onMerchantPressed.bind(this)}
         onOpenSpinningWheel={this.onOpenSpinningWheel.bind(this)}
         returnGreetings={this.returnGreetings()}
+        onPromoPressed={this.onPromoPressed.bind(this)}
+        onPromoPressedClose={this.onPromoPressedClose.bind(this)}
+        onCarouselPressed={this.onCarouselPressed.bind(this)}
       />
     );
   }
@@ -501,4 +556,6 @@ export default connect(mapStateToProps, {
   toggleSpinningWheelModal,
   loadShopsPromo,
   readShopPostMain,
+  togglePromotionModal,
+  listenToRecord,
 })(index);
