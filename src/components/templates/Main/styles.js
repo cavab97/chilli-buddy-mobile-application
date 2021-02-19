@@ -43,6 +43,20 @@ const styles = StyleSheet.create({
 
     elevation: 10,
   },
+  subContainerOutsideShadow: {
+    // marginVertical: 25,
+
+    borderRadius: 50,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 0,
+    // },
+    // shadowOpacity: 0.5,
+    // shadowRadius: 1,
+
+    // elevation: 10,
+  },
   HeaderSlider: {
     // resizeMode: "cover",
     // borderRadius: 30,

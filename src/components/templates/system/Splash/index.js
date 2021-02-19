@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageBackground, Image } from "../../../atoms";
+import { ImageBackground, Image, View } from "../../../atoms";
 import styles from "./styles";
 const restaurant = require("../../../../assets/images/RestaurantAndMarks_Icon.png");
 const dot = require("../../../../assets/images/Dot_Icon.png");
@@ -15,7 +15,9 @@ const Splash = ({ source }) => {
     //   <Image source={restaurant} style={styles.restaurant} />
     //   <Image source={dot} style={styles.dot} />
     // </ImageBackground>
-    <ImageBackground source={SplashNew} style={styles.container}></ImageBackground>
+    <View style={styles.container}>
+      <Image source={SplashNew} style={styles.image}></Image>
+    </View>
   );
 };
 

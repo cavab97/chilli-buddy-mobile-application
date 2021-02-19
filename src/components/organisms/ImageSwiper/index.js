@@ -29,6 +29,7 @@ const ImageSwiper = ({
       showsButtons={showsButtons}
       nextButton={nextButton}
       prevButton={prevButton}
+      // style={styles.wrapper}
     >
       {condition ? (
         slider.map((data, index) => {
@@ -52,11 +53,7 @@ const ImageSwiper = ({
         })
       ) : (
         <View style={style.subContainer1}>
-          <Image 
-            source={noImageSlider} 
-            style={style.imageTopStyle} 
-            resizeMode={resizeMode} 
-          />
+          <Image source={noImageSlider} style={style.imageTopStyle} resizeMode={resizeMode} />
         </View>
       )}
     </Swiper>
