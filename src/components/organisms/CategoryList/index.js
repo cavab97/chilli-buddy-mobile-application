@@ -30,6 +30,36 @@ function Category ({
         case "Cafe 咖啡馆":
             icon = require("../../../assets/categories/cafe.png")
             break;
+        case "China 中国菜":
+            icon = require("../../../assets/categories/china.png")
+            break;
+        case "Japanese 日本餐":
+            icon = require("../../../assets/categories/japanese.png")
+            break;
+        case "Korean 韩国餐":
+            icon = require("../../../assets/categories/korean.png")
+            break;
+        case "Thai 泰国餐":
+            icon = require("../../../assets/categories/thai.png")
+            break;
+        case "Bistro 小酒馆":
+            icon = require("../../../assets/categories/bistro.png")
+            break;
+        case "Steamboat 火锅":
+            icon = require("../../../assets/categories/steamboat.png")
+            break;
+        case "Local Cuisine 本地美食":
+            icon = require("../../../assets/categories/local.png")
+            break;
+        case "Beverage 饮料":
+            icon = require("../../../assets/categories/beverage.png")
+            break;
+        case "Food Truck 餐车":
+            icon = require("../../../assets/categories/foodTruck.png")
+            break;
+        case "Special Cuisine 特色美食":
+            icon = require("../../../assets/categories/specialCuisine.png")
+            break;
         default:
             icon = require("../../../assets/chilliBuddyCheckin/noMerchant.png")
             break;
