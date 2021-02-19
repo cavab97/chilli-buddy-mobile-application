@@ -10,13 +10,11 @@ import {
   Text,
 } from "@components/atoms";
 
-import { CardSection } from "@components/molecules";
+import { NotFoundFooter, CardSection } from "@components/molecules";
 
 import { CustomNavBar } from "@components/organisms/CustomNavBar";
 import { SwipeableModal } from "@components/organisms/SwipeableModal";
 import { SingleMerchantPromo } from "../SingleMerchantPromo";
-
-import moment from "moment";
 
 function Item({ 
   picture = [], 
@@ -122,7 +120,8 @@ const PromoList = ({
   onTagPressed,
   promotion,
   promotionModal,
-  onPromoPressedClose
+  onPromoPressedClose,
+  onSwipeMove
 }) => {
   
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
@@ -144,7 +143,8 @@ const PromoList = ({
         modalTitle="Category"
         type='category'
         full={false}
-        onSwipeFullScreen={onSwipeFullScreen}
+        onSwipeComplete={onSwipeFullScreen}
+        onSwipeMove={onSwipeMove}
         onBackDropPressed={onCategoryPressed}
       />
 
@@ -166,7 +166,9 @@ const PromoList = ({
       />
 
       <View style={styles.promoTitleContainer}>
-        <Text style={styles.pageTitle}>Promotions</Text>
+        <Text style={styles.pageTitle}>
+          Promotions
+        </Text>
 
         <View style={styles.iconContainer}>
           <TouchableOpacity onPress={toggleBookmark}>
@@ -198,7 +200,7 @@ const PromoList = ({
         keyExtractor={(item) => item.id}
         onRefresh={handleRefresh}
         refreshing={false}
-        //ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
+        ListFooterComponent={dataSource.length === 0 && <NotFoundFooter message="No promotion found"/>}
         style={styles.flatList}
       />
     </View>

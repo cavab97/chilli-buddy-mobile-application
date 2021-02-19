@@ -153,8 +153,9 @@ class index extends Component {
     this.handleRefresh();
   };
   
-  onSwipeFullScreen = () => {
-    this.props.toggleSwipeable()
+  onSwipeFullScreen = (swipeDirection) => {
+    console.log('swipping full screen')
+    console.log(swipeDirection)
   }
 
   onCategoryPressed = () => {
@@ -194,6 +195,11 @@ class index extends Component {
       await this.props.submitToBackend(data, "update");
     }
   };
+
+  onSwipeMove = (percentage) => {
+    console.log('on swipe')
+    console.log(percentage)
+  }
 
   onCarouselPressed() {
     const location = this.props.promotionState.promotion.shop.l;
@@ -264,6 +270,7 @@ class index extends Component {
         onTagPressed={this.onTagPressed.bind(this)}
         onSwipeFullScreen={this.onSwipeFullScreen.bind(this)}
         onPromoPressedClose={this.onPromoPressedClose.bind(this)}
+        onSwipeMove={this.onSwipeMove.bind(this)}
       />
     );
   }
