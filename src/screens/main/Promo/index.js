@@ -154,8 +154,7 @@ class index extends Component {
   };
   
   onSwipeFullScreen = (swipeDirection) => {
-    console.log('swipping full screen')
-    console.log(swipeDirection)
+    this.props.toggleTagModal()
   }
 
   onCategoryPressed = () => {

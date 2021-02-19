@@ -79,13 +79,12 @@ const SwipeableModal = ({
             isVisible={modalVisible}
             style={modalContainer}
             onSwipeMove={swipeFullScreen}
-            swipeDirection={['up', 'down']}
+            swipeDirection={['down']}
             backdropOpacity={0.45}
             onBackdropPress={onBackDropPressed}
             onSwipeComplete={onSwipeComplete}
-            onSwipeMove={onSwipeMove}
         >
-            <View style={full ? contentFull : contentHalf}>
+            <View style={contentFull }>
                 <View style={swipeableIndicator} />
                 <View style={contentContainer}>
                     <Text style={title}>

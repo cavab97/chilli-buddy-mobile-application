@@ -235,6 +235,7 @@ class index extends Component {
       ? (filteredShop = filteredShop.filter((shop) => shop.isFavourite === true))
       : filteredShop;
 
+      console.log(selectedTag)
     /* if (selectedTag) {
       filteredShop.forEach((shop) =>
         shop.tags.forEach((tag) =>

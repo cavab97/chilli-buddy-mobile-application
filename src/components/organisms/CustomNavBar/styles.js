@@ -5,7 +5,7 @@ import { Colors, Mixins } from "../../../settings/styles/theme";
 const styles = StyleSheet.create({
     container: {
         marginTop: Constants.statusBarHeight, 
-        height: Platform.OS === 'ios' ? Constants.statusBarHeight * 1.2 : Constants.statusBarHeight,
+        height: Platform.OS === 'ios' ? Constants.statusBarHeight * 1.2 : Constants.statusBarHeight * 2,
        /*  flex: 1, */
         alignItems:'flex-start',
         flexDirection: 'row',
