@@ -15,13 +15,13 @@ import { readObjects as readShopPost } from "@redux/shopPost/action";
 import {
   //readFromDatabase as readPromotion,
   listenToRecord as listenPromotion,
+  togglePromotionModal,
 } from "@redux/promo/action";
 
 import ContentLoader, { Rect } from "react-content-loader/native";
 
 import { SingleMerchant } from "@components/templates";
 
-import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import styles from "./styles";
 import { Actions } from "react-native-router-flux";
@@ -84,17 +84,6 @@ class index extends Component {
   componentWillUnmount() {
     this.props.removeListenerFromDatabase();
   }
-
-  // alterData = (node) => {
-  //   let { parent, data } = node;
-  //   console.log(data);
-  //   if (parent && parent.name === "p") {
-  //     // Texts elements are always children of wrappers, this is why we check the tag
-  //     // with "parent.name" and not "name"
-  //     return data.toUpperCase();
-  //   }
-  //   // Don't return anything (eg a falsy value) for anything else than the <h1> tag so nothing is altered
-  // };
 
   //Calculate distance from logitude and latitude
   calculateDistance = async (destinationLocation) => {
@@ -229,10 +218,23 @@ class index extends Component {
     // this.setState({ viewHeight: height });
   };
 
+  onPromoPressedClose() {
+    this.props.togglePromotionModal();
+  }
+
+  onPromoPressed(item) {
+    //Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
+    this.props.listenPromotion({ promoId: item.id });
+    this.props.togglePromotionModal();
+  }
+
   render() {
     const { shop, readLoading } = this.props.shopState;
 
+    const { promotion, promotionModalVisible } = this.props.promotionState;
+
     const { posts, readPostLoading, promotions, readPromotionLoading } = this.props;
+
     const noImage = require("@assets/images/404NotFound800x533.jpg");
     const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
 
@@ -280,6 +282,10 @@ class index extends Component {
           onPostPress={this.onPostPress.bind(this)}
           onFavouriteClick={this.onFavouriteClick.bind(this)}
           // alterData={this.alterData.bind(this)}
+          promotion={promotion}
+          promotionModal={promotionModalVisible}
+          onPromoPressed={this.onPromoPressed.bind(this)}
+          onPromoPressedClose={this.onPromoPressedClose.bind(this)}
         />
       );
     }
@@ -312,6 +318,7 @@ export default connect(mapStateToProps, {
   readShopPost,
   readPromotion,
   listenPromotion,
+  togglePromotionModal,
   verifyPermission,
   readFromDatabase,
 })(index);

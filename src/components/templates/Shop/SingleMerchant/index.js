@@ -16,15 +16,11 @@ import {
   ImageBackground,
 } from "@components/atoms";
 import HTML from "react-native-render-html";
+import { SingleMerchantPromo } from "../../Promo/SingleMerchantPromo";
 import Modal from "react-native-modal";
 
 import { Card } from "@components/molecules";
 
-import { Collapsible } from "@components/organisms/Collapsible";
-
-import { Ionicons } from "@expo/vector-icons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Colors } from "../../../../settings/styles/theme";
 import moment from "moment";
 
 const windowHeight = Dimensions.get("window").height;
@@ -61,6 +57,10 @@ const SingleMerchant = ({
   distance,
   calculatedDistance, //distance calculated from single merchant view
   onPostPress,
+  promotion,
+  promotionModal,
+  onPromoPressedClose,
+  onPromoPressed,
   find_dimensions = () => {},
 }) => {
   const {
@@ -89,10 +89,6 @@ const SingleMerchant = ({
     subContainer1,
     imageTopStyle,
   } = styles;
-
-  console.log("category");
-
-  console.log(categoryName);
 
   const PostList = ({ data }) => {
     if (data.length !== 0) {
@@ -133,7 +129,6 @@ const SingleMerchant = ({
                         {moment(item.created.at).format("DD/MM/YYYY")}
                       </Text>
                     </View> */}
-                    {console.log(item.images[0] == undefined)}
 
                     <View style={styles.postsTopRow}>
                       <View style={styles.logoPositionInModal}>
@@ -163,7 +158,6 @@ const SingleMerchant = ({
                               }}
                             />
                           )}
-                          {/* {console.log(item.created)} */}
                         </ImageBackground>
                       </TouchableOpacity>
                     </View>
@@ -618,6 +612,11 @@ const SingleMerchant = ({
 
         {promotions.length > 0 ? (
           <View>
+            <SingleMerchantPromo
+              promotionModal={promotionModal}
+              dataSource={promotion}
+              onPromoPressedClose={onPromoPressedClose}
+            />
             <Text style={sectionTitle}>Promotions</Text>
             <View style={styles.lastSectionFlatListRow}>
               <FlatList
@@ -627,7 +626,7 @@ const SingleMerchant = ({
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
                   <TouchableOpacity
-                    onPress={onPromoteClick.bind(this, item, distance, calculatedDistance)}
+                    onPress={onPromoPressed.bind(this, item)}
                   >
                     <Card
                       key={item.id}
