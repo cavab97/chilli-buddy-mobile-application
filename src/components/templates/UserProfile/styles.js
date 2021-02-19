@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
     marginRight: 8,
     marginTop: 15,
     // backgroundColor: "red",
+    paddingRight: 10,
+    width: 180,
   },
   userDesc: {
     fontSize: 14,
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
   },
   userInfomationIcon: {
     // textAlign: "center",
-    textAlignVertical: "center",
+    // textAlignVertical: "center",
     alignSelf: "center",
     justifyContent: "center",
     alignItems: "center",
@@ -157,8 +159,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   pencilIconTouchableOpacityStyle: {
-    padding: 12,
     top: 22,
+    // top: 10,
+    // left: -12,
+    width: 15,
+    height: 15,
+    padding: 2,
+    // backgroundColor: "red",
   },
 
   //Notification Style
