@@ -7,6 +7,13 @@ import { verifyPermission, loadBookmark } from "@redux/bookmark/action";
 import { update, submitToBackend } from "@redux/bookmark/action";
 import { onBookmarkClick } from "@redux/promo/action";
 
+import { loadShops, onFavouriteClick } from "@redux/shops/action";
+import {
+  update as updateToBackendShop,
+  submitToBackend as submitToBackendShop,
+  readFromDatabase,
+  updateIsFavourite,
+} from "@redux/favourite/action";
 import styles from "./styles";
 
 import { Image, Text, TouchableOpacity, View } from "@components/atoms";
@@ -91,6 +98,15 @@ class index extends Component {
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
+    await this.props.loadShops({
+      radius: RADIUS * this.state.radiusAddition,
+      latitude: location.coords.latitude,
+      longtitude: location.coords.longitude,
+      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+    });
+    await this.props.readFromDatabase();
+
     this.setState({ readLoading: false });
   };
 
@@ -163,8 +179,17 @@ class index extends Component {
   onBackPressed() {
     Actions.pop("Favourite");
   }
-  onShopsPressed() {}
-  onPromotionsPressed() {}
+  onShopsPressed() {
+    this.props.toggleFavourite();
+
+    console.log("shops");
+  }
+  onPromotionsPressed() {
+    console.log("promotions");
+  }
+  // onFavouriteFiltered() {
+  //   this.props.toggleFavourite();
+  // }
 
   render() {
     const { readLoading, promo, bookmark } = this.props.promotionState;
@@ -202,6 +227,7 @@ class index extends Component {
         onBackPressed={this.onBackPressed.bind(this)}
         onShopsPressed={this.onShopsPressed.bind(this)}
         onPromotionsPressed={this.onPromotionsPressed.bind(this)}
+        // toggleFavourite={this.onFavouriteFiltered.bind(this)}
       />
     );
   }
@@ -212,6 +238,7 @@ const mapStateToProps = (state) => {
   const promotionState = state.Promotion;
   const { bookmarks } = state.Bookmark;
   const bookmarkState = state.Bookmark;
+  // const shopState = state.Shops;
 
   return { categories, tags, promotionState, bookmarks, bookmarkState };
 };
@@ -222,4 +249,10 @@ export default connect(mapStateToProps, {
   onBookmarkClick,
   update,
   submitToBackend,
+  onFavouriteClick,
+  loadShops,
+  updateToBackendShop,
+  submitToBackendShop,
+  readFromDatabase,
+  updateIsFavourite,
 })(index);

@@ -211,14 +211,14 @@ const FavouriteList = ({
       <View style={styles.promoTitleContainer}>
         <Text style={styles.pageTitle}>Favourite</Text>
 
-        <View style={styles.iconContainer}>
+        {/* <View style={styles.iconContainer}>
           <TouchableOpacity onPress={toggleBookmark}>
             <Image
               source={bookmark ? filledHeartIcon : emptyHeartIcon}
               style={styles.emptyHeartIcon}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
       <Text style={styles.topSubText}>Promotions</Text>
 

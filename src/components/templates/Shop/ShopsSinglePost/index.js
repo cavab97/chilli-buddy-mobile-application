@@ -3,6 +3,7 @@ import styles from "./styles";
 
 import HTML from "react-native-render-html";
 import moment from "moment";
+import { ImageGenerator } from "../../../organisms/ImageGenerator";
 
 import {
   View,
@@ -27,20 +28,21 @@ const ShopsSinglePost = ({
   catchCondition,
   find_dimensions = () => {},
 }) => {
-  const ImageLoop = ({ rowData }) => {
-    // console.log("rowData: ", shopPosts.created.at.seconds);
+  // const ImageLoop = ({ rowData }) => {
+  //   // console.log("rowData: ", shopPosts.created.at.seconds);
 
-    const data = [];
+  //   const data = [];
 
-    for (let i = 0; i < rowData.length; i++) {
-      data.push(<Image key={i} source={{ uri: rowData[i] }} style={styles.chatBoxInnerImage} />);
-    }
+  //   for (let i = 0; i < rowData.length; i++) {
+  //     data.push(<Image key={i} source={{ uri: rowData[i] }} style={styles.chatBoxInnerImage} />);
+  //   }
 
-    return data;
-  };
+  //   return data;
+  // };
 
   const PostList = ({ data }) => {
     if (data.length !== 0) {
+      // console.log(data.shop.displayTitle);
       return (
         <View>
           <ScrollView>
@@ -88,7 +90,7 @@ const ShopsSinglePost = ({
                   {data.images.length < 1 ? (
                     <Image style={styles.chatBoxInnerImage} source={noImageV2} />
                   ) : (
-                    <ImageLoop rowData={data.images} />
+                    <ImageGenerator rowData={data.images} />
                   )}
 
                   {/* <Text>create at: {item.created.at}</Text> */}
@@ -130,7 +132,7 @@ const ShopsSinglePost = ({
             {/* <Image source={} style={} resizeMode={"cover"} /> */}
           </View>
           <View style={styles.postsTopRowNameContainer}>
-            <Text style={styles.ShopPostTopTitle}>{dataSource.displayTitle}</Text>
+            <Text style={styles.ShopPostTopTitle}>{shopPosts.shop.displayTitle}</Text>
             <Text style={styles.ShopPostSubTitle}>
               {/* {moment(shopPosts.created.at).format("DD/MM/YYYY")} */}
               {/* {console.log(readPostLoading)} */}

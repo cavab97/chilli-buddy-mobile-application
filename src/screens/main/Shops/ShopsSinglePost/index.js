@@ -122,6 +122,7 @@ class index extends Component {
     //     </ContentLoader>
     //   );
     // } else {
+    console.log(post);
     return (
       <ShopsSinglePost
         readPostLoading={readPostLoading}

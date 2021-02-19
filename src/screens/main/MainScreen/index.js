@@ -106,12 +106,20 @@ class index extends Component {
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
     const filteredDatasource = this.filteredDatasource();
+    // console.log(filteredDatasource[index]);
+
     if (filteredDatasource[index].adsType === "image") {
       Actions.SingleMerchant({ shopId: filteredDatasource[index].shopId });
     } else if (filteredDatasource[index].adsType === "video") {
       this.props.toggleModal();
       this.state.popUpImage = filteredDatasource[index].popUpImage;
     }
+    Actions.ShopsSinglePost({
+      postId: filteredDatasource[index].postId,
+      distance: filteredDatasource[index].distance,
+      categoryName: filteredDatasource[index].category,
+    });
+    // Actions.SingleMerchant({ shopId: filteredDatasource[index].shopId });
   }
 
   //close pop up from header
@@ -133,22 +141,26 @@ class index extends Component {
   filteredDatasource() {
     const advertisements = this.props.advertisements;
     const posts = this.props.posts;
-    console.log(posts[0].description);
+    // console.log(posts[5].coverPhoto);
     // console.log(posts[0].d.shop.id);
+    // console.log(posts[0].coverPhoto);
     let dataSourceAds = [];
     //Map image URL and Shop ID to array
     dataSourceAds = posts.map((item) => {
       // console.log(item.d.coverPhoto);
       return {
-        imageUri: item.shop.images[0],
-        shopId: item.shop.id,
+        imageUri: item.coverPhoto[0],
+        shopId: item.id,
+        category: item.shop.categories,
+        postId: item.id,
         // popUpImage: item.popUpImage,
       };
     });
 
     //Filter empty shopID and Cover pic ads
     var filteredDatasource = dataSourceAds.filter(
-      (value) => value.imageUri !== undefined && value.shopId !== undefined
+      (value) =>
+        value.imageUri !== undefined && value.shopId !== undefined && value.postId !== undefined
     );
     // //check pop up image type in slider
     // filteredDatasource.forEach((data) => {
@@ -224,7 +236,7 @@ class index extends Component {
       return "Good Morning.";
     } else if (hour >= 12 && hour <= 18) {
       return "Good Afternoon.";
-    } else if (hour >= 18 && hour <= 5) {
+    } else if ((hour >= 18 && hour <= 5) || hour >= 18) {
       return "Good Evening";
     }
   }
@@ -453,6 +465,8 @@ const mapStateToProps = (state) => {
   const promotionState = state.Promotion;
 
   const posts = state.ShopPostMain.posts;
+
+  // console.log(posts[5].coverPhoto);
 
   return {
     categories,
