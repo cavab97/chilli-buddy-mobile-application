@@ -105,7 +105,6 @@ const PromoList = ({
   tags,
   selectedCategory,
   handleRefresh,
-  renderFooter,
   onCarouselPressed,
   onPromoPressed,
   onCategoryChange,
@@ -113,7 +112,6 @@ const PromoList = ({
   onBookmarkPressed,
   onBackPressed,
   bookmark,
-  onSwipeFullScreen,
   tagModal,
   categoryModal,
   onCategoryPressed,
@@ -121,7 +119,6 @@ const PromoList = ({
   promotion,
   promotionModal,
   onPromoPressedClose,
-  onSwipeMove
 }) => {
   
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
@@ -135,6 +132,8 @@ const PromoList = ({
         onPressBack={onBackPressed} 
         onPressButton1={onCategoryPressed}
         onPressButton2={onTagPressed}
+        selectedButton1={categoryModal}
+        selectedButton2={tagModal}
       />
 
       <SwipeableModal
@@ -143,8 +142,7 @@ const PromoList = ({
         modalTitle="Category"
         type='category'
         full={false}
-        onSwipeComplete={onSwipeFullScreen}
-        onSwipeMove={onSwipeMove}
+        onSwipeComplete={onCategoryPressed}
         onBackDropPressed={onCategoryPressed}
       />
 
@@ -154,7 +152,7 @@ const PromoList = ({
         modalTitle="Tags"
         type='tag'
         full={false}
-        onSwipeFullScreen={onSwipeFullScreen}
+        onSwipeComplete={onTagPressed}
         onBackDropPressed={onTagPressed}
       />
 

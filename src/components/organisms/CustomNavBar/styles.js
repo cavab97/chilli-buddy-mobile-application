@@ -33,9 +33,29 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         marginLeft: 10
     },
+    selectedButton: {
+        shadowColor: Colors.GREY, 
+        shadowOffset: { 
+            height: 0, 
+            width: 0 
+        }, 
+        shadowOpacity: 0.4,
+        shadowRadius: 1.5, 
+        backgroundColor: Colors.PRIMARY,
+        elevation: 2,  
+        borderRadius: 30,
+        paddingVertical: 8,
+        paddingHorizontal: 15,
+        marginLeft: 10
+    },
     text: { 
         fontSize: 12, 
         fontFamily: 'HorizontalRounded' 
+    },
+    selectedText: {
+        fontSize: 12, 
+        fontFamily: 'HorizontalRounded',
+        color: Colors.WHITE
     }
 });
 

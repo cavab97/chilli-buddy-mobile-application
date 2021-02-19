@@ -44,7 +44,6 @@ class index extends Component {
       selectedTag: "All", //default all tag selected
     };
     this.handleRefresh = this.handleRefresh.bind(this);
-    this.renderFooter = this.renderFooter.bind(this);
   }
 
   componentDidMount = async () => {
@@ -107,28 +106,6 @@ class index extends Component {
     //await this.props.readFromDatabase();
   };
 
-  renderFooter({ empty }) {
-    if (empty) {
-      return Platform.OS === "ios" ? (
-        <Card style={{ backgroundColor: "transparent" }}>
-          <CardSection style={styles.emptySection}>
-            <Icon name="inbox" size={64} style={styles.emptyIcon} />
-            <Text style={styles.emptyText}>NO PROMOTION FOUND</Text>
-          </CardSection>
-        </Card>
-      ) : (
-        <Card style={{ backgroundColor: "transparent", elevation: 0 }}>
-          <CardSection style={[styles.emptySection, { elevation: 0 }]}>
-            <Icon name="inbox" size={64} style={styles.emptyIcon} />
-            <Text style={styles.emptyText}>NO PROMOTION FOUND</Text>
-          </CardSection>
-        </Card>
-      );
-    } else {
-      return <View style={{ marginBottom: 10 }} />;
-    }
-  }
-
   onBackPressed() {
     Actions.MainScreen();
   }
@@ -153,10 +130,6 @@ class index extends Component {
     this.handleRefresh();
   };
   
-  onSwipeFullScreen = (swipeDirection) => {
-    this.props.toggleTagModal()
-  }
-
   onCategoryPressed = () => {
     this.props.toggleCategoryModal()
   }
@@ -194,11 +167,6 @@ class index extends Component {
       await this.props.submitToBackend(data, "update");
     }
   };
-
-  onSwipeMove = (percentage) => {
-    console.log('on swipe')
-    console.log(percentage)
-  }
 
   onCarouselPressed() {
     const location = this.props.promotionState.promotion.shop.l;
@@ -258,7 +226,6 @@ class index extends Component {
         selectedCategory={this.state.selectedCategory}
         swipeable={swipeable}
         handleRefresh={this.handleRefresh.bind(this)}
-        renderFooter={this.renderFooter.bind(this)}
         onCarouselPressed={this.onCarouselPressed.bind(this)}
         onPromoPressed={this.onPromoPressed.bind(this)}
         onBookmarkPressed={this.onBookmarkPressed.bind(this)}
@@ -267,9 +234,7 @@ class index extends Component {
         onBackPressed={this.onBackPressed.bind(this)}
         onCategoryPressed={this.onCategoryPressed.bind(this)}
         onTagPressed={this.onTagPressed.bind(this)}
-        onSwipeFullScreen={this.onSwipeFullScreen.bind(this)}
         onPromoPressedClose={this.onPromoPressedClose.bind(this)}
-        onSwipeMove={this.onSwipeMove.bind(this)}
       />
     );
   }

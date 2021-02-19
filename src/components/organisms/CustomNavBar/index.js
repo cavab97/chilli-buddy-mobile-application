@@ -18,12 +18,16 @@ const CustomNavBar = ({
     onPressButton2,
     textOne,
     textTwo,
+    selectedButton1,
+    selectedButton2,
 }) => {
     const { 
         container,
         buttonContainer,
         button,
-        text
+        text,
+        selectedButton,
+        selectedText
     } = styles;
 
     return (
@@ -39,18 +43,18 @@ const CustomNavBar = ({
             </TouchableOpacity>
             <View style={buttonContainer}>
                 <TouchableOpacity 
-                    style={button}
+                    style={selectedButton1 ? selectedButton : button}
                     onPress={onPressButton1}
                 >
-                    <Text style={text}>
+                    <Text style={selectedButton1 ? selectedText : text}>
                         {textOne}
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    style={button}
+                    style={selectedButton2 ? selectedButton : button}
                     onPress={onPressButton2}
                 >
-                    <Text style={text}>
+                    <Text style={selectedButton2 ? selectedText : text}>
                         {textTwo}
                     </Text>
                 </TouchableOpacity>
