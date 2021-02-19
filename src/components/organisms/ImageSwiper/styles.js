@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // backgroundColor: "black",
   },
+  // container: {
+  //   borderWidth: 1,
+  //   borderColor: "black",
+  // },
 });
 
 export default styles;

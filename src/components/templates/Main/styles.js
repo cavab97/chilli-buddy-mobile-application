@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // height: windowHeight / 20,
-    marginHorizontal: 20,
   },
   subContainer1: {
     flex: 1,
@@ -24,14 +23,16 @@ const styles = StyleSheet.create({
     // marginHorizontal: 20,
     // marginVertical: 20,
     borderRadius: 50,
-    backgroundColor: "red",
-    borderWidth: 0,
+    // backgroundColor: "red",
+    // borderWidth: 1,
     // resizeMode: "cover",
   },
   subContainerOutside: {
     marginVertical: 25,
+
     minHeight: (windowWidth / 800) * 400,
     maxHeight: (windowWidth / 800) * 400,
+    width: "100%",
     borderRadius: 50,
     shadowColor: "#000",
     shadowOffset: {
@@ -40,8 +41,10 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.5,
     shadowRadius: 1,
-
+    // borderWidth: 1,
+    // zIndex: 2,
     elevation: 10,
+    overflow: "hidden",
   },
   subContainerOutsideShadow: {
     // marginVertical: 25,
@@ -100,7 +103,17 @@ const styles = StyleSheet.create({
   imageTopStyle: {
     width: "100%",
     height: "100%",
-    borderRadius: 40,
+    alignSelf: "center",
+    // borderLeftColor: "white",
+    // borderRightColor: "black",
+    // borderLeftWidth: 10,
+    // borderRightWidth: 10,
+
+    // resizeMode: "contain",
+    // borderRadius: 50,
+    // borderTopRightRadius: 50,
+    // borderBottomRightRadius: 50,
+    // marginHorizontal: 20,
   },
   floatingCheckInButton: {
     borderWidth: 1,
@@ -454,6 +467,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
+    marginHorizontal: 20,
   },
 
   firstSectionText1: {
@@ -462,7 +476,7 @@ const styles = StyleSheet.create({
   },
   firstSectionText2: {
     fontFamily: "HorizontalRounded",
-    fontSize: 40,
+    fontSize: 35,
     color: Colors.RED,
     paddingTop: 0,
   },
@@ -478,6 +492,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
+    marginHorizontal: 20,
   },
   searchBarStyles: {
     backgroundColor: "#FFF",
@@ -498,11 +513,15 @@ const styles = StyleSheet.create({
   searchBarPlaceHolderStyles: {
     color: Colors.RED,
   },
+  thirdSection: {
+    marginHorizontal: 20,
+  },
   quarterSection: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: 10,
+    marginHorizontal: 20,
   },
   QuarterContainer1: {
     backgroundColor: "#fff",
@@ -582,6 +601,9 @@ const styles = StyleSheet.create({
   lastSection: {
     // justifyContent: "space-between",
     marginVertical: 20,
+    // marginHorizontal: 20,
+    marginLeft: 20,
+
     // backgroundColor: "grey",
   },
   lastSectionFirstRow: {
