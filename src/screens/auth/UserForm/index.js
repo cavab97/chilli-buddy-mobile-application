@@ -140,7 +140,7 @@ export class Index extends Component {
           placeholderTextColor="#CCCCCC"
           inputStyle={styles.inputTextStyle}
           value={detail}
-          onChangeText={InputTextField}
+          onChangeText={onChangeText}
           keyboardType={
             title === "IC Number" ? "numeric" : title === "Email" ? "email-address" : "default"
           }
@@ -169,7 +169,6 @@ export class Index extends Component {
     const countriesList = require("../../../assets/address/countries.json");
     const statesList = require("../../../assets/address/Malaysia/states.json");
     const cameraIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyUserProfileV2/camera_Icon.png");
-
     address.country = "Malaysia";
 
     /*  if (this.state.triggerLoading || this.state.message){
@@ -229,8 +228,8 @@ export class Index extends Component {
                   onPress={this.onChangeImagePressed.bind(this)}
                   style={styles.UploadImageButton}
                 >
-                  {/* <CustomIcon name="camera" color={Colors.PRIMARY} size={14} /> */}
                   <Image source={cameraIcon} style={styles.cameraIcon} />
+                  {/* <CustomIcon name="camera" color={Colors.PRIMARY} size={14} /> */}
                 </TouchableOpacity>
               </View>
               <View style={styles.BodyContatiner}>
@@ -360,7 +359,7 @@ export class Index extends Component {
                                                 }
                                                 selectedKey={address.country}
                                                 initValue="Country"
-                                            />
+                                            /> 
                       </View>
                     </View>
                   </View>
