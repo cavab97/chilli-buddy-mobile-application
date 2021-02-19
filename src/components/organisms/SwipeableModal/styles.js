@@ -16,11 +16,13 @@ const styles = StyleSheet.create({
         width: 50, 
         height: 5, 
         alignSelf: 'center', 
-        marginTop: 15, 
-        borderRadius: 15
+        marginVertical: 15, 
+        borderRadius: 15,
     },
     contentContainer: {
-        padding: 30
+        paddingTop: 15,
+        paddingHorizontal: 30,
+        paddingBottom: 30
     },
     contentHalf: {
         height: windowHeight/2, 

@@ -4,6 +4,7 @@ import {
     Text,
     TouchableOpacity,
     View,
+    ScrollView
 } from "../../atoms";  
 
 import Modal from "react-native-modal";
@@ -78,20 +79,22 @@ const SwipeableModal = ({
         <Modal 
             isVisible={modalVisible}
             style={modalContainer}
-            onSwipeMove={swipeFullScreen}
             swipeDirection={['down']}
             backdropOpacity={0.45}
             onBackdropPress={onBackDropPressed}
             onSwipeComplete={onSwipeComplete}
+            propagateSwipe={true}
         >
-            <View style={contentFull }>
+            <View style={full ? contentFull : contentHalf}>
                 <View style={swipeableIndicator} />
-                <View style={contentContainer}>
-                    <Text style={title}>
-                        {modalTitle}
-                    </Text>
-                    {renderData(type, dataSource)}
-                </View>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={contentContainer}>
+                        <Text style={title}>
+                            {modalTitle}
+                        </Text>
+                        {renderData(type, dataSource)}
+                    </View>
+                </ScrollView>
             </View>
         </Modal>
     );
