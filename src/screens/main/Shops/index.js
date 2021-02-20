@@ -190,9 +190,12 @@ class index extends Component {
 
   onFavouritePressed = async (item) => {
     const shopId = item.id;
+    // console.log(shopId);
     const favouriteId = this.lookingForFavourite({ shopId });
     const isFavourite = !item.isFavourite;
+    // console.log("favouriteId");
 
+    // console.log(favouriteId);
     this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
 
@@ -235,7 +238,7 @@ class index extends Component {
       ? (filteredShop = filteredShop.filter((shop) => shop.isFavourite === true))
       : filteredShop;
 
-      console.log(selectedTag)
+    console.log(selectedTag);
     /* if (selectedTag) {
       filteredShop.forEach((shop) =>
         shop.tags.forEach((tag) =>

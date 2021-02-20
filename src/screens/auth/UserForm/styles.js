@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   },
   topText: {
     color: Colors.RED,
-    fontSize: 40,
+    fontSize: 30,
     paddingBottom: 10,
     paddingTop: 15,
     fontFamily: "HorizontalRounded",

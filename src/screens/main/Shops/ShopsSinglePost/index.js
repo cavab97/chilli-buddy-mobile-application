@@ -100,7 +100,7 @@ class index extends Component {
 
     let icon = [];
     let postImage = [];
-    if (shop.logo.length === 0) icon = require("@assets/logo.png");
+    if (shop.logo.length === 0 || shop.logo == undefined) icon = require("@assets/logo.png");
     else icon = { uri: shop.logo[0] };
     // const { posterArea, poster } = styles;
 

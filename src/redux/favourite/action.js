@@ -102,6 +102,26 @@ export function updateIsFavourite(shopId) {
   };
 }
 
+export function readSingleFavourite(shopId) {
+  return (dispatch, getState) => {
+    return new Promise(async (resolve, reject) => {
+      const favourites = getState().Favourite.favourites;
+      const newFavourites = favourites.map((favourite) => {
+        if (favourite.shop.id === shopId) {
+          favourite.isFavourite = favourite.isFavourite;
+        }
+        return favourite;
+      });
+
+      resolve(newFavourites);
+      dispatch({
+        type: actions.TOGGLE_FAVOURITE,
+        payload: { data: newFavourites },
+      });
+    });
+  };
+}
+
 export function loadFavourite({
   radius,
   latitude,

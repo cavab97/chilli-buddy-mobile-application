@@ -13,23 +13,23 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   promoTitleContainer: {
-    flexDirection: "row", 
+    flexDirection: "row",
     justifyContent: "space-between",
     width: "90%",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   iconContainer: {
-    flexDirection: "row", 
-    paddingTop: 5
+    flexDirection: "row",
+    paddingTop: 5,
   },
   pageTitle: {
-    fontSize: 36,
+    fontSize: 30,
     color: Colors.PRIMARY,
-    fontFamily: "HorizontalRounded"
+    fontFamily: "HorizontalRounded",
   },
   imageContainer: {
     borderBottomWidth: 0,
-    padding:0,
+    padding: 0,
     borderRadius: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   emptyHeartIcon: {
-    width: 30, 
-    height: 30, 
-    resizeMode: 'contain',
+    width: 30,
+    height: 30,
+    resizeMode: "contain",
   },
   emptyText: {
     fontWeight: "bold",
@@ -65,11 +65,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: "auto",
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   flatList: {
     minHeight: Mixins.WINDOW_HEIGHT - 300,
-    marginBottom: Mixins.WINDOW_HEIGHT / 15
+    marginBottom: Mixins.WINDOW_HEIGHT / 15,
   },
   checkbox: {
     backgroundColor: Colors.GRAY_LIGHT,
@@ -138,10 +138,10 @@ const styles = StyleSheet.create({
     textShadowColor: Colors.SECONDARY,
     //textShadow: "0 0 3px #000",
   },
-  distanceIcon: { 
-    height: 15, 
+  distanceIcon: {
+    height: 15,
     width: 15,
-    marginRight: 5
+    marginRight: 5,
   },
   detail: {
     fontSize: 12,
@@ -152,24 +152,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 0,
     borderBottomWidth: 0,
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
   },
   title: {
     fontSize: 16,
     fontFamily: "HorizontalRounded",
     flex: 1,
-    flexWrap: 'wrap'
+    flexWrap: "wrap",
   },
   subtitle: {
     fontSize: 12,
     fontFamily: "HorizontalRounded",
     flex: 1,
-    flexWrap: 'wrap'
+    flexWrap: "wrap",
   },
-  favouriteIcon: { 
-    width: 20, 
-    height: 20, 
+  favouriteIcon: {
+    width: 20,
+    height: 20,
     resizeMode: "contain",
   },
   textContainer: {
@@ -197,13 +197,13 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
     fontFamily: "RobotoBold",
   },
-  bookmarkIcon: { 
-    position: 'absolute', 
-    right: 5, 
-    bottom:0 
+  bookmarkIcon: {
+    position: "absolute",
+    right: 5,
+    bottom: 0,
   },
   leftCardContainer: {
-    width: "35%"
+    width: "35%",
   },
   rightCardContainer: {
     width: "65%",
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     paddingBottom: 10,
-  }
+  },
 });
 
 export default styles;

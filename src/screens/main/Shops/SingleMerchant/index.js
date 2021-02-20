@@ -42,14 +42,20 @@ class index extends Component {
       calculatedDistance: 0,
       location: null,
       getLocationLoading: true,
+      isFavourite: false,
     };
   }
 
   componentDidMount() {
     const shopId = this.props.shopId;
+    // this.props.readSingleFavourite(shopId);
+    this.setState({ isFavourite: this.lookingForFavourite({ shopId }).isFavourite });
+
     this.props.readPromotion(shopId);
     this.props.listenFromDatabase({ shopId });
     this.props.readShopPost(shopId);
+    this.props.readFromDatabase();
+
     this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
         if (permissions.location.permissions.location.foregroundGranted === undefined) {
@@ -65,20 +71,25 @@ class index extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      //Shop location changed
-      prevProps.shopState.shop.l.U !== this.props.shopState.shop.l.U ||
-      prevProps.shopState.shop.l.k !== this.props.shopState.shop.l.k ||
-      //Current location gain
-      (!prevState.location &&
-        this.state.location &&
-        //Shop location exist
-        this.props.shopState.shop.l.U &&
-        this.props.shopState.shop.l.k)
-    ) {
-      //console.log("enter if");
-      this.calculateDistance(this.props.shopState.shop.l);
-    }
+    // console("prevProps.shopState.shop.l.U == undefined");
+
+    // console(prevProps.shopState.shop.l.U == undefined);
+    if (prevProps.shopState.shop.l.U !== undefined) {
+      if (
+        //Shop location changed
+        prevProps.shopState.shop.l.U !== this.props.shopState.shop.l.U ||
+        prevProps.shopState.shop.l.k !== this.props.shopState.shop.l.k ||
+        //Current location gain
+        (!prevState.location &&
+          this.state.location &&
+          //Shop location exist
+          this.props.shopState.shop.l.U &&
+          this.props.shopState.shop.l.k)
+      ) {
+        //console.log("enter if");
+        this.calculateDistance(this.props.shopState.shop.l);
+      }
+    } else console.log("ret");
   }
 
   componentWillUnmount() {
@@ -162,8 +173,8 @@ class index extends Component {
   onPostPress = async (item) => {
     //const promoId = this.props.promotions[0].id;
     //console.log("singlemerchant: " + calculatedDistance);
-    console.log("item.id");
-    console.log(item.id);
+    // console.log("item.id");
+    // console.log(item.id);
     this.setState({ isOpenPost: !this.state.isOpenPost });
 
     Actions.ShopsSinglePost({
@@ -175,27 +186,44 @@ class index extends Component {
 
   lookingForFavourite({ shopId } = null) {
     const favourites = this.props.favouriteState.favourites;
-    console.log(favourites);
+    // console.log(favourites[0].isFavourite);
+    // console.log(favourites);
 
-    let favouriteId = null;
+    let favouriteFavourite = null;
 
     favourites.forEach((favourite) => {
       if (favourite.shopIds[0] === shopId) {
-        favouriteId = favourite.id;
+        favouriteFavourite = favourite;
       }
     });
-    return favouriteId;
+
+    // console.log("favouriteFavourite");
+
+    // console.log(favouriteFavourite);
+
+    return favouriteFavourite;
   }
   onFavouriteClick = async (item) => {
-    const shopId = item.id;
-    const favouriteId = this.lookingForFavourite({ shopId });
-    const isFavourite = !item.isFavourite;
+    // console.log(item);
+    const shopId = item;
 
-    this.props.onFavouriteClick(shopId);
+    const favourite = this.lookingForFavourite({ shopId });
+    const favouriteId = favourite.id;
+    // console.log("shopId");
+
+    // console.log(favourite.id);
+
+    const isFavourite = !favourite.isFavourite;
+
+    // console.log("isFavourite");
+
+    // console.log(isFavourite);
+    // this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
+    this.setState({ isFavourite: isFavourite });
 
     if (favouriteId === null) {
-      const data = { shopId, isFavourite };
+      const data = { favouriteId, isFavourite };
       await this.props.submitToBackend(data, "create");
     } else {
       const data = { favouriteId, isFavourite };
@@ -230,7 +258,6 @@ class index extends Component {
 
   render() {
     const { shop, readLoading } = this.props.shopState;
-
     const { promotion, promotionModalVisible } = this.props.promotionState;
 
     const { posts, readPostLoading, promotions, readPromotionLoading } = this.props;
@@ -240,12 +267,19 @@ class index extends Component {
 
     let icon = [];
     let postImage = [];
-    if (shop.logo.length === 0) icon = require("@assets/logo.png");
-    else icon = { uri: shop.logo[0] };
+    // console.log("shop.logo == undefined");
 
-    if (shop.images.length === 0) postImage = require("@assets/logo.png");
-    else {
-      postImage = { uri: shop.images[1] };
+    // console.log(shop.logo == undefined);
+    if (shop.logo != undefined) {
+      if (shop.logo.length === 0) icon = require("@assets/logo.png");
+      else icon = { uri: shop.logo[0] };
+    }
+
+    if (shop.images != undefined) {
+      if (shop.images.length === 0) postImage = require("@assets/logo.png");
+      else {
+        postImage = { uri: shop.images[1] };
+      }
     }
 
     if (readLoading || readPostLoading || readPromotionLoading || this.state.getLocationLoading) {
@@ -286,6 +320,7 @@ class index extends Component {
           promotionModal={promotionModalVisible}
           onPromoPressed={this.onPromoPressed.bind(this)}
           onPromoPressedClose={this.onPromoPressedClose.bind(this)}
+          isFavourite={this.state.isFavourite}
         />
       );
     }
@@ -309,6 +344,7 @@ const mapStateToProps = (state) => {
     promotions,
     promotionState,
     readPromotionLoading,
+    favouriteState,
   };
 };
 
@@ -321,4 +357,6 @@ export default connect(mapStateToProps, {
   togglePromotionModal,
   verifyPermission,
   readFromDatabase,
+  submitToBackend,
+  updateIsFavourite,
 })(index);

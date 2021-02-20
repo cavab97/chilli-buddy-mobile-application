@@ -301,7 +301,8 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
         <Scene
           key="HelpCenter"
           component={HelpCenter}
-          title="Help Center"
+          title=""
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
           titleStyle={styles.title}
         />
       </Stack>

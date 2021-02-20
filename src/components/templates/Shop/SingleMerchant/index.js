@@ -32,6 +32,8 @@ const webSite = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingle
 const distanceIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/Distance_Icon.png");
 const newsIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/news_Icon.png");
 const fillLessLove = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/favorLove_Icon.png");
+
+const filledHeartIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/filledHeart.png");
 const shareIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/shareArrow_Icon.png");
 const chatBox = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/ChatBox_background.png");
 const noImageV2 = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/noImageBackground.jpeg");
@@ -61,6 +63,7 @@ const SingleMerchant = ({
   promotionModal,
   onPromoPressedClose,
   onPromoPressed,
+  isFavourite,
   find_dimensions = () => {},
 }) => {
   const {
@@ -335,9 +338,14 @@ const SingleMerchant = ({
               }}
             >
               <TouchableOpacity //uncomment social media icon
-                onPress={onFavouriteClick}
+                onPress={() => onFavouriteClick(dataSource.id)}
               >
-                <Image style={{ width: 27, height: 25 }} source={fillLessLove} />
+                {isFavourite ? (
+                  <Image source={filledHeartIcon} style={{ width: 27, height: 25 }} />
+                ) : (
+                  <Image source={fillLessLove} style={{ width: 27, height: 25 }} />
+                )}
+                {/* <Image source={fillLessLove} style={{ width: 27, height: 25 }} /> */}
               </TouchableOpacity>
               <TouchableOpacity //uncomment social media icon
                 onPress={onPostTitleClick}
@@ -385,7 +393,7 @@ const SingleMerchant = ({
                   style={{
                     marginTop: 0,
                     marginRight: "10%",
-                    fontFamily: "RobotoRegular",
+                    fontFamily: "HorizontalRounded",
                     color: "grey",
                   }}
                   onPress={() => {
@@ -423,10 +431,11 @@ const SingleMerchant = ({
                 style={{
                   marginTop: 0,
                   marginRight: "10%",
-                  fontFamily: "RobotoRegular",
+                  fontFamily: "HorizontalRounded",
+                  color: "grey",
                 }}
               >
-                {dataSource.description}
+                {dataSource.description == null ? "No Available" : dataSource.description}
               </Text>
             </View>
           </View>
@@ -625,9 +634,7 @@ const SingleMerchant = ({
                 data={promotions}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
-                  <TouchableOpacity
-                    onPress={onPromoPressed.bind(this, item)}
-                  >
+                  <TouchableOpacity onPress={onPromoPressed.bind(this, item)}>
                     <Card
                       key={item.id}
                       style={index === 0 ? firstPromoteCardStyle : promoteCardStyle}

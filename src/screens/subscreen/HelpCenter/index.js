@@ -23,6 +23,9 @@ export class HelpCenter extends Component {
   render() {
     return (
       <View>
+        <View style={styles.topTextContainer}>
+          <Text style={styles.topText}>Help Center</Text>
+        </View>
         <View>
           <Text style={styles.title}>About</Text>
           {this.SingleListingSection("About Us", "https://gogogain.com/?page_id=277")}

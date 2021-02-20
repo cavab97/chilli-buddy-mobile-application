@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   pageTitle: {
-    fontSize: 36,
+    fontSize: 30,
     color: Colors.PRIMARY,
     fontFamily: "HorizontalRounded",
   },

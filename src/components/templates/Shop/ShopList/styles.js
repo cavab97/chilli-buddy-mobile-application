@@ -3,37 +3,37 @@ import { Colors, Mixins } from "../../../../settings/styles/theme";
 
 const styles = StyleSheet.create({
   shopContainer: {
-    height: "100%"
+    height: "100%",
   },
   shopTitleContainer: {
-    flexDirection: "row", 
+    flexDirection: "row",
     justifyContent: "space-between",
     width: "90%",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   iconContainer: {
-    flexDirection: "row", 
-    paddingTop: 5
+    flexDirection: "row",
+    paddingTop: 5,
   },
   emptyHeartIcon: {
-    width: 30, 
-    height: 30, 
-    resizeMode: 'contain',
-    marginRight: 15
+    width: 30,
+    height: 30,
+    resizeMode: "contain",
+    marginRight: 15,
   },
   filterIcon: {
-    width: 30, 
-    height: 30, 
-    resizeMode: 'contain',
+    width: 30,
+    height: 30,
+    resizeMode: "contain",
   },
   categoryTitleContainer: {
     width: "90%",
     alignSelf: "center",
-    marginTop: 10
+    marginTop: 10,
   },
-  categoryTitle: { 
-    fontFamily: "HorizontalRounded", 
-    fontSize: 18 
+  categoryTitle: {
+    fontFamily: "HorizontalRounded",
+    fontSize: 18,
   },
   cardContainer: {
     width: "90%",
@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: "auto",
   },
-  favouriteIcon: { 
-    width: 20, 
-    height: 20, 
+  favouriteIcon: {
+    width: 20,
+    height: 20,
     resizeMode: "contain",
   },
   imageContainer: {
     borderBottomWidth: 0,
-    padding:0,
+    padding: 0,
     borderRadius: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   pageTitle: {
-    fontSize: 36,
+    fontSize: 30,
     color: Colors.PRIMARY,
-    fontFamily: "HorizontalRounded"
+    fontFamily: "HorizontalRounded",
   },
   image: {
     width: "100%",
@@ -76,13 +76,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 0,
     borderBottomWidth: 0,
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
   },
-  distanceIcon: { 
-    height: 15, 
+  distanceIcon: {
+    height: 15,
     width: 15,
-    marginRight: 5
+    marginRight: 5,
   },
   emptySection: {
     alignContent: "center",
@@ -101,14 +101,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: Platform.OS === "ios" ? Colors.GRAY_LIGHTEST : "#F4F4F4",
   },
-  promotionWrapper: { 
-    width: 100, 
-    height: 40, 
-    resizeMode: "contain"
+  promotionWrapper: {
+    width: 100,
+    height: 40,
+    resizeMode: "contain",
   },
   flatList: {
     minHeight: Mixins.WINDOW_HEIGHT - 300,
-    marginBottom: Mixins.WINDOW_HEIGHT / 15
+    marginBottom: Mixins.WINDOW_HEIGHT / 15,
   },
   title: {
     fontSize: 16,
@@ -180,12 +180,12 @@ const styles = StyleSheet.create({
     //backgroundColor: Colors.PRIMARY,
     //borderRadius: 30,
     position: "absolute",
-    width: 60,  
-    height: 60,    
+    width: 60,
+    height: 60,
     right: 0,
     bottom: 0,
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: "center",
+    justifyContent: "center",
     textShadowColor: Colors.SECONDARY,
     //textShadow: "0 0 3px #000",
   },
