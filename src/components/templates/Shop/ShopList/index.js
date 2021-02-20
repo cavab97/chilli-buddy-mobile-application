@@ -1,4 +1,5 @@
 import React from "react";
+import { RefreshControl } from "react-native";
 import styles from "./styles";
 
 import {
@@ -116,6 +117,10 @@ const ShopList = ({
     <ScrollView 
       showsVerticalScrollIndicator={false} 
       style={styles.shopContainer}
+      refreshControl={<RefreshControl
+        refreshing={loading}
+        onRefresh={handleRefresh}
+      />}
     >
       <View style={styles.shopTitleContainer}>
         <Text style={styles.pageTitle}>
