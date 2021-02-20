@@ -1,4 +1,5 @@
 import React from "react";
+import { RefreshControl } from "react-native";
 import styles from "./styles";
 
 import {
@@ -103,7 +104,7 @@ const ShopList = ({
   toggleFavourite,
   favourite,
   tags,
-  props,
+  loading,
   isPromote,
   displayCategory,
   categories,
@@ -116,6 +117,10 @@ const ShopList = ({
     <ScrollView 
       showsVerticalScrollIndicator={false} 
       style={styles.shopContainer}
+      refreshControl={<RefreshControl
+        refreshing={loading}
+        onRefresh={handleRefresh}
+      />}
     >
       <View style={styles.shopTitleContainer}>
         <Text style={styles.pageTitle}>
@@ -178,7 +183,7 @@ const ShopList = ({
         )}
         keyExtractor={(item) => item.id}
         onRefresh={handleRefresh}
-        refreshing={state.isRefreshing}
+        refreshing={loading}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
         ListFooterComponent={shopData.length === 0 && <NotFoundFooter message="No shop found" />}

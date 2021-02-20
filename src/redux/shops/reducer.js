@@ -184,7 +184,8 @@ const shopsReducer = (state = initialState, { type, payload }) => {
     case actions.TOGGLE_CATEGORY:
       return {
         ...state,
-        selectedCategory: payload.data
+        selectedCategory: payload.data,
+        selectedTag: null
       }
 
     case actions.TOGGLE_FAVOURITE:
