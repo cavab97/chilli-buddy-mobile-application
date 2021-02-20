@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
-import { Platform } from "react-native";
 
 import {
   toggleCategory,
@@ -20,14 +19,7 @@ import {
   updateIsFavourite,
 } from "@redux/favourite/action";
 
-import styles from "./styles";
 import clone from "clone";
-
-import { Text, View } from "@components/atoms";
-
-import { Card, CardSection } from "@components/molecules";
-
-import Icon from "react-native-vector-icons/FontAwesome";
 
 import { ShopList } from "@components/templates";
 
@@ -206,7 +198,13 @@ class index extends Component {
   };
 
   render() {
-    const { shops, selectedCategory, favouriteControl, selectedTag } = this.props.shopState;
+    const { 
+      shops, 
+      selectedCategory, 
+      favouriteControl, 
+      selectedTag,
+      loading
+    } = this.props.shopState;
 
     const { categories, tags } = this.props;
 
@@ -214,6 +212,7 @@ class index extends Component {
     let filteredCategories;
     let selectedCategoryTag;
     let filteredTags = [];
+    let you
 
     // Get Shop Category
     shops.map((shop) => {
@@ -235,14 +234,9 @@ class index extends Component {
       ? (filteredShop = filteredShop.filter((shop) => shop.isFavourite === true))
       : filteredShop;
 
-      console.log(selectedTag)
-    /* if (selectedTag) {
-      filteredShop.forEach((shop) =>
-        shop.tags.forEach((tag) =>
-          tag 
-        )
-      )  
-    } */
+    selectedTag
+      ? (filteredShop = filteredShop.filter((shop) => shop.tags.includes(selectedTag) === true))
+      : filteredShop;
 
     if (selectedCategory) {
       selectedCategoryTag = filteredCategories.filter(
@@ -278,6 +272,7 @@ class index extends Component {
         props={this.props}
         categories={filteredCategories}
         tags={filteredTags}
+        loading={loading}
         //displayCategory={this.props.selectedCategory ? "" : this.props.selectedCategory.id}
       />
     );

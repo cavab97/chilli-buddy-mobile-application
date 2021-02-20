@@ -103,7 +103,7 @@ const ShopList = ({
   toggleFavourite,
   favourite,
   tags,
-  props,
+  loading,
   isPromote,
   displayCategory,
   categories,
@@ -178,7 +178,7 @@ const ShopList = ({
         )}
         keyExtractor={(item) => item.id}
         onRefresh={handleRefresh}
-        refreshing={state.isRefreshing}
+        refreshing={loading}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
         ListFooterComponent={shopData.length === 0 && <NotFoundFooter message="No shop found" />}
