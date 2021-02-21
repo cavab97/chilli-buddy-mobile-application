@@ -9,10 +9,13 @@ const initialState = {
   tags: {},
   categories: {},
 
+  selectedCategory: null,
+  selectedTag: null,
   swipeable: false,
   categoryModalVisible: false,
   tagModalVisible: false,
   promotionModalVisible: false,
+  bookmarkControl: false,
 
   readLoading: false,
   readError: false,
@@ -52,7 +55,11 @@ const initialState = {
 const promoReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.PERMISSION_VERIFICATION:
-      return { ...state, permissionVerificationLoading: true, permissionVerificationError: false };
+      return { 
+        ...state, 
+        permissionVerificationLoading: true, 
+        permissionVerificationError: false 
+      };
 
     case actions.PERMISSION_VERIFICATION_SUCCESS:
       return {
@@ -137,6 +144,24 @@ const promoReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         promotionModalVisible: !state.promotionModalVisible,
+      }
+
+    case actions.TOGGLE_CATEGORY:
+      return {
+        ...state,
+        selectedCategory: payload.data,
+      }
+
+    case actions.TOGGLE_TAG:
+      return {
+        ...state,
+        selectedTag: payload.data
+      }
+
+    case actions.TOGGLE_BOOKMARK:
+      return {
+        ...state,
+        bookmarkControl: !state.bookmarkControl
       }
 
     default:

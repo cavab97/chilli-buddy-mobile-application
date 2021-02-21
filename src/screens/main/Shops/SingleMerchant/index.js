@@ -50,7 +50,9 @@ class index extends Component {
   componentDidMount() {
     const shopId = this.props.shopId;
     // this.props.readSingleFavourite(shopId);
-    this.setState({ isFavourite: this.lookingForFavourite({ shopId }).isFavourite });
+    let favourite = this.lookingForFavourite({ shopId });
+
+    this.setState({ isFavourite: favourite ? favourite.isFavourite : false });
 
     this.props.readPromotion(shopId);
     this.props.listenFromDatabase({ shopId });
@@ -187,39 +189,22 @@ class index extends Component {
 
   lookingForFavourite({ shopId } = null) {
     const favourites = this.props.favouriteState.favourites;
-    // console.log(favourites[0].isFavourite);
-    // console.log(favourites);
 
-    let favouriteFavourite = null;
+    let favourite = null;
 
-    favourites.forEach((favourite) => {
-      if (favourite.shopIds[0] === shopId) {
-        favouriteFavourite = favourite;
-      }
-    });
+    favourite = favourites.filter(favourite => favourite.shopIds[0] === shopId)
 
-    // console.log("favouriteFavourite");
-
-    // console.log(favouriteFavourite);
-
-    return favouriteFavourite;
+    return favourite.length > 0 ? favourite[0] : null;
   }
+
   onFavouriteClick = async (item) => {
-    // console.log(item);
     const shopId = item;
 
     const favourite = this.lookingForFavourite({ shopId });
     const favouriteId = favourite.id;
-    // console.log("shopId");
-
-    // console.log(favourite.id);
 
     const isFavourite = !favourite.isFavourite;
 
-    // console.log("isFavourite");
-
-    // console.log(isFavourite);
-    // this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
     this.setState({ isFavourite: isFavourite });
 

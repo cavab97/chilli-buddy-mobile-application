@@ -10,11 +10,14 @@ import {
 import Modal from "react-native-modal";
 import styles from "./styles";
 
-function renderData(type, dataSource) {
+function renderData(type, dataSource, selectedItem, onPress) {
 
     const {  
         buttonContainer,
-        button
+        button,
+        selectedButton,
+        selectedText,
+        text
     } = styles;
 
     switch(type) {
@@ -22,9 +25,9 @@ function renderData(type, dataSource) {
             return (
                 <View style={buttonContainer}>
                     {dataSource.map(data => 
-                        <TouchableOpacity key={data.id}>
-                            <View style={button}>
-                                <Text>
+                        <TouchableOpacity key={data.id} onPress={() => onPress(data.id)}>
+                            <View style={selectedItem === data.id ? selectedButton : button}>
+                                <Text style={selectedItem === data.id ? selectedText : text}>
                                     {data.title}
                                 </Text>
                             </View>
@@ -33,19 +36,29 @@ function renderData(type, dataSource) {
                 </View>
             ) 
         case 'tag':
-            return (
-                <View style={buttonContainer}>
-                    {dataSource.map(data => 
-                        <TouchableOpacity key={data.id}>
-                            <View style={button}>
-                                <Text>
-                                    {data.title}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                    )}
-                </View>
-            )
+            if (dataSource.length === 0) {
+                return (
+                    <View style={buttonContainer}>
+                        <Text style={text}>
+                            Currently no category is selected.
+                        </Text> 
+                    </View>
+                )
+            } else {
+                return (
+                    <View style={buttonContainer}>
+                        {dataSource.map(data => 
+                            <TouchableOpacity key={data.id} onPress={() => onPress(data.id)}>
+                                <View style={selectedItem === data.id ? selectedButton : button}>
+                                    <Text style={selectedItem === data.id ? selectedText : text}>
+                                        {data.title}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                )
+            }
         default: 
             return (
                 <View/>
@@ -55,15 +68,14 @@ function renderData(type, dataSource) {
 
 const SwipeableModal = ({
     modalVisible,
-    swipeFullScreen,
-    swipeable,
     dataSource,
     modalTitle,
     full,
     type,
     onBackDropPressed,
     onSwipeComplete,
-    onSwipeMove
+    selectedCategory,
+    onPress
 }) => {
 
     const { 
@@ -92,7 +104,7 @@ const SwipeableModal = ({
                         <Text style={title}>
                             {modalTitle}
                         </Text>
-                        {renderData(type, dataSource)}
+                        {renderData(type, dataSource, selectedCategory, onPress)}
                     </View>
                 </ScrollView>
             </View>

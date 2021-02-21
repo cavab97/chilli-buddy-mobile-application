@@ -215,7 +215,6 @@ class index extends Component {
     let filteredCategories;
     let selectedCategoryTag;
     let filteredTags = [];
-    let you;
 
     // Get Shop Category
     shops.map((shop) => {

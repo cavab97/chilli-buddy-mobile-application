@@ -11,12 +11,10 @@ import {
   FlatList,
   Carousel,
   TouchableOpacity,
-  Button,
-  Overlay,
-  ImageBackground,
 } from "@components/atoms";
-import HTML from "react-native-render-html";
+
 import { SingleMerchantPromo } from "../../Promo/SingleMerchantPromo";
+import { PostList } from "@components/organisms/PostList";
 import Modal from "react-native-modal";
 
 import { Card } from "@components/molecules";
@@ -34,9 +32,6 @@ const newsIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingl
 const fillLessLove = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/favorLove_Icon.png");
 
 const filledHeartIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/filledHeart.png");
-const shareIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/shareArrow_Icon.png");
-const chatBox = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/ChatBox_background.png");
-const noImageV2 = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/noImageBackground.jpeg");
 
 const SingleMerchant = ({
   // alterData,
@@ -93,102 +88,7 @@ const SingleMerchant = ({
     imageTopStyle,
   } = styles;
 
-  const PostList = ({ data }) => {
-    if (data.length !== 0) {
-      return (
-        <View>
-          <ScrollView>
-            <View
-              onLayout={(event) => {
-                find_dimensions(event.nativeEvent.layout);
-              }}
-            >
-              <FlatList
-                data={data}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                  <ScrollView>
-                    {/* <View style={singlePostContainer}>
-                      <Text style={singlePostTitle}>{item.title}</Text>
-
-                      <HTML
-                        source={{ html: `<div>` + item.description + `</div>` }}
-                        tagsStyles={{
-                          p: {
-                            padding: 0,
-                            margin: 0,
-                          },
-                          ol: {
-                            padding: 0,
-                            margin: 0,
-                          },
-                        }}
-
-                        // tagsStyles={ p}
-                      />
-                 
-
-                      <Text style={{ paddingTop: 5 }}>
-                        {moment(item.created.at).format("DD/MM/YYYY")}
-                      </Text>
-                    </View> */}
-
-                    <View style={styles.postsTopRow}>
-                      <View style={styles.logoPositionInModal}>
-                        <Image style={logo} source={icon} />
-                      </View>
-                      <TouchableOpacity
-                        style={styles.chatBoxContainer}
-                        onPress={() => onPostPress(item)}
-                      >
-                        <ImageBackground style={styles.chatBoxImg} source={chatBox}>
-                          <View style={styles.chatBoxTopText}>
-                            <Text style={styles.chatBoxText} numberOfLines={2}>
-                              {item.title}{" "}
-                            </Text>
-                            <TouchableOpacity>
-                              <Image style={styles.shareIcon} source={shareIcon} />
-                            </TouchableOpacity>
-                          </View>
-                          {/* <Image style={styles.shareIcon} source={item.shop.image} /> */}
-                          {item.images[0] === undefined ? (
-                            <Image style={styles.chatBoxInnerImage} source={noImageV2} />
-                          ) : (
-                            <Image
-                              style={styles.chatBoxInnerImage}
-                              source={{
-                                uri: item.images[0],
-                              }}
-                            />
-                          )}
-                        </ImageBackground>
-                      </TouchableOpacity>
-                    </View>
-                    <Text style={styles.daysText}> {moment(item.created.at).fromNow()}</Text>
-                  </ScrollView>
-                )}
-              />
-            </View>
-          </ScrollView>
-        </View>
-      );
-    } else {
-      return (
-        <View>
-          <ScrollView>
-            <View>
-              <ScrollView>
-                <View style={singlePostContainer}>
-                  <Text style={singlePostTitle}>Currently there are no post available</Text>
-                </View>
-              </ScrollView>
-            </View>
-          </ScrollView>
-        </View>
-      );
-    }
-  };
-
+  
   return (
     <ScrollView scrollIndicatorInsets={{ right: 0.1 }}>
       <View style={posterArea}>
@@ -236,84 +136,40 @@ const SingleMerchant = ({
       <View style={logoPosition}>
         <Image style={logo} source={icon} />
       </View>
+
+      {/* Post Modal */}
       <Modal
-        // onBackdropPress={() => missionPress(null)}
         isVisible={isOpenPost}
-        width="100%"
-        height="100%"
-        // animationType="slide"
         onSwipeComplete={(e) => {
           onPostTitleClick();
         }}
         style={styles.modalContainer}
-        // presentationStyle="pageSheet"
-        swipeDirection="down"
-        propagateSwipe
+        swipeDirection={['down']}
+        backdropOpacity={0.45}
+        propagateSwipe={true}
       >
-        <Text style={styles.postText}>Whiteboard</Text>
+        <View style={styles.contentFull}>
+          <View style={styles.swipeableIndicator} />
+          <ScrollView 
+            style={styles.contentContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            <Text style={styles.title}>
+              Whiteboard
+            </Text>
 
-        <ScrollView style={styles.outPostContainer}>
-          {/* <View style={styles.postsTopRow}>
-            <View style={styles.logoPositionInModal}>
-              <Image style={logo} source={icon} />
+            <View style={styles.shopPostsContainer}>
+              <PostList 
+                data={shopPosts} 
+                icon={icon}
+                onPostPress={onPostPress}
+              />
             </View>
-            <View style={styles.postsTopRowNameContainer}>
-              <Text style={styles.ShopPostTopTitle}>{dataSource.displayTitle}</Text>
-              <Text style={styles.ShopPostSubTitle}>2 days Ago</Text>
-            </View>
-            <TouchableOpacity style={styles.shareContainer}>
-              <Text style={styles.shareText}>Share</Text>
-              <Image style={styles.shareIcon} source={shareIcon} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.shopPostsContainer}>
-            <PostList data={shopPosts} />
-          </View> */}
-          <View style={styles.shopPostsContainer}>
-            <PostList data={shopPosts} />
-          </View>
 
-          {/* <View style={styles.postsTopRow}>
-            <View style={styles.logoPositionInModal}>
-              <Image style={logo} source={icon} />
-            </View>
-            <TouchableOpacity style={styles.chatBoxContainer}>
-              <Text style={styles.chatBoxText}>Testsdasdasdssdsadsdsadaaing </Text>
-
-              <Image style={styles.chatBoxImg} source={chatBox} />
-            </TouchableOpacity>
-          </View> */}
-          {/* <View style={styles.postsTopRow}>
-            <View style={styles.logoPositionInModal}>
-              <Image style={logo} source={icon} />
-            </View>
-            <TouchableOpacity style={styles.chatBoxContainer}>
-              <Text style={styles.chatBoxText}>Testsdasdasdssdsadsdsadaaing </Text>
-
-              <Image style={styles.chatBoxImg} source={chatBox} />
-            </TouchableOpacity>
-          </View> */}
-        </ScrollView>
+          </ScrollView>
+        </View>
       </Modal>
-      {/* <Collapsible
-        isOpen={isOpenPost}
-        onPress={onPostTitleClick}
-        title={"Post"}
-        titleContainerStyle={postContainer}
-        titleStyle={postLabel}
-        rightIcon={
-          !isOpenPost ? (
-            <MaterialCommunityIcons style={postIconSwap} name="menu-swap" size={30} />
-          ) : (
-            <MaterialCommunityIcons style={postIconSwap} name="close" size={30} />
-          )
-        }
-        animeContainerStyle={{ marginTop: 10 }}
-        animeTime={Platform.OS == "ios" ? 200 : 1000}
-        animeTo={Platform.OS == "ios" ? windowHeight - 360 : viewHeight}
-        animeContent={<PostList data={shopPosts} />}
-      /> */}
-      {/* {!isOpenPost ? ( */}
+
       <View>
         <View style={detailArea}>
           <View style={styles.TopRow}>
@@ -340,12 +196,10 @@ const SingleMerchant = ({
               <TouchableOpacity //uncomment social media icon
                 onPress={() => onFavouriteClick(dataSource.id)}
               >
-                {isFavourite ? (
-                  <Image source={filledHeartIcon} style={{ width: 27, height: 25 }} />
-                ) : (
-                  <Image source={fillLessLove} style={{ width: 27, height: 25 }} />
-                )}
-                {/* <Image source={fillLessLove} style={{ width: 27, height: 25 }} /> */}
+                <Image 
+                  source={ isFavourite ? filledHeartIcon : fillLessLove} 
+                  style={{ width: 27, height: 25 }} 
+                />
               </TouchableOpacity>
               <TouchableOpacity //uncomment social media icon
                 onPress={onPostTitleClick}

@@ -32,24 +32,39 @@ function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance,
       <View style={styles.cardContainer}>
         <View style={styles.leftCardContainer}>
           <CardSection style={styles.imageContainer}>
-            <Image style={image} resizeMode="cover" source={cover} />
+            <Image 
+              style={image} 
+              resizeMode="cover" 
+              source={cover} 
+            />
           </CardSection>
         </View>
         <View style={styles.rightCardContainer}>
           <CardSection style={styles.textContainer}>
-            <Text style={title} numberOfLines={2}>
+            <Text 
+              style={title} 
+              numberOfLines={2}
+            >
               {name}
             </Text>
           </CardSection>
           <View>
             <CardSection style={styles.textContainer}>
-              <Text style={subtitle} numberOfLines={1}>
+              <Text 
+                style={subtitle} 
+                numberOfLines={1}
+              >
                 {shopName}
               </Text>
             </CardSection>
             <CardSection style={styles.descriptionContainer}>
-              <Image source={distanceIcon} style={styles.distanceIcon} />
-              <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")}km away</Text>
+              <Image 
+                source={distanceIcon} 
+                style={styles.distanceIcon} 
+              />
+              <Text style={detail}>
+                Just {+(Math.round(distance + "e+2") + "e-2")}km away
+              </Text>
               <View style={bookmarkIcon}>
                 <TouchableOpacity onPress={onBookmarkPressed}>
                   <Image
@@ -73,6 +88,8 @@ const PromoList = ({
   dataSource,
   toggleBookmark,
   categories,
+  allCategory,
+  allTag,
   tags,
   selectedCategory,
   handleRefresh,
@@ -90,9 +107,17 @@ const PromoList = ({
   promotion,
   promotionModal,
   onPromoPressedClose,
+  selectedTag
 }) => {
+
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
+
+  let selectedCategoryTitle = allCategory.filter((category) => category.id === selectedCategory);
+  selectedCategoryTitle = selectedCategoryTitle.length > 0 ? selectedCategoryTitle[0].title : '';
+
+  let selectedTagTitle = allTag.filter((tag) => tag.id === selectedTag);
+  selectedTagTitle = selectedTagTitle.length > 0 ? selectedTagTitle[0].title : '';
 
   return (
     <View style={{ flex: 1 /*height: 100%*/ }}>
@@ -114,6 +139,8 @@ const PromoList = ({
         full={false}
         onSwipeComplete={onCategoryPressed}
         onBackDropPressed={onCategoryPressed}
+        selectedCategory={selectedCategory}
+        onPress={onCategoryChange}  
       />
 
       <SwipeableModal
@@ -123,6 +150,9 @@ const PromoList = ({
         type="tag"
         full={false}
         onSwipeComplete={onTagPressed}
+        selectedTag={selectedTag}
+        onPress={onTagChange}
+        selectedCategory={selectedTag}
         onBackDropPressed={onTagPressed}
       />
 
@@ -134,7 +164,9 @@ const PromoList = ({
       />
 
       <View style={styles.promoTitleContainer}>
-        <Text style={styles.pageTitle}>Promotions</Text>
+        <Text style={styles.pageTitle}>
+          Promotions
+        </Text>
 
         <View style={styles.iconContainer}>
           <TouchableOpacity onPress={toggleBookmark}>
@@ -144,7 +176,31 @@ const PromoList = ({
             />
           </TouchableOpacity>
         </View>
+
+        
       </View>
+      { selectedCategory &&
+        <View style={styles.categoryContainer}>
+          <View 
+            style={styles.button} 
+            key={selectedCategory}
+          >
+              <Text style={{ fontFamily: 'HorizontalRounded' }}>
+                {selectedCategoryTitle}
+              </Text>
+          </View>
+          { selectedTag &&
+              <View 
+                style={styles.button} 
+                key={selectedTag}
+              >
+                <Text style={{ fontFamily: 'HorizontalRounded' }}>
+                  {selectedTagTitle}
+                </Text>
+              </View>
+          }
+        </View>
+      }
 
       <FlatList
         data={dataSource}

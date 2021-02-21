@@ -16,6 +16,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "90%",
+    paddingTop: 10,
+    alignSelf: "center",
+  },
+  categoryContainer: {
+    flexDirection: "row",
+    width: "90%",
+    paddingTop: 10,
     alignSelf: "center",
   },
   iconContainer: {
@@ -61,7 +68,6 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: "90%",
     marginTop: 30,
-    backgroundColor: "#fff",
     alignSelf: "center",
     height: "auto",
     flex: 1,
@@ -212,6 +218,22 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     paddingBottom: 10,
+  },
+  button: {
+    shadowColor: Colors.GREY, 
+    shadowOffset: { 
+        height: 0, 
+        width: 0 
+    }, 
+    shadowOpacity: 0.4,
+    shadowRadius: 1.5, 
+    backgroundColor: Colors.WHITE,
+    elevation: 2,  
+    borderRadius: 30,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    marginRight: 10,
+    marginVertical: 8
   },
 });
 

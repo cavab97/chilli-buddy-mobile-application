@@ -13,6 +13,9 @@ import {
   toggleTagModal,
   togglePromotionModal,
   listenToRecord,
+  toggleCategory,
+  toggleBookmark,
+  toggleTag,
 } from "@redux/promo/action";
 
 import {
@@ -161,6 +164,18 @@ class index extends Component {
     }
   };
 
+  onCategorySelected(id = null) {
+    this.props.toggleCategory(id);
+  }
+
+  onTagSelected(id = null) {
+    this.props.toggleTag(id);
+  }
+
+  onBookmarkFiltered() {
+    this.props.toggleBookmark();
+  }
+
   onCarouselPressed() {
     const location = this.props.promotionState.promotion.shop.l;
     this.calculateDistance(location);
@@ -194,9 +209,12 @@ class index extends Component {
       bookmark, 
       promotion,
       swipeable,
+      bookmarkControl,
       categoryModalVisible,
       tagModalVisible,
-      promotionModalVisible
+      promotionModalVisible,
+      selectedCategory,
+      selectedTag
     } = this.props.promotionState;
 
     const { categories, tags } = this.props
@@ -204,26 +222,77 @@ class index extends Component {
     const readBookmark = this.props.bookmarkState.readLoading;
     const submitLoading = this.props.bookmarkState.submitLoading;
 
+    let filteredPromotion;
+    let filteredCategories;
+    let filteredTags = [];
+    let selectedCategoryTag;
+
+    filteredCategories = categories.filter((category) => category.title !== "All");
+    
+    // Get Shop Category
+    promo.map((promotion) => {
+      let promotionCategory = categories.filter((category) => category.id === promotion.shop.categories[0]);
+
+      promotionCategory ? (promotion.category = promotionCategory[0].title) : "";
+    });
+
+    // On toggle category get category from promotion shop
+    selectedCategory
+      ? (filteredPromotion = promo.filter((promotion) => promotion.shop.categories[0] === selectedCategory))
+      : (filteredPromotion = promo.filter((promotion) => promotion.shop.categories[0] === filteredCategories[0].id))
+
+    // On toggle tag get tag from promotion shop
+    selectedTag
+      ? (filteredPromotion = filteredPromotion.filter((promotion) => promotion.shop.tags.includes(selectedTag) === true))
+      : filteredPromotion;
+
+    // On toggle bookmark get bookmark promotion
+    bookmarkControl
+      ? (filteredPromotion = filteredPromotion.filter((promotion) => promotion.isBookmark === true))
+      : filteredPromotion;
+    
+    if (selectedCategory) {
+      selectedCategoryTag = filteredCategories.filter(
+        (category) => category.id === selectedCategory
+      );
+
+      selectedCategoryTag = selectedCategoryTag[0].tags.filter((tags) => tags !== "All");
+
+      tags.forEach((tag) =>
+        selectedCategoryTag.forEach((categoryTag) => {
+          if (tag.id === categoryTag) {
+            filteredTags.push(tag);
+          }
+        })
+      );
+    }
+
     return (
       <PromoList
         loading={readLoading}
         readBookmark={readBookmark}
         submitLoading={submitLoading}
-        dataSource={promo}
+        dataSource={filteredPromotion}
         tagModal={tagModalVisible}
         categoryModal={categoryModalVisible}
-        categories={categories}
+        allCategory={categories}
+        allTag={tags}
+        categories={filteredCategories}
+        selectedCategoryTitle={selectedCategoryTag && selectedCategoryTag.title}
         promotion={promotion}
         promotionModal={promotionModalVisible}
-        tags={tags}
-        selectedCategory={this.state.selectedCategory}
+        tags={filteredTags}
+        bookmark={bookmarkControl}
+        toggleBookmark={this.onBookmarkFiltered.bind(this)}
+        selectedCategory={selectedCategory}
+        selectedTag={selectedTag}
         swipeable={swipeable}
         handleRefresh={this.handleRefresh.bind(this)}
         onCarouselPressed={this.onCarouselPressed.bind(this)}
         onPromoPressed={this.onPromoPressed.bind(this)}
         onBookmarkPressed={this.onBookmarkPressed.bind(this)}
-        onCategoryChange={this.onCategoryChange.bind(this)}
-        onTagChange={this.onTagChange.bind(this)}
+        onCategoryChange={this.onCategorySelected.bind(this)}
+        onTagChange={this.onTagSelected.bind(this)}
         onBackPressed={this.onBackPressed.bind(this)}
         onCategoryPressed={this.onCategoryPressed.bind(this)}
         onTagPressed={this.onTagPressed.bind(this)}
@@ -251,8 +320,11 @@ export default connect(mapStateToProps, {
   toggleTagModal,
   togglePromotionModal,
   listenToRecord,
+  toggleCategory,
+  toggleTag,
   update,
   submitToBackend,
   readFromDatabase,
-  toggleSwipeable
+  toggleSwipeable,
+  toggleBookmark
 })(index);

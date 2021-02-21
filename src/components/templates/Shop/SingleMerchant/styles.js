@@ -1,6 +1,10 @@
 import { auto } from "eol";
-import { StyleSheet } from "react-native";
-import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
+import { StyleSheet, Dimensions } from "react-native";
+import { Colors, Typography } from "../../../../settings/styles/theme";
+import Constants from 'expo-constants';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   wrapper: {},
@@ -68,31 +72,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 20,
     borderColor: "white",
-    borderWidth: 3.5,
-    borderRadius: 35,
-    elevation: 10,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 1,
-  },
-  logoPositionInModal: {
-    width: 50,
-    height: 50,
-    // alignSelf: "center",
-    // position: "absolute",
-    // top: 30,
-    // zIndex: 5,
-    // direction: "row",
-    // flexDirection: "row",
-    // justifyContent: "space-between",
-    // marginHorizontal: 20,
-    // flex: 1,
-    // marginLeft: 20,
-    borderColor: "white",
-    // backgroundColor: "grey",
     borderWidth: 3.5,
     borderRadius: 35,
     elevation: 10,
@@ -191,18 +170,6 @@ const styles = StyleSheet.create({
     color: Colors.GRAY_LIGHT,
     top: 110,
     right: 10,
-  },
-  singlePostContainer: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 15,
-    margin: 10,
-  },
-  singlePostTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-    paddingBottom: 10,
   },
   singlePostDescription: {
     fontSize: 14,
@@ -345,27 +312,11 @@ const styles = StyleSheet.create({
   col2: { width: "55%", backgroundColor: "#fff", textAlign: "left" },
 
   modalContainer: {
-    padding: 0,
-    // flex: 1,
-    position: "absolute",
-    // width: "auto",
-    borderTopLeftRadius: 35,
-    borderTopRightRadius: 35,
-    backgroundColor: "white",
-    marginHorizontal: 0,
-  },
-  postsTopRow: {
-    // backgroundColor: "grey",
-    flex: 1,
-    justifyContent: "space-between",
-    flexDirection: "row",
-    top: 0,
-    marginHorizontal: 40,
-
-    // alignItems: "center",
+    margin: 0, 
+    justifyContent: 'flex-end',
   },
   shopPostsContainer: {
-    paddingTop: 40,
+    paddingTop: 20,
     flex: 1,
   },
   shareText: {
@@ -393,15 +344,6 @@ const styles = StyleSheet.create({
   postsTopRowNameContainer: {
     marginRight: 40,
   },
-  shareIcon: {
-    resizeMode: "cover",
-    width: 18,
-    // backgroundColor: "red",
-    height: 14,
-    marginLeft: 15,
-    marginTop: 3,
-  },
-
   ///WhiteBoard
   postText: {
     fontSize: 20,
@@ -422,91 +364,30 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: "red",
   },
-  chatBoxImg: {
-    // borderWidth: 2,
-    // width: "100%",
-    // backgroundColor: "black",
-    width: 240,
-    height: 150,
-    resizeMode: "cover",
-    shadowColor: "grey",
-    // shadowOffset: { width: 0, height: 1 },
-    // // borderWidth: 1,
-    // shadowOpacity: 1,
-    // shadowRadius: 2.22,
-    // elevation: 10,
-    alignItems: "center",
-    borderRadius: 20,
-    // backgroundColor: "black",
+  contentFull: {
+    height: windowHeight - Constants.statusBarHeight, 
+    width: windowWidth,
+    backgroundColor: '#fff', 
+    borderTopLeftRadius: 30, 
+    borderTopRightRadius: 30,
   },
-  chatBoxContainer: {
-    // borderWidth: 2,
-    // width: "100%",
-    // backgroundColor: "black",
-    shadowColor: "grey",
-    shadowOffset: { width: 0, height: 0 },
-    // borderWidth: 1,
-    shadowOpacity: 1,
-    shadowRadius: 1.22,
-    elevation: 5,
-    // bottom: 10,
-    // backgroundColor: "red",
-    paddingLeft: 5,
-    marginVertical: 8,
-    paddingBottom: 10,
+  swipeableIndicator: {
+    backgroundColor: '#d3d3d3', 
+    width: 50, 
+    height: 5, 
+    alignSelf: 'center', 
+    marginVertical: 15, 
+    borderRadius: 15,
   },
-  chatBoxText: {
-    width: 180,
-    height: 30,
-    paddingLeft: 10,
-    overflow: "hidden",
-    // backgroundColor: "red",
-    fontSize: 12,
+  title: {
+    fontFamily: 'HorizontalRounded', 
+    fontSize: 18, 
+    paddingBottom: 10
   },
-  chatBoxTopText: {
-    // justifyContent: "space-between",
-    // position: "absolute",
-    top: 5,
-    left: 0,
-    // backgroundColor: "grey",
-    zIndex: 1,
-    flexDirection: "row",
-  },
-  chatBoxInnerImage: {
-    width: 205,
-    height: 100,
-    resizeMode: "cover",
-    // shadowColor: "grey",
-    // shadowOffset: { width: 0, height: 1 },
-    // // borderWidth: 1,
-    // shadowOpacity: 1,
-    // shadowRadius: 2.22,
-    // elevation: 10,
-    // position: "absolute",
-    // top: 40,
-    left: 3,
-    marginTop: 5,
-    // marginVertical: 0,
-  },
-  daysText: {
-    textAlign: "right",
-    // alignItems: "flex-end",
-    // marginBottom: 100,
-    // alignItems: "flex-start",
-    color: "grey",
-    // textAlignVertical: "top",
-    // backgroundColor: "yellow",
-    width: "100%",
-    // height: 40,
-    // flexDirection: "row",
-
-    paddingTop: 0,
-    marginHorizontal: -50,
-    bottom: 10,
-    // marginVertical: 10,
-    // backgroundColor: "black",
-
-    // position: "absolute",
+  contentContainer: {
+    paddingTop: 15,
+    paddingHorizontal: 30,
+    marginBottom: 40
   },
 });
 
