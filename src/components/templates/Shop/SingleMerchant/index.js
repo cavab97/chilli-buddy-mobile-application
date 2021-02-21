@@ -340,12 +340,10 @@ const SingleMerchant = ({
               <TouchableOpacity //uncomment social media icon
                 onPress={() => onFavouriteClick(dataSource.id)}
               >
-                {isFavourite ? (
-                  <Image source={filledHeartIcon} style={{ width: 27, height: 25 }} />
-                ) : (
-                  <Image source={fillLessLove} style={{ width: 27, height: 25 }} />
-                )}
-                {/* <Image source={fillLessLove} style={{ width: 27, height: 25 }} /> */}
+                <Image 
+                  source={ isFavourite ? filledHeartIcon : fillLessLove} 
+                  style={{ width: 27, height: 25 }} 
+                />
               </TouchableOpacity>
               <TouchableOpacity //uncomment social media icon
                 onPress={onPostTitleClick}

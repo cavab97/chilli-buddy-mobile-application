@@ -49,7 +49,9 @@ class index extends Component {
   componentDidMount() {
     const shopId = this.props.shopId;
     // this.props.readSingleFavourite(shopId);
-    this.setState({ isFavourite: this.lookingForFavourite({ shopId }) });
+    let favourite = this.lookingForFavourite({ shopId });
+    console.log(favourite)
+    this.setState({ isFavourite: favourite ? favourite.isFavourite : false });
 
     this.props.readPromotion(shopId);
     this.props.listenFromDatabase({ shopId });
@@ -188,12 +190,10 @@ class index extends Component {
     const favourites = this.props.favouriteState.favourites;
 
     let favourite = null;
-    let isFavourite = false;
 
     favourite = favourites.filter(favourite => favourite.shopIds[0] === shopId)
-    isFavourite = favourite.length > 0 ? favourite[0].isFavourite : false;
 
-    return isFavourite;
+    return favourite.length > 0 ? favourite[0] : null;
   }
 
   onFavouriteClick = async (item) => {
