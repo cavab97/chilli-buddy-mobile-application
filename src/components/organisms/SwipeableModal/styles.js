@@ -62,6 +62,28 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         marginRight: 10,
         marginVertical: 8
+    },
+    selectedButton: {
+        shadowColor: Colors.GREY, 
+        shadowOffset: { 
+            height: 0, 
+            width: 0 
+        }, 
+        shadowOpacity: 0.4,
+        shadowRadius: 1.5, 
+        backgroundColor: Colors.PRIMARY,
+        elevation: 2,  
+        borderRadius: 30,
+        paddingVertical: 8,
+        paddingHorizontal: 15,
+        marginRight: 10,
+        marginVertical: 8
+    },
+    selectedText: {
+        color: Colors.WHITE
+    },
+    text: {
+        color: 'black'
     }
 });
 

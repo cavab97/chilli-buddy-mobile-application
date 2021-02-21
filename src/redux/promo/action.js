@@ -20,6 +20,10 @@ const actions = {
   TOGGLE_TAG_MODAL: type + 'TOGGLE_TAG_MODAL',
   TOGGLE_PROMOTION_MODAL: type + 'TOGGLE_PROMOTION_MODAL',
 
+  TOGGLE_CATEGORY: type + 'TOGGLE_CATEGORY',
+  TOGGLE_TAG: type + 'TOGGLE_TAG',
+  TOGGLE_BOOKMARK: type + 'TOGGLE_BOOKMARK',
+
   READ_RECORD: type + "READ_RECORD",
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
   READ_RECORD_ERROR: type + "READ_RECORD_ERROR",
@@ -165,15 +169,35 @@ export const toggleCategoryModal = () => {
   }
 }
 
+export const toggleCategory = (data = null) => {
+  return{
+    type: actions.TOGGLE_CATEGORY,
+    payload: { data }
+  }
+}
+
 export const toggleTagModal = () => {
   return {
     type: actions.TOGGLE_TAG_MODAL
   }
 }
 
+export const toggleTag = (data = null) => {
+  return{
+    type: actions.TOGGLE_TAG,
+    payload: { data }
+  }
+}
+
 export const togglePromotionModal = () => {
   return {
     type: actions.TOGGLE_PROMOTION_MODAL
+  }
+}
+
+export const toggleBookmark = () => {
+  return {
+    type: actions.TOGGLE_BOOKMARK
   }
 }
 
