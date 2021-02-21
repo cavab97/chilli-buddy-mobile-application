@@ -80,10 +80,11 @@ const styles = StyleSheet.create({
         marginVertical: 8
     },
     selectedText: {
-        color: Colors.WHITE
+        color: Colors.WHITE,
+        fontFamily: 'HorizontalRounded'
     },
     text: {
-        color: 'black'
+        fontFamily: 'HorizontalRounded',
     }
 });
 

@@ -114,10 +114,10 @@ const PromoList = ({
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
   let selectedCategoryTitle = allCategory.filter((category) => category.id === selectedCategory);
-  selectedCategoryTitle = selectedCategoryTitle ? selectedCategoryTitle[0].title : '';
+  selectedCategoryTitle = selectedCategoryTitle.length > 0 ? selectedCategoryTitle[0].title : '';
 
   let selectedTagTitle = allTag.filter((tag) => tag.id === selectedTag);
-  selectedTagTitle = selectedTagTitle ? selectedTagTitle[0].title : '';
+  selectedTagTitle = selectedTagTitle.length > 0 ? selectedTagTitle[0].title : '';
 
   return (
     <View style={{ flex: 1 /*height: 100%*/ }}>
@@ -185,7 +185,7 @@ const PromoList = ({
             style={styles.button} 
             key={selectedCategory}
           >
-              <Text>
+              <Text style={{ fontFamily: 'HorizontalRounded' }}>
                 {selectedCategoryTitle}
               </Text>
           </View>
@@ -194,7 +194,7 @@ const PromoList = ({
                 style={styles.button} 
                 key={selectedTag}
               >
-                <Text>
+                <Text style={{ fontFamily: 'HorizontalRounded' }}>
                   {selectedTagTitle}
                 </Text>
               </View>

@@ -36,19 +36,29 @@ function renderData(type, dataSource, selectedItem, onPress) {
                 </View>
             ) 
         case 'tag':
-            return (
-                <View style={buttonContainer}>
-                    {dataSource.map(data => 
-                        <TouchableOpacity key={data.id} onPress={() => onPress(data.id)}>
-                            <View style={selectedItem === data.id ? selectedButton : button}>
-                                <Text style={selectedItem === data.id ? selectedText : text}>
-                                    {data.title}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                    )}
-                </View>
-            )
+            if (dataSource.length === 0) {
+                return (
+                    <View style={buttonContainer}>
+                        <Text style={text}>
+                            Currently no category is selected.
+                        </Text> 
+                    </View>
+                )
+            } else {
+                return (
+                    <View style={buttonContainer}>
+                        {dataSource.map(data => 
+                            <TouchableOpacity key={data.id} onPress={() => onPress(data.id)}>
+                                <View style={selectedItem === data.id ? selectedButton : button}>
+                                    <Text style={selectedItem === data.id ? selectedText : text}>
+                                        {data.title}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                )
+            }
         default: 
             return (
                 <View/>

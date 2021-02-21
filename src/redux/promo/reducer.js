@@ -55,7 +55,11 @@ const initialState = {
 const promoReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.PERMISSION_VERIFICATION:
-      return { ...state, permissionVerificationLoading: true, permissionVerificationError: false };
+      return { 
+        ...state, 
+        permissionVerificationLoading: true, 
+        permissionVerificationError: false 
+      };
 
     case actions.PERMISSION_VERIFICATION_SUCCESS:
       return {
