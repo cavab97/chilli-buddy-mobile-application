@@ -107,7 +107,9 @@ const ShopsSinglePost = ({
             <View>
               <ScrollView>
                 <View style={styles.singlePostContainer}>
-                  <Text style={styles.singlePostTitle}>Currently there are no post available</Text>
+                  <Text style={styles.singlePostTitle}>
+                    Currently there are no post available
+                  </Text>
                 </View>
               </ScrollView>
             </View>
@@ -134,14 +136,6 @@ const ShopsSinglePost = ({
           <View style={styles.postsTopRowNameContainer}>
             <Text style={styles.ShopPostTopTitle}>{shopPosts.shop.displayTitle}</Text>
             <Text style={styles.ShopPostSubTitle}>
-              {/* {moment(shopPosts.created.at).format("DD/MM/YYYY")} */}
-              {/* {console.log(readPostLoading)} */}
-
-              {/* {console.log("shopPosts.created.at")} */}
-              {/* {console.log(shopPosts.created.at == null)} */}
-              {/* {console.log(shopPosts.created.at)} */}
-              {/* {shopPosts.created.at.seconds == null} */}
-              {/* {shopPosts.created.at.seconds} */}
               {catchCondition}
             </Text>
           </View>
