@@ -186,7 +186,9 @@ const ShopList = ({
         refreshing={loading}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={shopData.length === 0 && <NotFoundFooter message="No shop found" />}
+        ListFooterComponent={shopData.length === 0 
+                              && loading === false 
+                              && <NotFoundFooter message="No shop found" />}
         style={styles.flatList}
         extraData={state}
       />

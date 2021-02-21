@@ -50,7 +50,7 @@ class index extends Component {
     const shopId = this.props.shopId;
     // this.props.readSingleFavourite(shopId);
     let favourite = this.lookingForFavourite({ shopId });
-    console.log(favourite)
+
     this.setState({ isFavourite: favourite ? favourite.isFavourite : false });
 
     this.props.readPromotion(shopId);
