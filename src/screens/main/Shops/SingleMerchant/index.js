@@ -8,6 +8,7 @@ import {
   readFromDatabase as readPromotion,
   removeListenerToRecord as removeListenerFromDatabase,
   verifyPermission,
+  onFavouriteClick,
 } from "@redux/shops/action";
 
 import { readObjects as readShopPost } from "@redux/shopPost/action";
@@ -344,4 +345,5 @@ export default connect(mapStateToProps, {
   readFromDatabase,
   submitToBackend,
   updateIsFavourite,
+  onFavouriteClick,
 })(index);
