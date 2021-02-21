@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
   },
   shopPostsContainer: {
     paddingTop: 40,
+    paddingBottom: 40,
     flex: 1,
   },
   chatBoxInnerImage: {

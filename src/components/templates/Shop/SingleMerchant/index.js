@@ -150,7 +150,10 @@ const SingleMerchant = ({
       >
         <View style={styles.contentFull}>
           <View style={styles.swipeableIndicator} />
-          <ScrollView style={styles.contentContainer}>
+          <ScrollView 
+            style={styles.contentContainer}
+            showsVerticalScrollIndicator={false}
+          >
             <Text style={styles.title}>
               Whiteboard
             </Text>
