@@ -10,6 +10,9 @@ const initialState = {
   readError: false,
   submitLoading: false,
   submitError: false,
+
+  selectedTab: false,
+
   tags: {},
   categories: {},
 
@@ -213,6 +216,12 @@ const favouriteReducer = (state = initialState, { type, payload }) => {
         ...state,
         favourite: payload.data ? payload.data : initialState.favourite,
       };
+    
+    case actions.TOGGLE_TAB:
+      return {
+        ...state,
+        selectedTab: !state.selectedTab
+      }
 
     default:
       return state;

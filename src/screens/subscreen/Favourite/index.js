@@ -2,10 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
+import { getDistance } from "geolib";
 
 import { verifyPermission, loadBookmark } from "@redux/bookmark/action";
 import { update, submitToBackend } from "@redux/bookmark/action";
-import { onBookmarkClick } from "@redux/promo/action";
+import { 
+  listenToRecord,
+  onBookmarkClick,
+  togglePromotionModal
+} from "@redux/promo/action";
 
 import { loadShops, onFavouriteClick } from "@redux/shops/action";
 import {
@@ -13,16 +18,10 @@ import {
   submitToBackend as submitToBackendShop,
   readFromDatabase,
   updateIsFavourite,
+  toggleTab
 } from "@redux/favourite/action";
-import styles from "./styles";
-
-import { Image, Text, TouchableOpacity, View } from "@components/atoms";
-
-import { Card, CardSection } from "@components/molecules";
 
 import { FavouriteList } from "@components/templates";
-
-import Icon from "react-native-vector-icons/FontAwesome";
 
 const RADIUS = 50;
 
@@ -38,7 +37,6 @@ class index extends Component {
       readLoading: true,
     };
     this.handleRefresh = this.handleRefresh.bind(this);
-    this.renderFooter = this.renderFooter.bind(this);
   }
 
   componentDidMount = async () => {
@@ -110,41 +108,13 @@ class index extends Component {
     this.setState({ readLoading: false });
   };
 
-  renderFooter({ empty }) {
-    if (empty) {
-      return Platform.OS === "ios" ? (
-        <Card style={{ backgroundColor: "transparent" }}>
-          <CardSection style={styles.emptySection}>
-            <Icon name="inbox" size={64} style={styles.emptyIcon} />
-            <Text style={styles.emptyText}>NO BOOKMARK FOUND</Text>
-          </CardSection>
-        </Card>
-      ) : (
-        <Card style={{ backgroundColor: "transparent", elevation: 0 }}>
-          <CardSection style={[styles.emptySection, { elevation: 0 }]}>
-            <Icon name="inbox" size={64} style={styles.emptyIcon} />
-            <Text style={styles.emptyText}>NO BOOKMARK FOUND</Text>
-          </CardSection>
-        </Card>
-      );
-    } else {
-      return <View style={{ marginBottom: 10 }} />;
-    }
-  }
-
   onMerchantPressed(item) {
-    Actions.SingleMerchantPromo({ promoId: item.promotion.id, distance: item.distance });
+    Actions.SingleMerchant({
+      shopId: item.id,
+      distance: item.distance,
+      categoryName: item.category,
+    });
   }
-
-  onCategoryChange = (value) => {
-    this.setState({ selectedCategory: value, selectedTag: "All" });
-    this.handleRefresh();
-  };
-
-  onTagChange = (value) => {
-    this.setState({ selectedTag: value });
-    this.handleRefresh();
-  };
 
   lookingForBookmark({ promoId } = null) {
     const bookmarks = this.props.bookmarks;
@@ -176,28 +146,83 @@ class index extends Component {
       await this.props.submitToBackend(data, "update");
     }
   };
+
+  onToggleTab(){
+    this.props.toggleTab();
+  }
+
   onBackPressed() {
     Actions.pop("Favourite");
   }
-  onShopsPressed() {
-    this.props.toggleFavourite();
 
-    console.log("shops");
+  onCarouselPressed() {
+    const location = this.props.promotionState.promotion.shop.l;
+    this.calculateDistance(location);
+    this.props.togglePromotionModal();
   }
-  onPromotionsPressed() {
-    console.log("promotions");
+
+  calculateDistance = async (destinationLocation) => {
+    const promo = this.props.promotionState;
+    var distance;
+    let location = await Location.getCurrentPositionAsync({});
+    distance =
+      getDistance(
+        { latitude: destinationLocation.U, longitude: destinationLocation.k },
+        {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }
+      ) / 1000;
+
+    Actions.SingleMerchant({
+      shopId: promo.promotion.shop.id,
+      distance: distance,
+      calculatedDistance: distance,
+    });
+  };
+
+  calculateShopDistance = async (destinationLocation) => {
+    var distance;
+    let location = await Location.getCurrentPositionAsync({});
+    distance =
+      getDistance(
+        { latitude: destinationLocation.U, longitude: destinationLocation.k },
+        {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }
+      ) / 1000;
   }
-  // onFavouriteFiltered() {
-  //   this.props.toggleFavourite();
-  // }
+
+  onPromoPressedClose() {
+    this.props.togglePromotionModal()
+  }
+
+  onPromoPressed(item) {
+    this.props.listenToRecord({ promoId: item.promotion.id })
+    this.props.togglePromotionModal()
+  }
 
   render() {
-    const { readLoading, promo, bookmark } = this.props.promotionState;
+    const { 
+      promotion,
+      promotionModalVisible
+    } = this.props.promotionState;
+
     const readBookmark = this.props.bookmarkState.readBookmark;
     const submitLoading = this.props.bookmarkState.submitLoading;
     const bookmarks = this.props.bookmarkState.bookmarks;
+    const { categories, tags } = this.props;
+
+    const {  
+      selectedTab,
+      favourites
+    } = this.props.favouriteState;
+
     let isBookmark = [];
     let activeBookmarks = [];
+    let isFavourite = [];
+    let activeFavourites = [];
 
     bookmarks.forEach((bookmark) => {
       if (bookmark.isBookmark === true) {
@@ -209,24 +234,44 @@ class index extends Component {
       isBookmark.push(bookmark.isBookmark);
     });
 
+    favourites.forEach((favourite) => {
+      if (favourite.isFavourite === true) {
+        activeFavourites.push(favourite);
+      }
+    })
+
+    activeFavourites.forEach((favourite) => {
+      isFavourite.push(favourite.isFavourite);
+    });
+
+    activeFavourites.map((favourite) => {
+      let favouriteCategory = categories.filter((category) => category.id === favourite.shop.categories[0]);
+
+      favouriteCategory ? (favourite.shop.category = favouriteCategory[0].title) : "";
+
+      let distance = this.calculateShopDistance(favourite.shop.l);
+
+      favourite.shop.distance = distance;
+    });
+
     return (
       <FavouriteList
         readBookmark={readBookmark}
         readLoading={this.state.readLoading}
         submitLoading={submitLoading}
         dataSource={activeBookmarks}
-        categories={this.state.categories}
-        tags={this.state.tags}
-        selectedCategory={this.state.selectedCategory}
+        shopData={activeFavourites}
+        selectedTab={selectedTab}
+        promotion={promotion}
+        promotionModal={promotionModalVisible}
         handleRefresh={this.handleRefresh.bind(this)}
-        renderFooter={this.renderFooter.bind(this)}
         onMerchantPressed={this.onMerchantPressed.bind(this)}
         onBookmarkPressed={this.onBookmarkPressed.bind(this)}
-        onCategoryChange={this.onCategoryChange.bind(this)}
-        onTagChange={this.onTagChange.bind(this)}
         onBackPressed={this.onBackPressed.bind(this)}
-        onShopsPressed={this.onShopsPressed.bind(this)}
-        onPromotionsPressed={this.onPromotionsPressed.bind(this)}
+        onPromoPressedClose={this.onPromoPressedClose.bind(this)}
+        onPromoPressed={this.onPromoPressed.bind(this)}
+        onCarouselPressed={this.onCarouselPressed.bind(this)}
+        onToggleTab={this.onToggleTab.bind(this)}
         // toggleFavourite={this.onFavouriteFiltered.bind(this)}
       />
     );
@@ -238,9 +283,17 @@ const mapStateToProps = (state) => {
   const promotionState = state.Promotion;
   const { bookmarks } = state.Bookmark;
   const bookmarkState = state.Bookmark;
+  const favouriteState = state.Favourite;
   // const shopState = state.Shops;
 
-  return { categories, tags, promotionState, bookmarks, bookmarkState };
+  return { 
+    categories, 
+    tags, 
+    promotionState, 
+    bookmarks, 
+    bookmarkState,
+    favouriteState
+  };
 };
 
 export default connect(mapStateToProps, {
@@ -255,4 +308,7 @@ export default connect(mapStateToProps, {
   submitToBackendShop,
   readFromDatabase,
   updateIsFavourite,
+  togglePromotionModal,
+  listenToRecord,
+  toggleTab
 })(index);

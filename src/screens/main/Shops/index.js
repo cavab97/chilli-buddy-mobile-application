@@ -147,7 +147,6 @@ class index extends Component {
   }
 
   onMerchantPressed(item) {
-    console.log(item.category);
     Actions.SingleMerchant({
       shopId: item.id,
       distance: item.distance,

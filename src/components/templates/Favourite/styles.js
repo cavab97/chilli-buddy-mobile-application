@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 250,
   },
+  shopImage: {
+    width: "100%",
+    height: 200,
+    borderRadius: 20,
+  },
   emptySection: {
     alignContent: "center",
     alignItems: "center",
@@ -14,7 +19,8 @@ const styles = StyleSheet.create({
   },
   promoTitleContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    paddingTop: 10,
+    paddingBottom: 10,
     width: "90%",
     alignSelf: "center",
     // backgroundColor: "yellow",
@@ -61,12 +67,19 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: "90%",
-    marginTop: 30,
+    marginTop: 20,
     backgroundColor: "#fff",
     alignSelf: "center",
     height: "auto",
     flex: 1,
     flexDirection: "row",
+  },
+  shopCardContainer: {
+    width: "90%",
+    marginTop: 20,
+    backgroundColor: "#fff",
+    alignSelf: "center",
+    height: "auto",
   },
   flatList: {
     minHeight: Mixins.WINDOW_HEIGHT - 300,

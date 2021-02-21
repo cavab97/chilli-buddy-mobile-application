@@ -221,7 +221,7 @@ const PromoList = ({
         )}
         keyExtractor={(item) => item.id}
         onRefresh={handleRefresh}
-        refreshing={false}
+        refreshing={loading}
         ListFooterComponent={
           dataSource.length === 0 && <NotFoundFooter message="No promotion found" />
         }

@@ -119,7 +119,7 @@ const shopsReducer = (state = initialState, { type, payload }) => {
     case actions.READ_FROM_DATABASE:
       return { 
         ...state, 
-        loading: true 
+        loading: true,
       };
 
     case actions.READ_FROM_DATABASE_SUCCESS:

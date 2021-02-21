@@ -14,6 +14,7 @@ const actions = {
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
 
   TOGGLE_FAVOURITE: type + "TOGGLE_FAVOURITE",
+  TOGGLE_TAB: type + "TOGGLE_TAB",
 
   READ_FAVOURITE: type + "READ_FAVOURITE",
   READ_FAVOURITE_SUCCESS: type + "READ_FAVOURITE_SUCCESS",
@@ -206,6 +207,12 @@ export function submitToBackend(data, actionName) {
       }
     });
   };
+}
+
+export const toggleTab = () => {
+  return{
+    type: actions.TOGGLE_TAB,
+  }
 }
 
 export default actions;
