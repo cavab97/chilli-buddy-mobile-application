@@ -28,20 +28,20 @@ export class HelpCenter extends Component {
         </View>
         <View>
           <Text style={styles.title}>About</Text>
-          {this.SingleListingSection("About Us", "https://gogogain.com/?page_id=277")}
-          {this.SingleListingSection("Term of Service", "https://gogogain.com/?page_id=826")}
-          {this.SingleListingSection("Privacy Policy", "https://gogogain.com/?page_id=824")}
+          {this.SingleListingSection("About Us", "https://chillibuddy.com/about-us/")}
+          {this.SingleListingSection("Term of Service", "https://chillibuddy.com/terms-and-conditions/")}
+          {this.SingleListingSection("Privacy Policy", "https://chillibuddy.com/privacy-policy/")}
         </View>
         <View>
           <Text style={styles.title}>Technical Support</Text>
-          {this.SingleListingSection("Email", "mailto:usersupport@infobay.com.my")}
+          {this.SingleListingSection("Email", "mailto:admin@chillibuddy.com")}
           {this.SingleListingSection("WhatsApp", "https://wa.me/601110990198")}
           {this.SingleListingSection("Customer Hotline", "tel:+601110990198")}
         </View>
-        <View>
+        {/* <View>
           <Text style={styles.title}>Frequently Asked Questions</Text>
           {this.SingleListingSection("View FAQ", "https://gogogain.com/?page_id=448")}
-        </View>
+        </View> */}
       </View>
     );
   }

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     color: Colors.PRIMARY,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     fontWeight: "bold",
     paddingLeft: 20,
     paddingVertical: 20,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   listTitle: {
     fontSize: 17,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
   },
   versionTextStyle: {
     fontSize: 18,
