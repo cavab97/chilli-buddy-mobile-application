@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedBack,
   View,
+  Image,
 } from "../../../components/atoms";
 
 import { ImageInfo, InputTextField } from "../../../components/molecules";
@@ -132,7 +133,7 @@ export class Index extends Component {
       <View style={styles.infoDetailSection}>
         <Text style={styles.infoTitleStyle}>
           {title}
-          {required && <Text style={{ color: "red", fontFamily: "RobotoRegular" }}> *</Text>}
+          {required && <Text style={{ color: "red", fontFamily: "HorizontalRounded" }}> *</Text>}
         </Text>
         <InputTextField
           placeholderText={title}
@@ -167,7 +168,7 @@ export class Index extends Component {
     const genderOption = ["Male", "Female"];
     const countriesList = require("../../../assets/address/countries.json");
     const statesList = require("../../../assets/address/Malaysia/states.json");
-
+    const cameraIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyUserProfileV2/camera_Icon.png");
     address.country = "Malaysia";
 
     /*  if (this.state.triggerLoading || this.state.message){
@@ -209,6 +210,11 @@ export class Index extends Component {
         <ScrollView showsVerticalScrollIndicator={false}>
           <TouchableWithoutFeedBack onPress={Keyboard.dismiss} accessible={false}>
             <View>
+              <View style={styles.topTextContainer}>
+                <Text style={styles.topText}>Profile</Text>
+                <Text style={styles.topSubText}>Edit Profile</Text>
+              </View>
+
               <View style={styles.ProfileContatiner}>
                 <View style={styles.ProfileImageStyle}>
                   {/* <View>  front camera profile picture*/}
@@ -222,7 +228,8 @@ export class Index extends Component {
                   onPress={this.onChangeImagePressed.bind(this)}
                   style={styles.UploadImageButton}
                 >
-                  <CustomIcon name="camera" color={Colors.PRIMARY} size={14} />
+                  <Image source={cameraIcon} style={styles.cameraIcon} />
+                  {/* <CustomIcon name="camera" color={Colors.PRIMARY} size={14} /> */}
                 </TouchableOpacity>
               </View>
               <View style={styles.BodyContatiner}>
@@ -241,8 +248,8 @@ export class Index extends Component {
                     key: "identityNumber",
                   })
                 )}
-                <View style={styles.infoDetailSection}>
-                  <Text style={styles.infoTitleStyle}>Gender</Text>
+                <View style={styles.infoDetailGenderSection}>
+                  <Text style={styles.infoTitleGenderStyle}>Gender</Text>
                   <ModalSelector
                     style={styles.genderButtonContainerStyle}
                     data={genderOption}
@@ -253,6 +260,7 @@ export class Index extends Component {
                     })}
                     selectedKey={gender}
                     initValue="Gender"
+                    selectStyle={styles.touchableStyle}
                   />
                 </View>
                 {/* {this.infoListSection(
@@ -277,7 +285,7 @@ export class Index extends Component {
                                             key: "phoneNumber",
                                         })
                                     )} */}
-                <View>
+                {/* <View>
                   <View style={styles.infoDetailSection}>
                     <Text style={styles.infoTitleStyle}>Address</Text>
                     <InputTextField
@@ -331,7 +339,7 @@ export class Index extends Component {
                       <View style={styles.fixContainer}>
                         <Text style={styles.countryStyle}>Malaysia</Text>
 
-                        {/* <ModalSelector
+                        <ModalSelector
                                                 style={styles.buttonContainerStyle}
                                                 data={countriesList}
                                                 keyExtractor={(item) =>
@@ -351,18 +359,18 @@ export class Index extends Component {
                                                 }
                                                 selectedKey={address.country}
                                                 initValue="Country"
-                                            /> */}
+                                            /> 
                       </View>
                     </View>
                   </View>
-                </View>
+                </View> */}
                 {this.state.message && this.state.error === false && (
                   <Text
                     style={{
                       paddingLeft: 20,
                       color: Colors.PRIMARY,
                       paddingBottom: 5,
-                      fontFamily: "RobotoRegular",
+                      fontFamily: "HorizontalRounded",
                     }}
                   >
                     Successful update information
@@ -374,7 +382,7 @@ export class Index extends Component {
                       paddingLeft: 20,
                       color: Colors.PRIMARY,
                       paddingBottom: 5,
-                      fontFamily: "RobotoRegular",
+                      fontFamily: "HorizontalRounded",
                     }}
                   >
                     {this.state.message}

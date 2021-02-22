@@ -12,6 +12,48 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
   },
+  promoTitleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "90%",
+    paddingTop: 10,
+    alignSelf: "center",
+  },
+  categoryContainer: {
+    flexDirection: "row",
+    width: "90%",
+    paddingTop: 10,
+    alignSelf: "center",
+  },
+  iconContainer: {
+    flexDirection: "row",
+    paddingTop: 5,
+  },
+  pageTitle: {
+    fontSize: 30,
+    color: Colors.PRIMARY,
+    fontFamily: "HorizontalRounded",
+  },
+  imageContainer: {
+    borderBottomWidth: 0,
+    padding: 0,
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  image: {
+    width: "100%",
+    height: 100,
+    borderRadius: 20,
+  },
+  emptyHeartIcon: {
+    width: 30,
+    height: 30,
+    resizeMode: "contain",
+  },
   emptyText: {
     fontWeight: "bold",
     fontSize: 20,
@@ -23,20 +65,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: Platform.OS === "ios" ? Colors.GRAY_LIGHTEST : "#F4F4F4",
   },
+  cardContainer: {
+    width: "90%",
+    marginTop: 30,
+    alignSelf: "center",
+    height: "auto",
+    flex: 1,
+    flexDirection: "row",
+  },
   flatList: {
     minHeight: Mixins.WINDOW_HEIGHT - 300,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    fontFamily: "RobotoRegular",
-    color: Colors.PRIMARY,
-  },
-  detail: {
-    marginLeft: 10,
-    fontSize: 12,
-    color: Colors.BLACK,
-    fontFamily: "RobotoRegular",
+    marginBottom: Mixins.WINDOW_HEIGHT / 15,
   },
   checkbox: {
     backgroundColor: Colors.GRAY_LIGHT,
@@ -105,7 +144,44 @@ const styles = StyleSheet.create({
     textShadowColor: Colors.SECONDARY,
     //textShadow: "0 0 3px #000",
   },
-
+  distanceIcon: {
+    height: 15,
+    width: 15,
+    marginRight: 5,
+  },
+  detail: {
+    fontSize: 12,
+    color: Colors.GREY,
+    fontFamily: "HorizontalRounded",
+  },
+  descriptionContainer: {
+    paddingHorizontal: 8,
+    paddingVertical: 0,
+    borderBottomWidth: 0,
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  title: {
+    fontSize: 16,
+    fontFamily: "HorizontalRounded",
+    flex: 1,
+    flexWrap: "wrap",
+  },
+  subtitle: {
+    fontSize: 12,
+    fontFamily: "HorizontalRounded",
+    flex: 1,
+    flexWrap: "wrap",
+  },
+  favouriteIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: "contain",
+  },
+  textContainer: {
+    paddingHorizontal: 8,
+    borderBottomWidth: 0,
+  },
   floatingDistanceIndicator: {
     borderWidth: 1,
     borderColor: "rgba(0,0,0,0.2)",
@@ -126,6 +202,38 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.WHITE,
     fontFamily: "RobotoBold",
+  },
+  bookmarkIcon: {
+    position: "absolute",
+    right: 5,
+    bottom: 0,
+  },
+  leftCardContainer: {
+    width: "35%",
+  },
+  rightCardContainer: {
+    width: "65%",
+    height: 100,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    paddingBottom: 10,
+  },
+  button: {
+    shadowColor: Colors.GREY, 
+    shadowOffset: { 
+        height: 0, 
+        width: 0 
+    }, 
+    shadowOpacity: 0.4,
+    shadowRadius: 1.5, 
+    backgroundColor: Colors.WHITE,
+    elevation: 2,  
+    borderRadius: 30,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    marginRight: 10,
+    marginVertical: 8
   },
 });
 

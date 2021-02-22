@@ -23,6 +23,9 @@ export class HelpCenter extends Component {
   render() {
     return (
       <View>
+        <View style={styles.topTextContainer}>
+          <Text style={styles.topText}>Help Center</Text>
+        </View>
         <View>
           <Text style={styles.title}>About</Text>
           {this.SingleListingSection("About Us", "https://chillibuddy.com/about-us/")}
@@ -34,7 +37,7 @@ export class HelpCenter extends Component {
         </View>
         <View>
           <Text style={styles.title}>Technical Support</Text>
-          {this.SingleListingSection("Email", "mailto:usersupport@infobay.com.my")}
+          {this.SingleListingSection("Email", "mailto:admin@chillibuddy.com")}
           {this.SingleListingSection("WhatsApp", "https://wa.me/601110990198")}
           {this.SingleListingSection("Customer Hotline", "tel:+601110990198")}
         </View>

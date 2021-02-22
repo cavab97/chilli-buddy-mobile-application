@@ -1,6 +1,7 @@
 //Main
 import shopsReducer from "./shops/reducer";
 import shopPostReducer from "./shopPost/reducer";
+import shopPostMainReducer from "./shopPostMain/reducer";
 
 import routeGroupReducer from "./routeGroup/reducer";
 import routeReducer from "./route/reducer";
@@ -20,11 +21,13 @@ import bookmarkReducer from "./bookmark/reducer";
 import voucherReducer from "./voucher/reducer";
 
 import checkInReducer from "./checkIn/reducer";
+import favouriteReducer from "./favourite/reducer";
 
 export default combineReducers = {
   Advertisement: advertisementsReducer,
   Shops: shopsReducer,
   ShopPost: shopPostReducer,
+  ShopPostMain: shopPostMainReducer,
   Settings: settingsReducer,
   RouteGroup: routeGroupReducer,
   Route: routeReducer,
@@ -37,4 +40,5 @@ export default combineReducers = {
   Bookmark: bookmarkReducer,
   Voucher: voucherReducer,
   CheckIn: checkInReducer,
+  Favourite: favouriteReducer,
 };

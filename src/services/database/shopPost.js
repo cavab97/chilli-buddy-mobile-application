@@ -39,7 +39,53 @@ export function readObjects(groupId) {
       });
   });
 }
+let objectListener = () => {};
 
+export function readObject({ objectId, updateListener = () => {} }) {
+  objectListener = database
+    .readRecord({ ref: `${objectName}Private0/${objectId}` })
+    .onSnapshot((snapshot) => {
+      const data = {
+        ...snapshot.data(),
+        ...snapshot.data().d,
+        id: snapshot.id,
+      };
+      delete data["d"];
+
+      const parent = database.processData({ data });
+      // const winner = database.processData({ data: data.winner });
+      // const created = database.processData({ data: data.created });
+      // const deleted = database.processData({ data: data.deleted });
+      // const updated = database.processData({ data: data.updated });
+
+      const processedData = { ...parent };
+
+      updateListener(processedData);
+    });
+}
+
+// export function listenObject({ objectId = null, updateListener = () => {} }) {
+//   objectListener = database
+//     .readRecord({ ref: `${objectName}Private0/${objectId}` })
+//     .onSnapshot((snapshot) => {
+//       const data = {
+//         ...snapshot.data(),
+//         ...snapshot.data().d,
+//         id: snapshot.id,
+//       };
+//       delete data["d"];
+
+//       const parent = database.processData({ data });
+//       const winner = database.processData({ data: data.winner });
+//       const created = database.processData({ data: data.created });
+//       const deleted = database.processData({ data: data.deleted });
+//       const updated = database.processData({ data: data.updated });
+
+//       const processedData = { ...parent, created, deleted, updated, winner };
+
+//       updateListener(processedData);
+//     });
+// }
 // export function readObject({ id }) {
 //   return new Promise((resolve, reject) => {
 //     database

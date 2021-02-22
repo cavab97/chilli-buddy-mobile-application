@@ -29,24 +29,28 @@ const ImageSwiper = ({
       showsButtons={showsButtons}
       nextButton={nextButton}
       prevButton={prevButton}
+      showsPagination={true}
+      // containerStyle={styles.container}
+      // removeClippedSubviews={false}
+      // showsHorizontalScrollIndicator={true}
+      // style={styles.wrapper}
     >
       {condition ? (
         slider.map((data, index) => {
           return (
-            <View>
+            <View key={data.shopId}>
               <TouchableOpacity
-                key={index}
                 activeOpacity={0.6}
                 onPress={onPressImage.bind(this, index)}
+                // style={style.subContainer1}
               >
-                {/* <View key={index} style={style.subContainer1}> */}
-                <Image
-                  source={{ uri: data.imageUri }}
-                  style={style.imageTopStyle}
-                  resizeMode={resizeMode}
-                />
-
-                {/* </View> */}
+                <View style={style.subContainer1}>
+                  <Image
+                    source={{ uri: data.imageUri }}
+                    resizeMode={resizeMode}
+                    style={style.imageTopStyle}
+                  />
+                </View>
               </TouchableOpacity>
             </View>
           );

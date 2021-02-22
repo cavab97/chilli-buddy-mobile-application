@@ -110,49 +110,8 @@ const BookmarkList = ({
   readLoading,
 }) => {
   return (
-    <View style={{ height: "100%" }}>
-      {/* <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          marginBottom: 8,
-        }}
-      >
-        <ModalSelector
-          onChange={onCategoryChange.bind(this)}
-          data={categories}
-          initValue="Select Categories"
-          style={styles.categoriesButton}
-          selectStyle={styles.categoriesSelect}
-          selectTextStyle={styles.modalSelectTextStyle}
-          optionTextStyle={styles.modalOptionTextStyle}
-          keyExtractor={(item) => item.id}
-          labelExtractor={(item) => item.title}
-        />
-
-        <ModalSelector
-          data={selectedCategory.tags}
-          keyExtractor={(item) => item}
-          labelExtractor={(item) =>
-            tags.filter((tag) => tag.id === item).map(({ title }) => title)[0]
-          }
-          onChange={onTagChange.bind(this)}
-          selectStyle={styles.categoriesSelect}
-          selectTextStyle={styles.modalSelectTextStyle}
-          optionTextStyle={styles.modalOptionTextStyle}
-          style={{
-            justifyContent: "center",
-            borderWidth: 1.2,
-            marginRight: 5,
-            marginTop: 13,
-            backgroundColor: "#D60000",
-            borderColor: "#D60000",
-            borderRadius: 3,
-          }}
-        >
-          <Icon name="filter" size={20} style={styles.tagsButton} />
-        </ModalSelector>
-      </View> */}
+    <View style={{ flex: 1 }}>
+  
       {readLoading ? (
         <View />
       ) : (

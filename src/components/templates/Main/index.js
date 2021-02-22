@@ -1,11 +1,16 @@
 import React from "react";
 import styles from "./styles";
 import { Platform, Dimensions, Animated } from "react-native";
+import { Colors } from "../../../settings/styles/theme";
+
 import { Actions } from "react-native-router-flux";
 //import Video  from "react-native-video";
 import { Video } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ImageInfo, SearchBar } from "../../molecules";
+import { SingleMerchantPromo } from "../../templates/Promo/SingleMerchantPromo";
+
 //import WheelOfFortune from "react-native-wheel-of-fortune";
 
 import {
@@ -20,6 +25,7 @@ import {
   Modal,
   Button,
   RefreshControl,
+  Icon as Icon2,
 } from "../../atoms";
 
 import { Card, CardSection } from "../../molecules";
@@ -29,6 +35,7 @@ import { InfoBox } from "@components/organisms/InfoBox";
 import { SmallCardList } from "../../organisms/SmallCardList";
 
 import { ImageSwiper } from "../../organisms/ImageSwiper";
+import { SpinningWheel } from "../../organisms/SpinningWheel";
 
 import ContentLoader, { Rect } from "react-content-loader/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -70,7 +77,20 @@ export default ({
   fadeResult,
   spinStatus,
   onCheckInPressed,
-  checkIn,
+  onPromotionsPressed,
+  onShopsPressed,
+  onProfilePressed,
+  user,
+  promoSource,
+  onMerchantPressed,
+  promotions,
+  onOpenSpinningWheel,
+  returnGreetings,
+  promotionModal,
+  promotion,
+  onCarouselPressed,
+  onPromoPressed,
+  onPromoPressedClose,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -86,12 +106,18 @@ export default ({
       key: "advertisementLoading" + index,
     };
   };
+
   const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
   const wheelIcon = require("../../../assets/icons/wheelIcon.png");
 
   const AdvertisementPopUp = (url) => {
     return type === "image" ? (
-      <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
+      <Modal
+        // animationType="fade"
+        transparent={true}
+        visible={isAdvertisementModelShow}
+        onBackdropPress={onCloseAdvertisementModal}
+      >
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
             <TouchableOpacity onPress={() => onPressPopUp(getShopId)}>
@@ -101,15 +127,27 @@ export default ({
                 //resizeMode="contain"
               />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
-              <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={onCloseAdvertisementModal}
+              activeOpacity={1}
+            >
+              <Image
+                source={require("../../../assets/chilliBuddyCheckin/closeButton.png")}
+                style={styles.videoImageCrossStyle}
+              />
             </TouchableOpacity>
           </View>
         </View>
         <View></View>
       </Modal>
     ) : type === "video" ? (
-      <Modal animationType="fade" transparent={true} visible={isAdvertisementModelShow}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isAdvertisementModelShow}
+        onBackdropPress={onCloseAdvertisementModal}
+      >
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
             <Video
@@ -123,8 +161,15 @@ export default ({
               positionMillis={0}
               useNativeControls={true}
             />
-            <TouchableOpacity style={styles.closeButton} onPress={onCloseAdvertisementModal}>
-              <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={onCloseAdvertisementModal}
+              activeOpacity={1}
+            >
+              <Image
+                source={require("../../../assets/chilliBuddyCheckin/closeButton.png")}
+                style={styles.videoImageCrossStyle}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -205,9 +250,82 @@ export default ({
       </TouchableOpacity>
     );
   };
+  function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance }) {
+    const { image } = styles;
+
+    let cover = "";
+    if (picture.length === 0) cover = require("@assets/images/404NotFound.jpeg");
+    else cover = { uri: picture[0] };
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <Card style={{ width: "98%" }}>
+          <CardSection
+            style={{
+              borderBottomWidth: 0,
+            }}
+          >
+            <Image style={image} resizeMode="cover" source={cover} />
+          </CardSection>
+          <View style={styles.floatingDistanceIndicator}>
+            <MaterialCommunityIcons name="map-marker-distance" color="white" size={20} />
+            <Text style={styles.distanceIndicatorTitle}>
+              {
+                +(distance != undefined
+                  ? Math.round(distance + "e+2") + "e-2"
+                  : Math.round(calculatedDistance + "e+2") + "e-2")
+              }
+              KM Away
+            </Text>
+          </View>
+          {/* <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
+            {gotBookmark ? (
+              <View
+                style={{
+                  borderRadius: 100,
+                  borderWidth: 0,
+                  borderColor: "#ffd30f",
+                  backgroundColor: "#ffd30f",
+                }}
+              >
+                <Icon2
+                  size={50}
+                  iconStyle={{ borderWidth: 0 }}
+                  containerStyle={{ justifyContent: "center" }}
+                  name={"stars"}
+                  color="#d60000"
+                />
+              </View>
+            ) : (
+              <View
+                style={{
+                  borderRadius: 100,
+                  backgroundColor: "#ffffff",
+                }}
+              >
+                <Icon2
+                  size={50}
+                  iconStyle={{ borderWidth: 0 }}
+                  containerStyle={{ justifyContent: "center" }}
+                  name={"stars"}
+                  color="#d60000"
+                />
+              </View>
+            )}
+          </TouchableOpacity> */}
+          {/* )} */}
+        </Card>
+      </TouchableOpacity>
+    );
+  }
+  const { displayName, email, phoneNumber, photoURL } = user;
 
   const wheelImage = require("../../../assets/categoryWheel.png");
   const resultImage = require("../../../assets/categoryResult.png");
+  const shopsIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/shop_Icon.png");
+  const salesIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/sale_Icon.png");
+  const spinWheel = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/spinWheel_Icon.png");
+  const checkIn = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/checkIn_Icon.png");
+  const hotPickIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/fireHotText_Icon.png");
 
   let { width } = Dimensions.get("window");
   width = width * 0.7;
@@ -215,7 +333,6 @@ export default ({
     inputRange: [0, 360],
     outputRange: ["0deg", "360deg"],
   });
-
   return (
     <View>
       <ScrollView
@@ -224,6 +341,7 @@ export default ({
         //refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
       >
         <View style={styles.container}>
+          {/* The First screen Row */}
           {readFail && (
             <InfoBox
               title="Memo"
@@ -234,150 +352,171 @@ export default ({
             />
           )}
           <View style={{ height: Constants.statusBarHeight }} />
-          <View style={styles.subContainer1}>
-            {readLoadingHeaderImages ? (
-              <ContentLoader speed={1} height={250} backgroundColor="#d9d9d9">
-                <Rect x="0" y="0" rx="4" ry="4" width="100%" height="280" />
-              </ContentLoader>
-            ) : (
-              <ImageSwiper
-                style={styles}
-                slider={slider}
-                autoplayTime={5}
-                autoplay={true}
-                noImageSlider={noImageHeaderSlider}
-                condition={slider.length > 0}
-                onPressImage={onPressImage}
-              />
-            )}
+
+          <SingleMerchantPromo
+            promotionModal={promotionModal}
+            dataSource={promotion}
+            onCarouselPressed={onCarouselPressed}
+            onPromoPressedClose={onPromoPressedClose}
+          />
+
+          <View style={styles.firstSection}>
+            {/* Column 1*/}
+            <View style={styles.firstSectionFirstColumn}>
+              {/* Row1 for Name*/}
+              <View>
+                {/* Name from firebase*/}
+                <Text style={styles.firstSectionText1}>Hi, {user.displayName} </Text>
+              </View>
+              {/* Row2 for Good Morning*/}
+              <View>
+                {/* Follow condition by Time*/}
+                <Text style={styles.firstSectionText2}>{returnGreetings}</Text>
+              </View>
+            </View>
+            {/* Column 1*/}
+            <View style={styles.firstSectionSecondColumn}>
+              {/* Row1 for Profile Button*/}
+
+              <TouchableOpacity style={styles.avatarContainer} onPress={onProfilePressed}>
+                <ImageInfo
+                  banner={photoURL ? photoURL : require("../../../assets/DefaultAvatar.jpg")}
+                  imageContainer={styles.profileImageStyle}
+                  imageStyle={styles.image}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
-          {readLoadingHeaderImages ? (
-            <View />
-          ) : randomAdPic !== undefined ? (
-            <AdvertisementPopUp />
-          ) : (
-            <View />
-          )}
+          {/* The Second screen Row */}
+          {/* <View style={styles.SecondSection}>
+            <SearchBar
+              placeholder="Search"
+              lightTheme={true}
+              searchIcon={true}
+              containerStyle={styles.searchBarStyles}
+              inputContainerStyle={styles.searchBarInputStyles}
+              placeholderTextColor="#f7d0d0"
+              round={true}
+            />
+            <SearchBar placeholder="Search" />
+          </View> */}
 
-          {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
+          {/* The Third screen Row */}
+          <View style={styles.thirdSection}>
+            {/* The Slider*/}
+            {/* ImageSwiper */}
 
-          <Modal transparent={true} visible={spinningWheelModal}>
-            <View style={styles.modelBackground}>
-              <View style={styles.containerForSpinningWheel}>
-                {randomCategory != null && spinStatus === false ? (
-                  <View>
-                    <View style={{ alignItems: "center", paddingTop: 30 }}>
-                      <Text style={styles.spinningTitle2}>
-                        {" "}
-                        We have a great choice of Restaurants near you{" "}
-                      </Text>
-                      <Text style={styles.subTitle}> Let's go! </Text>
-                    </View>
-                    <View style={styles.spinningWheelImage}>
-                      <Animated.View style={{ opacity: fadeResult }}>
-                        <TouchableOpacity onPress={() => onPressRandomCategory(randomCategory)}>
-                          <Animated.Image style={{ width, height: width }} source={resultImage} />
-                          <View style={styles.categoryTextHolder}>
-                            <CustomIcon
-                              name={randomCategory.icon}
-                              size={30}
-                              style={{ color: "#FFFFFF" }}
-                            />
-                            <Text style={styles.categoryText}> {randomCategory.title} </Text>
-                          </View>
-                        </TouchableOpacity>
-                      </Animated.View>
-                    </View>
-                  </View>
-                ) : (
-                  <View>
-                    <View style={{ alignItems: "center", paddingTop: 30 }}>
-                      <Text style={styles.spinningTitle}> Don't know </Text>
-                      <Text style={styles.subTitle}> WHAT TO EAT? </Text>
-                    </View>
-                    <View style={styles.spinningWheelImage}>
-                      <View>
-                        <Animated.View style={{ opacity: fadeWheel }}>
-                          <Animated.Image
-                            style={{ width, height: width, transform: [{ rotate: rotation }] }}
-                            source={wheelImage}
-                          />
-                        </Animated.View>
-                      </View>
-                    </View>
-                  </View>
-                )}
-                <View>
-                  <TouchableOpacity
-                    style={spinStatus ? styles.categoriesButton : styles.categoriesButton}
-                    onPress={spinningWheel}
-                    disabled={spinStatus}
-                  >
-                    <Text style={styles.buttonText}>
-                      {" "}
-                      {spinStatus ? "SPINNING..." : randomCategory ? "SPIN AGAIN" : "START"}{" "}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity
-                  style={styles.closeWheelModal}
-                  onPress={onCloseSpinningWheelModal}
+            <View style={styles.subContainerOutside}>
+              {readLoadingHeaderImages ? (
+                <ContentLoader
+                  speed={1}
+                  height={"100%"}
+                  style={styles.subContainerOutsideShadow}
+                  backgroundColor="#d9d9d9"
                 >
-                  <MaterialCommunityIcons name="close-circle-outline" size={40} color="#FFFFFF" />
-                </TouchableOpacity>
-              </View>
+                  <Rect x="0" y="0" rx="50" ry="50" width="100%" height="100%" />
+                </ContentLoader>
+              ) : (
+                <ImageSwiper
+                  style={styles}
+                  slider={slider}
+                  autoplayTime={5}
+                  autoplay={true}
+                  noImageSlider={noImageHeaderSlider}
+                  condition={slider.length > 0}
+                  onPressImage={onPressImage}
+                />
+              )}
             </View>
-          </Modal>
+            {readLoadingHeaderImages ? (
+              <View />
+            ) : randomAdPic !== undefined ? (
+              <AdvertisementPopUp />
+            ) : (
+              <View />
+            )}
 
-          {readLoadingCategoryList ? (
-            <View style={styles.subContainer2}>
-              <View>
-                <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
+            {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
+          </View>
+
+          {/* The quarter screen Row */}
+          <View style={styles.quarterSection}>
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onShopsPressed}>
+              <View style={styles.quarterInnerBox}>
+                <Image source={shopsIcon} transition={false} style={styles.quarterIcon} />
               </View>
-              <VirtualizedList
-                vertical
-                showsHorizontalScrollIndicator={false}
-                data={DATA}
-                renderItem={({ index }) => <CardListLoading index={index} />}
-                keyExtractor={(item) => item.key}
-                getItemCount={() => {
-                  return 6;
-                }}
-                getItem={getItem}
-              />
+              {/* <View style={styles.innerRedBackGround}></View> */}
+              <Text style={styles.floatingCheckInTitle}>Shops</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onPromotionsPressed}>
+              <View style={styles.quarterInnerBox}>
+                <Image source={salesIcon} transition={false} style={styles.quarterIcon} />
+              </View>
+              <Text style={styles.floatingCheckInTitle}>Promotions</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onOpenSpinningWheel}>
+              <View style={styles.quarterInnerBox}>
+                <Image source={spinWheel} transition={false} style={styles.quarterIcon} />
+              </View>
+              <Text style={styles.floatingCheckInTitle}>Spin Me</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.QuarterContainer1} onPress={onCheckInPressed}>
+              <View style={styles.quarterInnerBox}>
+                <Image source={checkIn} transition={false} style={styles.quarterIcon} />
+              </View>
+              <Text style={styles.floatingCheckInTitle}>Check In</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* The Last Row*/}
+          <View style={styles.lastSection}>
+            <View style={styles.lastSectionFirstRow}>
+              <Text style={styles.lastSectionText}>Hot Pick Today </Text>
+              <Image source={hotPickIcon} transition={false} style={styles.lastSectionIcon} />
             </View>
-          ) : dataSource2.length != 0 ? (
-            <View style={styles.subContainer2}>
-              {/* {randomAdPic !== undefined && <AdvertisementPopUp />} */}
-              <View>
-                <Text style={styles.sectionTitle}> {sectionTitle1} </Text>
-              </View>
+            <View style={styles.lastSectionFlatListRow}>
               <FlatList
-                vertical
+                horizontal
                 showsHorizontalScrollIndicator={false}
-                data={dataSource2}
+                data={promoSource}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item, index }) => <CategoriesList data={item} index={index} />}
-                scrollEnabled={dataSource2.length > 1 ? true : false}
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity onPress={() => onPromoPressed(item)}>
+                    <Card
+                      key={item.id + index}
+                      style={index === 0 ? styles.firstPromoteCardStyle : styles.promoteCardStyle}
+                    >
+                      {item.coverPhotos.length > 0 ? (
+                        <Image
+                          source={{ uri: item.coverPhotos[0] }}
+                          style={styles.promoteImage}
+                          resizeMode="cover"
+                        />
+                      ) : (
+                        <Image source={noPromoteImage} style={promoteImage} resizeMode="cover" />
+                      )}
+                      <View style={styles.lastSectionTextContainer}>
+                        <Text numberOfLines={2} style={styles.promoteTitleTextStyle}>
+                          {item.title}
+                        </Text>
+                      </View>
+                    </Card>
+                  </TouchableOpacity>
+                )}
+                keyExtractor={(item) => item.id}
+                onRefresh={handleRefresh}
+                refreshing={false}
+                scrollEnabled={promoSource.length > 1}
+
+                // ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
+                // style={styles.flatList}
               />
-              <View style={{ height: 25 }} />
             </View>
-          ) : (
-            <View style={styles.subContainer2}></View>
-          )}
+          </View>
         </View>
       </ScrollView>
-      <TouchableOpacity
-        style={styles.containerForFloatingButton}
-        onPress={onOpenSpinningWheelModal}
-      >
-        <Image source={wheelIcon} style={styles.floatingButton} />
-      </TouchableOpacity>
-      {/* <TouchableOpacity style={styles.floatingShopButton} onPress={onCheckInPressed}>
-        <Icon name="ios-checkmark-circle-outline" color="white" size={25} />
-        <Text style={styles.floatingCheckInTitle}>CHECK IN</Text>
-      </TouchableOpacity> */}
     </View>
   );
 };

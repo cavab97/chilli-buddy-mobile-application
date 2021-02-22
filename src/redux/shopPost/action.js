@@ -7,6 +7,10 @@ const actions = {
   READ_FROM_DATABASE_SUCCESS: type + "READ_FROM_DATABASE_SUCCESS",
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
 
+  READ_FROM_DATABASE_SINGLEPOST: type + "READ_FROM_DATABASE_SINGLEPOST",
+  READ_FROM_DATABASE_SINGLEPOST_SUCCESS: type + "READ_FROM_DATABASE_SINGLEPOST_SUCCESS",
+  READ_FROM_DATABASE_SINGLEPOST_ERROR: type + "READ_FROM_DATABASE_SINGLEPOST_ERROR",
+
   READ_RECORD: type + "READ_RECORD",
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
   READ_RECORD_ERROR: type + "READ_RECORD_ERROR",
@@ -21,7 +25,7 @@ export const update = (data) => {
   };
 };
 
-export function readFromDatabase(groupId) {
+export function readObjects(groupId) {
   return (dispatch) => {
     dispatch({ type: actions.READ_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
@@ -43,6 +47,57 @@ export function readFromDatabase(groupId) {
     });
   };
 }
+export function readObject(objectId) {
+  console.log("objectId");
+
+  console.log(objectId);
+  return (dispatch) => {
+    dispatch({ type: actions.READ_FROM_DATABASE_SINGLEPOST });
+
+    try {
+      shopPostDataServices.readObject({
+        objectId: objectId,
+        updateListener: (data) => {
+          dispatch({
+            type: actions.READ_FROM_DATABASE_SINGLEPOST_SUCCESS,
+            payload: { data },
+          });
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      reject(error);
+      dispatch({
+        type: actions.READ_FROM_DATABASE_SINGLEPOST_ERROR,
+        payload: { error },
+      });
+    }
+  };
+}
+
+// export function listenToRecord({ routeId = null }) {
+//   return (dispatch) => {
+//     dispatch({ type: actions.READ_RECORD });
+//     console.log(`Start listen to route : ${routeId} `);
+//     try {
+//       routeDataServices.listenObject({
+//         objectId: routeId,
+//         updateListener: (data) => {
+//           dispatch({
+//             type: actions.READ_RECORD_SUCCESS,
+//             payload: { data },
+//           });
+//         },
+//       });
+//     } catch (error) {
+//       console.log(error);
+//       dispatch({
+//         type: actions.READ_RECORD_ERROR,
+//         payload: { error },
+//       });
+//     }
+//   };
+// }
 
 // export function listenFromDatabase() {
 //   return (dispatch) => {
@@ -104,7 +159,5 @@ export function readFromDatabase(groupId) {
 //     shopPostDataServices.unlistenObject();
 //   }
 // }
-
-
 
 export default actions;

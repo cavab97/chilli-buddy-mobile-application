@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles";
 
-import { Dimensions } from "react-native";
+import { Dimensions, Platform } from "react-native";
 
 import {
   View,
@@ -9,50 +9,111 @@ import {
   Text,
   ScrollView,
   CustomIcon,
-  FlatList,
+  Modal,
   Carousel,
   TouchableOpacity,
 } from "@components/atoms";
 
-import { ImageSwiper } from "../../../../components/organisms/ImageSwiper";
-
-import { Ionicons } from "@expo/vector-icons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Colors } from "../../../../settings/styles/theme";
 import moment from "moment";
+import ContentLoader, { Rect } from "react-content-loader/native";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
 
 const SingleMerchantPromo = ({
   dataSource,
-  promotions,
+  promotionModal,
   noImage,
-  noPromoteImage,
+  onPromoPressedClose,
   onPromoteClick,
-  onMerchantPressed,
+  onCarouselPressed,
   onPressedSwipe,
   setSwiperRef,
-  distance,
-  calculatedDistance,
+  isVisible,
+  onClose,
+  readDataStatus,
 }) => {
   const {
-    posterArea,
-    poster,
-    imageTopStyle,
-    subContainer1,
-    promoImageSwapLeft,
-    promoImageSwapRight,
+    modelBackground,
+    adsImageStyle,
+    closeButton,
+    cross,
+    caption,
+    dateContainer,
+    distanceIndicatorTitle,
   } = styles;
 
+  const closeIcon = require("../../../../assets/chilliBuddyCheckin/closeButton.png");
+  const width = Platform.OS === "ios" && Platform.isPad === true ? 460 : 300;
+
+  const startDate = moment(dataSource.startTime).format("DD-MM-YYYY");
+  const endDate = moment(dataSource.endTime).format("DD-MM-YYYY");
+
   return (
-    <ScrollView>
+    <Modal transparent={true} visible={promotionModal} onBackdropPress={onClose}>
+      {readDataStatus ? (
+        <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="white">
+          <Rect
+            x="10"
+            y="20"
+            rx="10"
+            ry="10"
+            width={windowWidth - 20}
+            height={windowHeight - 110}
+          />
+        </ContentLoader>
+      ) : (
+        <View style={modelBackground}>
+          <View style={{ width: width }}>
+            <Carousel
+              ref={setSwiperRef}
+              data={dataSource.images}
+              renderItem={({ item, index }) => {
+                return (
+                  <TouchableOpacity onPress={onCarouselPressed}>
+                    {dataSource.images.length > 0 ? (
+                      <Image source={{ uri: item }} style={adsImageStyle} resizeMode={"cover"} />
+                    ) : (
+                      <Image
+                        source={noImage}
+                        style={adsImageStyle}
+                        //resizeMode={"cover"}
+                      />
+                    )}
+                  </TouchableOpacity>
+                );
+              }}
+              loop={true}
+              sliderWidth={width}
+              itemWidth={width}
+              contentContainerCustomStyle={{ alignItems: "center" }}
+            />
+            <TouchableOpacity style={closeButton} onPress={onPromoPressedClose} activeOpacity={1}>
+              <Image source={closeIcon} style={cross} />
+            </TouchableOpacity>
+            <View style={dateContainer}>
+              <Text style={distanceIndicatorTitle}>
+                Valid from {startDate} to {endDate}
+              </Text>
+            </View>
+            <Text style={caption}>slide for more</Text>
+          </View>
+        </View>
+      )}
+    </Modal>
+  );
+};
+
+export { SingleMerchantPromo };
+
+{
+  /* <ScrollView>
       <View style={posterArea}>
-        {/* <Image
+            <Image
                 style={poster}
                 source={cover}
-            /> */}
-        {/* <ImageSwiper 
+            /> 
+        <ImageSwiper 
             autoplay={false}
             style={styles}
             condition={dataSource.images.length > 0 }
@@ -63,7 +124,7 @@ const SingleMerchantPromo = ({
             setSwiperRef={setSwiperRef}
             nextButton={<MaterialCommunityIcons name="chevron-right-circle" size={30} onPress={onPressedSwipe.bind(this, "next")} />}
             prevButton={<MaterialCommunityIcons name="chevron-left-circle" size={30} onPress={onPressedSwipe.bind(this, "back")} />}
-        /> */}
+        />
         <Carousel
           ref={setSwiperRef}
           data={dataSource.images}
@@ -114,8 +175,5 @@ const SingleMerchantPromo = ({
         <CustomIcon name="merchant" size={20} color="white" />
         <Text style={styles.floatingShopButtonTitle}>View Shop</Text>
       </TouchableOpacity>
-    </ScrollView>
-  );
-};
-
-export { SingleMerchantPromo };
+    </ScrollView> */
+}

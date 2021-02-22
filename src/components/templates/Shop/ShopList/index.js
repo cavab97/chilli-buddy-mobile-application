@@ -1,13 +1,23 @@
 import React from "react";
+import { RefreshControl } from "react-native";
 import styles from "./styles";
 
-import { FlatList, Image, ModalSelector, Text, TouchableOpacity, View } from "@components/atoms";
+import {
+  FlatList,
+  Image,
+  ModalSelector,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from "@components/atoms";
 
-import { Card, CardSection } from "@components/molecules";
+import { NotFoundFooter, CardSection } from "@components/molecules";
 
+import { CategoryList } from "@components/organisms/CategoryList";
+
+import FavouriteIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Icon from "react-native-vector-icons/FontAwesome";
-import Label, { Orientation } from "react-native-label";
 
 function Item({
   name,
@@ -15,17 +25,17 @@ function Item({
   logo,
   picture = [],
   address,
-  subscribers,
+  category,
   distance,
   endDate,
   index,
   onPress,
-  onSubscribePress,
-  subscribed,
   isPromote,
+  onFavouritePress,
+  isFavourite,
+  item,
 }) {
-  const { image, title, detail, subscribe, profile } = styles;
-
+  const { image, title, detail, profile } = styles;
   let cover = "";
   if (picture.length === 0) cover = require("../../../../assets/images/404NotFound800x533.jpg");
   else cover = { uri: picture[0] };
@@ -34,86 +44,47 @@ function Item({
   if (logo.length === 0) icon = require("../../../../assets/logo.png");
   else icon = { uri: logo[0] };
 
+  const distanceIcon = require("../../../../assets/icons/distance.png");
+  const emptyHeartIcon = require("../../../../assets/icons/emptyHeart.png");
+  const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
+  const promotionTag = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/promotions.png");
+
   return (
     <TouchableOpacity onPress={onPress}>
-      <Card style={{ width: "98%" }}>
-        {/* <Label
-          orientation={Orientation.TOP_RIGHT}
-          title="Promotion"
-          color="#D60000"
-          distance={70}
-          extent={0}
-          style={isPromote ? { fontSize: 13 } : { display: "none" }}
-        > */}
-        <CardSection
-          style={{
-            borderBottomWidth: 0,
-          }}
-        >
+      <View style={styles.cardContainer}>
+        <CardSection style={styles.imageContainer}>
           <Image style={image} resizeMode="cover" source={cover} />
         </CardSection>
-        <CardSection
-          style={{
-            paddingHorizontal: 15,
-            borderBottomWidth: 0,
-          }}
-        >
+
+        <CardSection style={styles.textContainer}>
           <Text style={title}>{name}</Text>
         </CardSection>
-        <CardSection
-          style={{
-            paddingHorizontal: 15,
-            borderBottomWidth: 0,
-          }}
-        >
-          <MaterialCommunityIcons name="map-marker-distance" size={16} />
+
+        <CardSection style={styles.descriptionContainer}>
+          <Text style={detail}>{category}</Text>
+          <MaterialCommunityIcons
+            name="checkbox-blank-circle"
+            size={5}
+            color="#979797"
+            style={{ marginHorizontal: 8 }}
+          />
+          <Image source={distanceIcon} style={styles.distanceIcon} />
           <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")} Km away</Text>
+          <View style={{ position: "absolute", right: 5, bottom: 0 }}>
+            <TouchableOpacity onPress={onFavouritePress}>
+              {isFavourite ? (
+                <Image source={filledHeartIcon} style={styles.favouriteIcon} />
+              ) : (
+                <Image source={emptyHeartIcon} style={styles.favouriteIcon} />
+              )}
+            </TouchableOpacity>
+          </View>
         </CardSection>
 
-        <CardSection
-          style={{
-            paddingHorizontal: 15,
-            borderBottomWidth: 0,
-            marginBottom: 10,
-          }}
-        >
-          <Icon name="location-arrow" size={16} />
-          <Text style={detail}>
-            {address.line1} {address.line2}
-          </Text>
-        </CardSection>
-        {/* <TouchableOpacity
-            style={subscribe}
-            onPress={() => onSubscribePress(subscribed, shopID, index)}
-          >
-            <Text
-              style={{
-                color: "#fff",
-                fontSize: 16,
-                fontWeight: "bold"
-              }}
-            >
-              {subscribed ? "Unsubscribe" : "Subscribe"}
-            </Text>
-          </TouchableOpacity> */}
         <TouchableOpacity style={profile}>
-          <Image
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 50,
-              backgroundColor: "#D60000",
-            }}
-            source={icon}
-          />
-          {isPromote === true && (
-            <View style={styles.promotionTagView}>
-              <Text style={styles.promotionTag}>Promotion</Text>
-            </View>
-          )}
+          {isPromote === true && <Image source={promotionTag} style={styles.promotionWrapper} />}
         </TouchableOpacity>
-        {/* </Label> */}
-      </Card>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -124,88 +95,107 @@ const ShopList = ({
   filterData,
   renderFooter,
   onMerchantPressed,
-  onSubscribePressed,
+  onFavouritePressed,
   onCategoryChange,
   onTagChange,
   state,
-  props,
+  shopData,
+  selectedCategory,
+  toggleFavourite,
+  favourite,
+  tags,
+  loading,
   isPromote,
   displayCategory,
+  readLoading,
+  categories,
 }) => {
-  return (
-    <View style={{ height: "100%" }}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          marginBottom: 8,
-        }}
-      >
-        <ModalSelector
-          onChange={onCategoryChange.bind(this)}
-          data={state.categories}
-          initValue="Select Categories"
-          style={styles.categoriesButton}
-          selectStyle={styles.categoriesSelect}
-          selectTextStyle={styles.modalSelectTextStyle}
-          optionTextStyle={styles.modalOptionTextStyle}
-          keyExtractor={(item) => item.id}
-          labelExtractor={(item) => item.title}
-          selectedKey={displayCategory}
-        />
+  const filterIcon = require("../../../../assets/icons/filter.png");
+  const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
+  const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
-        <ModalSelector
-          data={state.selectedCategory.tags}
-          keyExtractor={(item) => item}
-          labelExtractor={(item) =>
-            state.tags.filter((tag) => tag.id === item).map(({ title }) => title)[0]
-          }
-          onChange={onTagChange.bind(this)}
-          selectStyle={styles.categoriesSelect}
-          selectTextStyle={styles.modalSelectTextStyle}
-          optionTextStyle={styles.modalOptionTextStyle}
-          style={{
-            justifyContent: "center",
-            borderWidth: 1.2,
-            marginRight: 5,
-            marginTop: 11,
-            backgroundColor: "#D60000",
-            borderColor: "#D60000",
-            borderRadius: 3,
-          }}
-        >
-          <Icon name="filter" size={20} style={styles.tagsButton} />
-        </ModalSelector>
+  return (
+    <ScrollView 
+      showsVerticalScrollIndicator={false} 
+      style={styles.shopContainer}
+      refreshControl={<RefreshControl
+        refreshing={loading}
+        onRefresh={handleRefresh}
+      />}
+    >
+      <View style={styles.shopTitleContainer}>
+        <Text style={styles.pageTitle}>
+          Shops
+        </Text>
+
+        <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={toggleFavourite}>
+            <Image
+              source={favourite ? filledHeartIcon : emptyHeartIcon}
+              style={styles.emptyHeartIcon}
+            />
+          </TouchableOpacity>
+
+          <ModalSelector
+            data={tags}
+            keyExtractor={(item) => item.id}
+            labelExtractor={(item) =>
+              tags.filter((tag) => tag.id === item.id).map(({ title }) => title)[0]
+            }
+            onChange={onTagChange.bind(this)}
+            selectStyle={styles.categoriesSelect}
+            selectTextStyle={styles.modalSelectTextStyle}
+            optionTextStyle={styles.modalOptionTextStyle}
+          >
+            <Image source={filterIcon} style={styles.filterIcon} />
+          </ModalSelector>
+        </View>
+      </View>
+
+      <View style={styles.categoryTitleContainer}>
+        <Text style={styles.categoryTitle}>
+          Category
+        </Text>
+        
+      </View>
+
+      <View style={{ paddingLeft: 15}}>
+        <CategoryList
+          categories={categories}
+          onCategoryChange={onCategoryChange}
+          selectedCategory={selectedCategory}
+        />
       </View>
 
       <FlatList
-        data={state.data}
+        data={shopData}
         renderItem={({ item, index }) => (
           <Item
             onPress={() => onMerchantPressed(item)}
-            onSubscribePress={onSubscribePressed}
+            onFavouritePress={() => onFavouritePressed(item)}
             name={item.displayTitle}
+            item={item}
             logo={item.logo}
             picture={item.images}
             address={item.address}
-            subscribers={item.subscribers}
-            subscribed={item.subscribed}
+            category={item.category}
             distance={item.distance}
             shopID={item.id}
             index={index}
+            isFavourite={item.isFavourite}
             isPromote={item.isPromote}
           />
         )}
         keyExtractor={(item) => item.id}
         onRefresh={handleRefresh}
-        refreshing={state.isRefreshing}
+        refreshing={false}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={renderFooter({ empty: state.data.length === 0 ? true : false })}
+        ListFooterComponent={shopData.length === 0 && <NotFoundFooter message="No shop found" />}
         style={styles.flatList}
         extraData={state}
       />
-    </View>
+    </ScrollView>
   );
 };
 

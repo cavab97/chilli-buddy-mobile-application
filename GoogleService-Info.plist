@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>431448808009-8bqpj6drcnesq7timfdpp1ub3a2duquu.apps.googleusercontent.com</string>
+	<string>473612187597-lj81ptfgp4mdqdrqa7bcae1c95ru36tf.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.431448808009-8bqpj6drcnesq7timfdpp1ub3a2duquu</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>431448808009-25e2936bs11okk3mslknd4mk5smbcflf.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.473612187597-lj81ptfgp4mdqdrqa7bcae1c95ru36tf</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAglA8jBmNmSAk0JQ9rTJgHnFB6s58iVA4</string>
+	<string>AIzaSyCeeqA3MQGhzYPhMgKttnx0i2MNPSEtj2Q</string>
 	<key>GCM_SENDER_ID</key>
-	<string>431448808009</string>
+	<string>473612187597</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.infobay.gogogainuser</string>
 	<key>PROJECT_ID</key>
-	<string>gogogain-gogogain</string>
+	<string>gogogain-dev</string>
 	<key>STORAGE_BUCKET</key>
-	<string>gogogain-gogogain.appspot.com</string>
+	<string>gogogain-dev.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,10 +29,10 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:431448808009:ios:3945dec00d0384a24c7d98</string>
+	<string>1:473612187597:ios:c22445318501b57396b684</string>
 	<key>DATABASE_URL</key>
-	<string>https://gogogain-gogogain.firebaseio.com</string>
-	<key>CFBundleURLTypes</key>
+	<string>https://gogogain-dev.firebaseio.com</string>
+		<key>CFBundleURLTypes</key>
 	<array>
 	<dict>
 	<key>CFBundleURLSchemes</key>
