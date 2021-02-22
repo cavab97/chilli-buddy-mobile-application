@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import { Dimensions } from "react-native";
+import { Dimensions, Share } from "react-native";
 import moment from "moment";
 
 import {
@@ -93,6 +93,62 @@ class index extends Component {
     // this.setState({ viewHeight: height });
   };
 
+  onShare(item) {
+    // const { settingInfo } = this.props;
+    // const { fbPost, title, message } = settingInfo.share;
+    // console.log("item.websiteUrl");
+
+    console.log(item.shop.displayTitle);
+    const regex = /(<([^>]+)>)/gi;
+    // console.log(item.shop.websiteUrl);
+    const shareOptions = {
+      // url: promotion.facebookUrl,
+      url: "https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en",
+
+      title: item.title,
+      // message: item.description.replace(regex, ""), dataSource.websiteUrl
+      message:
+        item.shop.facebookUrl != null
+          ? "Now " +
+            item.title +
+            " Promotion at" +
+            item.shop.displayTitle +
+            ", FacebookLink :" +
+            "https://" +
+            item.shop.facebookUrl
+          : item.shop.websiteUrl != null
+          ? "Now " +
+            item.title +
+            " Promotion at " +
+            item.shop.displayTitle +
+            ", FacebookLink :" +
+            "https://" +
+            item.shop.websiteUrl
+          : "Now " +
+            item.title +
+            " Promotion at" +
+            item.shop.displayTitle +
+            ", Phone :" +
+            `tel:${item.shop.phoneNumber}`,
+      subject: item.title,
+    };
+
+    Share.share(shareOptions)
+      .then(({ action, activityType }) => {
+        if (action === Share.dismissedAction) {
+          console.log("Share dismissed");
+        } else {
+          setTimeout(() => {
+            this.setState({ invited: true });
+            console.log("Share successfuld");
+          }, 3000);
+        }
+      })
+      .catch((error) => this.setState({ result: "error: " + error.message }));
+
+    // console.log(item);
+  }
+
   render() {
     const { shop, readLoading } = this.props.shopState;
     const { post, readPostLoading, promotions, readPromotionLoading } = this.props;
@@ -130,6 +186,7 @@ class index extends Component {
         icon={icon}
         dataSource={shop}
         find_dimensions={this.find_dimensions}
+        SharePress={this.onShare.bind(this)}
       />
     );
   }

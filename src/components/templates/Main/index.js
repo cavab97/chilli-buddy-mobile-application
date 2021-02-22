@@ -254,7 +254,7 @@ export default ({
     const { image } = styles;
 
     let cover = "";
-    if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
+    if (picture.length === 0) cover = require("@assets/images/404NotFound.jpeg");
     else cover = { uri: picture[0] };
     return (
       <TouchableOpacity onPress={onPress}>
@@ -495,7 +495,7 @@ export default ({
                           resizeMode="cover"
                         />
                       ) : (
-                        <Image source={noPromoteImage} style={promoteNoImage} resizeMode="cover" />
+                        <Image source={noPromoteImage} style={promoteImage} resizeMode="cover" />
                       )}
                       <View style={styles.lastSectionTextContainer}>
                         <Text numberOfLines={2} style={styles.promoteTitleTextStyle}>

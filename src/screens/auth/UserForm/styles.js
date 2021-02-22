@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
+    // backgroundColor: "red",
   },
   saveTextStyle: {
     color: Colors.RED,

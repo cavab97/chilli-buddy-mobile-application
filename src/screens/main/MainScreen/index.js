@@ -15,11 +15,7 @@ import {
   removeListenerFromDatabase as removeListenerFromRouteTickets,
 } from "@redux/routeTicket/action";
 
-import { 
-  loadShopsPromo,
-  togglePromotionModal,
-  listenToRecord,
-} from "@redux/promo/action";
+import { loadShopsPromo, togglePromotionModal, listenToRecord } from "@redux/promo/action";
 
 import clone from "clone";
 import { lessThan } from "react-native-reanimated";
@@ -110,21 +106,23 @@ class index extends Component {
 
   onPromoPressed(item) {
     //Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
-    this.props.listenToRecord({ promoId: item.id })
-    this.props.togglePromotionModal()
+    this.props.listenToRecord({ promoId: item.id });
+    this.props.togglePromotionModal();
   }
 
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
+    console.log("j");
+
     const filteredDatasource = this.filteredDatasource();
     // console.log(filteredDatasource[index]);
 
-    if (filteredDatasource[index].adsType === "image") {
-      Actions.SingleMerchant({ shopId: filteredDatasource[index].shopId });
-    } else if (filteredDatasource[index].adsType === "video") {
-      this.props.toggleModal();
-      this.state.popUpImage = filteredDatasource[index].popUpImage;
-    }
+    // if (filteredDatasource[index].adsType === "image") {
+    //   Actions.SingleMerchant({ shopId: filteredDatasource[index].shopId });
+    // } else if (filteredDatasource[index].adsType === "video") {
+    //   this.props.toggleModal();
+    //   this.state.popUpImage = filteredDatasource[index].popUpImage;
+    // }
     Actions.ShopsSinglePost({
       postId: filteredDatasource[index].postId,
       distance: filteredDatasource[index].distance,
@@ -256,7 +254,7 @@ class index extends Component {
   }
 
   onPromoPressedClose() {
-    this.props.togglePromotionModal()
+    this.props.togglePromotionModal();
   }
 
   onCarouselPressed() {
@@ -387,15 +385,15 @@ class index extends Component {
       readLoadingReward,
     } = this.props;
 
-    const { 
-      readLoading, 
-      promo, 
-      bookmark, 
-      promotions, 
+    const {
+      readLoading,
+      promo,
+      bookmark,
+      promotions,
       promotionModalVisible,
-      promotion
+      promotion,
     } = this.props.promotionState;
-    
+
     const readFail =
       readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
 
@@ -429,7 +427,7 @@ class index extends Component {
       })
       .toString();
 
-    const noImageHeaderSlider = require("../../../assets/gogogain/top_image.jpg");
+    const noImageHeaderSlider = require("../../../assets/gogogain/404NotFound.jpeg");
     const noImageAdvertisement = require("../../../assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
     const casualImage = require("../../../assets/gogogain/Mascot-C.png");
     const luxuryImage = require("../../../assets/gogogain/Mascot-L.png");

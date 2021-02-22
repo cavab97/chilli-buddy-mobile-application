@@ -1,4 +1,5 @@
 import React, { Component, useRef } from "react";
+
 import { connect } from "react-redux";
 import * as Location from "expo-location";
 import { View, Text } from "../../../../components/atoms";
@@ -27,7 +28,7 @@ import moment from "moment";
 import styles from "./styles";
 import { Actions } from "react-native-router-flux";
 import { getDistance } from "geolib";
-import { Platform } from "react-native";
+import { Platform, Share } from "react-native";
 import {
   update,
   submitToBackend,
@@ -192,7 +193,7 @@ class index extends Component {
 
     let favourite = null;
 
-    favourite = favourites.filter(favourite => favourite.shopIds[0] === shopId)
+    favourite = favourites.filter((favourite) => favourite.shopIds[0] === shopId);
 
     return favourite.length > 0 ? favourite[0] : null;
   }
@@ -240,6 +241,72 @@ class index extends Component {
     //Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
     this.props.listenPromotion({ promoId: item.id });
     this.props.togglePromotionModal();
+  }
+  // onShare() {
+  //   const { settingInfo } = this.props;
+  //   // const { fbPost } = settingInfo.share;
+  //   // Linking.openURL(`https://www.facebook.com/sharer/sharer.php?u=${fbPost}`);
+
+  //   setTimeout(() => {
+  //     this.setState({ shared: true });
+  //     console.log("Share successful");
+  //   }, 3000);
+  // }
+  onShare(item) {
+    // const { settingInfo } = this.props;
+    // const { fbPost, title, message } = settingInfo.share;
+    const { promotion } = this.props.promotionState;
+    // console.log("item.websiteUrl");
+
+    console.log(item.shop.displayTitle);
+    const regex = /(<([^>]+)>)/gi;
+    // console.log(item.shop.websiteUrl);
+    const shareOptions = {
+      // url: promotion.facebookUrl,
+      url: "https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en",
+
+      title: item.title,
+      // message: item.description.replace(regex, ""), dataSource.websiteUrl
+      message:
+        item.shop.facebookUrl != null
+          ? "Now " +
+            item.title +
+            " Promotion at" +
+            item.shop.displayTitle +
+            ", FacebookLink :" +
+            "https://" +
+            item.shop.facebookUrl
+          : item.shop.websiteUrl != null
+          ? "Now " +
+            item.title +
+            " Promotion at " +
+            item.shop.displayTitle +
+            ", FacebookLink :" +
+            "https://" +
+            item.shop.websiteUrl
+          : "Now " +
+            item.title +
+            " Promotion at" +
+            item.shop.displayTitle +
+            ", Phone :" +
+            `tel:${item.shop.phoneNumber}`,
+      subject: item.title,
+    };
+
+    Share.share(shareOptions)
+      .then(({ action, activityType }) => {
+        if (action === Share.dismissedAction) {
+          console.log("Share dismissed");
+        } else {
+          setTimeout(() => {
+            this.setState({ invited: true });
+            console.log("Share successfuld");
+          }, 3000);
+        }
+      })
+      .catch((error) => this.setState({ result: "error: " + error.message }));
+
+    // console.log(item);
   }
 
   render() {
@@ -307,6 +374,7 @@ class index extends Component {
           onPromoPressed={this.onPromoPressed.bind(this)}
           onPromoPressedClose={this.onPromoPressedClose.bind(this)}
           isFavourite={this.state.isFavourite}
+          SharePress={this.onShare.bind(this)}
         />
       );
     }
@@ -322,6 +390,7 @@ const mapStateToProps = (state) => {
   const promotionState = state.Promotion;
   const readPromotionLoading = state.Promotion.readLoading;
   const favouriteState = state.Favourite;
+  const settingInfo = state.Settings.info;
 
   return {
     shopState,
@@ -331,6 +400,7 @@ const mapStateToProps = (state) => {
     promotionState,
     readPromotionLoading,
     favouriteState,
+    settingInfo,
   };
 };
 

@@ -1,10 +1,10 @@
 import { auto } from "eol";
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Typography } from "../../../../settings/styles/theme";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   wrapper: {},
@@ -176,16 +176,15 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   firstPromoteCardStyle: {
-    width: 180,
-
+    width: 181.2,
     // marginLeft: 20,
     marginRight: 20,
-    elevation: 3,
+    elevation: 1,
     borderRadius: 30,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2.22,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.15,
+    shadowRadius: 0.5,
     marginBottom: 6,
     paddingTop: 10,
     alignItems: "center",
@@ -194,12 +193,12 @@ const styles = StyleSheet.create({
     width: 181.2,
     // marginLeft: 20,
     marginRight: 20,
-    elevation: 3,
+    elevation: 1,
     borderRadius: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.15,
+    shadowRadius: 0.5,
     marginBottom: 6,
     paddingTop: 10,
     alignItems: "center",
@@ -312,8 +311,8 @@ const styles = StyleSheet.create({
   col2: { width: "55%", backgroundColor: "#fff", textAlign: "left" },
 
   modalContainer: {
-    margin: 0, 
-    justifyContent: 'flex-end',
+    margin: 0,
+    justifyContent: "flex-end",
   },
   shopPostsContainer: {
     paddingTop: 20,
@@ -365,29 +364,29 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
   },
   contentFull: {
-    height: windowHeight - Constants.statusBarHeight, 
+    height: windowHeight - Constants.statusBarHeight,
     width: windowWidth,
-    backgroundColor: '#fff', 
-    borderTopLeftRadius: 30, 
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
   swipeableIndicator: {
-    backgroundColor: '#d3d3d3', 
-    width: 50, 
-    height: 5, 
-    alignSelf: 'center', 
-    marginVertical: 15, 
+    backgroundColor: "#d3d3d3",
+    width: 50,
+    height: 5,
+    alignSelf: "center",
+    marginVertical: 15,
     borderRadius: 15,
   },
   title: {
-    fontFamily: 'HorizontalRounded', 
-    fontSize: 18, 
-    paddingBottom: 10
+    fontFamily: "HorizontalRounded",
+    fontSize: 18,
+    paddingBottom: 10,
   },
   contentContainer: {
     paddingTop: 15,
     paddingHorizontal: 30,
-    marginBottom: 40
+    marginBottom: 40,
   },
 });
 

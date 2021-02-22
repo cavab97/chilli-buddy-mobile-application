@@ -60,6 +60,7 @@ const SingleMerchant = ({
   onPromoPressed,
   isFavourite,
   find_dimensions = () => {},
+  SharePress,
 }) => {
   const {
     posterArea,
@@ -88,7 +89,6 @@ const SingleMerchant = ({
     imageTopStyle,
   } = styles;
 
-  
   return (
     <ScrollView scrollIndicatorInsets={{ right: 0.1 }}>
       <View style={posterArea}>
@@ -144,28 +144,23 @@ const SingleMerchant = ({
           onPostTitleClick();
         }}
         style={styles.modalContainer}
-        swipeDirection={['down']}
+        swipeDirection={["down"]}
         backdropOpacity={0.45}
         propagateSwipe={true}
       >
         <View style={styles.contentFull}>
           <View style={styles.swipeableIndicator} />
-          <ScrollView 
-            style={styles.contentContainer}
-            showsVerticalScrollIndicator={false}
-          >
-            <Text style={styles.title}>
-              Whiteboard
-            </Text>
+          <ScrollView style={styles.contentContainer} showsVerticalScrollIndicator={false}>
+            <Text style={styles.title}>Whiteboard</Text>
 
             <View style={styles.shopPostsContainer}>
-              <PostList 
-                data={shopPosts} 
+              <PostList
+                data={shopPosts}
                 icon={icon}
                 onPostPress={onPostPress}
+                SharePress={SharePress}
               />
             </View>
-
           </ScrollView>
         </View>
       </Modal>
@@ -189,16 +184,17 @@ const SingleMerchant = ({
                 backgroundColor: "#FFF",
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginTop: 15,
-                marginLeft: 5,
+                marginTop: 5,
+                marginLeft: 15,
+                // backgroundColor: "red",
               }}
             >
               <TouchableOpacity //uncomment social media icon
                 onPress={() => onFavouriteClick(dataSource.id)}
               >
-                <Image 
-                  source={ isFavourite ? filledHeartIcon : fillLessLove} 
-                  style={{ width: 27, height: 25 }} 
+                <Image
+                  source={isFavourite ? filledHeartIcon : fillLessLove}
+                  style={{ width: 27, height: 25 }}
                 />
               </TouchableOpacity>
               <TouchableOpacity //uncomment social media icon
@@ -289,7 +285,9 @@ const SingleMerchant = ({
                   color: "grey",
                 }}
               >
-                {dataSource.description == null ? "No Available" : dataSource.description}
+                {dataSource.description == null
+                  ? "No Description Available"
+                  : dataSource.description}
               </Text>
             </View>
           </View>

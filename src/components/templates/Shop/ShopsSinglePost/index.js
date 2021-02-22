@@ -4,6 +4,7 @@ import styles from "./styles";
 import HTML from "react-native-render-html";
 import moment from "moment";
 import { ImageGenerator } from "../../../organisms/ImageGenerator";
+import ContentLoader, { Rect } from "react-content-loader/native";
 
 import {
   View,
@@ -27,11 +28,10 @@ const ShopsSinglePost = ({
   readPostLoading,
   catchCondition,
   find_dimensions = () => {},
+  SharePress,
 }) => {
-
   const PostList = ({ data }) => {
     if (data.length !== 0) {
-
       return (
         <ScrollView>
           <View
@@ -64,7 +64,7 @@ const ShopsSinglePost = ({
                     ul: {
                       padding: 0,
                       margin: 0,
-                    }
+                    },
                   }}
                 />
 
@@ -84,9 +84,7 @@ const ShopsSinglePost = ({
       return (
         <ScrollView>
           <View style={styles.singlePostContainer}>
-            <Text style={styles.singlePostTitle}>
-              Currently there are no post available
-            </Text>
+            <Text style={styles.singlePostTitle}>Currently there are no post available</Text>
           </View>
         </ScrollView>
       );
@@ -95,36 +93,30 @@ const ShopsSinglePost = ({
 
   if (readPostLoading) {
     return (
-      <View>
-        <Text>no available</Text>
-      </View>
+      <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
+        <Rect x="0" y="0" rx="0" ry="0" width="100%" height="150" />
+        <Rect x="10" y="100" rx="100" ry="100" width="25%" height="15%" />
+        <Rect x="20" y="200" rx="10" ry="10" width="250" height="175" />
+        <Rect x="20" y="400" rx="10" ry="10" width="250" height="175" />
+      </ContentLoader>
     );
   } else {
     return (
-      <ScrollView 
-        style={styles.outPostContainer} 
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView style={styles.outPostContainer} showsVerticalScrollIndicator={false}>
         <View style={styles.postsTopRow}>
           <View style={styles.logoPositionInModal}>
-            <Image 
-              style={styles.logo} 
-              source={icon} 
-            />
+            <Image style={styles.logo} source={icon} />
             {/* <Image source={} style={} resizeMode={"cover"} /> */}
           </View>
           <View style={styles.postsTopRowNameContainer}>
-            <Text style={styles.ShopPostTopTitle}>
-              {shopPosts.shop.displayTitle}
-            </Text>
-            <Text style={styles.ShopPostSubTitle}>
-              {catchCondition}
-            </Text>
+            <Text style={styles.ShopPostTopTitle}>{shopPosts.shop.displayTitle}</Text>
+            <Text style={styles.ShopPostSubTitle}>{catchCondition}</Text>
           </View>
-          <TouchableOpacity style={styles.shareContainer}>
-            <Text style={styles.shareText}>
-              Share
-            </Text>
+          <TouchableOpacity
+            style={styles.shareContainer}
+            onPress={SharePress.bind(this, shopPosts)}
+          >
+            <Text style={styles.shareText}>Share</Text>
             <Image style={styles.shareIcon} source={shareIcon} />
           </TouchableOpacity>
         </View>

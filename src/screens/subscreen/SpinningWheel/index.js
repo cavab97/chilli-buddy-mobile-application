@@ -97,62 +97,62 @@ class index extends Component {
     dataSource2.forEach((element, index) => {
       element.image = categoriesImage[index % 5];
       switch (element.title) {
-        case "Chinese | 中餐":
+        case "Chinese 中餐":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/chinese.png");
           break;
-        case "Western | 西餐":
+        case "Western 西餐":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/western.png");
 
           break;
-        case "Cafe | 咖啡馆":
+        case "Cafe 咖啡馆":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/cafe.png");
 
           break;
-        case "China | 中国菜":
+        case "China 中国菜":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/china.png");
 
           break;
-        case "Japanese | 日本餐":
+        case "Japanese 日本餐":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/japanese.png");
 
           break;
-        case "Korean | 韩国餐":
+        case "Korean 韩国餐":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/korean.png");
 
           break;
-        case "Thai | 泰国餐":
+        case "Thai 泰国餐":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/thai.png");
 
           break;
-        case "TAIWAN | 台湾":
+        case "TAIWAN 台湾":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/others.png");
 
           break;
-        case "Bistro | 小酒馆":
+        case "Bistro 小酒馆":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/bistro.png");
 
           break;
-        case "Steamboat | 火锅":
+        case "Steamboat 火锅":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/steamboat.png");
 
           break;
-        case "Local Cuisine | 本地美食":
+        case "Local Cuisine 本地美食":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/localcuisine.png");
 
           break;
-        case "Beverage | 饮料店":
+        case "Beverage 饮料店":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/beverage.png");
 
           break;
-        case "Food Truck | 餐车":
+        case "Food Truck 餐车":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/foodtruck.png");
 
           break;
-        case "LOK LOK | 碌碌":
+        case "LOK LOK 碌碌":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/others.png");
 
           break;
-        case "Special Cuisine | 特色美食":
+        case "Special Cuisine 特色美食":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/cuisine.png");
 
           break;

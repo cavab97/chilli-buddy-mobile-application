@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   singlePostTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    fontFamily: Typography.FONT_FAMILY_BOLD,
+    fontFamily: "HorizontalRounded",
     paddingBottom: 10,
   },
   shopPostsContainer: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     shadowOpacity: 1,
     shadowRadius: 2.22,
-    elevation: 10,
+    // elevation: 10,
     // position: "absolute",
     // top: 40,
     // left: 30,

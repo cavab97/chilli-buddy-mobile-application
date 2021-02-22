@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     paddingRight: 1,
     marginHorizontal: 15,
     justifyContent: "space-between",
-    backgroundColor: "red",
+    // backgroundColor: "red",
   },
   buttonContainer: {
     flexDirection: "row",

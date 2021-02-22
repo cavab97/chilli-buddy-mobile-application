@@ -145,7 +145,7 @@ function Grid({
                         />
                       ) : item.id === 24 || item.id === 32 ? (
                         <Image
-                          source={require("../../../assets/chilliBuddyCheckin/checkin_questionMark.png")}
+                          source={require("../../../assets/chilliBuddyCheckin/emptyGift.png")}
                           transition={false}
                           style={styles.redeemImageQuestionStyle}
                         />

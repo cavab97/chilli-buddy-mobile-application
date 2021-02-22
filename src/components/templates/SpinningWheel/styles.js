@@ -1,12 +1,13 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform, Dimensions } from "react-native";
 import { Colors } from "../../../settings/styles/theme";
+const windowWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   modelBackground: {
-    // flex: 1,
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fff",
+    // backgroundColor: "blue",
   },
   holderPng: {
     // height: "",
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     // marginBottom: 1000,
     // resizeMode: "cover",
     alignSelf: "center",
-    bottom: 100,
+    // bottom: windowWidth / 3,
     // backgroundColor: "red",
   },
   holderContainer: {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
   },
   //spinning wheel pop up container
   containerForSpinningWheel: {
-    backgroundColor: "#FFF",
+    // backgroundColor: "#FFF",
     borderRadius: 10,
     minWidth: Platform.OS === "ios" && Platform.isPad === true ? 460 : 300,
     height: Platform.OS === "ios" && Platform.isPad === true ? 950 : 400,
@@ -103,12 +104,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    fontFamily: "HorizontalRounded",
+
     // backgroundColor: "red",
   },
   //category Text
   categoryText: {
-    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 23 : 15,
+    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 23 : 19,
     color: "#ffffff",
     fontFamily: "HorizontalRounded",
     marginVertical: 16,
@@ -145,12 +146,16 @@ const styles = StyleSheet.create({
   buttonContain: {
     // marginTop: 35,
     paddingTop: 0,
+    height: 200,
     marginBottom: 0,
     // backgroundColor: "red",
+    justifyContent: "space-between",
+    flex: 1,
+    bottom: windowWidth / 3,
   },
   wheelIcon: {
-    width: 50,
-    height: 50,
+    width: windowWidth / 5.5,
+    height: windowWidth / 5.5,
     // color: "white",
     // backgroundColor: "white",
   },
