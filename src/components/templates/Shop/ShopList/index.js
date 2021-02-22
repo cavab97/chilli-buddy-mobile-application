@@ -107,6 +107,7 @@ const ShopList = ({
   loading,
   isPromote,
   displayCategory,
+  readLoading,
   categories,
 }) => {
   const filterIcon = require("../../../../assets/icons/filter.png");
@@ -155,6 +156,10 @@ const ShopList = ({
         <Text style={styles.categoryTitle}>
           Category
         </Text>
+        
+      </View>
+
+      <View style={{ paddingLeft: 15}}>
         <CategoryList
           categories={categories}
           onCategoryChange={onCategoryChange}
@@ -183,12 +188,10 @@ const ShopList = ({
         )}
         keyExtractor={(item) => item.id}
         onRefresh={handleRefresh}
-        refreshing={loading}
+        refreshing={false}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={shopData.length === 0 
-                              && loading === false 
-                              && <NotFoundFooter message="No shop found" />}
+        ListFooterComponent={shopData.length === 0 && <NotFoundFooter message="No shop found" />}
         style={styles.flatList}
         extraData={state}
       />
