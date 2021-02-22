@@ -83,14 +83,14 @@ const SpinningWheel = ({
                     />
                     <View style={styles.categoryTextHolder}>
                       {/* <CustomIcon name={randomCategory.icon} size={30} style={{ color: "#FFFFFF" }} /> */}
-                      {console.log(randomCategory.icon)}
+                      {/* {console.log(randomCategory.icon)} */}
                       <Image
                         source={randomCategory.icon}
                         style={
                           randomCategory.title2 == "others" ? styles.wheelIconV2 : styles.wheelIcon
                         }
                       />
-                      {console.log(randomCategory.title)}
+                      {/* {console.log(randomCategory.title)} */}
                       <Text style={styles.categoryText}>
                         {/* {randomCategory.title.replace("|", "\n")} */}
                         {/* {this.textAdjust.bind(randomCategory.title)} */}

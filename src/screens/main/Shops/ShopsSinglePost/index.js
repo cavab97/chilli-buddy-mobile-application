@@ -113,7 +113,7 @@ class index extends Component {
             item.title +
             " Promotion at" +
             item.shop.displayTitle +
-            ", FacebookLink :" +
+            " , Visit Us FacebookLink :" +
             "https://" +
             item.shop.facebookUrl
           : item.shop.websiteUrl != null
@@ -121,26 +121,26 @@ class index extends Component {
             item.title +
             " Promotion at " +
             item.shop.displayTitle +
-            ", FacebookLink :" +
+            ",Visit Us FacebookLink :" +
             "https://" +
             item.shop.websiteUrl
           : "Now " +
             item.title +
-            " Promotion at" +
+            " Promotion at " +
             item.shop.displayTitle +
-            ", Phone :" +
-            `tel:${item.shop.phoneNumber}`,
+            ", Contact Us Phone :" +
+            `+6${item.shop.phoneNumber}`,
       subject: item.title,
     };
 
     Share.share(shareOptions)
       .then(({ action, activityType }) => {
         if (action === Share.dismissedAction) {
-          console.log("Share dismissed");
+          // console.log("Share dismissed");
         } else {
           setTimeout(() => {
             this.setState({ invited: true });
-            console.log("Share successfuld");
+            // console.log("Share successfuld");
           }, 3000);
         }
       })

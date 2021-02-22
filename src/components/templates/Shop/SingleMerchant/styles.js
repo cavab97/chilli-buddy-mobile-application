@@ -1,5 +1,5 @@
 import { auto } from "eol";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import { Colors, Typography } from "../../../../settings/styles/theme";
 import Constants from "expo-constants";
 
@@ -103,9 +103,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     // marginHorizontal: 100,
   },
-  title: {
-    fontSize: 25,
-    fontWeight: "700",
+  titleWhiteboard: {
+    fontSize: Platform.isPad ? windowWidth / 20 : 25,
     fontFamily: "HorizontalRounded",
     marginBottom: 10,
     marginTop: 10,

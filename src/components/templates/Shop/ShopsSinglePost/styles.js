@@ -1,5 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform, Dimensions } from "react-native";
 import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
+const windowWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   outPostContainer: {
@@ -17,11 +18,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     // marginHorizontal: 10,
     // backgroundColor: "yellow",
-    width: "90%",
+    width: Platform.isPad ? windowWidth / 1.1 : "90%",
   },
   logoPositionInModal: {
-    width: 50,
-    height: 50,
+    width: Platform.isPad ? 70 : 50,
+    height: Platform.isPad ? 70 : 50,
     // alignSelf: "center",
     // position: "absolute",
     // top: 30,
@@ -50,11 +51,11 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
   postsTopRowNameContainer: {
-    marginRight: 10,
+    marginRight: Platform.isPad ? windowWidth / 2.5 : 10,
     // backgroundColor: "red",
   },
   ShopPostTopTitle: {
-    fontSize: 17,
+    fontSize: Platform.isPad ? windowWidth / 20 : 17,
     fontFamily: "HorizontalRounded",
     paddingBottom: 3,
     width: 150,
@@ -65,13 +66,13 @@ const styles = StyleSheet.create({
   ShopPostSubTitle: { color: "grey", fontSize: 12, width: 150, fontFamily: "HorizontalRounded" },
   shareContainer: {
     backgroundColor: "white",
-    height: 27,
-    width: 80,
+    height: Platform.isPad ? windowWidth / 15 : 27,
+    width: Platform.isPad ? windowWidth / 8 : 80,
     alignItems: "center",
     borderRadius: 40,
     resizeMode: "cover",
     flexDirection: "row",
-    paddingHorizontal: 5,
+    paddingHorizontal: Platform.isPad ? windowWidth / 50 : 5,
     shadowColor: Colors.GREY,
     shadowOffset: {
       height: 0,
@@ -101,11 +102,11 @@ const styles = StyleSheet.create({
   singlePostContainer: {
     // borderWidth: 1,
     borderRadius: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: Platform.isPad ? 30 : 15,
     marginHorizontal: 5,
   },
   singlePostTitle: {
-    fontSize: 18,
+    fontSize: Platform.isPad ? windowWidth / 20 : 18,
     fontWeight: "bold",
     fontFamily: "HorizontalRounded",
     paddingBottom: 10,
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
   },
   chatBoxInnerImage: {
     width: "100%",
-    height: 130,
+    height: Platform.isPad ? windowWidth / 3 : 130,
     resizeMode: "cover",
     shadowColor: "grey",
     shadowOffset: { width: 0, height: 1 },

@@ -75,7 +75,7 @@ class index extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-      /* if (
+    /* if (
         //Shop location changed
         prevProps.shopState.shop.l.U !== this.props.shopState.shop.l.U ||
         prevProps.shopState.shop.l.k !== this.props.shopState.shop.l.k ||
@@ -199,6 +199,7 @@ class index extends Component {
     const favouriteId = favourite.id;
 
     const isFavourite = !favourite.isFavourite;
+    this.props.onFavouriteClick(shopId);
 
     this.props.updateIsFavourite(shopId);
     this.setState({ isFavourite: isFavourite });
@@ -252,7 +253,7 @@ class index extends Component {
     const { promotion } = this.props.promotionState;
     // console.log("item.websiteUrl");
 
-    console.log(item.shop.displayTitle);
+    // console.log(item.shop.displayTitle);
     const regex = /(<([^>]+)>)/gi;
     // console.log(item.shop.websiteUrl);
     const shareOptions = {
@@ -290,11 +291,11 @@ class index extends Component {
     Share.share(shareOptions)
       .then(({ action, activityType }) => {
         if (action === Share.dismissedAction) {
-          console.log("Share dismissed");
+          // console.log("Share dismissed");
         } else {
           setTimeout(() => {
             this.setState({ invited: true });
-            console.log("Share successfuld");
+            // console.log("Share successfuld");
           }, 3000);
         }
       })

@@ -47,25 +47,28 @@ const ShopsSinglePost = ({
                 <HTML
                   source={{ html: `<div>` + data.description + `</div>` }}
                   // alterData={alterData}
-                  tagsStyles={{
-                    p: {
-                      padding: 0,
-                      margin: 0,
+                  tagsStyles={
+                    ({
+                      p: {
+                        padding: 0,
+                        margin: 0,
+                      },
+                      ol: {
+                        padding: 0,
+                        marginBottom: 30,
+                        margin: 0,
+                      },
+                      li: {
+                        padding: 0,
+                        margin: 0,
+                      },
+                      ul: {
+                        padding: 0,
+                        margin: 0,
+                      },
                     },
-                    ol: {
-                      padding: 0,
-                      marginBottom: 30,
-                      margin: 0,
-                    },
-                    li: {
-                      padding: 0,
-                      margin: 0,
-                    },
-                    ul: {
-                      padding: 0,
-                      margin: 0,
-                    },
-                  }}
+                    styles.singlePostTitle)
+                  }
                 />
 
                 {data.images.length < 1 ? (

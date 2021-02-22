@@ -96,10 +96,10 @@ const initialState = {
 const shopsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.PERMISSION_VERIFICATION:
-      return { 
-        ...state, 
-        permissionVerificationLoading: true, 
-        permissionVerificationError: false 
+      return {
+        ...state,
+        permissionVerificationLoading: true,
+        permissionVerificationError: false,
       };
 
     case actions.PERMISSION_VERIFICATION_SUCCESS:
@@ -117,48 +117,48 @@ const shopsReducer = (state = initialState, { type, payload }) => {
       };
 
     case actions.READ_FROM_DATABASE:
-      return { 
-        ...state, 
+      return {
+        ...state,
         loading: true,
       };
 
     case actions.READ_FROM_DATABASE_SUCCESS:
-      return { 
-        ...state, 
-        loading: false, 
-        shops: payload.data 
+      return {
+        ...state,
+        loading: false,
+        shops: payload.data,
       };
 
     case actions.READ_FROM_DATABASE_ERROR:
-      return { 
-        ...state, 
-        loading: false 
+      return {
+        ...state,
+        loading: false,
       };
 
     case actions.READ_PROMO_FROM_DATABASE:
-      return { 
-        ...state, 
-        loading: true 
+      return {
+        ...state,
+        loading: true,
       };
 
     case actions.READ_PROMO_FROM_DATABASE_SUCCESS:
-      return { 
-        ...state, 
-        loading: false, 
-        promo: payload.data 
+      return {
+        ...state,
+        loading: false,
+        promo: payload.data,
       };
 
     case actions.READ_PROMO_FROM_DATABASE_ERROR:
-      return { 
-        ...state, 
-        loading: false 
+      return {
+        ...state,
+        loading: false,
       };
 
     case actions.READ_RECORD:
-      return { 
-        ...state, 
-        readLoading: true, 
-        readError: false 
+      return {
+        ...state,
+        readLoading: true,
+        readError: false,
       };
 
     case actions.READ_RECORD_SUCCESS:
@@ -169,36 +169,37 @@ const shopsReducer = (state = initialState, { type, payload }) => {
       };
 
     case actions.READ_RECORD_ERROR:
-      return { 
-        ...state, 
-        readLoading: false, 
-        readError: payload.error 
+      return {
+        ...state,
+        readLoading: false,
+        readError: payload.error,
       };
 
     case actions.TOGGLE_SHOP_FAVOURITE:
-      return { 
-        ...state, 
-        shop: payload.data 
+      return {
+        ...state,
+        shop: payload.data,
+        shops: [...shops],
       };
 
     case actions.TOGGLE_CATEGORY:
       return {
         ...state,
         selectedCategory: payload.data,
-        selectedTag: null
-      }
+        selectedTag: null,
+      };
 
     case actions.TOGGLE_FAVOURITE:
       return {
         ...state,
-        favouriteControl: !state.favouriteControl
-      }
+        favouriteControl: !state.favouriteControl,
+      };
 
     case actions.TOGGLE_TAG:
       return {
         ...state,
-        selectedTag: payload.data
-      }
+        selectedTag: payload.data,
+      };
 
     default:
       return state;

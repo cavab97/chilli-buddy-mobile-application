@@ -6,6 +6,7 @@ import {
   GeoQuerySnapshot,
   encodeGeohash,
 } from "geofirestore";
+import { Actions } from "react-native-router-flux";
 
 import { permissionsRegistration, LOCATION } from "../../marslab-library-react-native/utils/system";
 import { shopDataServices as objectDataServices } from "../../services/database";
@@ -32,7 +33,7 @@ const actions = {
   TOGGLE_SHOP_FAVOURITE: type + "TOGGLE_SHOP_FAVOURITE",
   TOGGLE_CATEGORY: type + "TOGGLE_CATEGORY",
   TOGGLE_FAVOURITE: type + "TOGGLE_FAVOURITE",
-  TOGGLE_TAG: type + "TOGGLE_TAG"
+  TOGGLE_TAG: type + "TOGGLE_TAG",
 };
 
 const { firestore } = firebase;
@@ -68,10 +69,10 @@ export function verifyPermission() {
   };
 }
 
-export function loadShops({ 
-  radius, 
-  latitude, 
-  longtitude, 
+export function loadShops({
+  radius,
+  latitude,
+  longtitude,
   selectedCategory = null,
   selectedTag = null,
 }) {
@@ -110,9 +111,7 @@ export function loadShops({
           type: actions.READ_FROM_DATABASE_SUCCESS,
           payload: { data: shops },
         });
-
       } catch (error) {
-
         console.log(error);
 
         reject(error);
@@ -251,6 +250,7 @@ export function listenToRecord({ shopId = null }) {
 
 export function removeListenerToRecord() {
   return (dispatch) => {
+    // Actions.refresh({});
     console.log("Removed shop listener");
     objectDataServices.removeListenerToRecord();
   };
@@ -266,8 +266,7 @@ export function onFavouriteClick(shopId) {
         }
         return shop;
       });
-
-
+      // console.log(shops);
       resolve(newShops);
       dispatch({
         type: actions.TOGGLE_SHOP_FAVOURITE,
@@ -278,23 +277,23 @@ export function onFavouriteClick(shopId) {
 }
 
 export const toggleCategory = (data = null) => {
-  return{
+  return {
     type: actions.TOGGLE_CATEGORY,
-    payload: { data }
-  }
-}
+    payload: { data },
+  };
+};
 
 export const toggleFavourite = () => {
-  return{
+  return {
     type: actions.TOGGLE_FAVOURITE,
-  }
-}
+  };
+};
 
 export const toggleTag = (data = null) => {
-  return{
+  return {
     type: actions.TOGGLE_TAG,
-    payload: { data }
-  }
-}
+    payload: { data },
+  };
+};
 
 export default actions;

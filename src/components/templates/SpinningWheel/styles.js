@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
   holderPng: {
     // height: "",
     // aspectRatio: 50 / 100,
-    width: 95,
-    height: 95,
+    width: Platform.isPad ? 150 : 95,
+    height: Platform.isPad ? 150 : 95,
     // position: "absolute",
     // marginBottom: 1000,
     // resizeMode: "cover",
@@ -119,13 +119,13 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: Platform.OS === "ios" && Platform.isPad === true ? 23 : 25,
     color: Colors.RED,
-    marginVertical: 0,
+    marginVertical: Platform.OS === "ios" && Platform.isPad === true ? 20 : 0,
     textAlign: "center",
     fontFamily: "HorizontalRounded",
   },
   //random Category button
   categoriesButton: {
-    backgroundColor: "#FFF",
+    // backgroundColor: "#FFF",
     width: Platform.OS === "ios" && Platform.isPad === true ? 450 : 220,
     borderRadius: 10,
     height: Platform.isPad ? 70 : 50,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
     justifyContent: "space-between",
     flex: 1,
-    bottom: windowWidth / 3,
+    bottom: Platform.isPad ? windowWidth / 2 : windowWidth / 3,
   },
   wheelIcon: {
     width: windowWidth / 5.5,

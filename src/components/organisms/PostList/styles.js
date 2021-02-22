@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import Constants from "expo-constants";
 import { Colors } from "../../../settings/styles/theme";
 
@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
     //marginHorizontal: 40,
   },
   logoPositionInModal: {
-    width: 50,
-    height: 50,
+    width: Platform.isPad ? windowWidth / 10 : 50,
+    height: Platform.isPad ? windowWidth / 10 : 50,
     borderColor: "white",
     borderWidth: 3.5,
     borderRadius: 35,
@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
     shadowRadius: 1.22,
     elevation: 5,
     paddingLeft: 5,
-    marginTop: 3,
+    marginTop: Platform.isPad ? 10 : 3,
     marginBottom: 8,
     paddingBottom: 10,
   },
   chatBoxImg: {
-    width: 250, //240,
-    height: 160,
+    width: Platform.isPad ? windowWidth / 1.5 : 250, //240,
+    height: Platform.isPad ? windowWidth / 2.5 : 160,
     resizeMode: "cover",
     shadowColor: "grey",
     alignItems: "center",
@@ -60,23 +60,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   chatBoxText: {
-    width: 180,
+    width: Platform.isPad ? windowWidth / 2.2 : 180,
     height: 30,
     paddingLeft: 10,
     overflow: "hidden",
-    fontSize: 12,
+    fontSize: Platform.isPad ? windowWidth / 30 : 12,
+    // backgroundColor: "yellow",
   },
   shareIcon: {
     resizeMode: "cover",
-    width: 18,
+    width: Platform.isPad ? windowWidth / 30 : 18,
     // backgroundColor: "red",
-    height: 14,
+    height: Platform.isPad ? windowWidth / 30 : 14,
     marginLeft: 15,
     marginTop: 3,
   },
   chatBoxInnerImage: {
-    width: 205,
-    height: 100,
+    width: Platform.isPad ? windowWidth / 2 : 205,
+    height: Platform.isPad ? windowWidth / 3.2 : 100,
     resizeMode: "cover",
     left: 3,
     marginTop: 5,
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontFamily: "HorizontalRounded",
     bottom: 10,
-    fontSize: 12,
+    fontSize: Platform.isPad ? windowWidth / 30 : 12,
   },
   singlePostContainer: {
     borderWidth: 1,

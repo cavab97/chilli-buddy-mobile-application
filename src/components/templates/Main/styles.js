@@ -474,10 +474,11 @@ const styles = StyleSheet.create({
   firstSectionText1: {
     fontFamily: "HorizontalRounded",
     color: "#979797",
+    fontSize: Platform.isPad ? windowWidth / 40 : 12,
   },
   firstSectionText2: {
     fontFamily: "HorizontalRounded",
-    fontSize: 35,
+    fontSize: Platform.isPad ? windowWidth / 20 : 35,
     color: Colors.RED,
     paddingTop: 0,
   },
@@ -545,19 +546,19 @@ const styles = StyleSheet.create({
   },
   //shopIcon
   quarterIcon: {
-    width: "70%",
-    height: "80%",
+    width: Platform.isPad ? windowWidth / 6.5 : "70%",
+    height: Platform.isPad ? windowWidth / 6.5 : "80%",
 
     // position: "relative",
     resizeMode: "contain",
     zIndex: 1,
-    paddingTop: 60,
-    bottom: 20,
+    paddingTop: Platform.isPad ? 0 : 60,
+    bottom: Platform.isPad ? 40 : 20,
     aspectRatio: 70 / 100,
   },
 
   floatingCheckInTitle: {
-    fontSize: 12,
+    fontSize: Platform.isPad ? windowWidth / 35 : 12,
     fontFamily: "HorizontalRounded",
     color: "black",
     paddingTop: 3,
@@ -583,8 +584,8 @@ const styles = StyleSheet.create({
   },
   profileImageStyle: {
     backgroundColor: Colors.GRAY_DARK,
-    height: 40,
-    width: 40,
+    height: Platform.isPad ? windowWidth / 10 : 40,
+    width: Platform.isPad ? windowWidth / 10 : 40,
     borderRadius: 80,
     borderWidth: 1,
     borderColor: "white",
@@ -616,14 +617,14 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   lastSectionIcon: {
-    width: 30,
-    height: 30,
+    width: Platform.isPad ? windowWidth / 15 : 30,
+    height: Platform.isPad ? windowWidth / 15 : 30,
     // backgroundColor: "black",
   },
   lastSectionText: {
     color: Colors.RED,
     paddingTop: 7,
-    fontSize: 18,
+    fontSize: Platform.isPad ? windowWidth / 20 : 18,
     // backgroundColor: "black",
     fontFamily: "HorizontalRounded",
   },
@@ -656,7 +657,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   promoteTitleTextStyle: {
-    fontSize: 13,
+    fontSize: Platform.isPad ? 15 : 13,
     fontFamily: "HorizontalRounded",
     paddingBottom: 25,
     paddingTop: 10,
