@@ -19,9 +19,12 @@ export * from "./rank/LuckyDrawWinnerRanking";
 export * from "./CameraProfile";
 export * from "./CompletedUser";
 export * from "./Prizes";
+export * from "./Bookmark";
+export * from "./Favourite";
+
 export * from "./Shop/ShopList";
 export * from "./Shop/SingleMerchant";
-export * from "./Bookmark";
+export * from "./Shop/ShopsSinglePost";
 
 export * from "./CheckIn";
 export * from "./CheckIn/CheckInModals";
@@ -31,3 +34,5 @@ export * from "./Voucher/SingleVoucher";
 
 export * from "./Voucher/SingleVoucherRedeem";
 export * from "./Voucher/SingleVoucherErrorModal";
+
+export * from "./SpinningWheel";

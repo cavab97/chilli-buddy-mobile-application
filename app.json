@@ -5,13 +5,13 @@
     "privacy": "public",
     "owner": "calvinmars",
     "platforms": ["ios", "android"],
-    "version": "2.6.9",
+    "version": "3.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splashNew.png",
       "resizeMode": "contain",
-      "backgroundColor": "#D60000"
+      "backgroundColor": "#FFF"
     },
     "notification": {
       "icon": "./assets/notificationIcon.png",
@@ -42,7 +42,7 @@
     "android": {
       "package": "com.infobay.gogogain",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 42,
+      "versionCode": 45,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",

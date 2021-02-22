@@ -13,7 +13,7 @@ const SignoutButton = (props) => {
       disabled={props.disabled}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        {props.loading && <ActivityIndicator size="large" color={Colors.WHITE} />}
+        {props.loading && <ActivityIndicator size="small" color={Colors.RED} />}
         <Text style={[styles.textStyle, props.textStyle]}>{props.children}</Text>
       </View>
     </TouchableOpacity>

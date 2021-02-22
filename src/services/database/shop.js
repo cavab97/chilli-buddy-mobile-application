@@ -27,6 +27,49 @@ export function listenObject({ objectId = null, updateListener = () => {} }) {
     });
 }
 
+export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag }) {
+  return new Promise((resolve, reject) => {
+    let databaseRef = database.geoReadTable({ ref: `${objectName}Packaging0` });
+    if (selectedCategory)
+      databaseRef = databaseRef.where("shop.categories", "array-contains-any", [selectedCategory]);
+
+    databaseRef
+      .where("deleted.at", "==", null)
+      .limit(limit)
+      .near({
+        center: database.GeoPoint(l.latitude, l.longtitude),
+        radius: radius,
+      })
+      .get()
+      .then((QuerySnapshot) => {
+        const result = [];
+        QuerySnapshot.forEach((snapshot) => {
+          const data = {
+            ...snapshot.data(),
+            id: snapshot.id,
+            distance: snapshot.distance,
+          };
+          const parent = database.processData({ data });
+
+          const processedData = { ...parent };
+
+          if (selectedTag) {
+            const isValidData = processedData.shop.tags.filter((data) => data === selectedTag);
+
+            if (isValidData.length > 0) result.push(processedData);
+          } else {
+            result.push(processedData);
+          }
+        });
+        result.sort((a, b) => a.distance - b.distance);
+        resolve(result);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
 export function readObjects(groupId) {
   return new Promise((resolve, reject) => {
     database

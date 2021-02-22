@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 import { Dimensions } from "react-native";
-import { Colors } from "../../../settings/styles/theme";
+import { Colors, Mixins } from "../../../settings/styles/theme";
+
 import Constants from "expo-constants";
 
 const windowWidth = Dimensions.get("window").width;
@@ -10,16 +11,64 @@ const ratio = windowWidth / 800;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAFAFA",
+    // height: windowHeight / 20,
   },
   subContainer1: {
     flex: 1,
     //minHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
     //maxHeight: Platform.OS === "ios" && Platform.isPad === true ? 700 : 250,
-    minHeight: (windowWidth / 800) * 600,
-    maxHeight: (windowWidth / 800) * 600,
-  },
+    minHeight: (windowWidth / 800) * 400,
+    maxHeight: (windowWidth / 800) * 400,
 
+    // marginHorizontal: 20,
+    // marginVertical: 20,
+    borderRadius: 50,
+    // backgroundColor: "red",
+    // borderWidth: 1,
+    // resizeMode: "cover",
+  },
+  subContainerOutside: {
+    marginVertical: 25,
+
+    minHeight: (windowWidth / 800) * 400,
+    maxHeight: (windowWidth / 800) * 400,
+    width: "100%",
+    borderRadius: 50,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    // borderWidth: 1,
+    // zIndex: 2,
+    elevation: 10,
+    overflow: "hidden",
+  },
+  subContainerOutsideShadow: {
+    // marginVertical: 25,
+
+    borderRadius: 50,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 0,
+    // },
+    // shadowOpacity: 0.5,
+    // shadowRadius: 1,
+
+    // elevation: 10,
+  },
+  HeaderSlider: {
+    // resizeMode: "cover",
+    // borderRadius: 30,
+    // resizeMode: "cover",
+  },
+  //modal v2
+  modalStyleV2: {
+    borderRadius: 30,
+  },
   subContainer2: {
     alignItems: "center",
     flex: 1,
@@ -54,6 +103,17 @@ const styles = StyleSheet.create({
   imageTopStyle: {
     width: "100%",
     height: "100%",
+    alignSelf: "center",
+    // borderLeftColor: "white",
+    // borderRightColor: "black",
+    // borderLeftWidth: 10,
+    // borderRightWidth: 10,
+
+    // resizeMode: "contain",
+    // borderRadius: 50,
+    // borderTopRightRadius: 50,
+    // borderBottomRightRadius: 50,
+    // marginHorizontal: 20,
   },
   floatingCheckInButton: {
     borderWidth: 1,
@@ -307,18 +367,29 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -20,
     right: -20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  videoImageCrossStyle: {
+    width: Platform.isPad ? 100 : 50,
+    height: Platform.isPad ? 100 : 50,
+    zIndex: 0,
   },
   adsImageStyle: {
     // width: "100%",
     // height: "100%",
+    backgroundColor: "#d9d9d9",
 
     minWidth: Platform.OS === "ios" && Platform.isPad === true ? 460 : 300, //windowWidth - 150,
     //maxWidth: (windowWidth * 85) / 100, //windowWidth - 100,
     height: Platform.OS === "ios" && Platform.isPad === true ? 810 : 530, //(windowHeight * 80) / 100,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    borderTopLeftRadius: 45,
+    borderTopRightRadius: 45,
+    borderBottomLeftRadius: 45,
+    borderBottomRightRadius: 45,
   },
   adsImageContainer: {
     //borderWidth: 1,
@@ -349,24 +420,6 @@ const styles = StyleSheet.create({
     height: Platform.OS === "ios" && Platform.isPad === true ? 950 : 530,
   },
 
-  //spinning wheel modal title
-  spinningTitle: {
-    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 36 : 18,
-    paddingBottom: Platform.OS === "ios" && Platform.isPad === true ? 20 : 5,
-    marginTop: "13%",
-    fontFamily: "ZiTiQuanXinYiGuanHeiTi",
-    color: Colors.WHITE,
-  },
-
-  //spinning wheel next modal title
-  spinningTitle2: {
-    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 29 : 11,
-    paddingBottom: Platform.OS === "ios" && Platform.isPad === true ? 20 : 5,
-    marginTop: "13%",
-    fontFamily: "ZiTiQuanXinYiGuanHeiTi",
-    color: Colors.WHITE,
-  },
-
   //sub Title
   subTitle: {
     fontSize: Platform.OS === "ios" && Platform.isPad === true ? 36 : 18,
@@ -375,46 +428,6 @@ const styles = StyleSheet.create({
     fontFamily: "ZiTiQuanXinYiGuanHeiTi",
     color: Colors.WHITE,
     textAlign: "center",
-  },
-
-  //spinning wheel image
-  spinningWheelImage: {
-    alignItems: "center",
-    paddingBottom: 15,
-    justifyContent: "center",
-  },
-
-  //random Category button
-  categoriesButton: {
-    backgroundColor: "#D60000",
-    width: Platform.OS === "ios" && Platform.isPad === true ? 450 : 220,
-    borderRadius: 10,
-    height: Platform.isPad ? 70 : 50,
-    marginRight: "auto",
-    marginLeft: "auto",
-    borderWidth: 1,
-    borderColor: "#FFFFFF",
-    padding: Platform.isPad ? 0 : 0,
-  },
-
-  //random category text
-  buttonText: {
-    fontSize: Platform.OS === "ios" && Platform.isPad === true ? 23 : 15,
-    color: "#ffffff",
-    fontFamily: "ZiTiQuanXinYiGuanHeiTi",
-    marginVertical: 16,
-    textAlign: "center",
-  },
-
-  //category text holder
-  categoryTextHolder: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: "center",
-    alignItems: "center",
   },
 
   //category Text
@@ -426,13 +439,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  //close spinning wheel modal
-  closeWheelModal: {
-    position: "absolute",
-    top: 10,
-    right: 10,
-  },
-
   floatingShopButtonTitle: {
     fontSize: 9,
     fontWeight: "bold",
@@ -440,26 +446,239 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     textAlign: "center",
   },
-  floatingCheckInTitle: {
-    fontSize: 9,
+
+  // floatingShopButton: {
+  //   borderWidth: 1,
+  //   borderColor: "rgba(0,0,0,0.2)",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   width: 70,
+  //   position: "absolute",
+  //   bottom: 10,
+  //   right: 10,
+  //   height: 70,
+  //   backgroundColor: "#D60000",
+  //   borderRadius: 100,
+  //   borderColor: Colors.SECONDARY,
+  // },
+
+  //Top section part
+
+  firstSection: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 20,
+  },
+
+  firstSectionText1: {
     fontFamily: "HorizontalRounded",
-    color: "white",
-    paddingTop: 4,
+    color: "#979797",
+    fontSize: Platform.isPad ? windowWidth / 40 : 12,
+  },
+  firstSectionText2: {
+    fontFamily: "HorizontalRounded",
+    fontSize: Platform.isPad ? windowWidth / 20 : 35,
+    color: Colors.RED,
+    paddingTop: 0,
+  },
+  firstSectionFirstColumn: {
+    marginVertical: 20,
+  },
+  firstSectionSecondColumn: {
+    marginVertical: 20,
+  },
+  //second section part
+
+  SecondSection: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    marginHorizontal: 20,
+  },
+  searchBarStyles: {
+    backgroundColor: "#FFF",
+    // borderWidth: 1, //no effect
+    borderRadius: 25,
+    shadowColor: "#000",
+    shadowRadius: 2.22,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 10,
+
+    // height: 25,
+  },
+  searchBarInputStyles: {
+    backgroundColor: "#FFF",
+  },
+  searchBarPlaceHolderStyles: {
+    color: Colors.RED,
+  },
+  thirdSection: {
+    marginHorizontal: 20,
+  },
+  quarterSection: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 10,
+    marginHorizontal: 20,
+  },
+  QuarterContainer1: {
+    backgroundColor: "#fff",
+    width: windowWidth / 5,
+    height: windowWidth / 6,
+    alignItems: "center",
+    borderWidth: 0.1,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    shadowColor: "#f5f5f5",
+    shadowRadius: 0.5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 1,
+    // resizeMode: "cover",
+  },
+  //shopIcon
+  quarterIcon: {
+    width: Platform.isPad ? windowWidth / 6.5 : "70%",
+    height: Platform.isPad ? windowWidth / 6.5 : "80%",
+
+    // position: "relative",
+    resizeMode: "contain",
+    zIndex: 1,
+    paddingTop: Platform.isPad ? 0 : 60,
+    bottom: Platform.isPad ? 40 : 20,
+    aspectRatio: 70 / 100,
+  },
+
+  floatingCheckInTitle: {
+    fontSize: Platform.isPad ? windowWidth / 35 : 12,
+    fontFamily: "HorizontalRounded",
+    color: "black",
+    paddingTop: 3,
     textAlign: "center",
   },
-  floatingShopButton: {
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.2)",
+  quarterInnerBox: {
+    marginTop: 0,
+    backgroundColor: Colors.RED,
+    width: "75%",
     alignItems: "center",
-    justifyContent: "center",
-    width: 70,
-    position: "absolute",
-    bottom: 10,
-    right: 10,
-    height: 70,
-    backgroundColor: "#D60000",
+    height: "60%",
+    borderRadius: 10,
+  },
+  QuarterContainer2: { backgroundColor: "black", width: windowWidth / 6, alignItems: "center" },
+  QuarterContainer3: { backgroundColor: "black", width: windowWidth / 6, alignItems: "center" },
+  QuarterContainer4: { backgroundColor: "black", width: windowWidth / 6, alignItems: "center" },
+
+  avatarContainer: {
+    //marginRight: 12,
+    marginTop: 0,
+
+    // paddingLeft: 200,
+  },
+  profileImageStyle: {
+    backgroundColor: Colors.GRAY_DARK,
+    height: Platform.isPad ? windowWidth / 10 : 40,
+    width: Platform.isPad ? windowWidth / 10 : 40,
+    borderRadius: 80,
+    borderWidth: 1,
+    borderColor: "white",
+  },
+  image: {
+    flex: 1,
     borderRadius: 100,
-    borderColor: Colors.SECONDARY,
+    width: "100%",
+
+    resizeMode: "cover",
+    //width: "100%",
+    // height: "100%",
+  },
+  //last section
+  lastSection: {
+    // justifyContent: "space-between",
+    marginVertical: 20,
+    // marginHorizontal: 20,
+    marginLeft: 20,
+
+    // backgroundColor: "grey",
+  },
+  lastSectionFirstRow: {
+    flex: 1,
+    flexDirection: "row",
+    // justifyContent: "space-between",
+  },
+  scrollUi: {
+    backgroundColor: "black",
+  },
+  lastSectionIcon: {
+    width: Platform.isPad ? windowWidth / 15 : 30,
+    height: Platform.isPad ? windowWidth / 15 : 30,
+    // backgroundColor: "black",
+  },
+  lastSectionText: {
+    color: Colors.RED,
+    paddingTop: 7,
+    fontSize: Platform.isPad ? windowWidth / 20 : 18,
+    // backgroundColor: "black",
+    fontFamily: "HorizontalRounded",
+  },
+  firstPromoteCardStyle: {
+    width: 181.2,
+    height: 200,
+    // marginLeft: 20,
+    marginRight: 20,
+    elevation: 1,
+    borderRadius: 30,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.15,
+    shadowRadius: 0.5,
+    marginBottom: 6,
+    paddingTop: 10,
+    alignItems: "center",
+  },
+  promoteCardStyle: {
+    width: 181.2,
+    height: 200,
+
+    // marginLeft: 20,
+    marginRight: 20,
+    elevation: 1,
+    borderRadius: 30,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.15,
+    shadowRadius: 0.5,
+    marginBottom: 6,
+    paddingTop: 10,
+    alignItems: "center",
+  },
+  promoteTitleTextStyle: {
+    fontSize: Platform.isPad ? 15 : 13,
+    fontFamily: "HorizontalRounded",
+    paddingBottom: 25,
+    paddingTop: 10,
+  },
+  promoteImage: {
+    width: 160,
+    height: 121.2,
+    borderRadius: 20,
+  },
+  flatList: {
+    minHeight: Mixins.WINDOW_HEIGHT - 300,
+  },
+  lastSectionFlatListRow: {
+    marginTop: 10,
+  },
+  lastSectionTextContainer: {
+    alignSelf: "flex-start",
+    marginLeft: 20,
   },
 });
 

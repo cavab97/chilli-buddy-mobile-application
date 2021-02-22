@@ -1,86 +1,82 @@
 import React from "react";
 import styles from "./styles";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
   ActivityIndicator,
-  Icon as Icon2,
   FlatList,
   Image,
-  ModalSelector,
   TouchableOpacity,
   View,
   Text,
 } from "@components/atoms";
 
-import { Card, CardSection } from "@components/molecules";
+import { NotFoundFooter, CardSection } from "@components/molecules";
 
-import Icon from "react-native-vector-icons/FontAwesome";
+import { CustomNavBar } from "@components/organisms/CustomNavBar";
+import { SwipeableModal } from "@components/organisms/SwipeableModal";
+import { SingleMerchantPromo } from "../SingleMerchantPromo";
 
-function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance }) {
-  const { image } = styles;
+function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance, name, shopName }) {
+  const { image, detail, title, subtitle, bookmarkIcon } = styles;
 
   let cover = "";
   if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
   else cover = { uri: picture[0] };
+
+  const distanceIcon = require("../../../../assets/icons/distance.png");
+  const emptyHeartIcon = require("../../../../assets/icons/emptyHeart.png");
+  const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
+
   return (
     <TouchableOpacity onPress={onPress}>
-      <Card style={{ width: "98%" }}>
-        <CardSection
-          style={{
-            borderBottomWidth: 0,
-          }}
-        >
-          <Image style={image} resizeMode="cover" source={cover} />
-        </CardSection>
-        <View style={styles.floatingDistanceIndicator}>
-          <MaterialCommunityIcons name="map-marker-distance" color="white" size={20} />
-          <Text style={styles.distanceIndicatorTitle}>
-            {
-              +(distance != undefined
-                ? Math.round(distance + "e+2") + "e-2"
-                : Math.round(calculatedDistance + "e+2") + "e-2")
-            }
-            KM Away
-          </Text>
+      <View style={styles.cardContainer}>
+        <View style={styles.leftCardContainer}>
+          <CardSection style={styles.imageContainer}>
+            <Image 
+              style={image} 
+              resizeMode="cover" 
+              source={cover} 
+            />
+          </CardSection>
         </View>
-        <TouchableOpacity style={styles.bookmark} onPress={onBookmarkPressed}>
-          {gotBookmark ? (
-            <View
-              style={{
-                borderRadius: 100,
-                borderWidth: 0,
-                borderColor: "#ffd30f",
-                backgroundColor: "#ffd30f",
-              }}
+        <View style={styles.rightCardContainer}>
+          <CardSection style={styles.textContainer}>
+            <Text 
+              style={title} 
+              numberOfLines={2}
             >
-              <Icon2
-                size={50}
-                iconStyle={{ borderWidth: 0 }}
-                containerStyle={{ justifyContent: "center" }}
-                name={"stars"}
-                color="#d60000"
+              {name}
+            </Text>
+          </CardSection>
+          <View>
+            <CardSection style={styles.textContainer}>
+              <Text 
+                style={subtitle} 
+                numberOfLines={1}
+              >
+                {shopName}
+              </Text>
+            </CardSection>
+            <CardSection style={styles.descriptionContainer}>
+              <Image 
+                source={distanceIcon} 
+                style={styles.distanceIcon} 
               />
-            </View>
-          ) : (
-            <View
-              style={{
-                borderRadius: 100,
-                backgroundColor: "#ffffff",
-              }}
-            >
-              <Icon2
-                size={50}
-                iconStyle={{ borderWidth: 0 }}
-                containerStyle={{ justifyContent: "center" }}
-                name={"stars"}
-                color="#d60000"
-              />
-            </View>
-          )}
-        </TouchableOpacity>
-        {/* )} */}
-      </Card>
+              <Text style={detail}>
+                Just {+(Math.round(distance + "e+2") + "e-2")}km away
+              </Text>
+              <View style={bookmarkIcon}>
+                <TouchableOpacity onPress={onBookmarkPressed}>
+                  <Image
+                    source={gotBookmark ? filledHeartIcon : emptyHeartIcon}
+                    style={styles.favouriteIcon}
+                  />
+                </TouchableOpacity>
+              </View>
+            </CardSection>
+          </View>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -90,19 +86,155 @@ const PromoList = ({
   readBookmark,
   submitLoading,
   dataSource,
+  toggleBookmark,
   categories,
+  allCategory,
+  allTag,
   tags,
   selectedCategory,
   handleRefresh,
-  renderFooter,
-  onMerchantPressed,
+  onCarouselPressed,
+  onPromoPressed,
   onCategoryChange,
   onTagChange,
   onBookmarkPressed,
+  onBackPressed,
+  bookmark,
+  tagModal,
+  categoryModal,
+  onCategoryPressed,
+  onTagPressed,
+  promotion,
+  promotionModal,
+  onPromoPressedClose,
+  selectedTag
 }) => {
+
+  const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
+  const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
+
+  let selectedCategoryTitle = allCategory.filter((category) => category.id === selectedCategory);
+  selectedCategoryTitle = selectedCategoryTitle.length > 0 ? selectedCategoryTitle[0].title : '';
+
+  let selectedTagTitle = allTag.filter((tag) => tag.id === selectedTag);
+  selectedTagTitle = selectedTagTitle.length > 0 ? selectedTagTitle[0].title : '';
+
   return (
-    <View style={{ height: "100%" }}>
-      <View
+    <View style={{ flex: 1 /*height: 100%*/ }}>
+      <CustomNavBar
+        textOne="Category"
+        textTwo="Tags"
+        onPressBack={onBackPressed}
+        onPressButton1={onCategoryPressed}
+        onPressButton2={onTagPressed}
+        selectedButton1={categoryModal}
+        selectedButton2={tagModal}
+      />
+
+      <SwipeableModal
+        modalVisible={categoryModal}
+        dataSource={categories}
+        modalTitle="Category"
+        type="category"
+        full={false}
+        onSwipeComplete={onCategoryPressed}
+        onBackDropPressed={onCategoryPressed}
+        selectedCategory={selectedCategory}
+        onPress={onCategoryChange}  
+      />
+
+      <SwipeableModal
+        modalVisible={tagModal}
+        dataSource={tags}
+        modalTitle="Tags"
+        type="tag"
+        full={false}
+        onSwipeComplete={onTagPressed}
+        selectedTag={selectedTag}
+        onPress={onTagChange}
+        selectedCategory={selectedTag}
+        onBackDropPressed={onTagPressed}
+      />
+
+      <SingleMerchantPromo
+        promotionModal={promotionModal}
+        dataSource={promotion}
+        onCarouselPressed={onCarouselPressed}
+        onPromoPressedClose={onPromoPressedClose}
+      />
+
+      <View style={styles.promoTitleContainer}>
+        <Text style={styles.pageTitle}>
+          Promotions
+        </Text>
+
+        <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={toggleBookmark}>
+            <Image
+              source={bookmark ? filledHeartIcon : emptyHeartIcon}
+              style={styles.emptyHeartIcon}
+            />
+          </TouchableOpacity>
+        </View>
+
+        
+      </View>
+      { selectedCategory &&
+        <View style={styles.categoryContainer}>
+          <View 
+            style={styles.button} 
+            key={selectedCategory}
+          >
+              <Text style={{ fontFamily: 'HorizontalRounded' }}>
+                {selectedCategoryTitle}
+              </Text>
+          </View>
+          { selectedTag &&
+              <View 
+                style={styles.button} 
+                key={selectedTag}
+              >
+                <Text style={{ fontFamily: 'HorizontalRounded' }}>
+                  {selectedTagTitle}
+                </Text>
+              </View>
+          }
+        </View>
+      }
+
+      <FlatList
+        data={dataSource}
+        renderItem={({ item, index }) => (
+          <Item
+            onPress={() => onPromoPressed(item)}
+            onBookmarkPressed={() => onBookmarkPressed(item)}
+            name={item.title}
+            picture={item.coverPhotos}
+            distance={item.distance}
+            promoID={item.id}
+            shopName={item.shop.displayTitle}
+            gotBookmark={item.isBookmark} //{gotBookmark}
+            index={index}
+            readBookmark={readBookmark}
+            submitLoading={submitLoading}
+          />
+        )}
+        keyExtractor={(item) => item.id}
+        onRefresh={handleRefresh}
+        refreshing={loading}
+        ListFooterComponent={
+          dataSource.length === 0 && <NotFoundFooter message="No promotion found" />
+        }
+        style={styles.flatList}
+      />
+    </View>
+  );
+};
+
+export { PromoList };
+
+{
+  /* <View
         style={{
           flexDirection: "row",
           justifyContent: "flex-end",
@@ -143,32 +275,5 @@ const PromoList = ({
         >
           <Icon name="filter" size={20} style={styles.tagsButton} />
         </ModalSelector>
-      </View>
-
-      <FlatList
-        data={dataSource}
-        renderItem={({ item, index }) => (
-          <Item
-            onPress={() => onMerchantPressed(item)}
-            onBookmarkPressed={() => onBookmarkPressed(item)}
-            name={item.displayTitle}
-            picture={item.coverPhotos}
-            distance={item.distance}
-            promoID={item.id}
-            gotBookmark={item.isBookmark} //{gotBookmark}
-            index={index}
-            readBookmark={readBookmark}
-            submitLoading={submitLoading}
-          />
-        )}
-        keyExtractor={(item) => item.id}
-        onRefresh={handleRefresh}
-        refreshing={false}
-        ListFooterComponent={renderFooter({ empty: dataSource.length === 0 ? true : false })}
-        style={styles.flatList}
-      />
-    </View>
-  );
-};
-
-export { PromoList };
+      </View> */
+}

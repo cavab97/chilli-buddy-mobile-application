@@ -62,7 +62,6 @@ const initialState = {
       l: { _lat: 0, _long: 0 },
       g: null,
     },
-
     created: { at: null, by: null },
     deleted: { at: null, by: null },
     updated: { at: null, by: null },
@@ -112,6 +111,26 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         post: payload.data,
       };
+
+    case actions.READ_FROM_DATABASE_SINGLEPOST:
+      return {
+        ...state,
+        readLoading: true,
+        readError: false,
+      };
+    case actions.READ_FROM_DATABASE_SINGLEPOST_SUCCESS:
+      return {
+        ...state,
+        readLoading: false,
+        post: payload.data,
+      };
+    case actions.READ_FROM_DATABASE_SINGLEPOST_ERROR:
+      return {
+        ...state,
+        readLoading: false,
+        readError: payload.error,
+      };
+
     default:
       return state;
   }

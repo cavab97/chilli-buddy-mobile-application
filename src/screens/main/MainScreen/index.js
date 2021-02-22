@@ -1,19 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import MainTemplete from "@components/templates/Main";
+import MainTemplate from "@components/templates/Main";
 import { Actions } from "react-native-router-flux";
 import { readAllFromDatabase as readAllRoute } from "@redux/route/action";
 import { readFromDatabase as readAdvertisements, toggleModal } from "@redux/advertisement/action";
 import { readInfo as readSettingInfo, toggleSpinningWheelModal } from "@redux/settings/action";
 import { verifyPermission, loadShops } from "@redux/shops/action";
+import { readObjects as readShopPostMain } from "@redux/shopPostMain/action";
+import * as Location from "expo-location";
+import { getDistance } from "geolib";
+
 import {
   listenFromDatabase as listenToRouteTickets,
   removeListenerFromDatabase as removeListenerFromRouteTickets,
 } from "@redux/routeTicket/action";
 
+import { loadShopsPromo, togglePromotionModal, listenToRecord } from "@redux/promo/action";
+
 import clone from "clone";
 import { lessThan } from "react-native-reanimated";
 import { Animated } from "react-native";
+const RADIUS = 50;
 
 class index extends Component {
   constructor(props) {
@@ -28,11 +35,14 @@ class index extends Component {
       refreshing: false,
       popUpImage: "",
       wheelRotation: new Animated.Value(0),
-      fadeWheel: new Animated.Value(1),
+      // fadeWheel: new Animated.Value(1),
       fadeResult: new Animated.Value(0),
       randomCategoryNumber: null,
       randomCategory: null,
-      spinStatus: false,
+      // spinStatus: false,
+      selectedCategory: { id: "", tags: ["All"], title: "All" },
+      selectedTag: "All",
+      radiusAddition: 1,
     };
   }
 
@@ -41,6 +51,8 @@ class index extends Component {
     this.props.readAllRoute();
     this.props.readAdvertisements();
     this.props.readSettingInfo();
+    this.handleRefresh();
+    this.props.readShopPostMain();
   }
 
   componentWillUnmount() {
@@ -52,10 +64,20 @@ class index extends Component {
   // }
 
   handleRefresh = async () => {
+    let location = await Location.getCurrentPositionAsync({});
     this.setState({ refreshing: true });
     await this.props.readAdvertisements();
     await this.props.readSettingInfo();
+    await this.props.loadShopsPromo({
+      radius: RADIUS * this.state.radiusAddition,
+      latitude: location.coords.latitude,
+      longtitude: location.coords.longitude,
+      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+    });
     this.setState({ refreshing: false });
+
+    //await this.props.readFromDatabase();
   };
 
   handleVideoRef = (component) => {
@@ -68,24 +90,45 @@ class index extends Component {
   onCheckInPressed() {
     Actions.CheckIn();
   }
-
-  onPressCheckIn() {
-    Actions.CheckIn();
+  onShopsPressed() {
+    Actions.Shops();
+  }
+  onPromotionsPressed() {
+    Actions.Promo();
+  }
+  onProfilePressed() {
+    Actions.Profile();
+  }
+  //open spinning wheel screen
+  onOpenSpinningWheel() {
+    Actions.SpinningWheel();
   }
 
-  onPressCheckIn() {
-    Actions.CheckIn();
+  onPromoPressed(item) {
+    //Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
+    this.props.listenToRecord({ promoId: item.id });
+    this.props.togglePromotionModal();
   }
 
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
+    console.log("j");
+
     const filteredDatasource = this.filteredDatasource();
-    if (filteredDatasource[index].adsType === "image") {
-      Actions.SingleMerchant({ shopId: filteredDatasource[index].shopId });
-    } else if (filteredDatasource[index].adsType === "video") {
-      this.props.toggleModal();
-      this.state.popUpImage = filteredDatasource[index].popUpImage;
-    }
+    // console.log(filteredDatasource[index]);
+
+    // if (filteredDatasource[index].adsType === "image") {
+    //   Actions.SingleMerchant({ shopId: filteredDatasource[index].shopId });
+    // } else if (filteredDatasource[index].adsType === "video") {
+    //   this.props.toggleModal();
+    //   this.state.popUpImage = filteredDatasource[index].popUpImage;
+    // }
+    Actions.ShopsSinglePost({
+      postId: filteredDatasource[index].postId,
+      distance: filteredDatasource[index].distance,
+      categoryName: filteredDatasource[index].category,
+    });
+    // Actions.SingleMerchant({ shopId: filteredDatasource[index].shopId });
   }
 
   //close pop up from header
@@ -106,29 +149,60 @@ class index extends Component {
   //Filtered Data Source from empty shopId and empty cover pic
   filteredDatasource() {
     const advertisements = this.props.advertisements;
+    const posts = this.props.posts;
+    // console.log(posts[0].d.shop.id);
+    // console.log(posts[0].coverPhoto);
     let dataSourceAds = [];
-
     //Map image URL and Shop ID to array
-    dataSourceAds = advertisements.map((item) => {
+    dataSourceAds = posts.map((item) => {
+      // console.log(item.d.coverPhoto);
       return {
-        imageUri: item.coverPic,
-        shopId: item.shopID,
-        popUpImage: item.popUpImage,
+        imageUri: item.coverPhoto[0],
+        shopId: item.id,
+        category: item.shop.categories,
+        postId: item.id,
+        // popUpImage: item.popUpImage,
       };
     });
 
     //Filter empty shopID and Cover pic ads
     var filteredDatasource = dataSourceAds.filter(
-      (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
+      (value) =>
+        value.imageUri !== undefined && value.shopId !== undefined && value.postId !== undefined
     );
-
-    //check pop up image type in slider
-    filteredDatasource.forEach((data) => {
-      data.adsType = this.checkType(data.popUpImage);
-    });
+    // //check pop up image type in slider
+    // filteredDatasource.forEach((data) => {
+    //   data.adsType = this.checkType(data.popUpImage);
+    // });
 
     return filteredDatasource;
   }
+
+  // filteredDatasource() {
+  //   const advertisements = this.props.posts;
+  //   console.log(advertisements.d.images[0]);
+  //   let dataSourceAds = [];
+  //   //Map image URL and Shop ID to array
+  //   dataSourceAds = advertisements.map((item) => {
+  //     return {
+  //       imageUri: item.coverPic,
+  //       shopId: item.shopID,
+  //       popUpImage: item.popUpImage,
+  //     };
+  //   });
+
+  //   //Filter empty shopID and Cover pic ads
+  //   var filteredDatasource = dataSourceAds.filter(
+  //     (value) => Object.keys(value.imageUri).length !== 0 && Object.keys(value.shopId).length !== 0
+  //   );
+
+  //   //check pop up image type in slider
+  //   filteredDatasource.forEach((data) => {
+  //     data.adsType = this.checkType(data.popUpImage);
+  //   });
+
+  //   return filteredDatasource;
+  // }
 
   //Check the type of url is image or video
   checkType(imageUrl) {
@@ -157,137 +231,135 @@ class index extends Component {
     this.props.toggleSpinningWheelModal();
   }
 
-  spinningWheel() {
-    let newDeg = Math.random() * 360;
-    const curValue = this.state.wheelRotation.__getValue();
-    if (curValue > 720) {
-      newDeg = curValue - newDeg - 720;
-    } else {
-      newDeg = curValue + newDeg + 720;
-    }
-
-    this.setState({
-      randomCategoryNumber: Math.random(),
-      spinStatus: true,
-      randomCategory: null,
-    });
-
-    const randomCategory = this.getRandomCategory();
-    this.setState({ randomCategory: randomCategory });
-
-    Animated.parallel([
-      Animated.decay(this.state.wheelRotation, {
-        toValue: newDeg,
-        velocity: 200,
-        //deceleration: 0.99915,
-        useNativeDriver: true,
-      }).start(({ finished }) => {
-        // const randomCategory = this.getRandomCategory();
-        this.setState({ spinStatus: false });
-        Animated.timing(this.state.fadeResult, {
-          toValue: 1,
-          //delay: 2000,
-          duration: 1500,
-          useNativeDriver: true,
-        }).start();
-      }),
-      Animated.timing(this.state.fadeWheel, {
-        toValue: 0,
-        duration: 6000,
-        useNativeDriver: true,
-      }).start(),
-    ]);
-  }
-  getRandomCategory() {
-    let categoryArray = this.passCategory();
-    var randomCategory =
-      //categoryArray[Math.floor(this.state.randomCategoryNumber * categoryArray.length)];
-      categoryArray[Math.floor(Math.random() * categoryArray.length)+1];
-    return randomCategory;
-  }
-
   onPressRandomCategory(category) {
     Actions.Shops({ selectedCategory: category });
     this.props.toggleSpinningWheelModal();
   }
 
-  //Pass category
-  passCategory() {
-    let dataSource2 = [];
-    let categoriesImage = [
-      require("../../../assets/chillibuddy/category1.png"),
-      require("../../../assets/chillibuddy/category2.png"),
-      require("../../../assets/chillibuddy/category3.png"),
-      require("../../../assets/chillibuddy/category4.png"),
-      require("../../../assets/chillibuddy/category5.png"),
-    ];
-    let size = 30;
-    dataSource2 = this.state.categories.slice(1, size).map((category) => {
-      return {
-        key: category.id,
-        id: category.id,
-        no: category.no,
-        title: category.title,
-        tags: category.tags,
-        //image: require("../../../assets/chillibuddy/category1.png"),
-      };
-    });
-
-    //Assigning background pictures
-    dataSource2.forEach((element, index) => {
-      element.image = categoriesImage[index % 5];
-      switch (element.title) {
-        case "Chinese | 中餐":
-          element.icon = "chinese";
-          break;
-        case "Western | 西餐":
-          element.icon = "western";
-          break;
-        case "Cafe | 咖啡馆":
-          element.icon = "cafe";
-          break;
-        case "China | 中国菜":
-          element.icon = "china";
-          break;
-        case "Japanese | 日本餐":
-          element.icon = "japanese";
-          break;
-        case "Korean | 韩国餐":
-          element.icon = "korean";
-          break;
-        case "Thai | 泰国餐":
-          element.icon = "thai";
-          break;
-        case "TAIWAN | 台湾":
-          element.icon = "taiwan";
-          break;
-        case "Bistro | 小酒馆":
-          element.icon = "bistro";
-          break;
-        case "Steamboat | 火锅":
-          element.icon = "steamboat";
-          break;
-        case "Local Cuisine | 本地美食":
-          element.icon = "localcuisine";
-          break;
-        case "Beverage | 饮料店":
-          element.icon = "beverage";
-          break;
-        case "Food Truck | 餐车":
-          element.icon = "foodtruck";
-          break;
-        case "LOK LOK | 碌碌":
-          element.icon = "loklok";
-          break;
-        case "Special Cuisine | 特色美食":
-          element.icon = "cuisine";
-          break;
-        default:
-          element.icon = "others";
-      }
-    });
-    return dataSource2;
+  returnGreetings() {
+    let hour = new Date().getHours();
+    // let offsetInHours = date.getTimezoneOffset() / 60;
+    // console.log(hour);
+    if ((hour >= 5 && hour <= 12) || hour <= 12) {
+      return "Good Morning.";
+    } else if (hour >= 12 && hour <= 18) {
+      return "Good Afternoon.";
+    } else if ((hour >= 18 && hour <= 5) || hour >= 18) {
+      return "Good Evening";
+    }
   }
+  //merchant Pressed
+  onMerchantPressed(item) {
+    Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
+  }
+
+  onPromoPressedClose() {
+    this.props.togglePromotionModal();
+  }
+
+  onCarouselPressed() {
+    const location = this.props.promotionState.promotion.shop.l;
+    this.calculateDistance(location);
+    this.props.togglePromotionModal();
+  }
+
+  calculateDistance = async (destinationLocation) => {
+    const promo = this.props.promotionState;
+    var distance;
+    let location = await Location.getCurrentPositionAsync({});
+    distance =
+      getDistance(
+        { latitude: destinationLocation.U, longitude: destinationLocation.k },
+        {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }
+      ) / 1000;
+
+    Actions.SingleMerchant({
+      shopId: promo.promotion.shop.id,
+      distance: distance,
+      calculatedDistance: distance,
+    });
+  };
+
+  // //Pass category
+  // passCategory() {
+  //   let dataSource2 = [];
+  //   let categoriesImage = [
+  //     require("../../../assets/chillibuddy/category1.png"),
+  //     require("../../../assets/chillibuddy/category2.png"),
+  //     require("../../../assets/chillibuddy/category3.png"),
+  //     require("../../../assets/chillibuddy/category4.png"),
+  //     require("../../../assets/chillibuddy/category5.png"),
+  //   ];
+  //   let size = 30;
+  //   dataSource2 = this.state.categories.slice(1, size).map((category) => {
+  //     return {
+  //       key: category.id,
+  //       id: category.id,
+  //       no: category.no,
+  //       title: category.title,
+  //       tags: category.tags,
+  //       //image: require("../../../assets/chillibuddy/category1.png"),
+  //     };
+  //   });
+
+  //   //Assigning background pictures
+  //   dataSource2.forEach((element, index) => {
+  //     element.image = categoriesImage[index % 5];
+  //     switch (element.title) {
+  //       case "Chinese | 中餐":
+  //         element.icon = "chinese";
+  //         break;
+  //       case "Western | 西餐":
+  //         element.icon = "western";
+  //         break;
+  //       case "Cafe | 咖啡馆":
+  //         element.icon = "cafe";
+  //         break;
+  //       case "China | 中国菜":
+  //         element.icon = "china";
+  //         break;
+  //       case "Japanese | 日本餐":
+  //         element.icon = "japanese";
+  //         break;
+  //       case "Korean | 韩国餐":
+  //         element.icon = "korean";
+  //         break;
+  //       case "Thai | 泰国餐":
+  //         element.icon = "thai";
+  //         break;
+  //       case "TAIWAN | 台湾":
+  //         element.icon = "taiwan";
+  //         break;
+  //       case "Bistro | 小酒馆":
+  //         element.icon = "bistro";
+  //         break;
+  //       case "Steamboat | 火锅":
+  //         element.icon = "steamboat";
+  //         break;
+  //       case "Local Cuisine | 本地美食":
+  //         element.icon = "localcuisine";
+  //         break;
+  //       case "Beverage | 饮料店":
+  //         element.icon = "beverage";
+  //         break;
+  //       case "Food Truck | 餐车":
+  //         element.icon = "foodtruck";
+  //         break;
+  //       case "LOK LOK | 碌碌":
+  //         element.icon = "loklok";
+  //         break;
+  //       case "Special Cuisine | 特色美食":
+  //         element.icon = "cuisine";
+  //         break;
+  //       default:
+  //         element.icon = "others";
+  //     }
+  //   });
+  //   return dataSource2;
+  // }
 
   render() {
     const {
@@ -301,7 +373,26 @@ class index extends Component {
       readErrorRouteTicket,
       readErrorAdvertisement,
       readErrorHeaderImages,
+      posts,
     } = this.props;
+    // console.log(posts);
+    let {
+      user,
+      notifications,
+      ownRewards,
+      photo,
+      readLoadingNotification,
+      readLoadingReward,
+    } = this.props;
+
+    const {
+      readLoading,
+      promo,
+      bookmark,
+      promotions,
+      promotionModalVisible,
+      promotion,
+    } = this.props.promotionState;
 
     const readFail =
       readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
@@ -311,6 +402,7 @@ class index extends Component {
 
     //Sort to show latest
     advertisements.sort((a, b) => b.createAt - a.createAt);
+    // console.log(advertisements);
 
     //Push ads popup cover pic into array
     advertisements.forEach((advertisement) => {
@@ -335,20 +427,20 @@ class index extends Component {
       })
       .toString();
 
-    const noImageHeaderSlider = require("../../../assets/gogogain/top_image.jpg");
+    const noImageHeaderSlider = require("../../../assets/gogogain/404NotFound.jpeg");
     const noImageAdvertisement = require("../../../assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
     const casualImage = require("../../../assets/gogogain/Mascot-C.png");
     const luxuryImage = require("../../../assets/gogogain/Mascot-L.png");
 
     return (
-      <MainTemplete
+      <MainTemplate
         readFail={readFail}
         slider={this.filteredDatasource()}
         filteredAdPic={filteredAdPic}
         randomAdPic={randomAdPic}
         getShopId={getShopId}
-        dataSource={dataSource}
-        dataSource2={this.passCategory()}
+        promotion={promotion}
+        // dataSource2={this.passCategory()}
         sectionTitle1="Category"
         //routeTickets={routeTickets}
         casualImage={casualImage}
@@ -373,17 +465,30 @@ class index extends Component {
         popUpImage={this.state.popUpImage}
         onClosePopUp={this.onClosePopUp.bind(this)}
         spinningWheelModal={this.props.spinningWheelModal}
-        onOpenSpinningWheelModal={this.onOpenSpinningWheelModal.bind(this)}
-        onCloseSpinningWheelModal={this.onCloseSpinningWheelModal.bind(this)}
-        spinningWheel={this.spinningWheel.bind(this)}
+        // onOpenSpinningWheelModal={this.onOpenSpinningWheelModal.bind(this)}
+        // onCloseSpinningWheelModal={this.onCloseSpinningWheelModal.bind(this)}
+        // spinningWheel={this.spinningWheel.bind(this)}
         wheelRotation={this.state.wheelRotation}
         randomCategory={this.state.randomCategory}
         onPressRandomCategory={this.onPressRandomCategory.bind(this)}
         fadeWheel={this.state.fadeWheel}
         fadeResult={this.state.fadeResult}
-        spinStatus={this.state.spinStatus}
+        // spinStatus={this.state.spinStatus}
         onCheckInPressed={this.onCheckInPressed.bind(this)}
-        checkIn={this.onPressCheckIn.bind(this)}
+        onPromotionsPressed={this.onPromotionsPressed.bind(this)}
+        onShopsPressed={this.onShopsPressed.bind(this)}
+        onProfilePressed={this.onProfilePressed.bind(this)}
+        user={user}
+        promoSource={promo}
+        dataSource
+        promotions={promotions}
+        promotionModal={promotionModalVisible}
+        onMerchantPressed={this.onMerchantPressed.bind(this)}
+        onOpenSpinningWheel={this.onOpenSpinningWheel.bind(this)}
+        returnGreetings={this.returnGreetings()}
+        onPromoPressed={this.onPromoPressed.bind(this)}
+        onPromoPressedClose={this.onPromoPressedClose.bind(this)}
+        onCarouselPressed={this.onCarouselPressed.bind(this)}
       />
     );
   }
@@ -407,6 +512,14 @@ const mapStateToProps = (state) => {
 
   const openModal = state.Advertisement.openModal;
 
+  const user = state.Auth.user;
+
+  const promotionState = state.Promotion;
+
+  const posts = state.ShopPostMain.posts;
+
+  // console.log(posts[5].coverPhoto);
+
   return {
     categories,
     tags,
@@ -423,6 +536,9 @@ const mapStateToProps = (state) => {
     readErrorHeaderImages,
     openModal,
     spinningWheelModal,
+    user,
+    promotionState,
+    posts,
   };
 };
 
@@ -436,4 +552,8 @@ export default connect(mapStateToProps, {
   loadShops,
   readSettingInfo,
   toggleSpinningWheelModal,
+  loadShopsPromo,
+  readShopPostMain,
+  togglePromotionModal,
+  listenToRecord,
 })(index);

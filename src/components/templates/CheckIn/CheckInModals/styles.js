@@ -1,6 +1,9 @@
 import { StyleSheet, Dimensions, Platform } from "react-native";
 import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
 const size = Dimensions.get("window").width / 1.1;
+const widthW = Dimensions.get("window").width;
+const heightW = Dimensions.get("window").height;
+const divWH = widthW / heightW;
 
 const styles = StyleSheet.create({
   messageText: {
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // marginVertical: 0,
     // bottom: 0,
-    backgroundColor: "red",
+    // backgroundColor: "red",
     padding: 10,
   },
 
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
     // position: "absolute",
 
     bottom: Platform.isPad ? 45 : Platform.OS === "ios" ? 25 : 25,
-    left: Platform.isPad ? 340 : Platform.OS === "ios" ? 195 : 185,
+    left: Platform.isPad ? 340 : Platform.OS === "ios" ? divWH * 202 : divWH * 202,
     // backgroundColor: "red",
     resizeMode: "contain",
     fontSize: 10,

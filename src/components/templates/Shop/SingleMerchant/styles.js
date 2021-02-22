@@ -1,5 +1,10 @@
-import { StyleSheet } from "react-native";
-import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
+import { auto } from "eol";
+import { StyleSheet, Dimensions, Platform } from "react-native";
+import { Colors, Typography } from "../../../../settings/styles/theme";
+import Constants from "expo-constants";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   wrapper: {},
@@ -25,11 +30,14 @@ const styles = StyleSheet.create({
   },
   posterArea: {
     flex: 1,
-    height: 250,
+    height: 200,
+    borderBottomWidth: 0.5,
   },
   subContainer1: {
     flex: 1,
-    height: 250,
+    height: 200,
+    // backgroundColor: "black",
+    // resizeMode: "cover",
   },
   actionDotStyle: {
     // backgroundColor: '#ffffff',
@@ -52,42 +60,59 @@ const styles = StyleSheet.create({
   },
   imageTopStyle: {
     width: "100%",
-    height: "100%",
+    height: 200,
   },
   logoPosition: {
     width: 70,
     height: 70,
-    alignSelf: "center",
+    // alignSelf: "center",
     position: "absolute",
-    top: 210,
+    top: 160,
     zIndex: 5,
+    flex: 1,
+    marginLeft: 20,
+    borderColor: "white",
+    borderWidth: 3.5,
+    borderRadius: 35,
+    elevation: 10,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
   },
+  outPostContainer: {
+    flex: 1,
+    // backgroundColor: "red",
+  },
+
   logo: {
     width: "100%",
     height: "100%",
     borderRadius: 35,
   },
   detailArea: {
-    width: "100%",
+    width: "98%",
     paddingLeft: "5%",
     //paddingRight: "5%", uncomment this at social media icon
-    paddingTop: "5%",
+    paddingTop: "8%",
     marginTop: 0,
     marginBottom: 20,
     alignSelf: "center",
     backgroundColor: "white",
+    // marginHorizontal: 100,
   },
-  title: {
-    fontSize: 25,
-    fontWeight: "700",
-    fontFamily: "RobotoRegular",
+  titleWhiteboard: {
+    fontSize: Platform.isPad ? windowWidth / 20 : 25,
+    fontFamily: "HorizontalRounded",
     marginBottom: 10,
     marginTop: 10,
   },
   subTitle: {
     fontSize: 18,
     fontWeight: "600",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginTop: 30,
   },
   detail: {
@@ -104,6 +129,7 @@ const styles = StyleSheet.create({
   },
   setRow: {
     flexDirection: "row",
+    backgroundColor: "white",
   },
   operatingHour: {},
   operatingContainer: {
@@ -144,50 +170,46 @@ const styles = StyleSheet.create({
     top: 110,
     right: 10,
   },
-  singlePostContainer: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 15,
-    margin: 10,
-  },
-  singlePostTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-    paddingBottom: 10,
-  },
   singlePostDescription: {
     fontSize: 14,
     paddingBottom: 20,
   },
   firstPromoteCardStyle: {
     width: 181.2,
-    marginLeft: 20,
+    height: 200,
+
+    // marginLeft: 20,
     marginRight: 20,
-    elevation: 3,
-    borderRadius: 10,
+    elevation: 1,
+    borderRadius: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.15,
+    shadowRadius: 0.5,
     marginBottom: 6,
+    paddingTop: 10,
+    alignItems: "center",
   },
   promoteCardStyle: {
     width: 181.2,
+    height: 200,
+
+    // marginLeft: 20,
     marginRight: 20,
-    elevation: 3,
-    borderRadius: 10,
+    elevation: 1,
+    borderRadius: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.15,
+    shadowRadius: 0.5,
     marginBottom: 6,
+    paddingTop: 10,
+    alignItems: "center",
   },
   promoteImage: {
-    width: 179.2,
+    width: 165,
     height: 121.2,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
+    borderRadius: 20,
   },
   promoteNoImage: {
     width: 179.2,
@@ -197,22 +219,177 @@ const styles = StyleSheet.create({
     resizeMode: "center",
   },
   promoteTitleTextStyle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    fontFamily: "RobotoRegular",
-    marginBottom: 7,
-    marginTop: 5,
+    fontSize: 13,
+    fontFamily: "HorizontalRounded",
+    marginBottom: 0,
+    marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
-    height: 55,
+    // height: ,
   },
   sectionTitle: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "700",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginTop: "5%",
     marginBottom: 8,
     marginLeft: 22,
+    color: Colors.RED,
+  },
+  lastSectionFlatListRow: {
+    marginLeft: 15,
+  },
+
+  FirstRow: {
+    paddingTop: 20,
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+  },
+  TopRow: {
+    paddingTop: 20,
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+  },
+  TopTitle: {
+    fontSize: 25,
+    fontFamily: "HorizontalRounded",
+    paddingBottom: 3,
+    width: 240,
+    // marginBottom: 10,
+    // marginTop: 10,
+  },
+  ShopPostTopTitle: {
+    fontSize: 17,
+    fontFamily: "HorizontalRounded",
+    paddingBottom: 3,
+    width: 150,
+    // backgroundColor: "red",
+    // marginBottom: 10,
+    // marginTop: 10,
+  },
+  ShopPostSubTitle: { color: "grey", fontSize: 12, width: 150, fontFamily: "HorizontalRounded" },
+  TopSubTitle: {
+    fontSize: 13,
+    // fontWeight: "700",
+    fontFamily: "HorizontalRounded",
+    color: "grey",
+    // marginBottom: 10,
+    // marginTop: 10,
+    width: 240,
+    // backgroundColor: "red",
+  },
+  textLabel: {
+    color: "black",
+    fontFamily: "HorizontalRounded",
+  },
+  SubTopcol: {
+    flex: 1,
+    flexDirection: "row",
+    // backgroundColor: "yellow",
+  },
+  Topcol: { width: "65%", backgroundColor: "#fff" },
+  lastSectionTextContainer: {
+    alignSelf: "flex-start",
+    marginLeft: 10,
+    // width: 100,
+    height: 50,
+    // backgroundColor: "grey",
+  },
+  FirstRowSocialMedia: {
+    paddingTop: 20,
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    backgroundColor: "#FFF",
+    width: "100%",
+  },
+  col: { width: "35%", backgroundColor: "#fff" },
+  colSocialMedia: { width: "35%", backgroundColor: "#fff", marginTop: 8 },
+
+  col2: { width: "55%", backgroundColor: "#fff", textAlign: "left" },
+
+  modalContainer: {
+    margin: 0,
+    justifyContent: "flex-end",
+  },
+  shopPostsContainer: {
+    paddingTop: 20,
+    flex: 1,
+  },
+  shareText: {
+    fontSize: 15,
+    fontFamily: "HorizontalRounded",
+    color: Colors.RED,
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  shareContainer: {
+    backgroundColor: "white",
+    height: 27,
+    width: 80,
+    alignItems: "center",
+    borderRadius: 40,
+    resizeMode: "cover",
+    flexDirection: "row",
+    paddingHorizontal: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    padding: 2,
+  },
+  postsTopRowNameContainer: {
+    marginRight: 40,
+  },
+  ///WhiteBoard
+  postText: {
+    fontSize: 20,
+    paddingLeft: 50,
+    paddingTop: 35,
+    fontFamily: "HorizontalRounded",
+    // backgroundColor: "red",
+  },
+  outPostContainer: {
+    flex: 1,
+    // backgroundColor: "red",
+  },
+  outPostContainer: {
+    flex: 1,
+    // backgroundColor: "red",
+  },
+  outPostContainer: {
+    flex: 1,
+    // backgroundColor: "red",
+  },
+  contentFull: {
+    height: windowHeight - Constants.statusBarHeight,
+    width: windowWidth,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
+  swipeableIndicator: {
+    backgroundColor: "#d3d3d3",
+    width: 50,
+    height: 5,
+    alignSelf: "center",
+    marginVertical: 15,
+    borderRadius: 15,
+  },
+  title: {
+    fontFamily: "HorizontalRounded",
+    fontSize: 18,
+    paddingBottom: 10,
+  },
+  contentContainer: {
+    paddingTop: 15,
+    paddingHorizontal: 30,
+    marginBottom: 40,
   },
 });
 

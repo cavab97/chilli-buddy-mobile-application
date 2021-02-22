@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Icon, Text, TouchableOpacity, View } from "../../atoms";
+import { Icon, Text, TouchableOpacity, View, Image } from "../../atoms";
 
 import { ImageInfo } from "../../molecules";
 
@@ -12,6 +12,8 @@ import { Colors } from "@settings/styles/theme/index";
 import Notification from "./Notification";
 import MyRanking from "./MyRanking";
 import MyAccount from "./MyAccount";
+const editIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyUserProfileV2/edit_pen.png");
+const verifiedIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyUserProfileV2/verified_true.png");
 
 const UserProfile = ({
   user,
@@ -59,7 +61,7 @@ const UserProfile = ({
           {displayName && (
             <View style={styles.textContainer1}>
               <Text style={styles.userTitle}>{displayName}</Text>
-              <Icon
+              {/* <Icon
                 size={10}
                 iconStyle={[styles.userInfomationIcon, { borderWidth: 0 }]}
                 containerStyle={{ justifyContent: "center" }}
@@ -67,13 +69,15 @@ const UserProfile = ({
                 name={"verified"}
                 type="octicon"
                 color={styles.userInfomationIcon.borderColor}
-              />
+              /> */}
+
+              <Image style={styles.userInfomationIcon} source={verifiedIcon} />
 
               <TouchableOpacity
                 onPress={() => onEditProfilePress()}
                 style={styles.pencilIconTouchableOpacityStyle}
               >
-                <Icon
+                {/* <Icon
                   size={25}
                   iconStyle={[styles.userEditIcon, { borderWidth: 0 }]}
                   containerStyle={{ justifyContent: "center" }}
@@ -81,7 +85,8 @@ const UserProfile = ({
                   name={"mode-edit"}
                   type="materialicons"
                   color={styles.userEditIcon.borderColor}
-                />
+                /> */}
+                <Image style={styles.userEditIcon} source={editIcon} />
               </TouchableOpacity>
             </View>
           )}

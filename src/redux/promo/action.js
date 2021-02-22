@@ -15,6 +15,14 @@ const actions = {
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
 
   TOGGLE_PROMO_BOOKMARK: type + "TOGGLE_PROMO_BOOKMARK",
+  TOGGLE_SWIPEABLE: type + 'TOGGLE_SWIPEABLE',
+  TOGGLE_CATEGORY_MODAL: type + 'TOGGLE_CATEGORY_MODAL',
+  TOGGLE_TAG_MODAL: type + 'TOGGLE_TAG_MODAL',
+  TOGGLE_PROMOTION_MODAL: type + 'TOGGLE_PROMOTION_MODAL',
+
+  TOGGLE_CATEGORY: type + 'TOGGLE_CATEGORY',
+  TOGGLE_TAG: type + 'TOGGLE_TAG',
+  TOGGLE_BOOKMARK: type + 'TOGGLE_BOOKMARK',
 
   READ_RECORD: type + "READ_RECORD",
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
@@ -147,6 +155,50 @@ export function removeListenerToRecord() {
     console.log("Removed promo listener");
     objectDataServices.removeListenerToRecord();
   };
+}
+
+export const toggleSwipeable = () => {
+  return {
+    type: actions.TOGGLE_SWIPEABLE,
+  };
+};
+
+export const toggleCategoryModal = () => {
+  return {
+    type: actions.TOGGLE_CATEGORY_MODAL
+  }
+}
+
+export const toggleCategory = (data = null) => {
+  return{
+    type: actions.TOGGLE_CATEGORY,
+    payload: { data }
+  }
+}
+
+export const toggleTagModal = () => {
+  return {
+    type: actions.TOGGLE_TAG_MODAL
+  }
+}
+
+export const toggleTag = (data = null) => {
+  return{
+    type: actions.TOGGLE_TAG,
+    payload: { data }
+  }
+}
+
+export const togglePromotionModal = () => {
+  return {
+    type: actions.TOGGLE_PROMOTION_MODAL
+  }
+}
+
+export const toggleBookmark = () => {
+  return {
+    type: actions.TOGGLE_BOOKMARK
+  }
 }
 
 export default actions;

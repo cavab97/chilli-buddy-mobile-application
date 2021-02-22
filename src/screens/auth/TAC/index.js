@@ -129,7 +129,7 @@ class index extends Component {
             >
               <View style={styles.containerpart1}>
                 <Image
-                  source={require("../../../assets/gogogain/loginIcon.png")}
+                  source={require("../../../assets/gogogain/loginIcon22.png")}
                   style={styles.logoImage}
                 />
               </View>
