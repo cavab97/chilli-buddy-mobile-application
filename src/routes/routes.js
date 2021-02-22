@@ -101,7 +101,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           component={SpinningWheel}
           // title="dsdsdsds"
           titleStyle={styles.title}
-          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0, marginLeft: 10 }}
         />
       </Stack>
 
@@ -141,7 +141,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           component={Shops}
           //title="Shops"
           titleStyle={styles.title}
-          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0, marginLeft: 15 }}
         />
       </Stack>
       <Stack key="SingleMerchant" back>

@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     width: "100%",
     // marginHorizontal: 60,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
   },
   //category text holder
   categoryTextHolder: {

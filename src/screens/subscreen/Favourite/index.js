@@ -18,7 +18,8 @@ import {
   submitToBackend as submitToBackendShop,
   readFromDatabase,
   updateIsFavourite,
-  toggleTab
+  toggleTab,
+  loadFavourite
 } from "@redux/favourite/action";
 
 import { FavouriteList } from "@components/templates";
@@ -77,6 +78,7 @@ class index extends Component {
       alert(readError);
     }
 
+
     // if (
     //   prevProps.bookmarkState.submitLoading &&
     //   !submitLoading
@@ -96,14 +98,14 @@ class index extends Component {
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    await this.props.loadShops({
+    await this.props.loadFavourite({
       radius: RADIUS * this.state.radiusAddition,
       latitude: location.coords.latitude,
       longtitude: location.coords.longitude,
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    await this.props.readFromDatabase();
+    //await this.props.readFromDatabase();
 
     this.setState({ readLoading: false });
   };
@@ -155,6 +157,40 @@ class index extends Component {
     Actions.pop("Favourite");
   }
 
+  lookingForFavourite({ shopId } = null) {
+    const favourites = this.props.favouriteState.favourites;
+
+    let favouriteId = null;
+
+    favourites.forEach((favourite) => {
+      if (favourite.shopIds[0] === shopId) {
+        favouriteId = favourite.id;
+      }
+    });
+    return favouriteId;
+  }
+
+
+  onFavouritePressed = async (item) => {
+    const shopId = item.id;
+    // console.log(shopId);
+    const favouriteId = this.lookingForFavourite({ shopId });
+    const isFavourite = !item.isFavourite;
+    // console.log("favouriteId");
+
+    // console.log(favouriteId);
+    this.props.onFavouriteClick(shopId);
+    this.props.updateIsFavourite(shopId);
+
+    if (favouriteId === null) {
+      const data = { shopId, isFavourite };
+      await this.props.submitToBackendShop(data, "create");
+    } else {
+      const data = { favouriteId, isFavourite };
+      await this.props.submitToBackendShop(data, "update");
+    }
+  };
+
   onCarouselPressed() {
     const location = this.props.promotionState.promotion.shop.l;
     this.calculateDistance(location);
@@ -180,19 +216,6 @@ class index extends Component {
       calculatedDistance: distance,
     });
   };
-
-  calculateShopDistance = async (destinationLocation) => {
-    var distance;
-    let location = await Location.getCurrentPositionAsync({});
-    distance =
-      getDistance(
-        { latitude: destinationLocation.U, longitude: destinationLocation.k },
-        {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        }
-      ) / 1000;
-  }
 
   onPromoPressedClose() {
     this.props.togglePromotionModal()
@@ -246,12 +269,9 @@ class index extends Component {
 
     activeFavourites.map((favourite) => {
       let favouriteCategory = categories.filter((category) => category.id === favourite.shop.categories[0]);
-
+      let favouriteDistance = favourite.distance
       favouriteCategory ? (favourite.shop.category = favouriteCategory[0].title) : "";
-
-      let distance = this.calculateShopDistance(favourite.shop.l);
-
-      favourite.shop.distance = distance;
+      favourite.distance = favouriteDistance
     });
 
     return (
@@ -272,6 +292,7 @@ class index extends Component {
         onPromoPressed={this.onPromoPressed.bind(this)}
         onCarouselPressed={this.onCarouselPressed.bind(this)}
         onToggleTab={this.onToggleTab.bind(this)}
+        onFavouritePressed={this.onFavouritePressed.bind(this)}
         // toggleFavourite={this.onFavouriteFiltered.bind(this)}
       />
     );
@@ -310,5 +331,6 @@ export default connect(mapStateToProps, {
   updateIsFavourite,
   togglePromotionModal,
   listenToRecord,
-  toggleTab
+  toggleTab,
+  loadFavourite
 })(index);

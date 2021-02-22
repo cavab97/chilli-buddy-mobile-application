@@ -79,7 +79,11 @@ class index extends Component {
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
 
-    await this.props.toggleCategory(filteredCategories[0].id);
+    if (this.props.selectedCategory) {
+      await this.props.toggleCategory(this.props.selectedCategory.id);
+    } else {
+      await this.props.toggleCategory(filteredCategories[0].id);
+    }
     //await this.props.readFromDatabase();
   };
 
