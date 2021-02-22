@@ -20,6 +20,15 @@ function Category ({
 }) {
     let icon;
 
+    let categoryTitle = title.split(" ");
+    let arrangedCategoryTitle = '';
+
+    if (categoryTitle.length > 0 ) {
+        for(let i=0; i<categoryTitle.length; i++) {
+            arrangedCategoryTitle += categoryTitle[i] + '\n';
+        }
+    }
+
     switch (title) {
         case "Chinese 中餐":
             icon = require("../../../assets/categories/chinese.png")
@@ -77,8 +86,11 @@ function Category ({
                 />
             </View>
             <View >
-                <Text style={selectedCategory === id ? styles.titleSelected : styles.title}>
-                    {title}
+                <Text 
+                    style={selectedCategory === id ? styles.titleSelected : styles.title}
+                    numberOfLines={3}
+                >
+                    {arrangedCategoryTitle}
                 </Text>
             </View>
         </TouchableOpacity>
@@ -90,6 +102,9 @@ const CategoryList = ({
     onCategoryChange,
     selectedCategory
 }) => {
+
+    
+
     return(
         <FlatList
             data={categories}

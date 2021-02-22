@@ -34,6 +34,7 @@ function ShopItem({
   onFavouritePress,
   isFavourite,
 }) {
+  
   const { shopImage, title, detail, profile } = styles;
   let cover = "";
   if (picture.length === 0) cover = require("../../../assets/images/404NotFound800x533.jpg");
@@ -200,6 +201,7 @@ const FavouriteList = ({
   onCarouselPressed,
   onPromoPressedClose,
   onPromoPressed,
+  onFavouritePressed,
   onToggleTab,
   shopData
 }) => {
@@ -240,13 +242,13 @@ const FavouriteList = ({
               renderItem={({ item, index }) => (
                 <ShopItem
                   onPress={() => onMerchantPressed(item.shop)}
-                  onFavouritePress={() => onFavouritePressed(item)}
+                  onFavouritePress={() => onFavouritePressed(item.shop)}
                   name={item.shop.displayTitle}
                   logo={item.shop.logo}
                   picture={item.shop.images}
                   address={item.shop.address}
                   category={item.shop.category}
-                  distance={item.shop.distance}
+                  distance={item.distance}
                   index={index}
                   isFavourite={item.isFavourite}
                   isPromote={item.shop.isPromote}
@@ -255,8 +257,9 @@ const FavouriteList = ({
               keyExtractor={(item) => item.id}
               onRefresh={handleRefresh}
               refreshing={readLoading}
+              showsVerticalScrollIndicator={false}
               onEndReachedThreshold={0.5}
-              ListFooterComponent={shopData.length === 0 && <NotFoundFooter message="No favourite shops found" />}
+              ListFooterComponent={shopData.length === 0 ? <NotFoundFooter message="No favourite shops found" /> : <View style={{ paddingBottom: 30 }}/>}
               style={styles.flatList}
             />
           :

@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "90%",
     alignSelf: "center",
+    paddingTop: 10
   },
   iconContainer: {
     flexDirection: "row",

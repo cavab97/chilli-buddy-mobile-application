@@ -9,7 +9,7 @@ import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import { StyleSheet, Button } from "react-native";
-const { height } = Dimensions.get("window");
+const width = Dimensions.get("window").width;
 
 const CheckInModal = ({
   Header,
@@ -107,7 +107,7 @@ const CheckInModal = ({
           ) : (
             <View
               // position="absolute"
-              bottom={Platform.isPad ? -80 : Platform.OS === "ios" ? -110 : -115}
+              bottom={Platform.isPad ? -80 : Platform.OS === "ios" ? -width / 3 : -115}
               right={Platform.isPad ? -220 : Platform.OS === "ios" ? -120 : -105}
               resizeMode="contain"
               fontSize={10}

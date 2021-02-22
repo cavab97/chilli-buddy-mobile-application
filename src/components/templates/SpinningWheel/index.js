@@ -18,6 +18,16 @@ const SpinningWheel = ({
   fadeResult,
   spinningWheel,
 }) => {
+  let arrangedCategoryTitle = "";
+  if (randomCategory != null && spinStatus === false) {
+    let categoryTitle = randomCategory.title.split(" ");
+
+    if (categoryTitle.length > 0) {
+      for (let i = 0; i < categoryTitle.length; i++) {
+        arrangedCategoryTitle += categoryTitle[i] + "\n";
+      }
+    }
+  }
   const resultImage = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/empty_wheel_result.png");
   const wheelImage = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/spinWheelWithFood.png");
 
@@ -31,6 +41,16 @@ const SpinningWheel = ({
   // console.log("randomCategory");
 
   // console.log(randomCategory);
+  // if (randomCategory != null && spinStatus === false) {
+  //   let categoryTitle = randomCategory.title.split(" ");
+  //   let arrangedCategoryTitle = "";
+
+  //   if (categoryTitle.length > 0) {
+  //     for (let i = 0; i < categoryTitle.length; i++) {
+  //       arrangedCategoryTitle += categoryTitle[i] + "\n";
+  //     }
+  //   }
+  // }
 
   return (
     // <Modal transparent={true} visible={spinningWheelModal}>
@@ -64,10 +84,17 @@ const SpinningWheel = ({
                     <View style={styles.categoryTextHolder}>
                       {/* <CustomIcon name={randomCategory.icon} size={30} style={{ color: "#FFFFFF" }} /> */}
                       {console.log(randomCategory.icon)}
-                      <Image source={randomCategory.icon} style={styles.wheelIcon} />
+                      <Image
+                        source={randomCategory.icon}
+                        style={
+                          randomCategory.title2 == "others" ? styles.wheelIconV2 : styles.wheelIcon
+                        }
+                      />
                       {console.log(randomCategory.title)}
                       <Text style={styles.categoryText}>
-                        {randomCategory.title.replace("|", "\n")}
+                        {/* {randomCategory.title.replace("|", "\n")} */}
+                        {/* {this.textAdjust.bind(randomCategory.title)} */}
+                        {arrangedCategoryTitle}
                       </Text>
                     </View>
                   </TouchableOpacity>

@@ -92,7 +92,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           component={Profile}
           // title="Profile"
           titleStyle={styles.title}
-          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0, marginLeft: 15 }}
         />
       </Stack>
       <Stack key="SpinningWheel" back>
@@ -101,7 +101,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           component={SpinningWheel}
           // title="dsdsdsds"
           titleStyle={styles.title}
-          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0, marginLeft: 10 }}
         />
       </Stack>
 
@@ -111,7 +111,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           component={ShopsSinglePost}
           // title="dsdsdsds"
           titleStyle={styles.title}
-          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0, marginLeft: 10 }}
         />
       </Stack>
       {/* 
@@ -141,7 +141,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           component={Shops}
           //title="Shops"
           titleStyle={styles.title}
-          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0, marginLeft: 15 }}
         />
       </Stack>
       <Stack key="SingleMerchant" back>
@@ -281,7 +281,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           component={userForm}
           title=" "
           titleStyle={styles.title}
-          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0, marginLeft: 10 }}
         />
       </Stack>
       {/* <Stack key="Promo" back>
@@ -302,7 +302,7 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           key="HelpCenter"
           component={HelpCenter}
           title=""
-          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0 }}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0, marginLeft: 10 }}
           titleStyle={styles.title}
         />
       </Stack>

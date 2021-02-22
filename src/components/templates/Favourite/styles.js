@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   flatList: {
     minHeight: Mixins.WINDOW_HEIGHT - 300,
-    marginBottom: Mixins.WINDOW_HEIGHT / 15,
+    paddingBottom: 60,
   },
   checkbox: {
     backgroundColor: Colors.GRAY_LIGHT,
@@ -218,10 +218,25 @@ const styles = StyleSheet.create({
   },
   topSubText: {
     fontFamily: "HorizontalRounded",
-    fontSize: 15,
+    fontSize: 18,
     width: "90%",
+    paddingBottom: 10,
     // backgroundColor: "red",
     alignSelf: "center",
+  },
+  promotionWrapper: {
+    width: 100,
+    height: 40,
+    resizeMode: "contain",
+  },
+  profile: {
+    //backgroundColor: Colors.PRIMARY,
+    borderRadius: 30,
+    //justifyContent: "center",
+    //alignItems: "center",
+    position: "absolute",
+    top: 15,
+    left: -3,
   },
 });
 

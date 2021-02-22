@@ -92,7 +92,7 @@ const initialState = {
       created: { at: null, by: null },
       deleted: { at: null, by: null },
       updated: { at: null, by: null },
-      l: null,
+      l: { _lat: 0, _long: 0 },
       g: null,
     },
     created: { at: null, by: null },

@@ -157,7 +157,8 @@ class index extends Component {
 
           break;
         default:
-          element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/others.png");
+          (element.title2 = "others"),
+            (element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/others.png"));
       }
     });
     return dataSource2;

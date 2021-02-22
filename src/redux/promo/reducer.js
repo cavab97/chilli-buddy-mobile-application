@@ -78,21 +78,23 @@ const promoReducer = (state = initialState, { type, payload }) => {
     case actions.READ_FROM_DATABASE:
       return { 
         ...state, 
-        readLoading: true 
+        readLoading: true,
+        selectedCategory: null,
+        selectedTag: null,
       };
 
     case actions.READ_FROM_DATABASE_SUCCESS:
       return { 
         ...state, 
         readLoading: false, 
-        promo: payload.data 
+        promo: payload.data,
       };
 
     case actions.READ_FROM_DATABASE_ERROR:
       return { 
         ...state, 
         readLoading: false, 
-        readError: payload.error 
+        readError: payload.error,
       };
 
     case actions.READ_RECORD:

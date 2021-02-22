@@ -75,11 +75,7 @@ class index extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // console("prevProps.shopState.shop.l.U == undefined");
-
-    // console(prevProps.shopState.shop.l.U == undefined);
-    if (prevProps.shopState.shop.l.U !== undefined) {
-      if (
+      /* if (
         //Shop location changed
         prevProps.shopState.shop.l.U !== this.props.shopState.shop.l.U ||
         prevProps.shopState.shop.l.k !== this.props.shopState.shop.l.k ||
@@ -90,10 +86,8 @@ class index extends Component {
           this.props.shopState.shop.l.U &&
           this.props.shopState.shop.l.k)
       ) {
-        //console.log("enter if");
         this.calculateDistance(this.props.shopState.shop.l);
-      }
-    } else console.log("ret");
+      } */
   }
 
   componentWillUnmount() {
