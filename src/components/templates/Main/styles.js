@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     // borderWidth: 1,
     // zIndex: 2,
-    elevation: 10,
+    // elevation: 10,
     overflow: "hidden",
   },
   subContainerOutsideShadow: {

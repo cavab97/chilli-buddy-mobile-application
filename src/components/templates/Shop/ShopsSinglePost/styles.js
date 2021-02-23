@@ -52,12 +52,13 @@ const styles = StyleSheet.create({
   },
   postsTopRowNameContainer: {
     marginRight: Platform.isPad ? windowWidth / 2.5 : 10,
+    marginHorizontal: 10,
     // backgroundColor: "red",
+    // top: 10,
   },
   ShopPostTopTitle: {
     fontSize: Platform.isPad ? windowWidth / 20 : 17,
     fontFamily: "HorizontalRounded",
-    paddingBottom: 3,
     width: 150,
     // backgroundColor: "red",
     // marginBottom: 10,

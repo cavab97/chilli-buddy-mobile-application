@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import { Dimensions, Share } from "react-native";
-import moment from "moment";
 import * as Location from "expo-location";
+import moment from "moment";
 
 import {
   listenToRecord as listenFromDatabase,

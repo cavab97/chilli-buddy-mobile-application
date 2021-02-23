@@ -14,6 +14,8 @@ import {
 } from "@components/atoms";
 
 import { SingleMerchantPromo } from "../../Promo/SingleMerchantPromo";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { PostList } from "@components/organisms/PostList";
 import Modal from "react-native-modal";
 
@@ -107,7 +109,7 @@ const SingleMerchant = ({
             );
           }}
           loop={true}
-          //autoplay={true}
+          autoplay={true}
           sliderWidth={windowWidth}
           itemWidth={windowWidth}
         />
@@ -119,14 +121,14 @@ const SingleMerchant = ({
                 noImageSlider={noImage}
                 slider={dataSource.images}
             /> */}
-
-        {/* <MaterialCommunityIcons
+        {/* 
+        <MaterialCommunityIcons
           style={coverImageSwapLeft}
           name="chevron-left-circle"
           size={30}
-          // onPress={onClickToSwip.bind(this, "back")}
-        />
-        <MaterialCommunityIcons
+          onPress={onClickToSwip.bind(this, "back")}
+        /> */}
+        {/* <MaterialCommunityIcons
           style={coverImageSwapRight}
           name="chevron-right-circle"
           size={30}

@@ -137,6 +137,7 @@ class index extends Component {
   }
 
   onPressPopUp(getShopId) {
+    console.log(getShopId);
     Actions.SingleMerchant({ shopId: getShopId });
     this.setState({ isAdvertisementModelShow: false });
   }

@@ -30,12 +30,12 @@ const styles = StyleSheet.create({
   },
   posterArea: {
     flex: 1,
-    height: 200,
+    height: 250,
     borderBottomWidth: 0.5,
   },
   subContainer1: {
     flex: 1,
-    height: 200,
+    height: "100%",
     // backgroundColor: "black",
     // resizeMode: "cover",
   },
@@ -60,14 +60,14 @@ const styles = StyleSheet.create({
   },
   imageTopStyle: {
     width: "100%",
-    height: 200,
+    height: "100%",
   },
   logoPosition: {
     width: 70,
     height: 70,
     // alignSelf: "center",
     position: "absolute",
-    top: 160,
+    top: 210,
     zIndex: 5,
     flex: 1,
     marginLeft: 20,
