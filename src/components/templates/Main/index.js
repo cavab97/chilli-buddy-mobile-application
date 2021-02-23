@@ -46,7 +46,7 @@ const AdvertisementPopUp = ({
   isAdvertisementModelShow,
   onCloseAdvertisementModal,
   randomAdPic,
-  type
+  type,
 }) => {
   return type === "image" ? (
     <Modal
@@ -57,7 +57,9 @@ const AdvertisementPopUp = ({
     >
       <View style={styles.modelBackground}>
         <View style={styles.adsImageContainer}>
-          <TouchableOpacity onPress={() => onPressPopUp(getShopId)}>
+          <TouchableOpacity
+          // onPress={() => onPressPopUp(getShopId)}
+          >
             <Image
               source={{ uri: randomAdPic }}
               style={styles.adsImageStyle}
@@ -183,8 +185,6 @@ export default ({
 
   const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
   const wheelIcon = require("../../../assets/icons/wheelIcon.png");
-
-  
 
   const PressHeaderToPopUp = ({ url }) => {
     return (
@@ -444,14 +444,14 @@ export default ({
               <View />
             )} */}
 
-            {randomAdPic !== undefined &&
-              <AdvertisementPopUp 
+            {randomAdPic !== undefined && (
+              <AdvertisementPopUp
                 isAdvertisementModelShow={isAdvertisementModelShow}
                 onCloseAdvertisementModal={onCloseAdvertisementModal}
                 randomAdPic={randomAdPic}
                 type={type}
               />
-            }
+            )}
 
             {/* {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />} */}
           </View>
