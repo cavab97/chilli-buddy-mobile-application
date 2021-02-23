@@ -232,8 +232,15 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 15,
     marginRight: 10,
-    marginVertical: 8
+    marginVertical: 8,
+    flexDirection: 'row',
+    justifyContent: 'center', 
+    alignItems: 'center'
   },
+  iconButton: {
+    fontFamily: 'HorizontalRounded', 
+    paddingRight: 5
+  }
 });
 
 export default styles;

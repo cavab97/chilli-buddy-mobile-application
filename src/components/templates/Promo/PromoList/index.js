@@ -15,6 +15,7 @@ import { NotFoundFooter, CardSection } from "@components/molecules";
 import { CustomNavBar } from "@components/organisms/CustomNavBar";
 import { SwipeableModal } from "@components/organisms/SwipeableModal";
 import { SingleMerchantPromo } from "../SingleMerchantPromo";
+import Icon from "react-native-vector-icons/AntDesign";
 
 function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance, name, shopName }) {
   const { image, detail, title, subtitle, bookmarkIcon } = styles;
@@ -107,7 +108,8 @@ const PromoList = ({
   promotion,
   promotionModal,
   onPromoPressedClose,
-  selectedTag
+  selectedTag,
+  onCategoryRemove
 }) => {
 
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
@@ -118,6 +120,9 @@ const PromoList = ({
 
   let selectedTagTitle = allTag.filter((tag) => tag.id === selectedTag);
   selectedTagTitle = selectedTagTitle.length > 0 ? selectedTagTitle[0].title : '';
+
+  let categoryType = 'category';
+  let tagType = 'tag';
 
   return (
     <View style={{ flex: 1 }}>
@@ -185,18 +190,32 @@ const PromoList = ({
             style={styles.button} 
             key={selectedCategory}
           >
-              <Text style={{ fontFamily: 'HorizontalRounded' }}>
-                {selectedCategoryTitle}
-              </Text>
+            <Text style={styles.iconButton}>
+              {selectedCategoryTitle}
+            </Text>
+            <TouchableOpacity onPress={() => onCategoryRemove(categoryType)}>
+              <Icon
+                name="close"
+                size={16}
+                color="#909090"
+              />
+            </TouchableOpacity>
           </View>
           { selectedTag &&
               <View 
                 style={styles.button} 
                 key={selectedTag}
               >
-                <Text style={{ fontFamily: 'HorizontalRounded' }}>
+                <Text style={styles.iconButton}>
                   {selectedTagTitle}
                 </Text>
+                <TouchableOpacity onPress={() => onCategoryRemove(tagType)}>
+                  <Icon
+                    name="close"
+                    size={16}
+                    color="#909090"
+                  />
+                </TouchableOpacity>
               </View>
           }
         </View>

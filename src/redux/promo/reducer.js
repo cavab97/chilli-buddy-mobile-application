@@ -165,6 +165,19 @@ const promoReducer = (state = initialState, { type, payload }) => {
         ...state,
         bookmarkControl: !state.bookmarkControl
       }
+    
+    case actions.TOGGLE_REMOVE_CATEGORY:
+      return {
+        ...state,
+        selectedCategory: null,
+        selectedTag: null
+      }
+    
+    case actions.TOGGLE_REMOVE_TAG:
+      return {
+        ...state,
+        selectedTag: null
+      }
 
     default:
       return state;

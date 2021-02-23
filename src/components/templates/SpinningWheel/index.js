@@ -60,7 +60,7 @@ const SpinningWheel = ({
         {randomCategory != null && spinStatus === false ? (
           <View style={styles.mainTitleContain}>
             <Text style={styles.spinningTitle2}>Spin Me </Text>
-            <Text style={styles.subTitle2}>We have a great choice if Restaurants near you,</Text>
+            <Text style={styles.subTitle2}>We have a great choice of Restaurants near you,</Text>
             <Text style={styles.subTitle}>Let's Go!</Text>
           </View>
         ) : (

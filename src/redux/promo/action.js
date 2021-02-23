@@ -23,6 +23,8 @@ const actions = {
   TOGGLE_CATEGORY: type + 'TOGGLE_CATEGORY',
   TOGGLE_TAG: type + 'TOGGLE_TAG',
   TOGGLE_BOOKMARK: type + 'TOGGLE_BOOKMARK',
+  TOGGLE_REMOVE_CATEGORY: type + 'TOGGLE_REMOVE_CATEGORY',
+  TOGGLE_REMOVE_TAG: type + 'TOGGLE_REMOVE_TAG',
 
   READ_RECORD: type + "READ_RECORD",
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
@@ -198,6 +200,18 @@ export const togglePromotionModal = () => {
 export const toggleBookmark = () => {
   return {
     type: actions.TOGGLE_BOOKMARK
+  }
+}
+
+export const toggleRemoveCategory = () => {
+  return {
+    type: actions.TOGGLE_REMOVE_CATEGORY,
+  }
+}
+
+export const toggleRemoveTag = () => {
+  return {
+    type: actions.TOGGLE_REMOVE_TAG,
   }
 }
 
