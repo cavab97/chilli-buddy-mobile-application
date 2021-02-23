@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import { Dimensions, Share } from "react-native";
 import moment from "moment";
+import * as Location from "expo-location";
 
 import {
   listenToRecord as listenFromDatabase,
@@ -13,10 +14,6 @@ import {
 import { readObjects as readShopPost, readObject as readSinglePost } from "@redux/shopPost/action";
 
 import { ShopsSinglePost } from "@components/templates";
-
-import ContentLoader, { Rect } from "react-content-loader/native";
-
-import styles from "./styles";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;

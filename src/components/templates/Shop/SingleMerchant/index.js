@@ -227,7 +227,6 @@ const SingleMerchant = ({
                     Linking.openURL(`tel:${dataSource.phoneNumber}`);
                   }}
                 >
-                  {" "}
                   {dataSource.phoneNumber}
                 </Text>
               </View>

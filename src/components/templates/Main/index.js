@@ -42,6 +42,80 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { CustomIcon } from "@components/atoms/index";
 import Constants from "expo-constants";
 
+const AdvertisementPopUp = ({
+  isAdvertisementModelShow,
+  onCloseAdvertisementModal,
+  randomAdPic,
+  type
+}) => {
+  return type === "image" ? (
+    <Modal
+      // animationType="fade"
+      transparent={true}
+      visible={isAdvertisementModelShow}
+      onBackdropPress={onCloseAdvertisementModal}
+    >
+      <View style={styles.modelBackground}>
+        <View style={styles.adsImageContainer}>
+          <TouchableOpacity onPress={() => onPressPopUp(getShopId)}>
+            <Image
+              source={{ uri: randomAdPic }}
+              style={styles.adsImageStyle}
+              //resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={onCloseAdvertisementModal}
+            activeOpacity={1}
+          >
+            <Image
+              source={require("../../../assets/chilliBuddyCheckin/closeButton.png")}
+              style={styles.videoImageCrossStyle}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View></View>
+    </Modal>
+  ) : type === "video" ? (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={isAdvertisementModelShow}
+      onBackdropPress={onCloseAdvertisementModal}
+    >
+      <View style={styles.modelBackground}>
+        <View style={styles.adsImageContainer}>
+          <Video
+            ref={handleVideoRef}
+            source={{
+              uri: randomAdPic,
+            }}
+            shouldPlay
+            resizeMode="contain"
+            style={styles.adsImageStyle}
+            positionMillis={0}
+            useNativeControls={true}
+          />
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={onCloseAdvertisementModal}
+            activeOpacity={1}
+          >
+            <Image
+              source={require("../../../assets/chilliBuddyCheckin/closeButton.png")}
+              style={styles.videoImageCrossStyle}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  ) : (
+    <View />
+  );
+};
+
 export default ({
   readFail,
   slider,
@@ -110,74 +184,7 @@ export default ({
   const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
   const wheelIcon = require("../../../assets/icons/wheelIcon.png");
 
-  const AdvertisementPopUp = (url) => {
-    return type === "image" ? (
-      <Modal
-        // animationType="fade"
-        transparent={true}
-        visible={isAdvertisementModelShow}
-        onBackdropPress={onCloseAdvertisementModal}
-      >
-        <View style={styles.modelBackground}>
-          <View style={styles.adsImageContainer}>
-            <TouchableOpacity onPress={() => onPressPopUp(getShopId)}>
-              <Image
-                source={{ uri: randomAdPic }}
-                style={styles.adsImageStyle}
-                //resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={onCloseAdvertisementModal}
-              activeOpacity={1}
-            >
-              <Image
-                source={require("../../../assets/chilliBuddyCheckin/closeButton.png")}
-                style={styles.videoImageCrossStyle}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View></View>
-      </Modal>
-    ) : type === "video" ? (
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isAdvertisementModelShow}
-        onBackdropPress={onCloseAdvertisementModal}
-      >
-        <View style={styles.modelBackground}>
-          <View style={styles.adsImageContainer}>
-            <Video
-              ref={handleVideoRef}
-              source={{
-                uri: randomAdPic,
-              }}
-              shouldPlay
-              resizeMode="contain"
-              style={styles.adsImageStyle}
-              positionMillis={0}
-              useNativeControls={true}
-            />
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={onCloseAdvertisementModal}
-              activeOpacity={1}
-            >
-              <Image
-                source={require("../../../assets/chilliBuddyCheckin/closeButton.png")}
-                style={styles.videoImageCrossStyle}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-    ) : (
-      <View />
-    );
-  };
+  
 
   const PressHeaderToPopUp = ({ url }) => {
     return (
@@ -429,15 +436,24 @@ export default ({
                 />
               )}
             </View>
-            {readLoadingHeaderImages ? (
+            {/* {readLoadingHeaderImages ? (
               <View />
             ) : randomAdPic !== undefined ? (
               <AdvertisementPopUp />
             ) : (
               <View />
-            )}
+            )} */}
 
-            {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />}
+            {randomAdPic !== undefined &&
+              <AdvertisementPopUp 
+                isAdvertisementModelShow={isAdvertisementModelShow}
+                onCloseAdvertisementModal={onCloseAdvertisementModal}
+                randomAdPic={randomAdPic}
+                type={type}
+              />
+            }
+
+            {/* {openModal ? <PressHeaderToPopUp url={popUpImage} /> : <View />} */}
           </View>
 
           {/* The quarter screen Row */}

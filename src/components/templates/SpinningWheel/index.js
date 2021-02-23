@@ -122,10 +122,18 @@ const SpinningWheel = ({
         </View>
 
         <View style={styles.buttonContain}>
-          <Image
+          {/* <Image
             source={require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/spinWheelHolder_Icon.png")}
             style={styles.holderPng}
-          />
+          /> */}
+          <View style={{ marginTop: -30 }}>
+            <View style={{ position: 'absolute', left: 0, right: 0 }}>
+              <Image
+                source={require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/spinWheelHolder_Icon.png")}
+                style={styles.holderPng}
+              />
+            </View>
+          </View>
           <TouchableOpacity
             style={spinStatus ? styles.categoriesButton : styles.categoriesButton}
             onPress={spinningWheel}
