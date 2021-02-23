@@ -308,13 +308,20 @@ class index extends Component {
     const { shop, readLoading } = this.props.shopState;
     const { promotion, promotionModalVisible } = this.props.promotionState;
 
-    const { posts, readPostLoading, promotions, readPromotionLoading } = this.props;
+    const { 
+      posts, 
+      readPostLoading, 
+      promotions, 
+      readPromotionLoading, 
+      categories 
+    } = this.props;
 
     const noImage = require("@assets/images/404NotFound800x533.jpg");
     const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
 
     let icon = [];
     let postImage = [];
+    let category = categories.filter(category => category.id === shop.categories[0])
     // console.log("shop.logo == undefined");
 
     // console.log(shop.logo == undefined);
@@ -359,7 +366,7 @@ class index extends Component {
           find_dimensions={this.find_dimensions}
           viewHeight={this.state.viewHeight}
           distance={this.props.distance}
-          categoryName={this.props.categoryName}
+          categoryName={category ? category[0].title : ''}
           calculatedDistance={this.state.calculatedDistance}
           onPostPress={this.onPostPress.bind(this)}
           onFavouriteClick={this.onFavouriteClick.bind(this)}
@@ -386,6 +393,7 @@ const mapStateToProps = (state) => {
   const readPromotionLoading = state.Promotion.readLoading;
   const favouriteState = state.Favourite;
   const settingInfo = state.Settings.info;
+  const { categories } = state.Settings;
 
   return {
     shopState,
@@ -396,6 +404,7 @@ const mapStateToProps = (state) => {
     readPromotionLoading,
     favouriteState,
     settingInfo,
+    categories
   };
 };
 

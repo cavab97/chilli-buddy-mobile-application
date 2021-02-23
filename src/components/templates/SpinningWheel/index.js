@@ -67,7 +67,7 @@ const SpinningWheel = ({
           <View style={styles.mainTitleContain}>
             <Text style={styles.spinningTitle2}>Spin Me </Text>
 
-            <Text style={styles.subTitle2}> Don't Know What To Eat? </Text>
+            <Text style={styles.subTitle2}>Don't Know What To Eat? </Text>
             <Text style={styles.subTitle}> </Text>
           </View>
         )}

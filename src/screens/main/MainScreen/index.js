@@ -265,6 +265,7 @@ class index extends Component {
 
   calculateDistance = async (destinationLocation) => {
     const promo = this.props.promotionState;
+
     var distance;
     let location = await Location.getCurrentPositionAsync({});
     distance =

@@ -163,10 +163,11 @@ class index extends Component {
     });
     return dataSource2;
   }
+  
   getRandomCategory() {
     let categoryArray = this.passCategory();
     var randomCategory =
-      categoryArray[Math.floor(this.state.randomCategoryNumber * categoryArray.length)];
+      categoryArray[Math.floor(Math.random() * categoryArray.length) + 1];
     return randomCategory;
   }
 
