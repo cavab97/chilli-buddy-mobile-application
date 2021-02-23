@@ -12,6 +12,7 @@ const initialState = {
   selectedCategory: null,
   selectedTag: null,
   favouriteControl: false,
+  favouriteError: false,
 
   readLoading: false,
   readError: false,
@@ -178,13 +179,19 @@ const shopsReducer = (state = initialState, { type, payload }) => {
     case actions.TOGGLE_SHOP_FAVOURITE:
       return {
         ...state,
-        shop: payload.data,
-        shops: [...state.shops],
+        shops: payload.data,
       };
+      
     case actions.TOGGLE_SHOP_SINGLEMERCHANT_FAVOURITE:
       return {
         ...state,
         favouriteControl: payload.data,
+      };
+
+    case actions.TOGGLE_SHOP_FAVOURITE_ERROR:
+      return {
+        ...state,
+        favouriteError: payload.data,
       };
 
     case actions.TOGGLE_CATEGORY:
