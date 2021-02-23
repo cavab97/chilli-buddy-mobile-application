@@ -31,6 +31,7 @@ const actions = {
   READ_RECORD_ERROR: type + "READ_RECORD_ERROR",
 
   TOGGLE_SHOP_FAVOURITE: type + "TOGGLE_SHOP_FAVOURITE",
+  TOGGLE_SHOP_FAVOURITE_ERROR: type + "TOGGLE_SHOP_FAVOURITE_ERROR",
   TOGGLE_CATEGORY: type + "TOGGLE_CATEGORY",
   TOGGLE_FAVOURITE: type + "TOGGLE_FAVOURITE",
   TOGGLE_TAG: type + "TOGGLE_TAG",
@@ -259,19 +260,26 @@ export function removeListenerToRecord() {
 export function onFavouriteClick(shopId) {
   return (dispatch, getState) => {
     return new Promise(async (resolve, reject) => {
-      const shops = getState().Shops.shops;
-      const newShops = shops.map((shop) => {
-        if (shop.id === shopId) {
-          shop.isFavourite = !shop.isFavourite;
-        }
-        return shop;
-      });
-      // console.log(shops);
-      resolve(newShops);
-      dispatch({
-        type: actions.TOGGLE_SHOP_FAVOURITE,
-        payload: { data: newShops },
-      });
+      try {
+        const shops = getState().Shops.shops;
+        const newShops = shops.map((shop) => {
+          if (shop.id === shopId) {
+            shop.isFavourite = !shop.isFavourite;
+          }
+          return shop;
+        });
+        resolve(newShops);
+        dispatch({
+          type: actions.TOGGLE_SHOP_FAVOURITE,
+          payload: { data: newShops },
+        });
+      } catch (error) {
+        console.log(error);
+        dispatch({
+          type: actions.TOGGLE_SHOP_FAVOURITE_ERROR,
+          payload: { error },
+        });
+      }
     });
   };
 }

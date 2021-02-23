@@ -163,6 +163,7 @@ class index extends Component {
     let favouriteId = null;
 
     favourites.forEach((favourite) => {
+      console.log(favourite.shopIds)
       if (favourite.shopIds[0] === shopId) {
         favouriteId = favourite.id;
       }

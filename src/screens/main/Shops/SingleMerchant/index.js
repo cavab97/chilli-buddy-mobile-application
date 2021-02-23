@@ -35,6 +35,7 @@ import {
   readFromDatabase,
   updateIsFavourite,
 } from "@redux/favourite/action";
+
 class index extends Component {
   constructor(props) {
     super(props);
@@ -53,12 +54,11 @@ class index extends Component {
     // this.props.readSingleFavourite(shopId);
     let favourite = this.lookingForFavourite({ shopId });
 
-    this.setState({ isFavourite: favourite ? favourite.isFavourite : false });
+    this.setState({ isFavourite: favourite ? true : false });
 
     this.props.readPromotion(shopId);
     this.props.listenFromDatabase({ shopId });
     this.props.readShopPost(shopId);
-    this.props.readFromDatabase();
 
     this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
@@ -185,27 +185,27 @@ class index extends Component {
   lookingForFavourite({ shopId } = null) {
     const favourites = this.props.favouriteState.favourites;
 
-    let favourite = null;
+    let favouriteInfo = null;
 
-    favourite = favourites.filter((favourite) => favourite.shopIds[0] === shopId);
-
-    return favourite.length > 0 ? favourite[0] : null;
+    favourites.forEach((favourite) => {
+      if (favourite.shopIds[0] === shopId) {
+        //favouriteId = favourite.id;
+        favouriteInfo = favourite
+      }
+    });
+    return favouriteInfo;
   }
 
-  onFavouriteClick = async (item) => {
-    const shopId = item;
+  onFavouritePressed = async (item) => {
+    const shopId = this.props.shopId;
+    const favouriteId = this.lookingForFavourite({ shopId });
+    const isFavourite = !item.isFavourite;
 
-    const favourite = this.lookingForFavourite({ shopId });
-    const favouriteId = favourite.id;
-
-    const isFavourite = !favourite.isFavourite;
     this.props.onFavouriteClick(shopId);
-
     this.props.updateIsFavourite(shopId);
-    this.setState({ isFavourite: isFavourite });
 
     if (favouriteId === null) {
-      const data = { favouriteId, isFavourite };
+      const data = { shopId, isFavourite };
       await this.props.submitToBackend(data, "create");
     } else {
       const data = { favouriteId, isFavourite };
@@ -237,25 +237,12 @@ class index extends Component {
     this.props.listenPromotion({ promoId: item.id });
     this.props.togglePromotionModal();
   }
-  // onShare() {
-  //   const { settingInfo } = this.props;
-  //   // const { fbPost } = settingInfo.share;
-  //   // Linking.openURL(`https://www.facebook.com/sharer/sharer.php?u=${fbPost}`);
 
-  //   setTimeout(() => {
-  //     this.setState({ shared: true });
-  //     console.log("Share successful");
-  //   }, 3000);
-  // }
   onShare(item) {
-    // const { settingInfo } = this.props;
-    // const { fbPost, title, message } = settingInfo.share;
     const { promotion } = this.props.promotionState;
-    // console.log("item.websiteUrl");
 
-    // console.log(item.shop.displayTitle);
     const regex = /(<([^>]+)>)/gi;
-    // console.log(item.shop.websiteUrl);
+
     const shareOptions = {
       // url: promotion.facebookUrl,
       url: "https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en",
@@ -291,17 +278,13 @@ class index extends Component {
     Share.share(shareOptions)
       .then(({ action, activityType }) => {
         if (action === Share.dismissedAction) {
-          // console.log("Share dismissed");
         } else {
           setTimeout(() => {
             this.setState({ invited: true });
-            // console.log("Share successfuld");
           }, 3000);
         }
       })
       .catch((error) => this.setState({ result: "error: " + error.message }));
-
-    // console.log(item);
   }
 
   render() {
@@ -321,10 +304,13 @@ class index extends Component {
 
     let icon = [];
     let postImage = [];
-    let category = categories.filter(category => category.id === shop.categories[0])
-    // console.log("shop.logo == undefined");
 
-    // console.log(shop.logo == undefined);
+    let category
+
+    if (shop.categories) {
+      category = categories.filter(category => category.id === shop.categories[0])
+    }
+
     if (shop.logo != undefined) {
       if (shop.logo.length === 0) icon = require("@assets/logo.png");
       else icon = { uri: shop.logo[0] };
@@ -369,7 +355,7 @@ class index extends Component {
           categoryName={category ? category[0].title : ''}
           calculatedDistance={this.state.calculatedDistance}
           onPostPress={this.onPostPress.bind(this)}
-          onFavouriteClick={this.onFavouriteClick.bind(this)}
+          onFavouriteClick={this.onFavouritePressed.bind(this)}
           // alterData={this.alterData.bind(this)}
           promotion={promotion}
           promotionModal={promotionModalVisible}

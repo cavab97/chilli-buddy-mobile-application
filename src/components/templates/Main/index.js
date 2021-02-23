@@ -47,6 +47,7 @@ const AdvertisementPopUp = ({
   onCloseAdvertisementModal,
   randomAdPic,
   type,
+  handleVideoRef,
 }) => {
   return type === "image" ? (
     <Modal
@@ -450,6 +451,7 @@ export default ({
                 onCloseAdvertisementModal={onCloseAdvertisementModal}
                 randomAdPic={randomAdPic}
                 type={type}
+                handleVideoRef={handleVideoRef}
               />
             )}
 
