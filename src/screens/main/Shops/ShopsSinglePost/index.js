@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import { Dimensions, Share } from "react-native";
+import * as Location from "expo-location";
 import moment from "moment";
 
 import {

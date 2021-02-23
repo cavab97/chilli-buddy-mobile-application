@@ -38,21 +38,20 @@ const ImageSwiper = ({
       {condition ? (
         slider.map((data, index) => {
           return (
-            <View key={data.shopId}>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={onPressImage.bind(this, index)}
-                // style={style.subContainer1}
-              >
-                <View style={style.subContainer1}>
-                  <Image
-                    source={{ uri: data.imageUri }}
-                    resizeMode={resizeMode}
-                    style={style.imageTopStyle}
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={onPressImage.bind(this, index)}
+              key={data.shopId}
+              // style={style.subContainer1}
+            >
+              {/* <View style={style.subContainer1}> */}
+              <Image
+                source={{ uri: data.imageUri }}
+                resizeMode={resizeMode}
+                style={style.imageTopStyle}
+              />
+              {/* </View> */}
+            </TouchableOpacity>
           );
         })
       ) : (

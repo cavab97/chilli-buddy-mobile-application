@@ -120,15 +120,15 @@ export default ({
       >
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
             // onPress={() => onPressPopUp(getShopId)}
-            >
-              <Image
-                source={{ uri: randomAdPic }}
-                style={styles.adsImageStyle}
-                //resizeMode="contain"
-              />
-            </TouchableOpacity>
+            > */}
+            <Image
+              source={{ uri: randomAdPic }}
+              style={styles.adsImageStyle}
+              //resizeMode="contain"
+            />
+            {/* </TouchableOpacity> */}
             <TouchableOpacity
               style={styles.closeButton}
               onPress={onCloseAdvertisementModal}
@@ -409,17 +409,20 @@ export default ({
             {/* The Slider*/}
             {/* ImageSwiper */}
 
-            <View style={styles.subContainer1}>
+            <View style={styles.subContainerOutside}>
               {readLoadingHeaderImages ? (
                 <ContentLoader
                   speed={1}
                   height={"100%"}
-                  style={styles.subContainerOutsideShadow}
+                  // style={styles.subContainerOutsideShadow}
                   backgroundColor="#d9d9d9"
                 >
                   <Rect x="0" y="0" rx="50" ry="50" width="100%" height="100%" />
                 </ContentLoader>
               ) : (
+                // <TouchableOpacity style={styles.subContainerOutside} onPress={onPressImage}>
+                //   <Text>hello</Text>
+                // </TouchableOpacity>
                 <ImageSwiper
                   style={styles}
                   slider={slider}
