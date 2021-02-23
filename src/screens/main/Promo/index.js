@@ -16,6 +16,8 @@ import {
   toggleCategory,
   toggleBookmark,
   toggleTag,
+  toggleRemoveCategory,
+  toggleRemoveTag
 } from "@redux/promo/action";
 
 import {
@@ -172,6 +174,19 @@ class index extends Component {
     this.props.toggleTag(id);
   }
 
+  onCategoryRemove(type) {
+    switch(type){
+      case 'category':
+        this.props.toggleRemoveCategory();
+        break;
+      case 'tag':
+        this.props.toggleRemoveTag();
+        break;
+      default:
+        break;
+    }
+  }
+
   onBookmarkFiltered() {
     this.props.toggleBookmark();
   }
@@ -239,12 +254,14 @@ class index extends Component {
 
     // On toggle category get category from promotion shop
     selectedCategory
-      ? (filteredPromotion = promo.filter((promotion) => promotion.shop.categories[0] === selectedCategory))
-      : (filteredPromotion = promo.filter((promotion) => promotion.shop.categories[0] === filteredCategories[0].id))
+      ? (filteredPromotion = promo.filter((promotion) => promotion.shop.categories.includes(selectedCategory)))
+      : filteredPromotion = promo;
 
     // On toggle tag get tag from promotion shop
-    selectedTag
-      ? (filteredPromotion = filteredPromotion.filter((promotion) => promotion.shop.tags.includes(selectedTag) === true))
+    selectedTag ?
+      selectedTag === 'All' 
+        ? filteredPromotion
+        : (filteredPromotion = filteredPromotion.filter((promotion) => promotion.shop.tags.includes(selectedTag) === true))
       : filteredPromotion;
 
     // On toggle bookmark get bookmark promotion
@@ -257,7 +274,7 @@ class index extends Component {
         (category) => category.id === selectedCategory
       );
 
-      selectedCategoryTag = selectedCategoryTag[0].tags.filter((tags) => tags !== "All");
+      selectedCategoryTag = selectedCategoryTag[0].tags
 
       tags.forEach((tag) =>
         selectedCategoryTag.forEach((categoryTag) => {
@@ -298,6 +315,7 @@ class index extends Component {
         onCategoryPressed={this.onCategoryPressed.bind(this)}
         onTagPressed={this.onTagPressed.bind(this)}
         onPromoPressedClose={this.onPromoPressedClose.bind(this)}
+        onCategoryRemove={this.onCategoryRemove.bind(this)}
       />
     );
   }
@@ -327,5 +345,7 @@ export default connect(mapStateToProps, {
   submitToBackend,
   readFromDatabase,
   toggleSwipeable,
-  toggleBookmark
+  toggleBookmark,
+  toggleRemoveCategory,
+  toggleRemoveTag
 })(index);

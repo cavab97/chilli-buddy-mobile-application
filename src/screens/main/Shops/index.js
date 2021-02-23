@@ -164,9 +164,6 @@ class index extends Component {
   };
 
   onTagChange = (tag) => {
-    /* this.setState({ selectedTag: value });
-    this.handleRefresh();
-    this.filterData(); */
     this.props.toggleTag(tag.id);
   };
 
@@ -185,12 +182,9 @@ class index extends Component {
 
   onFavouritePressed = async (item) => {
     const shopId = item.id;
-    // console.log(shopId);
     const favouriteId = this.lookingForFavourite({ shopId });
     const isFavourite = !item.isFavourite;
-    // console.log("favouriteId");
 
-    // console.log(favouriteId);
     this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
 
@@ -231,8 +225,8 @@ class index extends Component {
 
     // On toggle category get category shop
     selectedCategory
-      ? (filteredShop = shops.filter((shop) => shop.categories[0] === selectedCategory))
-      : (filteredShop = shops.filter((shop) => shop.categories[0] === filteredCategories[0].id));
+      ? (filteredShop = shops.filter((shop) => shop.categories.includes(selectedCategory) === true))
+      : (filteredShop = shops.filter((shop) => shop.categories.includes(filteredCategories[0].id) === true));
 
     // On toggle favourite get favourite shop
     favouriteControl
@@ -240,14 +234,17 @@ class index extends Component {
       : filteredShop;
 
     selectedTag
-      ? (filteredShop = filteredShop.filter((shop) => shop.tags.includes(selectedTag) === true))
+      ?  selectedTag === 'All' 
+        ? filteredShop 
+        : (filteredShop = filteredShop.filter((shop) => shop.tags.includes(selectedTag) === true))
       : filteredShop;
 
     if (selectedCategory) {
       selectedCategoryTag = filteredCategories.filter(
         (category) => category.id === selectedCategory
       );
-      selectedCategoryTag = selectedCategoryTag[0].tags.filter((tags) => tags !== "All");
+      
+      selectedCategoryTag = selectedCategoryTag[0].tags
 
       tags.forEach((tag) =>
         selectedCategoryTag.forEach((categoryTag) => {
