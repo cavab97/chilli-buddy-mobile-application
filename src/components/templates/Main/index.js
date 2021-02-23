@@ -120,7 +120,9 @@ export default ({
       >
         <View style={styles.modelBackground}>
           <View style={styles.adsImageContainer}>
-            <TouchableOpacity onPress={() => onPressPopUp(getShopId)}>
+            <TouchableOpacity
+            // onPress={() => onPressPopUp(getShopId)}
+            >
               <Image
                 source={{ uri: randomAdPic }}
                 style={styles.adsImageStyle}
@@ -254,7 +256,7 @@ export default ({
     const { image } = styles;
 
     let cover = "";
-    if (picture.length === 0) cover = require("@assets/images/404NotFound.jpeg");
+    if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
     else cover = { uri: picture[0] };
     return (
       <TouchableOpacity onPress={onPress}>
@@ -407,7 +409,7 @@ export default ({
             {/* The Slider*/}
             {/* ImageSwiper */}
 
-            <View style={styles.subContainerOutside}>
+            <View style={styles.subContainer1}>
               {readLoadingHeaderImages ? (
                 <ContentLoader
                   speed={1}
@@ -495,7 +497,7 @@ export default ({
                           resizeMode="cover"
                         />
                       ) : (
-                        <Image source={noPromoteImage} style={promoteImage} resizeMode="cover" />
+                        <Image source={noPromoteImage} style={promoteNoImage} resizeMode="cover" />
                       )}
                       <View style={styles.lastSectionTextContainer}>
                         <Text numberOfLines={2} style={styles.promoteTitleTextStyle}>

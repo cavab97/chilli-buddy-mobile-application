@@ -179,7 +179,12 @@ const shopsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         shop: payload.data,
-        shops: [...shops],
+        shops: [...state.shops],
+      };
+    case actions.TOGGLE_SHOP_SINGLEMERCHANT_FAVOURITE:
+      return {
+        ...state,
+        favouriteControl: payload.data,
       };
 
     case actions.TOGGLE_CATEGORY:
