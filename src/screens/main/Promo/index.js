@@ -258,8 +258,10 @@ class index extends Component {
       : filteredPromotion = promo;
 
     // On toggle tag get tag from promotion shop
-    selectedTag
-      ? (filteredPromotion = filteredPromotion.filter((promotion) => promotion.shop.tags.includes(selectedTag) === true))
+    selectedTag ?
+      selectedTag === 'All' 
+        ? filteredPromotion
+        : (filteredPromotion = filteredPromotion.filter((promotion) => promotion.shop.tags.includes(selectedTag) === true))
       : filteredPromotion;
 
     // On toggle bookmark get bookmark promotion
@@ -272,7 +274,7 @@ class index extends Component {
         (category) => category.id === selectedCategory
       );
 
-      selectedCategoryTag = selectedCategoryTag[0].tags.filter((tags) => tags !== "All");
+      selectedCategoryTag = selectedCategoryTag[0].tags
 
       tags.forEach((tag) =>
         selectedCategoryTag.forEach((categoryTag) => {
