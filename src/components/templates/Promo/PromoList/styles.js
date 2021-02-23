@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
   },
   flatList: {
     minHeight: Mixins.WINDOW_HEIGHT - 300,
-    marginBottom: Mixins.WINDOW_HEIGHT / 15,
   },
   checkbox: {
     backgroundColor: Colors.GRAY_LIGHT,

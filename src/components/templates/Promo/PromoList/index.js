@@ -28,7 +28,7 @@ function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance,
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} >
       <View style={styles.cardContainer}>
         <View style={styles.leftCardContainer}>
           <CardSection style={styles.imageContainer}>
@@ -120,7 +120,7 @@ const PromoList = ({
   selectedTagTitle = selectedTagTitle.length > 0 ? selectedTagTitle[0].title : '';
 
   return (
-    <View style={{ flex: 1 /*height: 100%*/ }}>
+    <View style={{ flex: 1 }}>
       <CustomNavBar
         textOne="Category"
         textTwo="Tags"
@@ -223,7 +223,7 @@ const PromoList = ({
         onRefresh={handleRefresh}
         refreshing={loading}
         ListFooterComponent={
-          dataSource.length === 0 && <NotFoundFooter message="No promotion found" />
+          dataSource.length === 0 ? <NotFoundFooter message="No promotion found"  /> : <View style={{ paddingBottom: 40 }}/>
         }
         style={styles.flatList}
       />

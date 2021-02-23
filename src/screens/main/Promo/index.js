@@ -240,7 +240,7 @@ class index extends Component {
     // On toggle category get category from promotion shop
     selectedCategory
       ? (filteredPromotion = promo.filter((promotion) => promotion.shop.categories[0] === selectedCategory))
-      : (filteredPromotion = promo.filter((promotion) => promotion.shop.categories[0] === filteredCategories[0].id))
+      : filteredPromotion = promo;
 
     // On toggle tag get tag from promotion shop
     selectedTag
