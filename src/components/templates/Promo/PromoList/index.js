@@ -21,7 +21,7 @@ function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance,
   const { image, detail, title, subtitle, bookmarkIcon } = styles;
 
   let cover = "";
-  if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
+  if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpeg");
   else cover = { uri: picture[0] };
 
   const distanceIcon = require("../../../../assets/icons/distance.png");
@@ -29,43 +29,28 @@ function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance,
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
   return (
-    <TouchableOpacity onPress={onPress} >
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.cardContainer}>
         <View style={styles.leftCardContainer}>
           <CardSection style={styles.imageContainer}>
-            <Image 
-              style={image} 
-              resizeMode="cover" 
-              source={cover} 
-            />
+            <Image style={image} resizeMode="cover" source={cover} />
           </CardSection>
         </View>
         <View style={styles.rightCardContainer}>
           <CardSection style={styles.textContainer}>
-            <Text 
-              style={title} 
-              numberOfLines={2}
-            >
+            <Text style={title} numberOfLines={2}>
               {name}
             </Text>
           </CardSection>
           <View>
             <CardSection style={styles.textContainer}>
-              <Text 
-                style={subtitle} 
-                numberOfLines={1}
-              >
+              <Text style={subtitle} numberOfLines={1}>
                 {shopName}
               </Text>
             </CardSection>
             <CardSection style={styles.descriptionContainer}>
-              <Image 
-                source={distanceIcon} 
-                style={styles.distanceIcon} 
-              />
-              <Text style={detail}>
-                Just {+(Math.round(distance + "e+2") + "e-2")}km away
-              </Text>
+              <Image source={distanceIcon} style={styles.distanceIcon} />
+              <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")}km away</Text>
               <View style={bookmarkIcon}>
                 <TouchableOpacity onPress={onBookmarkPressed}>
                   <Image
@@ -109,20 +94,19 @@ const PromoList = ({
   promotionModal,
   onPromoPressedClose,
   selectedTag,
-  onCategoryRemove
+  onCategoryRemove,
 }) => {
-
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
   let selectedCategoryTitle = allCategory.filter((category) => category.id === selectedCategory);
-  selectedCategoryTitle = selectedCategoryTitle.length > 0 ? selectedCategoryTitle[0].title : '';
+  selectedCategoryTitle = selectedCategoryTitle.length > 0 ? selectedCategoryTitle[0].title : "";
 
   let selectedTagTitle = allTag.filter((tag) => tag.id === selectedTag);
-  selectedTagTitle = selectedTagTitle.length > 0 ? selectedTagTitle[0].title : '';
+  selectedTagTitle = selectedTagTitle.length > 0 ? selectedTagTitle[0].title : "";
 
-  let categoryType = 'category';
-  let tagType = 'tag';
+  let categoryType = "category";
+  let tagType = "tag";
 
   return (
     <View style={{ flex: 1 }}>
@@ -145,7 +129,7 @@ const PromoList = ({
         onSwipeComplete={onCategoryPressed}
         onBackDropPressed={onCategoryPressed}
         selectedCategory={selectedCategory}
-        onPress={onCategoryChange}  
+        onPress={onCategoryChange}
       />
 
       <SwipeableModal
@@ -169,9 +153,7 @@ const PromoList = ({
       />
 
       <View style={styles.promoTitleContainer}>
-        <Text style={styles.pageTitle}>
-          Promotions
-        </Text>
+        <Text style={styles.pageTitle}>Promotions</Text>
 
         <View style={styles.iconContainer}>
           <TouchableOpacity onPress={toggleBookmark}>
@@ -181,45 +163,25 @@ const PromoList = ({
             />
           </TouchableOpacity>
         </View>
-
-        
       </View>
-      { selectedCategory &&
+      {selectedCategory && (
         <View style={styles.categoryContainer}>
-          <View 
-            style={styles.button} 
-            key={selectedCategory}
-          >
-            <Text style={styles.iconButton}>
-              {selectedCategoryTitle}
-            </Text>
+          <View style={styles.button} key={selectedCategory}>
+            <Text style={styles.iconButton}>{selectedCategoryTitle}</Text>
             <TouchableOpacity onPress={() => onCategoryRemove(categoryType)}>
-              <Icon
-                name="close"
-                size={16}
-                color="#909090"
-              />
+              <Icon name="close" size={16} color="#909090" />
             </TouchableOpacity>
           </View>
-          { selectedTag &&
-              <View 
-                style={styles.button} 
-                key={selectedTag}
-              >
-                <Text style={styles.iconButton}>
-                  {selectedTagTitle}
-                </Text>
-                <TouchableOpacity onPress={() => onCategoryRemove(tagType)}>
-                  <Icon
-                    name="close"
-                    size={16}
-                    color="#909090"
-                  />
-                </TouchableOpacity>
-              </View>
-          }
+          {selectedTag && (
+            <View style={styles.button} key={selectedTag}>
+              <Text style={styles.iconButton}>{selectedTagTitle}</Text>
+              <TouchableOpacity onPress={() => onCategoryRemove(tagType)}>
+                <Icon name="close" size={16} color="#909090" />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
-      }
+      )}
 
       <FlatList
         data={dataSource}
@@ -242,7 +204,11 @@ const PromoList = ({
         onRefresh={handleRefresh}
         refreshing={loading}
         ListFooterComponent={
-          dataSource.length === 0 ? <NotFoundFooter message="No promotion found"  /> : <View style={{ paddingBottom: 40 }}/>
+          dataSource.length === 0 ? (
+            <NotFoundFooter message="No promotion found" />
+          ) : (
+            <View style={{ paddingBottom: 40 }} />
+          )
         }
         style={styles.flatList}
       />

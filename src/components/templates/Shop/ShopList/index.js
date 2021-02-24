@@ -37,7 +37,7 @@ function Item({
 }) {
   const { image, title, detail, profile } = styles;
   let cover = "";
-  if (picture.length === 0) cover = require("../../../../assets/images/404NotFound800x533.jpg");
+  if (picture.length === 0) cover = require("../../../../assets/images/404NotFound800x533.jpeg");
   else cover = { uri: picture[0] };
 
   let icon = "";

@@ -155,7 +155,6 @@ class index extends Component {
       shopId: item.id,
       distance: item.distance,
       categoryName: item.category,
-      isFavourited: item.isFavourite
     });
   }
 
@@ -227,7 +226,9 @@ class index extends Component {
     // On toggle category get category shop
     selectedCategory
       ? (filteredShop = shops.filter((shop) => shop.categories.includes(selectedCategory) === true))
-      : (filteredShop = shops.filter((shop) => shop.categories.includes(filteredCategories[0].id) === true));
+      : (filteredShop = shops.filter(
+          (shop) => shop.categories.includes(filteredCategories[0].id) === true
+        ));
 
     // On toggle favourite get favourite shop
     favouriteControl
@@ -235,8 +236,8 @@ class index extends Component {
       : filteredShop;
 
     selectedTag
-      ?  selectedTag === 'All' 
-        ? filteredShop 
+      ? selectedTag === "All"
+        ? filteredShop
         : (filteredShop = filteredShop.filter((shop) => shop.tags.includes(selectedTag) === true))
       : filteredShop;
 
@@ -244,8 +245,8 @@ class index extends Component {
       selectedCategoryTag = filteredCategories.filter(
         (category) => category.id === selectedCategory
       );
-      
-      selectedCategoryTag = selectedCategoryTag[0].tags
+
+      selectedCategoryTag = selectedCategoryTag[0].tags;
 
       tags.forEach((tag) =>
         selectedCategoryTag.forEach((categoryTag) => {
