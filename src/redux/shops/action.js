@@ -260,26 +260,29 @@ export function removeListenerToRecord() {
 export function onFavouriteClick(shopId) {
   return (dispatch, getState) => {
     return new Promise(async (resolve, reject) => {
-      try {
+      //try {
         const shops = getState().Shops.shops;
+        let isFavourited = null;
         const newShops = shops.map((shop) => {
           if (shop.id === shopId) {
             shop.isFavourite = !shop.isFavourite;
+            isFavourited = shop;
           }
           return shop;
         });
-        resolve(newShops);
+        resolve(newShops, isFavourited);
+        const data = { shops: newShops, shop: isFavourited }
         dispatch({
           type: actions.TOGGLE_SHOP_FAVOURITE,
-          payload: { data: newShops },
-        });
+          payload: { data },
+        });/* 
       } catch (error) {
         console.log(error);
         dispatch({
           type: actions.TOGGLE_SHOP_FAVOURITE_ERROR,
           payload: { error },
         });
-      }
+      } */
     });
   };
 }

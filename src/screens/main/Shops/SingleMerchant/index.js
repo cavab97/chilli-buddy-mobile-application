@@ -52,9 +52,9 @@ class index extends Component {
   componentDidMount() {
     const shopId = this.props.shopId;
     // this.props.readSingleFavourite(shopId);
-    let favourite = this.lookingForFavourite({ shopId });
+    //let favourite = this.lookingForFavourite({ shopId });
 
-    this.setState({ isFavourite: favourite ? true : false });
+    //this.setState({ isFavourite: favourite ? true : false });
 
     this.props.readPromotion(shopId);
     this.props.listenFromDatabase({ shopId });
@@ -296,7 +296,8 @@ class index extends Component {
       readPostLoading, 
       promotions, 
       readPromotionLoading, 
-      categories 
+      categories,
+      isFavourited
     } = this.props;
 
     const noImage = require("@assets/images/404NotFound800x533.jpg");
@@ -361,7 +362,7 @@ class index extends Component {
           promotionModal={promotionModalVisible}
           onPromoPressed={this.onPromoPressed.bind(this)}
           onPromoPressedClose={this.onPromoPressedClose.bind(this)}
-          isFavourite={this.state.isFavourite}
+          isFavourite={shop.isFavourite}
           SharePress={this.onShare.bind(this)}
         />
       );

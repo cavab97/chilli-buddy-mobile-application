@@ -155,6 +155,7 @@ class index extends Component {
       shopId: item.id,
       distance: item.distance,
       categoryName: item.category,
+      isFavourited: item.isFavourite
     });
   }
 
