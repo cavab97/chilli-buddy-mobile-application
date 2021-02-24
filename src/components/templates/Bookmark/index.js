@@ -31,7 +31,7 @@ function Item({
   const { image } = styles;
 
   let cover = "";
-  if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
+  if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpeg");
   else cover = { uri: picture[0] };
   return (
     <TouchableOpacity onPress={onPress}>
@@ -111,7 +111,6 @@ const BookmarkList = ({
 }) => {
   return (
     <View style={{ flex: 1 }}>
-  
       {readLoading ? (
         <View />
       ) : (

@@ -52,13 +52,16 @@ class index extends Component {
   componentDidMount() {
     const shopId = this.props.shopId;
     // this.props.readSingleFavourite(shopId);
-    let favourite = this.lookingForFavourite({ shopId });
+    //let favourite = this.lookingForFavourite({ shopId });
 
-    this.setState({ isFavourite: favourite ? true : false });
-
+    //this.setState({ isFavourite: favourite ? true : false });
     this.props.readPromotion(shopId);
     this.props.listenFromDatabase({ shopId });
     this.props.readShopPost(shopId);
+    let singleShopInfo = this.lookingForSingleShop({ shopId });
+    console.log(singleShopInfo.isFavourite);
+    // console.log(favourite.isFavourite);
+    this.setState({ isFavourite: singleShopInfo.isFavourite });
 
     this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
@@ -181,6 +184,19 @@ class index extends Component {
       categoryName: item.category,
     });
   };
+  lookingForSingleShop({ shopId } = null) {
+    const { shops } = this.props.shopState;
+    let favouriteInfo = null;
+    // console.log(shops);
+    shops.forEach((favourite) => {
+      if (favourite.id === shopId) {
+        //favouriteId = favourite.id;
+        favouriteInfo = favourite;
+      }
+    });
+
+    return favouriteInfo;
+  }
 
   lookingForFavourite({ shopId } = null) {
     const favourites = this.props.favouriteState.favourites;
@@ -190,13 +206,14 @@ class index extends Component {
     favourites.forEach((favourite) => {
       if (favourite.shopIds[0] === shopId) {
         //favouriteId = favourite.id;
-        favouriteInfo = favourite
+        favouriteInfo = favourite;
       }
     });
     return favouriteInfo;
   }
 
   onFavouritePressed = async (item) => {
+    this.setState({ isFavourite: !this.state.isFavourite });
     const shopId = this.props.shopId;
     const favouriteId = this.lookingForFavourite({ shopId });
     const isFavourite = !item.isFavourite;
@@ -291,24 +308,25 @@ class index extends Component {
     const { shop, readLoading } = this.props.shopState;
     const { promotion, promotionModalVisible } = this.props.promotionState;
 
-    const { 
-      posts, 
-      readPostLoading, 
-      promotions, 
-      readPromotionLoading, 
-      categories 
+    const {
+      posts,
+      readPostLoading,
+      promotions,
+      readPromotionLoading,
+      categories,
+      isFavourited,
     } = this.props;
 
-    const noImage = require("@assets/images/404NotFound800x533.jpg");
+    const noImage = require("@assets/images/404NotFound800x533.jpeg");
     const noPromoteImage = require("@assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
 
     let icon = [];
     let postImage = [];
 
-    let category
+    let category;
 
     if (shop.categories) {
-      category = categories.filter(category => category.id === shop.categories[0])
+      category = categories.filter((category) => category.id === shop.categories[0]);
     }
 
     if (shop.logo != undefined) {
@@ -352,7 +370,7 @@ class index extends Component {
           find_dimensions={this.find_dimensions}
           viewHeight={this.state.viewHeight}
           distance={this.props.distance}
-          categoryName={category ? category[0].title : ''}
+          categoryName={category ? category[0].title : ""}
           calculatedDistance={this.state.calculatedDistance}
           onPostPress={this.onPostPress.bind(this)}
           onFavouriteClick={this.onFavouritePressed.bind(this)}
@@ -390,7 +408,7 @@ const mapStateToProps = (state) => {
     readPromotionLoading,
     favouriteState,
     settingInfo,
-    categories
+    categories,
   };
 };
 

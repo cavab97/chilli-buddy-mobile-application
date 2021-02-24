@@ -75,7 +75,7 @@ class index extends Component {
 
     const { promotion, readLoading } = this.props.promotion;
 
-    const noImage = require("@assets/images/404NotFound800x533.jpg");
+    const noImage = require("@assets/images/404NotFound800x533.jpeg");
 
     return (
       <SingleMerchantPromo

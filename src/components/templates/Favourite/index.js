@@ -17,11 +17,10 @@ import {
 } from "@components/atoms";
 
 import { Card, CardSection } from "@components/molecules";
-import { SingleMerchantPromo } from "../Promo/SingleMerchantPromo"
+import { SingleMerchantPromo } from "../Promo/SingleMerchantPromo";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NotFoundFooter } from "@components/molecules/index";
-
 
 function ShopItem({
   name,
@@ -34,10 +33,9 @@ function ShopItem({
   onFavouritePress,
   isFavourite,
 }) {
-  
   const { shopImage, title, detail, profile } = styles;
   let cover = "";
-  if (picture.length === 0) cover = require("../../../assets/images/404NotFound800x533.jpg");
+  if (picture.length === 0) cover = require("../../../assets/images/404NotFound800x533.jpeg");
   else cover = { uri: picture[0] };
 
   let icon = "";
@@ -53,23 +51,15 @@ function ShopItem({
     <TouchableOpacity onPress={onPress}>
       <View style={styles.shopCardContainer}>
         <CardSection style={styles.imageContainer}>
-          <Image 
-            style={shopImage} 
-            resizeMode="cover" 
-            source={cover} 
-          />
+          <Image style={shopImage} resizeMode="cover" source={cover} />
         </CardSection>
 
         <CardSection style={styles.textContainer}>
-          <Text style={title}>
-            {name}
-          </Text>
+          <Text style={title}>{name}</Text>
         </CardSection>
 
         <CardSection style={styles.descriptionContainer}>
-          <Text style={detail}>
-            {category}
-          </Text>
+          <Text style={detail}>{category}</Text>
           <MaterialCommunityIcons
             name="checkbox-blank-circle"
             size={5}
@@ -77,14 +67,12 @@ function ShopItem({
             style={{ marginHorizontal: 8 }}
           />
           <Image source={distanceIcon} style={styles.distanceIcon} />
-          <Text style={detail}>
-            Just {+(Math.round(distance + "e+2") + "e-2")} Km away
-          </Text>
+          <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")} Km away</Text>
           <View style={{ position: "absolute", right: 5, bottom: 0 }}>
             <TouchableOpacity onPress={onFavouritePress}>
-              <Image 
-                source={isFavourite ? filledHeartIcon : emptyHeartIcon} 
-                style={styles.favouriteIcon} 
+              <Image
+                source={isFavourite ? filledHeartIcon : emptyHeartIcon}
+                style={styles.favouriteIcon}
               />
             </TouchableOpacity>
           </View>
@@ -112,7 +100,7 @@ function PromotionItem({
 }) {
   const { image } = styles;
   let cover = "";
-  if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpg");
+  if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpeg");
   else cover = { uri: picture[0] };
 
   const distanceIcon = require("../../../assets/icons/distance.png");
@@ -124,11 +112,7 @@ function PromotionItem({
       <View style={styles.cardContainer}>
         <View style={{ width: "35%" }}>
           <CardSection style={styles.imageContainer}>
-            <Image 
-              style={image} 
-              resizeMode="cover" 
-              source={cover} 
-            />
+            <Image style={image} resizeMode="cover" source={cover} />
           </CardSection>
         </View>
         <View
@@ -142,35 +126,26 @@ function PromotionItem({
           }}
         >
           <CardSection style={styles.textContainer}>
-            <Text 
-              style={styles.title} 
-              numberOfLines={2}
-            >
+            <Text style={styles.title} numberOfLines={2}>
               {name}
             </Text>
           </CardSection>
           <View>
             <CardSection style={styles.textContainer}>
-              <Text 
-                style={styles.subtitle} 
-                numberOfLines={1}
-              >
+              <Text style={styles.subtitle} numberOfLines={1}>
                 {shopName}
               </Text>
             </CardSection>
             <CardSection style={styles.descriptionContainer}>
-              <Image 
-                source={distanceIcon} 
-                style={styles.distanceIcon} 
-              />
+              <Image source={distanceIcon} style={styles.distanceIcon} />
               <Text style={styles.detail}>
                 Just {+(Math.round(distance + "e+2") + "e-2")}km away
               </Text>
               <View style={styles.bookmarkIcon}>
                 <TouchableOpacity onPress={onBookmarkPressed}>
-                  <Image 
-                    source={ gotBookmark ? filledHeartIcon : emptyHeartIcon} 
-                    style={styles.favouriteIcon} 
+                  <Image
+                    source={gotBookmark ? filledHeartIcon : emptyHeartIcon}
+                    style={styles.favouriteIcon}
                   />
                 </TouchableOpacity>
               </View>
@@ -203,11 +178,9 @@ const FavouriteList = ({
   onPromoPressed,
   onFavouritePressed,
   onToggleTab,
-  shopData
+  shopData,
 }) => {
-
   return (
-
     <View style={{ flex: 1 /*height: 100%*/ }}>
       <CustomNavBar
         textOne="Shops"
@@ -218,7 +191,7 @@ const FavouriteList = ({
         selectedButton1={!selectedTab}
         selectedButton2={selectedTab}
       />
-      
+
       <SingleMerchantPromo
         promotionModal={promotionModal}
         dataSource={promotion}
@@ -227,66 +200,70 @@ const FavouriteList = ({
       />
 
       <View style={styles.promoTitleContainer}>
-        <Text style={styles.pageTitle}>
-          Favourite
-        </Text>
+        <Text style={styles.pageTitle}>Favourite</Text>
       </View>
 
-        <Text style={styles.topSubText}>
-          { !selectedTab ? 'Shops' : 'Promotions'}
-        </Text>
+      <Text style={styles.topSubText}>{!selectedTab ? "Shops" : "Promotions"}</Text>
 
-        { !selectedTab ?
-            <FlatList
-              data={shopData}
-              renderItem={({ item, index }) => (
-                <ShopItem
-                  onPress={() => onMerchantPressed(item.shop)}
-                  onFavouritePress={() => onFavouritePressed(item.shop)}
-                  name={item.shop.displayTitle}
-                  logo={item.shop.logo}
-                  picture={item.shop.images}
-                  address={item.shop.address}
-                  category={item.shop.category}
-                  distance={item.distance}
-                  index={index}
-                  isFavourite={item.isFavourite}
-                  isPromote={item.shop.isPromote}
-                />
-              )}
-              keyExtractor={(item) => item.id}
-              onRefresh={handleRefresh}
-              refreshing={readLoading}
-              showsVerticalScrollIndicator={false}
-              onEndReachedThreshold={0.5}
-              ListFooterComponent={shopData.length === 0 ? <NotFoundFooter message="No favourite shops found" /> : <View style={{ paddingBottom: 30 }}/>}
-              style={styles.flatList}
+      {!selectedTab ? (
+        <FlatList
+          data={shopData}
+          renderItem={({ item, index }) => (
+            <ShopItem
+              onPress={() => onMerchantPressed(item.shop)}
+              onFavouritePress={() => onFavouritePressed(item.shop)}
+              name={item.shop.displayTitle}
+              logo={item.shop.logo}
+              picture={item.shop.images}
+              address={item.shop.address}
+              category={item.shop.category}
+              distance={item.distance}
+              index={index}
+              isFavourite={item.isFavourite}
+              isPromote={item.shop.isPromote}
             />
-          :
-            <FlatList
-              data={dataSource}
-              renderItem={({ item, index }) => (
-                  <PromotionItem
-                    onPress={() => onPromoPressed(item)}
-                    onBookmarkPressed={() => onBookmarkPressed(item)}
-                    name={item.promotion.title}
-                    picture={item.promotion.coverPhotos}
-                    distance={item.distance}
-                    promoID={item.id}
-                    shopName={item.promotion.shop.displayTitle}
-                    gotBookmark={item.isBookmark} //{gotBookmark}
-                    index={index}
-                    readBookmark={readBookmark}
-                    submitLoading={submitLoading}
-                  />
-              )}
-              keyExtractor={(item) => item.id}
-              onRefresh={handleRefresh}
-              refreshing={false}
-              ListFooterComponent={dataSource.length === 0 && <NotFoundFooter message="No favourite promotions found"/>}
-              style={styles.flatList}
+          )}
+          keyExtractor={(item) => item.id}
+          onRefresh={handleRefresh}
+          refreshing={readLoading}
+          showsVerticalScrollIndicator={false}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={
+            shopData.length === 0 ? (
+              <NotFoundFooter message="No favourite shops found" />
+            ) : (
+              <View style={{ paddingBottom: 30 }} />
+            )
+          }
+          style={styles.flatList}
+        />
+      ) : (
+        <FlatList
+          data={dataSource}
+          renderItem={({ item, index }) => (
+            <PromotionItem
+              onPress={() => onPromoPressed(item)}
+              onBookmarkPressed={() => onBookmarkPressed(item)}
+              name={item.promotion.title}
+              picture={item.promotion.coverPhotos}
+              distance={item.distance}
+              promoID={item.id}
+              shopName={item.promotion.shop.displayTitle}
+              gotBookmark={item.isBookmark} //{gotBookmark}
+              index={index}
+              readBookmark={readBookmark}
+              submitLoading={submitLoading}
             />
-        }
+          )}
+          keyExtractor={(item) => item.id}
+          onRefresh={handleRefresh}
+          refreshing={false}
+          ListFooterComponent={
+            dataSource.length === 0 && <NotFoundFooter message="No favourite promotions found" />
+          }
+          style={styles.flatList}
+        />
+      )}
     </View>
   );
 };
