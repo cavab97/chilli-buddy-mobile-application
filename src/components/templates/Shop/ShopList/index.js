@@ -109,6 +109,10 @@ const ShopList = ({
   displayCategory,
   readLoading,
   categories,
+  returnSpecificCategory,
+  scrollToItem,
+  flatListRef,
+  returnFlatlistMyRef,
 }) => {
   const filterIcon = require("../../../../assets/icons/filter.png");
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
@@ -156,6 +160,10 @@ const ShopList = ({
           categories={categories}
           onCategoryChange={onCategoryChange}
           selectedCategory={selectedCategory}
+          returnSpecificCategory={returnSpecificCategory}
+          scrollToItem={scrollToItem}
+          flatListRef={flatListRef}
+          returnFlatlistMyRef={returnFlatlistMyRef}
         />
       </View>
 

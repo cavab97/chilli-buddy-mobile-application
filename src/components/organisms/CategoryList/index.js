@@ -1,7 +1,7 @@
 import React from "react";
 
-import { FlatList, Text, TouchableOpacity, View, Image } from "../../atoms";
-
+import { Text, TouchableOpacity, View, Image, Button } from "../../atoms";
+import { FlatList } from "react-native";
 import ContentLoader, { Rect } from "react-content-loader/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
@@ -12,9 +12,6 @@ function Category({ id, title, onCategoryChange, selectedCategory }) {
   let categoryTitle = title.split(" ");
   let arrangedCategoryTitle = "";
 
-  //   scrollToIndex = () => {
-  //     this.flatListRef.scrollToIndex({ animated: true, index: randomIndex });
-  //   };
   if (categoryTitle.length > 0) {
     for (let i = 0; i < categoryTitle.length; i++) {
       arrangedCategoryTitle += categoryTitle[i] + "\n";
@@ -86,10 +83,31 @@ function Category({ id, title, onCategoryChange, selectedCategory }) {
   );
 }
 
-const CategoryList = ({ categories, onCategoryChange, selectedCategory }) => {
+const CategoryList = ({
+  categories,
+  onCategoryChange,
+  selectedCategory,
+  returnSpecificCategory,
+}) => {
+  setTimeout(() => {
+    this.flatListRef.scrollToIndex({
+      animated: false,
+      index:
+        returnSpecificCategory(categories, selectedCategory) === -1
+          ? 0
+          : returnSpecificCategory(categories, selectedCategory),
+    });
+  }, 500);
+
+  getItemLayout = (data, index) => ({ length: 20, offset: 100 * index, index });
+
   return (
     <FlatList
       data={categories}
+      ref={(ref) => {
+        this.flatListRef = ref;
+      }}
+      getItemLayout={this.getItemLayout}
       renderItem={({ item, index }) => (
         <Category
           id={item.id}
@@ -102,9 +120,6 @@ const CategoryList = ({ categories, onCategoryChange, selectedCategory }) => {
       horizontal
       showsHorizontalScrollIndicator={false}
       keyExtractor={(item) => item.id}
-      ref={(ref) => {
-        this.flatListRef = ref;
-      }}
     />
   );
 };

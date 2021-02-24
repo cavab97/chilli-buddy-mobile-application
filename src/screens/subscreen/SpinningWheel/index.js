@@ -70,7 +70,6 @@ class index extends Component {
   onPressRandomCategory(category) {
     Actions.Shops({ selectedCategory: category });
   }
-
   //Pass category
   passCategory() {
     let dataSource2 = [];

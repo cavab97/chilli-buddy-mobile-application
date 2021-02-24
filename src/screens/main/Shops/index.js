@@ -22,6 +22,7 @@ import {
 import clone from "clone";
 
 import { ShopList } from "@components/templates";
+import { FlatList } from "react-native-gesture-handler";
 
 const ITEMS_PER_PAGE = 10;
 const RADIUS = 50;
@@ -30,6 +31,7 @@ const RADIUS = 50;
 class index extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       radiusAddition: 1,
       data: [],
@@ -52,7 +54,6 @@ class index extends Component {
 
   // old ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidMount = async () => {
-    //this.handleRefresh();
     this.props.verifyPermission().then((permissions) => {
       if (permissions.location !== "granted") {
         if (permissions.location.permissions.location.foregroundGranted === undefined) {
@@ -196,6 +197,16 @@ class index extends Component {
       await this.props.submitToBackend(data, "update");
     }
   };
+  returnSpecificCategory(categories, selectedCategory) {
+    // console.log(category);
+    // console.log(categories[0].id);
+    let index;
+
+    index = categories.findIndex((category) => {
+      return category.id === selectedCategory;
+    });
+    return index;
+  }
 
   render() {
     const {
@@ -277,6 +288,9 @@ class index extends Component {
         categories={filteredCategories}
         tags={filteredTags}
         loading={loading}
+        returnSpecificCategory={this.returnSpecificCategory.bind(this)}
+        // returnFlatlistMyRef={this.returnFlatlistMyRef.bind(this)}
+
         //displayCategory={this.props.selectedCategory ? "" : this.props.selectedCategory.id}
       />
     );
