@@ -3,6 +3,10 @@ import { Colors, Mixins, Typography } from "../../../../settings/styles/theme";
 const size = Dimensions.get("window").width / 1.1;
 const widthW = Dimensions.get("window").width;
 const heightW = Dimensions.get("window").height;
+
+const widthS = Dimensions.get("screen").width;
+const widthH = Dimensions.get("screen").height;
+
 const divWH = widthW / heightW;
 
 const styles = StyleSheet.create({
@@ -72,7 +76,25 @@ const styles = StyleSheet.create({
     // position: "absolute",
 
     bottom: Platform.isPad ? 45 : Platform.OS === "ios" ? 25 : 25,
-    left: Platform.isPad ? 340 : Platform.OS === "ios" ? divWH * 202 : divWH * 202,
+    left: Platform.isPad
+      ? 340
+      : Platform.OS === "ios"
+      ? widthS <= 375
+        ? widthS / 3.5
+        : widthS / 3.5
+      : widthS <= 375
+      ? widthS / 3.5
+      : widthS / 3.5,
+
+    // bottom: Platform.isPad
+    // ? 200
+    // : Platform.OS === "ios"
+    // ? screenWidth <= 375
+    //   ? screenWidth / 3
+    //   : screenWidth / 5
+    // : screenWidth <= 375
+    // ? screenWidth / 3
+    // : screenWidth / 3,
     // backgroundColor: "red",
     resizeMode: "contain",
     fontSize: 10,

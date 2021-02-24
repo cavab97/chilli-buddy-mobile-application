@@ -1,8 +1,10 @@
 import { StyleSheet, Platform, Dimensions } from "react-native";
 import { Colors } from "../../../settings/styles/theme";
 const windowWidth = Dimensions.get("window").width;
+const screenWidth = Dimensions.get("screen").width;
+
 const windowHeight = Dimensions.get("window").height;
-const inch = windowWidth / windowHeight;
+const inch = windowHeight / windowWidth;
 const styles = StyleSheet.create({
   modelBackground: {
     flex: 1,
@@ -19,20 +21,23 @@ const styles = StyleSheet.create({
     // marginBottom: 1000,
     // resizeMode: "cover",
     alignSelf: "center",
+    // bottom: 30,
     // bottom: windowWidth / 3,
     // backgroundColor: "red",
   },
-  holderContainer: {
-    backgroundColor: "#D60000",
-    width: Platform.OS === "ios" && Platform.isPad === true ? 450 : 220,
-    borderRadius: 10,
-    height: Platform.isPad ? 70 : 50,
-    marginRight: "auto",
-    marginLeft: "auto",
-    borderWidth: 1,
-    borderColor: "#FFFFFF",
-    padding: Platform.isPad ? 0 : 0,
-  },
+
+  // holderContainer: {
+  //   backgroundColor: "red",
+  //   // width: Platform.OS === "ios" && Platform.isPad === true ? 450 : 220,
+  //   // borderRadius: 10,
+  //   // height: Platform.isPad ? 70 : 50,
+  //   // marginRight: "auto",
+  //   // marginLeft: "auto",
+  //   // borderWidth: 1,
+  //   // borderColor: "#FFFFFF",
+  //   // padding: Platform.isPad ? 0 : 0,
+  //   marginTop: -50,
+  // },
   //spinning wheel pop up container
   containerForSpinningWheel: {
     // backgroundColor: "#FFF",
@@ -152,7 +157,15 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
     justifyContent: "space-between",
     flex: 1,
-    bottom: Platform.isPad ? 200 : inch * 150,
+    bottom: Platform.isPad
+      ? 200
+      : Platform.OS === "ios"
+      ? screenWidth <= 375
+        ? screenWidth / 3
+        : screenWidth / 5
+      : screenWidth <= 375
+      ? screenWidth / 3
+      : screenWidth / 3,
   },
   wheelIcon: {
     width: windowWidth / 5.5,
