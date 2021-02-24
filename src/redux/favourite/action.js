@@ -72,8 +72,8 @@ export function readFromDatabase() {
           payload: { data: favourites },
         });
       } catch (error) {
-        console.log(error);
         reject(error);
+        console.log(error);
         dispatch({
           type: actions.READ_FROM_DATABASE_ERROR,
           payload: { error },
@@ -198,8 +198,8 @@ export function submitToBackend(data, actionName) {
         //   payload: { data: result },
         // });
       } catch (error) {
-        console.log(error);
         reject(error);
+        console.log(error);
         dispatch({
           type: actions.SUBMIT_TO_BACKEND_ERROR,
           payload: { error },
