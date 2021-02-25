@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./styles";
+import { Dimensions, Platform } from "react-native";
 
 import HTML from "react-native-render-html";
 import moment from "moment";
@@ -20,6 +21,7 @@ import {
 } from "@components/atoms";
 const shareIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/shareArrow_Icon.png");
 const noImageV2 = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/noImageBackground.jpeg");
+const windowWidth = Dimensions.get("window").width;
 
 const ShopsSinglePost = ({
   shopPosts,
@@ -46,29 +48,57 @@ const ShopsSinglePost = ({
                 {/* {console.log(item.id)} */}
                 <HTML
                   source={{ html: `<div>` + data.description + `</div>` }}
-                  // alterData={alterData}
-                  tagsStyles={
-                    ({
-                      p: {
-                        padding: 0,
-                        margin: 0,
-                      },
-                      ol: {
-                        padding: 0,
-                        marginBottom: 30,
-                        margin: 0,
-                      },
-                      li: {
-                        padding: 0,
-                        margin: 0,
-                      },
-                      ul: {
-                        padding: 0,
-                        margin: 0,
-                      },
+                  tagsStyles={{
+                    p: {
+                      fontFamily: "HorizontalRounded",
+                      padding: 0,
+                      fontSize: Platform.isPad ? windowWidth / 20 : 10,
+                      lineHeight: 10,
                     },
-                    styles.singlePostTitle)
-                  }
+                    ol: {
+                      padding: 0,
+                      // marginBottom: 30,
+                      margin: 0,
+                      fontSize: Platform.isPad ? windowWidth / 20 : 10,
+                    },
+                    li: {
+                      padding: 0,
+                      margin: 0,
+                      marginTop: 3,
+                      fontSize: Platform.isPad ? windowWidth / 20 : 10,
+                    },
+                    ul: {
+                      padding: 0,
+                      margin: 0,
+                      fontSize: Platform.isPad ? windowWidth / 20 : 10,
+                      lineHeight: 5,
+                    },
+                  }}
+                  style={styles.singlePostTitle}
+
+                  // alterData={alterData}
+                  // tagsStyles={
+                  //   ({
+                  //     p: {
+                  //       // padding: 0,
+                  //       // margin: 0,
+                  //     },
+                  // ol: {
+                  //   padding: 0,
+                  //   marginBottom: 30,
+                  //   margin: 0,
+                  // },
+                  // li: {
+                  //   padding: 0,
+                  //   margin: 0,
+                  // },
+                  // ul: {
+                  //   padding: 0,
+                  //   margin: 0,
+                  // },
+                  //   },
+                  //   styles.singlePostTitle)
+                  // }
                 />
 
                 {data.images.length < 1 ? (

@@ -595,7 +595,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: "100%",
 
-    resizeMode: "cover",
     //width: "100%",
     // height: "100%",
   },

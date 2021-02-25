@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
   col: { width: "35%", backgroundColor: "#fff" },
   colSocialMedia: { width: "35%", backgroundColor: "#fff", marginTop: 8 },
 
-  col2: { width: "55%", backgroundColor: "#fff", textAlign: "left" },
+  col2: { width: "55%", textAlign: "left" },
 
   modalContainer: {
     margin: 0,
@@ -390,6 +390,14 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingHorizontal: 30,
     marginBottom: 40,
+  },
+  singlePostTitle: {
+    fontSize: Platform.isPad ? windowWidth / 20 : 18,
+    fontFamily: "HorizontalRounded",
+    marginTop: 0,
+    marginRight: "10%",
+    color: "grey",
+    // backgroundColor: "yellow",
   },
 });
 

@@ -17,7 +17,11 @@ const Post = ({ item, icon, onPostPress, SharePress }) => {
         <View style={styles.logoPositionInModal}>
           <Image style={styles.logo} source={icon} />
         </View>
-        <TouchableOpacity style={styles.chatBoxContainer} onPress={() => onPostPress(item)}>
+        <TouchableOpacity
+          style={styles.chatBoxContainer}
+          onPress={() => onPostPress(item)}
+          activeOpacity={1}
+        >
           <ImageBackground style={styles.chatBoxImg} source={chatBoxImage}>
             <View style={styles.chatBoxTopText}>
               <Text style={styles.chatBoxText} numberOfLines={2}>

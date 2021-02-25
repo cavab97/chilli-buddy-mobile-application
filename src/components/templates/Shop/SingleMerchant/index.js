@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./styles";
 
 import { Dimensions, Alert, Linking } from "react-native";
+import HTML from "react-native-render-html";
 
 import {
   View,
@@ -284,18 +285,43 @@ const SingleMerchant = ({
             </View>
             <View style={styles.col2}>
               {/* <Text style={styles.col2Text}>{tnc}</Text> */}
-              <Text
-                style={{
-                  marginTop: 0,
-                  marginRight: "10%",
-                  fontFamily: "HorizontalRounded",
-                  color: "grey",
-                }}
-              >
-                {dataSource.description == null
-                  ? "No Description Available"
-                  : dataSource.description}
-              </Text>
+              {dataSource.description == null ? (
+                <Text
+                  style={{
+                    marginTop: 0,
+                    marginRight: "10%",
+                    fontFamily: "HorizontalRounded",
+                    color: "grey",
+                  }}
+                >
+                  No Description Available
+                </Text>
+              ) : (
+                <HTML
+                  source={{ html: dataSource.description }}
+                  // alterData={alterData}
+                  tagsStyles={{
+                    p: {
+                      fontFamily: "HorizontalRounded",
+                      padding: 0,
+                      color: "grey",
+                    },
+                    ol: {
+                      padding: 0,
+                      marginBottom: 30,
+                      margin: 0,
+                    },
+                    li: {
+                      padding: 0,
+                      margin: 0,
+                    },
+                    ul: {
+                      padding: 0,
+                      margin: 0,
+                    },
+                  }}
+                />
+              )}
             </View>
           </View>
 

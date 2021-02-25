@@ -4,7 +4,7 @@ import { Colors, Mixins, Typography } from "../../../settings/styles/theme";
 const styles = StyleSheet.create({
   chatBoxInnerImage: {
     width: "100%",
-    height: Platform.isPad ? 250 : 130,
+    height: Platform.isPad ? 250 : 200,
     resizeMode: "cover",
     shadowColor: "grey",
     shadowOffset: { width: 0, height: 1 },

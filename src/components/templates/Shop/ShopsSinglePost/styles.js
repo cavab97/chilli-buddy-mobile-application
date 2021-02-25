@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "grey",
     borderWidth: 3.5,
     borderRadius: 35,
-    elevation: 10,
+    elevation: 5,
     shadowOffset: {
       width: 0,
       height: 0,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   singlePostTitle: {
     fontSize: Platform.isPad ? windowWidth / 20 : 18,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     fontFamily: "HorizontalRounded",
     paddingBottom: 10,
   },
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   chatBoxInnerImage: {
     width: "100%",
-    height: Platform.isPad ? windowWidth / 3 : 130,
+    height: Platform.isPad ? windowWidth / 3 : 200,
     resizeMode: "cover",
     shadowColor: "grey",
     shadowOffset: { width: 0, height: 1 },
