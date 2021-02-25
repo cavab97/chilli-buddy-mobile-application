@@ -210,7 +210,7 @@ const FavouriteList = ({
           data={shopData}
           renderItem={({ item, index }) => (
             <ShopItem
-              onPress={() => onMerchantPressed(item)}
+              onPress={() => onMerchantPressed(item.shop)}
               onFavouritePress={() => onFavouritePressed(item.shop)}
               name={item.shop.displayTitle}
               logo={item.shop.logo}

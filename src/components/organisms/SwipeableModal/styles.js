@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
     },
     contentFull: {
-        height: windowHeight - Constants.statusBarHeight, 
+        height: windowHeight - Constants.statusBarHeight - 5, 
         width: windowWidth,
         backgroundColor: '#fff', 
         borderTopLeftRadius: 30, 

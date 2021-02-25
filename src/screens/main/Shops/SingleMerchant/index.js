@@ -60,9 +60,9 @@ class index extends Component {
     this.props.readShopPost(shopId);
     let singleShopInfo = this.lookingForSingleShop({ shopId });
     // console.log(singleShopInfo.isFavourite == null);
-    console.log(singleShopInfo);
+    // console.log(singleShopInfo);
     this.setState({
-      isFavourite: singleShopInfo === null ? false : singleShopInfo.isFavourite,
+      isFavourite: singleShopInfo ? singleShopInfo.isFavourite : false,
     });
 
     this.props.verifyPermission().then(async (permissions) => {
@@ -101,7 +101,6 @@ class index extends Component {
 
   //Calculate distance from logitude and latitude
   calculateDistance = async (destinationLocation) => {
-    //console.log("calculatedistance");
     try {
       var distance;
       var location = this.state.location;
@@ -119,8 +118,6 @@ class index extends Component {
           }
         ) / 1000;
       this.setState({ calculatedDistance: distance });
-      //console.log("calculatedistance");
-      //console.log("distance1: " + this.state.calculatedDistance);
     } catch (e) {
       this.setState({ locationLoading: false });
     }
@@ -172,7 +169,6 @@ class index extends Component {
 
   onPromoteClick = (item, distance, calculatedDistance) => {
     //const promoId = this.props.promotions[0].id;
-    //console.log("singlemerchant: " + calculatedDistance);
     Actions.SingleMerchantPromo({
       promoId: item.id,
       distance: distance,
@@ -182,9 +178,6 @@ class index extends Component {
 
   onPostPress = async (item) => {
     //const promoId = this.props.promotions[0].id;
-    //console.log("singlemerchant: " + calculatedDistance);
-    // console.log("item.id");
-    // console.log(item.id);
     this.setState({ isOpenPost: !this.state.isOpenPost });
 
     Actions.ShopsSinglePost({
@@ -196,7 +189,7 @@ class index extends Component {
   lookingForSingleShop({ shopId } = null) {
     const { shops } = this.props.shopState;
     let favouriteInfo = null;
-    // console.log(shops);
+
     shops.forEach((favourite) => {
       if (favourite.id === shopId) {
         //favouriteId = favourite.id;
