@@ -6,11 +6,7 @@ import { getDistance } from "geolib";
 
 import { verifyPermission, loadBookmark } from "@redux/bookmark/action";
 import { update, submitToBackend } from "@redux/bookmark/action";
-import { 
-  listenToRecord,
-  onBookmarkClick,
-  togglePromotionModal
-} from "@redux/promo/action";
+import { listenToRecord, onBookmarkClick, togglePromotionModal } from "@redux/promo/action";
 
 import { loadShops, onFavouriteClick } from "@redux/shops/action";
 import {
@@ -19,7 +15,7 @@ import {
   readFromDatabase,
   updateIsFavourite,
   toggleTab,
-  loadFavourite
+  loadFavourite,
 } from "@redux/favourite/action";
 
 import { FavouriteList } from "@components/templates";
@@ -78,7 +74,6 @@ class index extends Component {
       alert(readError);
     }
 
-
     // if (
     //   prevProps.bookmarkState.submitLoading &&
     //   !submitLoading
@@ -112,9 +107,9 @@ class index extends Component {
 
   onMerchantPressed(item) {
     Actions.SingleMerchant({
-      shopId: item.id,
+      shopId: item.shop.id,
       distance: item.distance,
-      categoryName: item.category,
+      categoryName: item.shop.category,
     });
   }
 
@@ -149,7 +144,7 @@ class index extends Component {
     }
   };
 
-  onToggleTab(){
+  onToggleTab() {
     this.props.toggleTab();
   }
 
@@ -163,14 +158,13 @@ class index extends Component {
     let favouriteId = null;
 
     favourites.forEach((favourite) => {
-      console.log(favourite.shopIds)
+      console.log(favourite.shopIds);
       if (favourite.shopIds[0] === shopId) {
         favouriteId = favourite.id;
       }
     });
     return favouriteId;
   }
-
 
   onFavouritePressed = async (item) => {
     const shopId = item.id;
@@ -219,29 +213,23 @@ class index extends Component {
   };
 
   onPromoPressedClose() {
-    this.props.togglePromotionModal()
+    this.props.togglePromotionModal();
   }
 
   onPromoPressed(item) {
-    this.props.listenToRecord({ promoId: item.promotion.id })
-    this.props.togglePromotionModal()
+    this.props.listenToRecord({ promoId: item.promotion.id });
+    this.props.togglePromotionModal();
   }
 
   render() {
-    const { 
-      promotion,
-      promotionModalVisible
-    } = this.props.promotionState;
+    const { promotion, promotionModalVisible } = this.props.promotionState;
 
     const readBookmark = this.props.bookmarkState.readBookmark;
     const submitLoading = this.props.bookmarkState.submitLoading;
     const bookmarks = this.props.bookmarkState.bookmarks;
     const { categories, tags } = this.props;
 
-    const {  
-      selectedTab,
-      favourites
-    } = this.props.favouriteState;
+    const { selectedTab, favourites } = this.props.favouriteState;
 
     let isBookmark = [];
     let activeBookmarks = [];
@@ -262,17 +250,19 @@ class index extends Component {
       if (favourite.isFavourite === true) {
         activeFavourites.push(favourite);
       }
-    })
+    });
 
     activeFavourites.forEach((favourite) => {
       isFavourite.push(favourite.isFavourite);
     });
 
     activeFavourites.map((favourite) => {
-      let favouriteCategory = categories.filter((category) => category.id === favourite.shop.categories[0]);
-      let favouriteDistance = favourite.distance
+      let favouriteCategory = categories.filter(
+        (category) => category.id === favourite.shop.categories[0]
+      );
+      let favouriteDistance = favourite.distance;
       favouriteCategory ? (favourite.shop.category = favouriteCategory[0].title) : "";
-      favourite.distance = favouriteDistance
+      favourite.distance = favouriteDistance;
     });
 
     return (
@@ -308,13 +298,13 @@ const mapStateToProps = (state) => {
   const favouriteState = state.Favourite;
   // const shopState = state.Shops;
 
-  return { 
-    categories, 
-    tags, 
-    promotionState, 
-    bookmarks, 
+  return {
+    categories,
+    tags,
+    promotionState,
+    bookmarks,
     bookmarkState,
-    favouriteState
+    favouriteState,
   };
 };
 
@@ -333,5 +323,5 @@ export default connect(mapStateToProps, {
   togglePromotionModal,
   listenToRecord,
   toggleTab,
-  loadFavourite
+  loadFavourite,
 })(index);

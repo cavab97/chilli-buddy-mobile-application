@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
   operatingContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFF",
-    width: "80%",
+    // backgroundColor: "black",
+    width: "85%",
     paddingBottom: 3,
   },
 });

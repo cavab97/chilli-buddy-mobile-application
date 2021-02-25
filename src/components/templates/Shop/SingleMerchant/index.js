@@ -94,25 +94,29 @@ const SingleMerchant = ({
   return (
     <ScrollView scrollIndicatorInsets={{ right: 0.1 }}>
       <View style={posterArea}>
-        <Carousel
-          ref={setSwiperRef}
-          data={dataSource.images}
-          renderItem={({ item, index }) => {
-            return (
-              <View key={index} style={subContainer1}>
-                {dataSource.images.length > 0 ? (
-                  <Image source={{ uri: item }} style={imageTopStyle} resizeMode={"cover"} />
-                ) : (
-                  <Image source={noImage} style={imageTopStyle} resizeMode={"cover"} />
-                )}
-              </View>
-            );
-          }}
-          loop={true}
-          autoplay={true}
-          sliderWidth={windowWidth}
-          itemWidth={windowWidth}
-        />
+        {dataSource.images.length == 0 ? (
+          <Image source={noImage} style={imageTopStyle} resizeMode={"cover"} />
+        ) : (
+          <Carousel
+            ref={setSwiperRef}
+            data={dataSource.images}
+            renderItem={({ item, index }) => {
+              return (
+                <View key={index} style={subContainer1}>
+                  {dataSource.images.length > 0 ? (
+                    <Image source={{ uri: item }} style={imageTopStyle} resizeMode={"cover"} />
+                  ) : (
+                    <Image source={noImage} style={imageTopStyle} resizeMode={"cover"} />
+                  )}
+                </View>
+              );
+            }}
+            loop={true}
+            autoplay={true}
+            sliderWidth={windowWidth}
+            itemWidth={windowWidth}
+          />
+        )}
         {/* <ImageSwiper
                 // autoplay={false}
                 // autoplayTime={7}
@@ -229,7 +233,9 @@ const SingleMerchant = ({
                     Linking.openURL(`tel:${dataSource.phoneNumber}`);
                   }}
                 >
-                  {dataSource.phoneNumber}
+                  {dataSource.phoneNumber == null
+                    ? "No Phone Number Available"
+                    : dataSource.phoneNumber}
                 </Text>
               </View>
             </View>
