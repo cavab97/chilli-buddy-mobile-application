@@ -36,12 +36,11 @@ class index extends Component {
   onMerchantPressed() {
     const location = this.props.promotion.promotion.shop.l;
     this.calculateDistance(location);
-    //console.log(promo.promotion.shop.id)
   }
 
   calculateDistance = async (destinationLocation) => {
     const promo = this.props.promotion;
-    //console.log("get: " + destinationLocation.U + " and " + destinationLocation.k);
+    
     var distance;
     let location = await Location.getCurrentPositionAsync({});
     distance =
@@ -52,7 +51,6 @@ class index extends Component {
           longitude: location.coords.longitude,
         }
       ) / 1000;
-    //console.log("singleDis: " + distance);
 
     Actions.SingleMerchant({
       shopId: promo.promotion.shop.id,

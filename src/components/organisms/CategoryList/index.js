@@ -6,6 +6,20 @@ import ContentLoader, { Rect } from "react-content-loader/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
 
+const categoryImage = {
+  "Chinese 中餐": require("../../../assets/categories/chinese.png"),
+  "Western 西餐": require("../../../assets/categories/western.png"),
+  "Cafe 咖啡馆": require("../../../assets/categories/cafe.png"),
+  "China 中国菜": require("../../../assets/categories/china.png"),
+  "Japanese 日本餐": require("../../../assets/categories/japanese.png"),
+  "Korean 韩国餐": require("../../../assets/categories/korean.png"),
+  "Thai 泰国餐": require("../../../assets/categories/thai.png"),
+  "Bistro 小酒馆": require("../../../assets/categories/bistro.png"),
+  "Steamboat 火锅": require("../../../assets/categories/steamboat.png"),
+  "Local Cuisine 本地美食": require("../../../assets/categories/local.png"),
+  "Beverage 饮料": require("../../../assets/categories/beverage.png")
+}
+
 function Category({ id, title, onCategoryChange, selectedCategory }) {
   let icon;
 

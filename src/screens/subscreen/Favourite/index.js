@@ -110,10 +110,22 @@ class index extends Component {
     this.setState({ readLoading: false });
   };
 
-  onMerchantPressed(item) {
+  onMerchantPressed = async (item) =>  {
+    let destinationLocation = item.l;
+    var distance;
+    let location = await Location.getCurrentPositionAsync({});
+    distance =
+      getDistance(
+        { latitude: destinationLocation.U, longitude: destinationLocation.k },
+        {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }
+      ) / 1000;
+
     Actions.SingleMerchant({
       shopId: item.id,
-      distance: item.distance,
+      distance: distance,
       categoryName: item.category,
     });
   }
@@ -163,7 +175,6 @@ class index extends Component {
     let favouriteId = null;
 
     favourites.forEach((favourite) => {
-      console.log(favourite.shopIds)
       if (favourite.shopIds[0] === shopId) {
         favouriteId = favourite.id;
       }
@@ -174,12 +185,10 @@ class index extends Component {
 
   onFavouritePressed = async (item) => {
     const shopId = item.id;
-    // console.log(shopId);
+
     const favouriteId = this.lookingForFavourite({ shopId });
     const isFavourite = !item.isFavourite;
-    // console.log("favouriteId");
-
-    // console.log(favouriteId);
+ 
     this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
 
