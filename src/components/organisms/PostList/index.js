@@ -18,11 +18,12 @@ const Post = ({ item, icon, onPostPress, SharePress }) => {
           <Image style={styles.logo} source={icon} />
         </View>
         <TouchableOpacity
-          style={styles.chatBoxContainer}
+          style={styles.chatbox} //chatboxcontainer
           onPress={() => onPostPress(item)}
           activeOpacity={1}
         >
-          <ImageBackground style={styles.chatBoxImg} source={chatBoxImage}>
+          {/* <ImageBackground style={styles.chatBoxImg} source={chatBoxImage}> */}
+          {/* <View style={styles.chatbox}> */}
             <View style={styles.chatBoxTopText}>
               <Text style={styles.chatBoxText} numberOfLines={2}>
                 {item.title}{" "}
@@ -41,7 +42,8 @@ const Post = ({ item, icon, onPostPress, SharePress }) => {
                 }}
               />
             )}
-          </ImageBackground>
+          {/* </View> */}
+          {/* </ImageBackground> */}
         </TouchableOpacity>
       </View>
       <Text style={styles.daysText}>{moment(item.created.at).fromNow()}</Text>
