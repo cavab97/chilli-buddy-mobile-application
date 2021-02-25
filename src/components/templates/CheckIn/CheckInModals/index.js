@@ -108,7 +108,7 @@ const CheckInModal = ({
             <View
               // position="absolute"
               bottom={
-                Platform.isPad ? -width / 6.8 : Platform.OS === "ios" ? -width / 2.7 : -width / 2.7
+                Platform.isPad ? -width / 6.8 : Platform.OS === "ios" ? -width / 2.8 : -width / 2.7
               }
               right={Platform.isPad ? -220 : Platform.OS === "ios" ? -120 : -105}
               resizeMode="contain"

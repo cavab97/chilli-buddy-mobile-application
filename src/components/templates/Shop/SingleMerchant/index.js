@@ -284,7 +284,7 @@ const SingleMerchant = ({
               <Text style={styles.textLabel}> Description</Text>
             </View>
             <View style={styles.col2}>
-              {/* <Text style={styles.col2Text}>{tnc}</Text> */}
+              {console.log("description" + dataSource)}
               {dataSource.description == null ? (
                 <Text
                   style={{
@@ -295,6 +295,17 @@ const SingleMerchant = ({
                   }}
                 >
                   No Description Available
+                </Text>
+              ) : dataSource.description.charAt(0) != "<" ? (
+                <Text
+                  style={{
+                    marginTop: 0,
+                    marginRight: "10%",
+                    fontFamily: "HorizontalRounded",
+                    color: "grey",
+                  }}
+                >
+                  {dataSource.description}{" "}
                 </Text>
               ) : (
                 <HTML
