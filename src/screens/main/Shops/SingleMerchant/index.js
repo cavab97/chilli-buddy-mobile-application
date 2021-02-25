@@ -60,7 +60,7 @@ class index extends Component {
     this.props.readShopPost(shopId);
     let singleShopInfo = this.lookingForSingleShop({ shopId });
 
-    this.setState({ isFavourite: singleShopInfo.isFavourite });
+    this.setState({ isFavourite: singleShopInfo ? singleShopInfo.isFavourite : false });
 
     this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
@@ -178,16 +178,16 @@ class index extends Component {
   };
   lookingForSingleShop({ shopId } = null) {
     const { shops } = this.props.shopState;
-    let favouriteInfo = null;
+    let shopInfo = null;
 
-    shops.forEach((favourite) => {
-      if (favourite.id === shopId) {
+    shops.forEach((shop) => {
+      if (shop.id === shopId) {
         //favouriteId = favourite.id;
-        favouriteInfo = favourite;
+        shopInfo = shop;
       }
     });
 
-    return favouriteInfo;
+    return shopInfo;
   }
 
   lookingForFavourite({ shopId } = null) {

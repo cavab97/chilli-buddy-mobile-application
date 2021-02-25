@@ -38,20 +38,6 @@ const SpinningWheel = ({
     outputRange: ["0deg", "360deg"],
   });
 
-  // console.log("randomCategory");
-
-  // console.log(randomCategory);
-  // if (randomCategory != null && spinStatus === false) {
-  //   let categoryTitle = randomCategory.title.split(" ");
-  //   let arrangedCategoryTitle = "";
-
-  //   if (categoryTitle.length > 0) {
-  //     for (let i = 0; i < categoryTitle.length; i++) {
-  //       arrangedCategoryTitle += categoryTitle[i] + "\n";
-  //     }
-  //   }
-  // }
-
   return (
     // <Modal transparent={true} visible={spinningWheelModal}>
 

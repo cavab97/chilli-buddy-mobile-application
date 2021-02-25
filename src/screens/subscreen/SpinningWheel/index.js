@@ -165,7 +165,9 @@ class index extends Component {
 
   getRandomCategory() {
     let categoryArray = this.passCategory();
-    var randomCategory = categoryArray[Math.floor(Math.random() * categoryArray.length) + 1];
+    let index = Math.floor(Math.random() * categoryArray.length + 1);
+    var randomCategory = categoryArray[index > categoryArray.length ? index - 1 : index];
+
     return randomCategory;
   }
 
