@@ -72,11 +72,10 @@ function Item({
           <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")} Km away</Text>
           <View style={{ position: "absolute", right: 5, bottom: 0 }}>
             <TouchableOpacity onPress={onFavouritePress}>
-              {isFavourite ? (
-                <Image source={filledHeartIcon} style={styles.favouriteIcon} />
-              ) : (
-                <Image source={emptyHeartIcon} style={styles.favouriteIcon} />
-              )}
+                <Image 
+                  source={isFavourite ? filledHeartIcon : emptyHeartIcon} 
+                  style={styles.favouriteIcon} 
+                />
             </TouchableOpacity>
           </View>
         </CardSection>
@@ -191,7 +190,7 @@ const ShopList = ({
         refreshing={false}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={shopData.length === 0 && <NotFoundFooter message="No shop found" />}
+        ListFooterComponent={shopData.length === 0 && !loading && <NotFoundFooter message="No shop found" />}
         style={styles.flatList}
         extraData={state}
       />

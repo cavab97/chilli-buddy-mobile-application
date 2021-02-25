@@ -59,8 +59,7 @@ class index extends Component {
     this.props.listenFromDatabase({ shopId });
     this.props.readShopPost(shopId);
     let singleShopInfo = this.lookingForSingleShop({ shopId });
-    // console.log(singleShopInfo.isFavourite == null);
-    // console.log(singleShopInfo);
+
     this.setState({
       isFavourite: singleShopInfo ? singleShopInfo.isFavourite : false,
     });
@@ -188,16 +187,16 @@ class index extends Component {
   };
   lookingForSingleShop({ shopId } = null) {
     const { shops } = this.props.shopState;
-    let favouriteInfo = null;
+    let shopInfo = null;
 
-    shops.forEach((favourite) => {
-      if (favourite.id === shopId) {
+    shops.forEach((shop) => {
+      if (shop.id === shopId) {
         //favouriteId = favourite.id;
-        favouriteInfo = favourite;
+        shopInfo = shop;
       }
     });
 
-    return favouriteInfo;
+    return shopInfo;
   }
 
   lookingForFavourite({ shopId } = null) {

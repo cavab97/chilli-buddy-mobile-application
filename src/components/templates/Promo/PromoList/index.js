@@ -204,7 +204,7 @@ const PromoList = ({
         onRefresh={handleRefresh}
         refreshing={loading}
         ListFooterComponent={
-          dataSource.length === 0 ? (
+          dataSource.length === 0 && !loading ? (
             <NotFoundFooter message="No promotion found" />
           ) : (
             <View style={{ paddingBottom: 40 }} />
