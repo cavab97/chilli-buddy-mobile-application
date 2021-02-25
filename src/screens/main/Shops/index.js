@@ -150,7 +150,9 @@ class index extends Component {
   onFavouriteFiltered() {
     this.props.toggleFavourite();
   }
-
+  componentWillUnmount() {
+    this.props.toggleCategory(null);
+  }
   onMerchantPressed(item) {
     Actions.SingleMerchant({
       shopId: item.id,

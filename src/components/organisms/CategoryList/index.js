@@ -1,7 +1,8 @@
 import React from "react";
 
-import { Text, TouchableOpacity, View, Image, Button } from "../../atoms";
-import { FlatList } from "react-native";
+import { Text, TouchableOpacity, View, Image } from "../../atoms";
+import { SwiperFlatList } from "react-native-swiper-flatlist";
+
 import ContentLoader, { Rect } from "react-content-loader/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
@@ -17,8 +18,8 @@ const categoryImage = {
   "Bistro 小酒馆": require("../../../assets/categories/bistro.png"),
   "Steamboat 火锅": require("../../../assets/categories/steamboat.png"),
   "Local Cuisine 本地美食": require("../../../assets/categories/local.png"),
-  "Beverage 饮料": require("../../../assets/categories/beverage.png")
-}
+  "Beverage 饮料": require("../../../assets/categories/beverage.png"),
+};
 
 function Category({ id, title, onCategoryChange, selectedCategory }) {
   let icon;
@@ -103,6 +104,15 @@ const CategoryList = ({
   selectedCategory,
   returnSpecificCategory,
 }) => {
+  // setTimeout(() => {
+  //   this.flatListRef.scrollToIndex({
+  //     animated: false,
+  //     index:
+  //       returnSpecificCategory(categories, selectedCategory) === -1
+  //         ? 0
+  //         : returnSpecificCategory(categories, selectedCategory),
+  //   });
+  // }, 500);
   setTimeout(() => {
     this.flatListRef.scrollToIndex({
       animated: false,
@@ -111,28 +121,27 @@ const CategoryList = ({
           ? 0
           : returnSpecificCategory(categories, selectedCategory),
     });
-  }, 500);
+  }, 1);
 
-  getItemLayout = (data, index) => ({ length: 20, offset: 100 * index, index });
+  // getItemLayout = (data, index) => ({ length: 20, offset: 100 * index, index });
 
   return (
-    <FlatList
+    <SwiperFlatList
       data={categories}
       ref={(ref) => {
         this.flatListRef = ref;
       }}
-      getItemLayout={this.getItemLayout}
       renderItem={({ item, index }) => (
         <Category
           id={item.id}
           title={item.title}
-          index={index}
+          index={10}
           onCategoryChange={onCategoryChange}
           selectedCategory={selectedCategory}
         />
       )}
-      horizontal
-      showsHorizontalScrollIndicator={false}
+      //   horizontal
+      //   showsHorizontalScrollIndicator={false}
       keyExtractor={(item) => item.id}
     />
   );
