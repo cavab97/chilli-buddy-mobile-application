@@ -60,7 +60,9 @@ class index extends Component {
     this.props.readShopPost(shopId);
     let singleShopInfo = this.lookingForSingleShop({ shopId });
 
-    this.setState({ isFavourite: singleShopInfo ? singleShopInfo.isFavourite : false });
+    this.setState({
+      isFavourite: singleShopInfo ? singleShopInfo.isFavourite : false,
+    });
 
     this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
@@ -138,13 +140,20 @@ class index extends Component {
             {item.day.charAt(0).toUpperCase() + item.day.slice(1)}
           </Text>
           {item.operate ? (
-            <Text style={{ marginLeft: 10, fontFamily: "HorizontalRounded", color: "grey" }}>
+            <Text
+              style={{
+                marginLeft: 0,
+                fontFamily: "HorizontalRounded",
+                color: "grey",
+                paddingRight: 5,
+              }}
+            >
               {moment(item.open.toString(), "Hmm").format("LT") +
                 " to " +
                 moment(item.close.toString(), "Hmm").format("LT")}
             </Text>
           ) : (
-            <Text style={{ marginLeft: 10, fontFamily: "HorizontalRounded", color: "grey" }}>
+            <Text style={{ marginLeft: 0, fontFamily: "HorizontalRounded", color: "grey" }}>
               Closed
             </Text>
           )}
