@@ -12,6 +12,8 @@ import {
   ScrollView,
 } from "@components/atoms";
 
+import ContentLoader, { Rect } from "react-content-loader/native";
+
 import { NotFoundFooter, CardSection } from "@components/molecules";
 
 import { CategoryList } from "@components/organisms/CategoryList";
@@ -112,90 +114,103 @@ const ShopList = ({
   scrollToItem,
   flatListRef,
   returnFlatlistMyRef,
+  setFlatListRef
 }) => {
   const filterIcon = require("../../../../assets/icons/filter.png");
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
-  return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={styles.shopContainer}
-      refreshControl={<RefreshControl refreshing={loading} onRefresh={handleRefresh} />}
-    >
-      <View style={styles.shopTitleContainer}>
-        <Text style={styles.pageTitle}>Shops</Text>
+  if (loading) {
+    return (
+      <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
+        <Rect x="10" y="50" rx="0" ry="30" width="100" height="50" />
+        <Rect x="20" y="150" rx="0" ry="150" width="50" height="40" />
+        <Rect x="20" y="200" rx="10" ry="10" width="250" height="175" />
+        <Rect x="20" y="400" rx="10" ry="10" width="250" height="175" />
+      </ContentLoader>
+    )
+  }else {
+    return (
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.shopContainer}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={handleRefresh} />}
+      >
+        <View style={styles.shopTitleContainer}>
+          <Text style={styles.pageTitle}>Shops</Text>
 
-        <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={toggleFavourite}>
-            <Image
-              source={favourite ? filledHeartIcon : emptyHeartIcon}
-              style={styles.emptyHeartIcon}
-            />
-          </TouchableOpacity>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity onPress={toggleFavourite}>
+              <Image
+                source={favourite ? filledHeartIcon : emptyHeartIcon}
+                style={styles.emptyHeartIcon}
+              />
+            </TouchableOpacity>
 
-          <ModalSelector
-            data={tags}
-            keyExtractor={(item) => item.id}
-            labelExtractor={(item) =>
-              tags.filter((tag) => tag.id === item.id).map(({ title }) => title)[0]
-            }
-            onChange={onTagChange.bind(this)}
-            selectStyle={styles.categoriesSelect}
-            selectTextStyle={styles.modalSelectTextStyle}
-            optionTextStyle={styles.modalOptionTextStyle}
-          >
-            <Image source={filterIcon} style={styles.filterIcon} />
-          </ModalSelector>
+            <ModalSelector
+              data={tags}
+              keyExtractor={(item) => item.id}
+              labelExtractor={(item) =>
+                tags.filter((tag) => tag.id === item.id).map(({ title }) => title)[0]
+              }
+              onChange={onTagChange.bind(this)}
+              selectStyle={styles.categoriesSelect}
+              selectTextStyle={styles.modalSelectTextStyle}
+              optionTextStyle={styles.modalOptionTextStyle}
+            >
+              <Image source={filterIcon} style={styles.filterIcon} />
+            </ModalSelector>
+          </View>
         </View>
-      </View>
 
-      <View style={styles.categoryTitleContainer}>
-        <Text style={styles.categoryTitle}>Category</Text>
-      </View>
+        <View style={styles.categoryTitleContainer}>
+          <Text style={styles.categoryTitle}>Category</Text>
+        </View>
 
-      <View style={{ paddingLeft: 15 }}>
-        <CategoryList
-          categories={categories}
-          onCategoryChange={onCategoryChange}
-          selectedCategory={selectedCategory}
-          returnSpecificCategory={returnSpecificCategory}
-          scrollToItem={scrollToItem}
-          flatListRef={flatListRef}
-          returnFlatlistMyRef={returnFlatlistMyRef}
-        />
-      </View>
-
-      <FlatList
-        data={shopData}
-        renderItem={({ item, index }) => (
-          <Item
-            onPress={() => onMerchantPressed(item)}
-            onFavouritePress={() => onFavouritePressed(item)}
-            name={item.displayTitle}
-            item={item}
-            logo={item.logo}
-            picture={item.images}
-            address={item.address}
-            category={item.category}
-            distance={item.distance}
-            shopID={item.id}
-            index={index}
-            isFavourite={item.isFavourite}
-            isPromote={item.isPromote}
+        <View style={{ paddingLeft: 15 }}>
+          <CategoryList
+            categories={categories}
+            onCategoryChange={onCategoryChange}
+            selectedCategory={selectedCategory}
+            returnSpecificCategory={returnSpecificCategory}
+            scrollToItem={scrollToItem}
+            flatListRef={flatListRef}
+            returnFlatlistMyRef={returnFlatlistMyRef}
+            setFlatListRef={setFlatListRef}
           />
-        )}
-        keyExtractor={(item) => item.id}
-        onRefresh={handleRefresh}
-        refreshing={false}
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={shopData.length === 0 && !loading && <NotFoundFooter message="No shop found" />}
-        style={styles.flatList}
-        extraData={state}
-      />
-    </ScrollView>
-  );
+        </View>
+
+        <FlatList
+          data={shopData}
+          renderItem={({ item, index }) => (
+            <Item
+              onPress={() => onMerchantPressed(item)}
+              onFavouritePress={() => onFavouritePressed(item)}
+              name={item.displayTitle}
+              item={item}
+              logo={item.logo}
+              picture={item.images}
+              address={item.address}
+              category={item.category}
+              distance={item.distance}
+              shopID={item.id}
+              index={index}
+              isFavourite={item.isFavourite}
+              isPromote={item.isPromote}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          onRefresh={handleRefresh}
+          refreshing={false}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={shopData.length === 0 && !loading && <NotFoundFooter message="No shop found" />}
+          style={styles.flatList}
+          extraData={state}
+        />
+      </ScrollView>
+    );
+  }
 };
 
 export { ShopList };
