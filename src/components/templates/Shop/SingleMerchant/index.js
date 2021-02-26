@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles";
 
-import { Dimensions, Alert, Linking } from "react-native";
+import { Dimensions, Alert, Linking, Platform } from "react-native";
 import HTML from "react-native-render-html";
 
 import {
@@ -310,7 +310,12 @@ const SingleMerchant = ({
                 <HTML
                   source={{ html: dataSource.description }}
                   // alterData={alterData}
-                  baseFontStyle={{ fontFamily: "HorizontalRounded", color: 'grey', fontWeight: null,  fontSize: Platform.isPad ? windowWidth / 30 : 17 }}
+                  baseFontStyle={{
+                    fontFamily: "HorizontalRounded",
+                    color: "grey",
+                    fontWeight: null,
+                    fontSize: Platform.isPad ? windowWidth / 30 : 17,
+                  }}
                   ignoredStyles={["font-family", "letter-spacing"]}
                   tagsStyles={{
                     p: {
@@ -320,30 +325,30 @@ const SingleMerchant = ({
                     },
                     div: {
                       fontFamily: "HorizontalRounded",
-                      color: 'grey',
+                      color: "grey",
                     },
                     b: {
                       fontFamily: "HorizontalRounded",
-                      color: 'grey',
+                      color: "grey",
                     },
                     ol: {
                       padding: 0,
                       marginBottom: 30,
                       margin: 0,
                       fontFamily: "HorizontalRounded",
-                      color: 'grey',
+                      color: "grey",
                     },
                     li: {
                       padding: 0,
                       margin: 0,
                       fontFamily: "HorizontalRounded",
-                      color: 'grey',
+                      color: "grey",
                     },
                     ul: {
                       padding: 0,
                       margin: 0,
                       fontFamily: "HorizontalRounded",
-                      color: 'grey',
+                      color: "grey",
                     },
                   }}
                 />

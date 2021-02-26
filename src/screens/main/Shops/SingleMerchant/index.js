@@ -178,7 +178,7 @@ class index extends Component {
   onPostPress = async (item) => {
     //const promoId = this.props.promotions[0].id;
     this.setState({ isOpenPost: !this.state.isOpenPost });
-
+    // console.log(item.shop);
     Actions.ShopsSinglePost({
       postId: item.id,
       distance: item.distance,

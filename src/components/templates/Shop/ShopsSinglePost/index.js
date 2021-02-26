@@ -70,6 +70,12 @@ const ShopsSinglePost = ({
                 ) : (
                   <HTML
                     source={{ html: `<div>` + data.description + `</div>` }}
+                    baseFontStyle={{
+                      fontFamily: "HorizontalRounded",
+                      color: "grey",
+                      fontWeight: null,
+                      fontSize: Platform.isPad ? windowWidth / 30 : 17,
+                    }}
                     tagsStyles={{
                       p: {
                         // fontFamily: "HorizontalRounded",

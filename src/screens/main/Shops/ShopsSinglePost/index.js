@@ -32,6 +32,9 @@ class index extends Component {
     // this.props.listenFromDatabase({ shopId });
     // this.props.readShopPost(shopId);
     await this.props.readSinglePost(postId);
+
+    await this.props.listenFromDatabase({ shopId });
+
     this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
         if (permissions.location.permissions.location.foregroundGranted === undefined) {
@@ -148,14 +151,18 @@ class index extends Component {
 
   render() {
     const { post, readPostLoading } = this.props;
+    const { shop, readLoading } = this.props.shopState;
+
     // console.log("posts.id");
 
     let icon;
     let postImage = [];
-    // console.log(post);
-    if (post.shop.logo.length === 0 || post.shop.logo == undefined)
-      icon = require("@assets/logo.png");
-    else icon = { uri: post.shop.logo[0] };
+    // console.log(post.shop);
+    if (post.shop.logo.length === 0 || post.shop.logo == undefined) {
+      if (shop.logo == undefined || shop.logo.length === 0) {
+        icon = require("@assets/logo.png");
+      } else icon = { uri: shop.logo[0] };
+    } else icon = { uri: post.shop.logo[0] };
 
     // const { posterArea, poster } = styles;
 
