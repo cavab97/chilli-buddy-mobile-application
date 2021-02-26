@@ -19,8 +19,6 @@ import {
   updateIsFavourite,
 } from "@redux/favourite/action";
 
-import clone from "clone";
-
 import { ShopList } from "@components/templates";
 
 const ITEMS_PER_PAGE = 10;
@@ -97,6 +95,8 @@ class index extends Component {
   componentDidUpdate(prevProps, prevState) {
     const currentShop = this.props.shopState.shops;
     const readError = this.props.shopState.readError;
+    const { selectedCategory } = this.props.shopState;
+    const { categories } = this.props;
     // const readLoading = this.props.bookmarkState.readLoading;
 
     // if no shop in the radius, call handleRefresh read again by increase radiusAddition state
@@ -117,13 +117,8 @@ class index extends Component {
     }
 
     if (this.flatListRef !== null) {
-      console.log(this.flatListRef);
-      const { categories, selectedCategory } = this.props;
-
       let filteredCategories = categories.filter((category) => category.title !== "All");
-      console.log(selectedCategory);
-      console.log(filteredCategories.length);
-      console.log(this.returnSpecificCategory(filteredCategories, selectedCategory));
+
       this.flatListRef.scrollToIndex({
         animated: false,
         index:
