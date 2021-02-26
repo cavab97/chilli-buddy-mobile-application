@@ -59,7 +59,8 @@ const AdvertisementPopUp = ({
       <View style={styles.modelBackground}>
         <View style={styles.adsImageContainer}>
           <TouchableOpacity
-          // onPress={() => onPressPopUp(getShopId)}
+            // onPress={() => onPressPopUp(getShopId)}
+            activeOpacity={1}
           >
             <Image
               source={{ uri: randomAdPic }}
@@ -203,7 +204,7 @@ export default ({
               positionMillis={0}
               useNativeControls={true}
             />
-            <TouchableOpacity style={styles.closeButton} onPress={onClosePopUp}>
+            <TouchableOpacity style={styles.closeButton} onPress={onClosePopUp} activeOpacity={1}>
               <MaterialCommunityIcons name="close-circle" size={40} color="#D60000" />
             </TouchableOpacity>
           </View>
@@ -265,7 +266,7 @@ export default ({
     if (picture.length === 0) cover = require("@assets/images/404NotFound800x533.jpeg");
     else cover = { uri: picture[0] };
     return (
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPress} activeOpacity={1}>
         <Card style={{ width: "98%" }}>
           <CardSection
             style={{
@@ -386,7 +387,11 @@ export default ({
             <View style={styles.firstSectionSecondColumn}>
               {/* Row1 for Profile Button*/}
 
-              <TouchableOpacity style={styles.avatarContainer} onPress={onProfilePressed}>
+              <TouchableOpacity
+                style={styles.avatarContainer}
+                onPress={onProfilePressed}
+                activeOpacity={1}
+              >
                 <ImageInfo
                   banner={photoURL ? photoURL : require("../../../assets/DefaultAvatar.jpg")}
                   imageContainer={styles.profileImageStyle}
@@ -460,7 +465,11 @@ export default ({
 
           {/* The quarter screen Row */}
           <View style={styles.quarterSection}>
-            <TouchableOpacity style={styles.QuarterContainer1} onPress={onShopsPressed}>
+            <TouchableOpacity
+              style={styles.QuarterContainer1}
+              onPress={onShopsPressed}
+              activeOpacity={1}
+            >
               <View style={styles.quarterInnerBox}>
                 <Image source={shopsIcon} transition={false} style={styles.quarterIcon} />
               </View>
@@ -468,19 +477,31 @@ export default ({
               <Text style={styles.floatingCheckInTitle}>Shops</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.QuarterContainer1} onPress={onPromotionsPressed}>
+            <TouchableOpacity
+              style={styles.QuarterContainer1}
+              onPress={onPromotionsPressed}
+              activeOpacity={1}
+            >
               <View style={styles.quarterInnerBox}>
                 <Image source={salesIcon} transition={false} style={styles.quarterIcon} />
               </View>
               <Text style={styles.floatingCheckInTitle}>Promotions</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.QuarterContainer1} onPress={onOpenSpinningWheel}>
+            <TouchableOpacity
+              style={styles.QuarterContainer1}
+              onPress={onOpenSpinningWheel}
+              activeOpacity={1}
+            >
               <View style={styles.quarterInnerBox}>
                 <Image source={spinWheel} transition={false} style={styles.quarterIcon} />
               </View>
               <Text style={styles.floatingCheckInTitle}>Spin Me</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.QuarterContainer1} onPress={onCheckInPressed}>
+            <TouchableOpacity
+              style={styles.QuarterContainer1}
+              onPress={onCheckInPressed}
+              activeOpacity={1}
+            >
               <View style={styles.quarterInnerBox}>
                 <Image source={checkIn} transition={false} style={styles.quarterIcon} />
               </View>
@@ -501,7 +522,7 @@ export default ({
                 data={promoSource}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
-                  <TouchableOpacity onPress={() => onPromoPressed(item)}>
+                  <TouchableOpacity onPress={() => onPromoPressed(item)} activeOpacity={1}>
                     <Card
                       key={item.id + index}
                       style={index === 0 ? styles.firstPromoteCardStyle : styles.promoteCardStyle}
