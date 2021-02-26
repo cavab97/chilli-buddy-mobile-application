@@ -72,11 +72,7 @@ export function verifyPermission() {
   };
 }
 
-export function loadShops({
-  radius,
-  selectedCategory = null,
-  selectedTag = null,
-}) {
+export function loadShops({ radius, selectedCategory = null, selectedTag = null }) {
   let limit = 0;
   return (dispatch, getState) => {
     dispatch({ type: actions.READ_FROM_DATABASE });
@@ -85,7 +81,7 @@ export function loadShops({
         let location = await Location.getCurrentPositionAsync({});
         let latitude = location.coords.latitude;
         let longtitude = location.coords.longitude;
-        
+
         radius < 15 ? (limit = 0) : (limit = 100);
         const shops = await objectDataServices.geoReadObjects({
           l: { latitude, longtitude },
@@ -265,21 +261,21 @@ export function onFavouriteClick(shopId) {
   return (dispatch, getState) => {
     return new Promise(async (resolve, reject) => {
       //try {
-        const shops = getState().Shops.shops;
-        let isFavourited = null;
-        const newShops = shops.map((shop) => {
-          if (shop.id === shopId) {
-            shop.isFavourite = !shop.isFavourite;
-            isFavourited = shop;
-          }
-          return shop;
-        });
-        resolve(newShops, isFavourited);
-        const data = { shops: newShops, shop: isFavourited }
-        dispatch({
-          type: actions.TOGGLE_SHOP_FAVOURITE,
-          payload: { data },
-        });/* 
+      const shops = getState().Shops.shops;
+      let isFavourited = null;
+      const newShops = shops.map((shop) => {
+        if (shop.id === shopId) {
+          shop.isFavourite = !shop.isFavourite;
+          isFavourited = shop;
+        }
+        return shop;
+      });
+      resolve(newShops, isFavourited);
+      const data = { shops: newShops, shop: isFavourited };
+      dispatch({
+        type: actions.TOGGLE_SHOP_FAVOURITE,
+        payload: { data },
+      }); /* 
       } catch (error) {
         console.log(error);
         dispatch({

@@ -1,5 +1,5 @@
 import React from "react";
-import { RefreshControl } from "react-native";
+import { RefreshControl, Dimensions } from "react-native";
 import styles from "./styles";
 
 import {
@@ -20,6 +20,7 @@ import { CategoryList } from "@components/organisms/CategoryList";
 
 import FavouriteIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+const windowWidth = Dimensions.get("window").width;
 
 function Item({
   name,
@@ -123,17 +124,16 @@ const ShopList = ({
   if (loading) {
     return (
       <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
-        <Rect x="20" y="15" rx="20" ry="30" width="30%" height="50" />
-        <Rect x="20" y="75" rx="20" ry="30" width="20%" height="30" />
+        <Rect x="20" y="15" rx="10" ry="10" width="30%" height="50" />
+        <Rect x="20" y="75" rx="10" ry="10" width="20%" height="30" />
 
-        <Rect x="350" y="15" rx="20" ry="20" width="35" height="40" />
-
-        <Rect x="300" y="15" rx="20" ry="20" width="35" height="40" />
+        <Rect x={windowWidth / 1.2} y="15" rx="10" ry="10" width="35" height="40" />
+        <Rect x={windowWidth / 1.4} y="15" rx="10" ry="10" width="35" height="40" />
 
         <Rect x="20" y="130" rx="20" ry="20" width="20%" height="100" />
-        <Rect x="120" y="130" rx="20" ry="20" width="20%" height="100" />
-        <Rect x="220" y="130" rx="20" ry="20" width="20%" height="100" />
-        <Rect x="320" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="110" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="200" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="290" y="130" rx="20" ry="20" width="20%" height="100" />
 
         <Rect x="20" y="250" rx="10" ry="10" width="90%" height="175" />
         <Rect x="20" y="450" rx="10" ry="10" width="90%" height="175" />

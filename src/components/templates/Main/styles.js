@@ -579,11 +579,12 @@ const styles = StyleSheet.create({
   avatarContainer: {
     //marginRight: 12,
     marginTop: 0,
+    backgroundColor: "white",
 
     // paddingLeft: 200,
   },
   profileImageStyle: {
-    backgroundColor: Colors.GRAY_DARK,
+    // backgroundColor: Colors.GRAY_DARK,
     height: Platform.isPad ? windowWidth / 10 : 40,
     width: Platform.isPad ? windowWidth / 10 : 40,
     borderRadius: 80,
@@ -594,7 +595,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 100,
     width: "100%",
-
+    resizeMode: "cover",
     //width: "100%",
     // height: "100%",
   },

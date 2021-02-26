@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import * as Location from "expo-location";
 
 import {
   toggleCategory,
