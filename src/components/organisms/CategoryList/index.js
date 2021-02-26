@@ -21,7 +21,14 @@ const categoryImage = {
   "Beverage 饮料": require("../../../assets/categories/beverage.png"),
 };
 
-function Category({ id, title, onCategoryChange, selectedCategory }) {
+function Category({ 
+  id, 
+  title, 
+  onCategoryChange, 
+  selectedCategory,
+  indexing,
+  length
+}) {
   let icon;
 
   let categoryTitle = title.split(" ");
@@ -79,6 +86,7 @@ function Category({ id, title, onCategoryChange, selectedCategory }) {
   }
 
   return (
+    <>
     <TouchableOpacity
       style={selectedCategory === id ? styles.cardSelected : styles.card}
       onPress={() => onCategoryChange(id)}
@@ -95,6 +103,10 @@ function Category({ id, title, onCategoryChange, selectedCategory }) {
         </Text>
       </View>
     </TouchableOpacity>
+    { indexing === length-1 &&
+      <View style={{ marginRight: 40 }}/>
+    }
+    </>
   );
 }
 
@@ -138,6 +150,8 @@ const CategoryList = ({
           id={item.id}
           title={item.title}
           index={categories.length}
+          length={categories.length}
+          indexing={index}
           onCategoryChange={onCategoryChange}
           selectedCategory={selectedCategory}
         />
