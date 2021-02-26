@@ -91,6 +91,8 @@ class index extends Component {
   componentDidUpdate(prevProps, prevState) {
     const currentShop = this.props.shopState.shops;
     const readError = this.props.shopState.readError;
+    const { categories, selectedCategory } = this.props;
+
     // const readLoading = this.props.bookmarkState.readLoading;
 
     // if no shop in the radius, call handleRefresh read again by increase radiusAddition state
@@ -108,6 +110,17 @@ class index extends Component {
 
     if (prevProps.shopState.readError !== readError && readError !== false) {
       alert(readError);
+    }
+
+    if (this.flatListRef !== null) {
+      let filteredCategories = categories.filter((category) => category.title !== "All");
+      this.flatListRef.scrollToIndex({
+        animated: false,
+        index:
+          this.returnSpecificCategory(filteredCategories, selectedCategory) === -1
+            ? 0
+            : this.returnSpecificCategory(filteredCategories, selectedCategory)
+      });
     }
   }
 
@@ -199,6 +212,7 @@ class index extends Component {
       await this.props.submitToBackend(data, "update");
     }
   };
+
   returnSpecificCategory(categories, selectedCategory) {
     // console.log(category);
     // console.log(categories[0].id);
@@ -208,6 +222,18 @@ class index extends Component {
       return category.id === selectedCategory;
     });
     return index;
+  }
+
+  setFlatListRef = (value) => {
+    const { categories, selectedCategory } = this.props;
+
+    let filteredCategories = categories.filter((category) => category.title !== "All");
+
+    this.flatListRef = value;
+  }
+
+  filterCategory = () => {
+
   }
 
   render() {
@@ -291,6 +317,7 @@ class index extends Component {
         tags={filteredTags}
         loading={loading}
         returnSpecificCategory={this.returnSpecificCategory.bind(this)}
+        setFlatListRef={this.setFlatListRef.bind(this)}
         // returnFlatlistMyRef={this.returnFlatlistMyRef.bind(this)}
 
         //displayCategory={this.props.selectedCategory ? "" : this.props.selectedCategory.id}

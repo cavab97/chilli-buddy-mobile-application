@@ -103,6 +103,7 @@ const CategoryList = ({
   onCategoryChange,
   selectedCategory,
   returnSpecificCategory,
+  setFlatListRef
 }) => {
   // setTimeout(() => {
   //   this.flatListRef.scrollToIndex({
@@ -113,7 +114,7 @@ const CategoryList = ({
   //         : returnSpecificCategory(categories, selectedCategory),
   //   });
   // }, 500);
-  setTimeout(() => {
+  /* setTimeout(() => {
     this.flatListRef.scrollToIndex({
       animated: false,
       index:
@@ -121,16 +122,17 @@ const CategoryList = ({
           ? 0
           : returnSpecificCategory(categories, selectedCategory),
     });
-  }, 1);
+  }, 1); */
 
   // getItemLayout = (data, index) => ({ length: 20, offset: 100 * index, index });
 
   return (
     <SwiperFlatList
       data={categories}
-      ref={(ref) => {
+      /* ref={(ref) => {
         this.flatListRef = ref;
-      }}
+      }} */
+      ref={setFlatListRef}
       renderItem={({ item, index }) => (
         <Category
           id={item.id}

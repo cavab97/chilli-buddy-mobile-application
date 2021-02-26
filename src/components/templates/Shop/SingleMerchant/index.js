@@ -284,7 +284,6 @@ const SingleMerchant = ({
               <Text style={styles.textLabel}> Description</Text>
             </View>
             <View style={styles.col2}>
-              {console.log("description" + dataSource)}
               {dataSource.description == null ? (
                 <Text
                   style={{
@@ -317,18 +316,24 @@ const SingleMerchant = ({
                       padding: 0,
                       color: "grey",
                     },
+                    b: {
+                      fontFamily: "HorizontalRounded",
+                    },
                     ol: {
                       padding: 0,
                       marginBottom: 30,
                       margin: 0,
+                      fontFamily: "HorizontalRounded",
                     },
                     li: {
                       padding: 0,
                       margin: 0,
+                      fontFamily: "HorizontalRounded",
                     },
                     ul: {
                       padding: 0,
                       margin: 0,
+                      fontFamily: "HorizontalRounded",
                     },
                   }}
                 />
