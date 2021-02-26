@@ -96,13 +96,12 @@ class index extends Component {
     // const readLoading = this.props.bookmarkState.readLoading;
 
     // if no shop in the radius, call handleRefresh read again by increase radiusAddition state
-    /* if (currentShop.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
+    if (currentShop.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
       if (prevState.radiusAddition === this.state.radiusAddition) {
         this.setState({ radiusAddition: this.state.radiusAddition * 3 });
       }
       this.handleRefresh();
     }
- */
     // if get shop in the radius, reset the radiusAddition to 1 for read next time
     if (prevProps.shopState.shops !== currentShop && currentShop.length > 0) {
       this.setState({ radiusAddition: 1 });

@@ -137,7 +137,7 @@ const CategoryList = ({
         <Category
           id={item.id}
           title={item.title}
-          index={10}
+          index={categories.length}
           onCategoryChange={onCategoryChange}
           selectedCategory={selectedCategory}
         />
