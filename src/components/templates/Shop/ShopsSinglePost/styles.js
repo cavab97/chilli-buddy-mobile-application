@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     // marginHorizontal: 10,
     // backgroundColor: "yellow",
-    width: Platform.isPad ? windowWidth / 1.1 : "90%",
+    width: Platform.isPad ? "100%" : "90%",
   },
   logoPositionInModal: {
     width: Platform.isPad ? 70 : 50,
@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
   postsTopRowNameContainer: {
     marginRight: Platform.isPad ? windowWidth / 2.5 : 10,
     marginHorizontal: 10,
-    // backgroundColor: "red",
+    backgroundColor: "red",
     // top: 10,
   },
   ShopPostTopTitle: {
-    fontSize: Platform.isPad ? windowWidth / 20 : 17,
+    fontSize: Platform.isPad ? windowWidth / 30 : 17,
     fontFamily: "HorizontalRounded",
-    width: 150,
+    width: Platform.isPad ? 220 : 150,
     // backgroundColor: "red",
     // marginBottom: 10,
     // marginTop: 10,
