@@ -110,7 +110,7 @@ class index extends Component {
       alert(readError);
     }
 
-    if (this.flatListRef !== null) {
+    if (this.flatListRef !== null && this.flatListRef !== undefined) {
       let filteredCategories = categories.filter((category) => category.title !== "All");
 
       this.flatListRef.scrollToIndex({

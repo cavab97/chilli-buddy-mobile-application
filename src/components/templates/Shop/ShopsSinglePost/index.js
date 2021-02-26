@@ -32,6 +32,7 @@ const ShopsSinglePost = ({
   find_dimensions = () => {},
   SharePress,
 }) => {
+  
   const PostList = ({ data }) => {
     if (data.length !== 0) {
       return (
@@ -48,6 +49,7 @@ const ShopsSinglePost = ({
                 {/* {console.log(item.id)} */}
                 <HTML
                   source={{ html: `<div>` + data.description + `</div>` }}
+                  baseFontStyle={{ fontFamily: "HorizontalRounded", color: 'grey', fontWeight: null,  fontSize: Platform.isPad ? windowWidth / 30 : 17 }}
                   tagsStyles={{
                     p: {
                       fontFamily: "HorizontalRounded",
@@ -57,6 +59,7 @@ const ShopsSinglePost = ({
                     ol: {
                       padding: 0,
                       // marginBottom: 30,
+                      fontFamily: "HorizontalRounded",
                       margin: 0,
                       fontSize: Platform.isPad ? windowWidth / 30 : 17,
                     },
@@ -64,11 +67,13 @@ const ShopsSinglePost = ({
                       padding: 0,
                       margin: 0,
                       marginTop: 3,
+                      fontFamily: "HorizontalRounded",
                       fontSize: Platform.isPad ? windowWidth / 30 : 17,
                     },
                     ul: {
                       padding: 0,
                       margin: 0,
+                      fontFamily: "HorizontalRounded",
                       fontSize: Platform.isPad ? windowWidth / 30 : 17,
                     },
                   }}
