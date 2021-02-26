@@ -584,7 +584,7 @@ const styles = StyleSheet.create({
     // paddingLeft: 200,
   },
   profileImageStyle: {
-    // backgroundColor: Colors.GRAY_DARK,
+    backgroundColor: Colors.GRAY_DARK,
     height: Platform.isPad ? windowWidth / 10 : 40,
     width: Platform.isPad ? windowWidth / 10 : 40,
     borderRadius: 80,
