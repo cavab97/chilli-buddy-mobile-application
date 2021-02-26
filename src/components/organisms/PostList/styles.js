@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     overflow: "hidden",
     fontSize: Platform.isPad ? windowWidth / 30 : 12,
+    fontFamily: 'HorizontalRounded'
     // backgroundColor: "yellow",
   },
   shareIcon: {

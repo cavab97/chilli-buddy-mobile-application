@@ -187,12 +187,12 @@ const SingleMerchant = ({
             </View>
             <View
               style={{
-                width: "23%",
+                width: "22%",
                 // backgroundColor: "#FFF",
                 flexDirection: "row",
                 justifyContent: "space-between",
                 marginTop: 5,
-                marginLeft: 15,
+                marginLeft: 25,
                 // backgroundColor: "red",
               }}
             >
@@ -304,36 +304,46 @@ const SingleMerchant = ({
                     color: "grey",
                   }}
                 >
-                  {dataSource.description}{" "}
+                  {dataSource.description}
                 </Text>
               ) : (
                 <HTML
                   source={{ html: dataSource.description }}
                   // alterData={alterData}
+                  baseFontStyle={{ fontFamily: "HorizontalRounded", color: 'grey', fontWeight: null,  fontSize: Platform.isPad ? windowWidth / 30 : 17 }}
+                  ignoredStyles={["font-family", "letter-spacing"]}
                   tagsStyles={{
                     p: {
                       fontFamily: "HorizontalRounded",
                       padding: 0,
                       color: "grey",
                     },
+                    div: {
+                      fontFamily: "HorizontalRounded",
+                      color: 'grey',
+                    },
                     b: {
                       fontFamily: "HorizontalRounded",
+                      color: 'grey',
                     },
                     ol: {
                       padding: 0,
                       marginBottom: 30,
                       margin: 0,
                       fontFamily: "HorizontalRounded",
+                      color: 'grey',
                     },
                     li: {
                       padding: 0,
                       margin: 0,
                       fontFamily: "HorizontalRounded",
+                      color: 'grey',
                     },
                     ul: {
                       padding: 0,
                       margin: 0,
                       fontFamily: "HorizontalRounded",
+                      color: 'grey',
                     },
                   }}
                 />
