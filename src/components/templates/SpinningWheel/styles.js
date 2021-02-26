@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flex: 1,
     bottom: Platform.isPad
-      ? 200
+      ? screenWidth / 2
       : Platform.OS === "ios"
       ? screenWidth <= 375
         ? screenWidth / 3

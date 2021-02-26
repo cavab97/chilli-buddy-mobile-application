@@ -52,8 +52,8 @@ const ShopsSinglePost = ({
                     p: {
                       fontFamily: "HorizontalRounded",
                       padding: 0,
-                      fontSize: Platform.isPad ? windowWidth / 20 : 10,
-                      lineHeight: 10,
+                      fontSize: Platform.isPad ? windowWidth / 30 : 10,
+                      lineHeight: Platform.isPad ? 0 : 10,
                     },
                     ol: {
                       padding: 0,
