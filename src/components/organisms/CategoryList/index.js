@@ -78,7 +78,10 @@ function Category({ id, title, onCategoryChange, selectedCategory, indexing, len
       break;
   }
 
-  if (title === "All" && Platform.OS === "android") {
+  if (
+    (title === "All" && Platform.OS === "android") ||
+    (title === "All" && Platform.OS === "ios")
+  ) {
     return <View style={{ marginRight: 50, width: 100 }} />;
   } else {
     return (

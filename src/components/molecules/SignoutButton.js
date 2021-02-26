@@ -31,9 +31,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: Colors.WHITE,
-    fontWeight: "bold",
     fontSize: 16,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
   },
 });
 

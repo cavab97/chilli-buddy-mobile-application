@@ -1,10 +1,6 @@
 import React from "react";
 
-import {
-  Text, 
-  TouchableOpacity,
-  View
-} from "../atoms";
+import { Text, TouchableOpacity, View } from "../atoms";
 
 import Icon from "react-native-vector-icons/Ionicons";
 import { Platform } from "react-native";
@@ -59,14 +55,12 @@ const styles = {
     paddingVertical: 5,
   },
   textTitle: {
-    fontWeight: "bold",
     fontSize: 20,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
   },
   textSubtitle: {
-    fontWeight: "bold",
     color: "#f18a22",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     textTransform: "uppercase",
     fontSize: 16,
     paddingTop: 2,

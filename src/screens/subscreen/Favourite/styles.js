@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     color: Colors.PRIMARY,
   },
   detail: {
     marginLeft: 10,
     fontSize: 12,
     color: Colors.BLACK,
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
   },
   checkbox: {
     backgroundColor: Colors.GRAY_LIGHT,

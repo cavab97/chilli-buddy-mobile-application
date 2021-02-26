@@ -98,13 +98,13 @@ const styles = {
   textColor: {
     color: Colors.PRIMARY,
     fontWeight: "bold",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
   },
   prizeTitle: {
     fontSize: 12,
   },
   textFontFamily: {
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
   },
   noUserContainer: {
     flex: 1,

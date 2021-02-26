@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontWeight: "700",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginBottom: 10,
     marginTop: 10,
   },
   subTitle: {
     fontSize: 18,
     fontWeight: "600",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginTop: 30,
   },
   detail: {
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   promoteTitleTextStyle: {
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginBottom: 7,
     marginTop: 5,
     marginLeft: 10,
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 25,
     fontWeight: "700",
-    fontFamily: "RobotoRegular",
+    fontFamily: "HorizontalRounded",
     marginTop: "5%",
     marginBottom: 8,
     marginLeft: 22,

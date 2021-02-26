@@ -147,14 +147,16 @@ class index extends Component {
   }
 
   render() {
-    const { shop, readLoading } = this.props.shopState;
-    const { post, readPostLoading, promotions, readPromotionLoading } = this.props;
+    const { post, readPostLoading } = this.props;
     // console.log("posts.id");
 
     let icon;
     let postImage = [];
-    if (shop.logo.length === 0 || shop.logo == undefined) icon = require("@assets/logo.png");
-    else icon = { uri: shop.logo[0] };
+    // console.log(post);
+    if (post.shop.logo.length === 0 || post.shop.logo == undefined)
+      icon = require("@assets/logo.png");
+    else icon = { uri: post.shop.logo[0] };
+
     // const { posterArea, poster } = styles;
 
     // const { promotion, readLoading } = this.props.promotion;
@@ -181,7 +183,6 @@ class index extends Component {
         catchCondition={this.catchCondition()}
         shopPosts={post}
         icon={icon}
-        dataSource={shop}
         find_dimensions={this.find_dimensions}
         SharePress={this.onShare.bind(this)}
       />
