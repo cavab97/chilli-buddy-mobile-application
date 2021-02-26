@@ -115,6 +115,23 @@ class index extends Component {
     if (prevProps.shopState.readError !== readError && readError !== false) {
       alert(readError);
     }
+
+    if (this.flatListRef !== null) {
+      console.log(this.flatListRef);
+      const { categories, selectedCategory } = this.props;
+
+      let filteredCategories = categories.filter((category) => category.title !== "All");
+      console.log(selectedCategory);
+      console.log(filteredCategories.length);
+      console.log(this.returnSpecificCategory(filteredCategories, selectedCategory));
+      this.flatListRef.scrollToIndex({
+        animated: false,
+        index:
+          this.returnSpecificCategory(filteredCategories, selectedCategory) === -1
+            ? 0
+            : this.returnSpecificCategory(filteredCategories, selectedCategory),
+      });
+    }
   }
 
   handleLoadMore() {
@@ -218,6 +235,25 @@ class index extends Component {
     this.myRef.current.scrollToIndex({ animated: true, index: 20 });
   }
 
+  setFlatListRef = (value) => {
+    const { categories, selectedCategory } = this.props;
+
+    let filteredCategories = categories.filter((category) => category.title !== "All");
+
+    this.flatListRef = value;
+
+    /* if (this.flatListRef !== null) {
+      let filteredCategories = categories.filter((category) => category.title !== "All");
+      this.flatListRef.scrollToIndex({
+        animated: false,
+        index:
+          this.returnSpecificCategory(filteredCategories, selectedCategory) === -1
+            ? 0
+            : this.returnSpecificCategory(filteredCategories, selectedCategory)
+      });
+    } */
+  };
+
   render() {
     const {
       shops,
@@ -301,6 +337,7 @@ class index extends Component {
         returnSpecificCategory={this.returnSpecificCategory.bind(this)}
         scrollToItem={this.scrollToItem.bind(this)}
         myRef={this.myRef}
+        setFlatListRef={this.setFlatListRef.bind(this)}
         //displayCategory={this.props.selectedCategory ? "" : this.props.selectedCategory.id}
       />
     );

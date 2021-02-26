@@ -103,7 +103,7 @@ const CategoryList = ({
   onCategoryChange,
   selectedCategory,
   returnSpecificCategory,
-  setFlatListRef
+  setFlatListRef,
 }) => {
   // setTimeout(() => {
   //   this.flatListRef.scrollToIndex({
