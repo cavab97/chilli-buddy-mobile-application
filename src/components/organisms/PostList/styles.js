@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     top: 0,
     marginHorizontal: 0,
     // backgroundColor: "yellow",
-  },
+  },//test
   logoPositionInModal: {
     width: Platform.isPad ? windowWidth / 10 : 50,
     height: Platform.isPad ? windowWidth / 10 : 50,

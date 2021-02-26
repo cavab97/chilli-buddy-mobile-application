@@ -22,7 +22,6 @@ import {
 import clone from "clone";
 
 import { ShopList } from "@components/templates";
-import { FlatList } from "react-native-gesture-handler";
 
 const ITEMS_PER_PAGE = 10;
 const RADIUS = 50;
@@ -31,6 +30,7 @@ const RADIUS = 50;
 class index extends Component {
   constructor(props) {
     super(props);
+    this.myRef = null;
 
     this.state = {
       radiusAddition: 1,
@@ -54,6 +54,12 @@ class index extends Component {
 
   // old ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidMount = async () => {
+    //this.handleRefresh();
+    // this.myRef.scrollToIndex({ index: 20 });
+    // setTimeout(() => {
+    // }, 1000);
+    // this.scrollToItem();
+
     this.props.verifyPermission().then((permissions) => {
       if (permissions.location !== "granted") {
         if (permissions.location.permissions.location.foregroundGranted === undefined) {
@@ -91,8 +97,6 @@ class index extends Component {
   componentDidUpdate(prevProps, prevState) {
     const currentShop = this.props.shopState.shops;
     const readError = this.props.shopState.readError;
-    const { categories, selectedCategory } = this.props;
-
     // const readLoading = this.props.bookmarkState.readLoading;
 
     // if no shop in the radius, call handleRefresh read again by increase radiusAddition state
@@ -110,17 +114,6 @@ class index extends Component {
 
     if (prevProps.shopState.readError !== readError && readError !== false) {
       alert(readError);
-    }
-
-    if (this.flatListRef !== null) {
-      let filteredCategories = categories.filter((category) => category.title !== "All");
-      this.flatListRef.scrollToIndex({
-        animated: false,
-        index:
-          this.returnSpecificCategory(filteredCategories, selectedCategory) === -1
-            ? 0
-            : this.returnSpecificCategory(filteredCategories, selectedCategory)
-      });
     }
   }
 
@@ -163,9 +156,7 @@ class index extends Component {
   onFavouriteFiltered() {
     this.props.toggleFavourite();
   }
-  componentWillUnmount() {
-    this.props.toggleCategory(null);
-  }
+
   onMerchantPressed(item) {
     Actions.SingleMerchant({
       shopId: item.id,
@@ -212,7 +203,6 @@ class index extends Component {
       await this.props.submitToBackend(data, "update");
     }
   };
-
   returnSpecificCategory(categories, selectedCategory) {
     // console.log(category);
     // console.log(categories[0].id);
@@ -221,19 +211,11 @@ class index extends Component {
     index = categories.findIndex((category) => {
       return category.id === selectedCategory;
     });
+    // console.log(index);
     return index;
   }
-
-  setFlatListRef = (value) => {
-    const { categories, selectedCategory } = this.props;
-
-    let filteredCategories = categories.filter((category) => category.title !== "All");
-
-    this.flatListRef = value;
-  }
-
-  filterCategory = () => {
-
+  scrollToItem() {
+    this.myRef.current.scrollToIndex({ animated: true, index: 20 });
   }
 
   render() {
@@ -317,9 +299,8 @@ class index extends Component {
         tags={filteredTags}
         loading={loading}
         returnSpecificCategory={this.returnSpecificCategory.bind(this)}
-        setFlatListRef={this.setFlatListRef.bind(this)}
-        // returnFlatlistMyRef={this.returnFlatlistMyRef.bind(this)}
-
+        scrollToItem={this.scrollToItem.bind(this)}
+        myRef={this.myRef}
         //displayCategory={this.props.selectedCategory ? "" : this.props.selectedCategory.id}
       />
     );
