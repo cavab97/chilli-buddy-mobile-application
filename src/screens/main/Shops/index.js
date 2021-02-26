@@ -304,6 +304,8 @@ class index extends Component {
       );
     }
 
+    filteredCategories.push(categories[0]);
+
     return (
       <ShopList
         handleRefresh={this.handleRefresh.bind(this)}

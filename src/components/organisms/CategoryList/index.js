@@ -1,6 +1,7 @@
 import React from "react";
+import { Platform } from "react-native";
 
-import { Text, TouchableOpacity, View, Image } from "../../atoms";
+import { Text, TouchableOpacity, View, Image, SrollView } from "../../atoms";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 import ContentLoader, { Rect } from "react-content-loader/native";
@@ -21,9 +22,8 @@ const categoryImage = {
   "Beverage 饮料": require("../../../assets/categories/beverage.png"),
 };
 
-function Category({ id, title, onCategoryChange, selectedCategory }) {
+function Category({ id, title, onCategoryChange, selectedCategory, indexing, length }) {
   let icon;
-
   let categoryTitle = title.split(" ");
   let arrangedCategoryTitle = "";
 
@@ -78,24 +78,28 @@ function Category({ id, title, onCategoryChange, selectedCategory }) {
       break;
   }
 
-  return (
-    <TouchableOpacity
-      style={selectedCategory === id ? styles.cardSelected : styles.card}
-      onPress={() => onCategoryChange(id)}
-    >
-      <View style={styles.iconContainer}>
-        <Image source={icon} style={styles.icon} />
-      </View>
-      <View>
-        <Text
-          style={selectedCategory === id ? styles.titleSelected : styles.title}
-          numberOfLines={3}
-        >
-          {arrangedCategoryTitle}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
+  if (title === "All" && Platform.OS === "android") {
+    return <View style={{ marginRight: 50, width: 100 }} />;
+  } else {
+    return (
+      <TouchableOpacity
+        style={selectedCategory === id ? styles.cardSelected : styles.card}
+        onPress={() => onCategoryChange(id)}
+      >
+        <View style={styles.iconContainer}>
+          <Image source={icon} style={styles.icon} />
+        </View>
+        <View>
+          <Text
+            style={selectedCategory === id ? styles.titleSelected : styles.title}
+            numberOfLines={3}
+          >
+            {arrangedCategoryTitle}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
 }
 
 const CategoryList = ({
@@ -138,12 +142,15 @@ const CategoryList = ({
           id={item.id}
           title={item.title}
           index={categories.length}
+          length={categories.length}
+          indexing={index}
           onCategoryChange={onCategoryChange}
           selectedCategory={selectedCategory}
         />
       )}
       //   horizontal
       //   showsHorizontalScrollIndicator={false}
+
       keyExtractor={(item) => item.id}
     />
   );

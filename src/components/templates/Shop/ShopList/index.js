@@ -120,7 +120,7 @@ const ShopList = ({
   const filterIcon = require("../../../../assets/icons/filter.png");
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
-
+  console.log(loading);
   if (loading) {
     return (
       <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
