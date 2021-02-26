@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   postsTopRowNameContainer: {
     marginRight: Platform.isPad ? windowWidth / 2.5 : 10,
     marginHorizontal: 10,
-    backgroundColor: "red",
+    // backgroundColor: "red",
     // top: 10,
   },
   ShopPostTopTitle: {

@@ -59,7 +59,7 @@ export class MyAccount extends Component {
                         true
                     )}
                 </View> */}
-        <View>{this.settingListing("Version", this.onVersionPress.bind(this), "3.0.2")}</View>
+        <View>{this.settingListing("Version", this.onVersionPress.bind(this), "3.0.5")}</View>
         {/* <View style={styles.signoutButtonStyle}>xsxs
           <SignoutButton onPress={onSignoutPress} loading={logOutLoading}>
             Sign Out

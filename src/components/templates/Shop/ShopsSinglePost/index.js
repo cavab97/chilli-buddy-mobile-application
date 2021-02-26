@@ -53,7 +53,7 @@ const ShopsSinglePost = ({
                       fontFamily: "HorizontalRounded",
                       padding: 0,
                       fontSize: Platform.isPad ? windowWidth / 30 : 10,
-                      lineHeight: Platform.isPad ? 0 : 10,
+                      // lineHeight: Platform.isPad ? 0 : 10,
                     },
                     ol: {
                       padding: 0,
@@ -71,7 +71,7 @@ const ShopsSinglePost = ({
                       padding: 0,
                       margin: 0,
                       fontSize: Platform.isPad ? windowWidth / 20 : 10,
-                      lineHeight: 5,
+                      // lineHeight: 5,
                     },
                   }}
                   style={styles.singlePostTitle}
@@ -128,9 +128,17 @@ const ShopsSinglePost = ({
     return (
       <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
         <Rect x="0" y="0" rx="0" ry="0" width="100%" height="150" />
-        <Rect x="10" y="100" rx="100" ry="100" width="25%" height="15%" />
-        <Rect x="20" y="200" rx="10" ry="10" width="250" height="175" />
-        <Rect x="20" y="400" rx="10" ry="10" width="250" height="175" />
+        <Rect x="10" y="100" rx="100" ry="100" width="100" height="100" />
+
+        <Rect x="20" y="220" rx="10" ry="10" width="90%" height="20" />
+        <Rect x="20" y="250" rx="10" ry="10" width="30%" height="20" />
+        <Rect x="20" y="280" rx="10" ry="10" width="60%" height="20" />
+        <Rect x="20" y="310" rx="10" ry="10" width="70%" height="20" />
+        <Rect x="20" y="340" rx="10" ry="10" width="50%" height="20" />
+        <Rect x="20" y="370" rx="10" ry="10" width="90%" height="20" />
+
+        <Rect x="20" y="400" rx="10" ry="10" width="90%" height="175" />
+        <Rect x="20" y="600" rx="10" ry="10" width="90%" height="175" />
       </ContentLoader>
     );
   } else {

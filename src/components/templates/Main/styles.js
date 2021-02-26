@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     minHeight: (windowWidth / 800) * 400,
     maxHeight: (windowWidth / 800) * 400,
     width: "100%",
-    borderRadius: 50,
+    borderRadius: 25,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -584,7 +584,7 @@ const styles = StyleSheet.create({
     // paddingLeft: 200,
   },
   profileImageStyle: {
-    // backgroundColor: Colors.GRAY_DARK,
+    backgroundColor: Colors.GRAY_DARK,
     height: Platform.isPad ? windowWidth / 10 : 40,
     width: Platform.isPad ? windowWidth / 10 : 40,
     borderRadius: 80,
