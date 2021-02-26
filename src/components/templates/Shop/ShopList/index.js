@@ -123,19 +123,21 @@ const ShopList = ({
   if (loading) {
     return (
       <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
-        <Rect x="20" y="15" rx="0" ry="30" width="30%" height="50" />
-        <Rect x="20" y="75" rx="0" ry="30" width="20%" height="30" />
+        <Rect x="20" y="15" rx="20" ry="30" width="30%" height="50" />
+        <Rect x="20" y="75" rx="20" ry="30" width="20%" height="30" />
 
-        <Rect x="270" y="15" rx="0" ry="150" width="35" height="40" />
+        <Rect x="350" y="15" rx="20" ry="20" width="35" height="40" />
+
+        <Rect x="300" y="15" rx="20" ry="20" width="35" height="40" />
 
         <Rect x="20" y="130" rx="20" ry="20" width="20%" height="100" />
-        <Rect x="100" y="130" rx="20" ry="20" width="20%" height="100" />
-        <Rect x="180" y="130" rx="20" ry="20" width="20%" height="100" />
-        <Rect x="260" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="120" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="220" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="320" y="130" rx="20" ry="20" width="20%" height="100" />
 
-        <Rect x="320" y="15" rx="0" ry="150" width="35" height="40" />
         <Rect x="20" y="250" rx="10" ry="10" width="90%" height="175" />
         <Rect x="20" y="450" rx="10" ry="10" width="90%" height="175" />
+        <Rect x="20" y="650" rx="10" ry="10" width="90%" height="175" />
       </ContentLoader>
     );
   } else {
