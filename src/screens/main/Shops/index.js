@@ -92,6 +92,7 @@ class index extends Component {
     const currentShop = this.props.shopState.shops;
     const readError = this.props.shopState.readError;
     const { categories, selectedCategory } = this.props;
+    const prevStateFlatListRef = this.flatListRef;
 
     // const readLoading = this.props.bookmarkState.readLoading;
 
@@ -112,7 +113,7 @@ class index extends Component {
       alert(readError);
     }
 
-    if (this.flatListRef !== null) {
+    if (prevStateFlatListRef !== this.flatListRef) {
       let filteredCategories = categories.filter((category) => category.title !== "All");
       this.flatListRef.scrollToIndex({
         animated: false,
