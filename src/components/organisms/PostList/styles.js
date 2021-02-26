@@ -60,10 +60,10 @@ const styles = StyleSheet.create({
     // shadowOpacity: 1,
     // shadowRadius: 1.22,
     // borderWidth: 1,
-   // marginTop: 3,
+    // marginTop: 3,
 
     //elevation: 10,
-    
+
     marginRight: Platform.OS === "ios" ? 0 : 5,
   },
   chatbox: {
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 15,
     marginLeft: 10,
-    marginRight: 2
+    marginRight: 2,
   },
   chatBoxTopText: {
     top: 5,

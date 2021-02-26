@@ -24,24 +24,24 @@ const Post = ({ item, icon, onPostPress, SharePress }) => {
         >
           {/* <ImageBackground style={styles.chatBoxImg} source={chatBoxImage}> */}
           {/* <View style={styles.chatbox}> */}
-            <View style={styles.chatBoxTopText}>
-              <Text style={styles.chatBoxText} numberOfLines={2}>
-                {item.title}{" "}
-              </Text>
-              <TouchableOpacity onPress={() => SharePress(item)}>
-                <Image style={styles.shareIcon} source={shareIcon} />
-              </TouchableOpacity>
-            </View>
-            {item.images[0] === undefined ? (
-              <Image style={styles.chatBoxInnerImage} source={defaultImage} />
-            ) : (
-              <Image
-                style={styles.chatBoxInnerImage}
-                source={{
-                  uri: item.images[0],
-                }}
-              />
-            )}
+          <View style={styles.chatBoxTopText}>
+            <Text style={styles.chatBoxText} numberOfLines={2}>
+              {item.title}{" "}
+            </Text>
+            <TouchableOpacity onPress={() => SharePress(item)}>
+              <Image style={styles.shareIcon} source={shareIcon} />
+            </TouchableOpacity>
+          </View>
+          {item.images[0] === undefined ? (
+            <Image style={styles.chatBoxInnerImage} source={defaultImage} />
+          ) : (
+            <Image
+              style={styles.chatBoxInnerImage}
+              source={{
+                uri: item.images[0],
+              }}
+            />
+          )}
           {/* </View> */}
           {/* </ImageBackground> */}
         </TouchableOpacity>

@@ -74,10 +74,10 @@ function Item({
           <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")} Km away</Text>
           <View style={{ position: "absolute", right: 5, bottom: 0 }}>
             <TouchableOpacity onPress={onFavouritePress}>
-                <Image 
-                  source={isFavourite ? filledHeartIcon : emptyHeartIcon} 
-                  style={styles.favouriteIcon} 
-                />
+              <Image
+                source={isFavourite ? filledHeartIcon : emptyHeartIcon}
+                style={styles.favouriteIcon}
+              />
             </TouchableOpacity>
           </View>
         </CardSection>
@@ -114,7 +114,7 @@ const ShopList = ({
   scrollToItem,
   flatListRef,
   returnFlatlistMyRef,
-  setFlatListRef
+  setFlatListRef,
 }) => {
   const filterIcon = require("../../../../assets/icons/filter.png");
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
@@ -123,13 +123,22 @@ const ShopList = ({
   if (loading) {
     return (
       <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
-        <Rect x="10" y="50" rx="0" ry="30" width="100" height="50" />
-        <Rect x="20" y="150" rx="0" ry="150" width="50" height="40" />
-        <Rect x="20" y="200" rx="10" ry="10" width="250" height="175" />
-        <Rect x="20" y="400" rx="10" ry="10" width="250" height="175" />
+        <Rect x="20" y="15" rx="0" ry="30" width="30%" height="50" />
+        <Rect x="20" y="75" rx="0" ry="30" width="20%" height="30" />
+
+        <Rect x="270" y="15" rx="0" ry="150" width="35" height="40" />
+
+        <Rect x="20" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="100" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="180" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="260" y="130" rx="20" ry="20" width="20%" height="100" />
+
+        <Rect x="320" y="15" rx="0" ry="150" width="35" height="40" />
+        <Rect x="20" y="250" rx="10" ry="10" width="90%" height="175" />
+        <Rect x="20" y="450" rx="10" ry="10" width="90%" height="175" />
       </ContentLoader>
-    )
-  }else {
+    );
+  } else {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -204,7 +213,9 @@ const ShopList = ({
           refreshing={false}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.5}
-          ListFooterComponent={shopData.length === 0 && !loading && <NotFoundFooter message="No shop found" />}
+          ListFooterComponent={
+            shopData.length === 0 && !loading && <NotFoundFooter message="No shop found" />
+          }
           style={styles.flatList}
           extraData={state}
         />

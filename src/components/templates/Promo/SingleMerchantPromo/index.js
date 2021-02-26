@@ -83,7 +83,7 @@ const SingleMerchantPromo = ({
                   </TouchableOpacity>
                 );
               }}
-              loop={false}
+              loop={true}
               sliderWidth={width}
               itemWidth={width}
               contentContainerCustomStyle={{ alignItems: "center" }}
