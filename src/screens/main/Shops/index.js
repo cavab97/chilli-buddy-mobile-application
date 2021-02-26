@@ -19,10 +19,8 @@ import {
   updateIsFavourite,
 } from "@redux/favourite/action";
 
-import clone from "clone";
 
 import { ShopList } from "@components/templates";
-import { FlatList } from "react-native-gesture-handler";
 
 const ITEMS_PER_PAGE = 10;
 const RADIUS = 50;
@@ -91,9 +89,8 @@ class index extends Component {
   componentDidUpdate(prevProps, prevState) {
     const currentShop = this.props.shopState.shops;
     const readError = this.props.shopState.readError;
-    const { categories, selectedCategory } = this.props;
-    const prevStateFlatListRef = this.flatListRef;
-
+    const { selectedCategory } = this.props.shopState;
+    const { categories } = this.props;
     // const readLoading = this.props.bookmarkState.readLoading;
 
     // if no shop in the radius, call handleRefresh read again by increase radiusAddition state
@@ -113,8 +110,9 @@ class index extends Component {
       alert(readError);
     }
 
-    if (prevStateFlatListRef !== this.flatListRef) {
+    if (this.flatListRef !== null ) {
       let filteredCategories = categories.filter((category) => category.title !== "All");
+
       this.flatListRef.scrollToIndex({
         animated: false,
         index:
@@ -122,7 +120,8 @@ class index extends Component {
             ? 0
             : this.returnSpecificCategory(filteredCategories, selectedCategory)
       });
-    }
+    } 
+    
   }
 
   handleLoadMore() {
@@ -231,10 +230,17 @@ class index extends Component {
     let filteredCategories = categories.filter((category) => category.title !== "All");
 
     this.flatListRef = value;
-  }
 
-  filterCategory = () => {
-
+    /* if (this.flatListRef !== null) {
+      let filteredCategories = categories.filter((category) => category.title !== "All");
+      this.flatListRef.scrollToIndex({
+        animated: false,
+        index:
+          this.returnSpecificCategory(filteredCategories, selectedCategory) === -1
+            ? 0
+            : this.returnSpecificCategory(filteredCategories, selectedCategory)
+      });
+    } */
   }
 
   render() {
