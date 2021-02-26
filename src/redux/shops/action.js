@@ -8,6 +8,8 @@ import {
 } from "geofirestore";
 import { Actions } from "react-native-router-flux";
 
+import * as Location from "expo-location";
+
 import { permissionsRegistration, LOCATION } from "../../marslab-library-react-native/utils/system";
 import { shopDataServices as objectDataServices } from "../../services/database";
 
@@ -72,8 +74,6 @@ export function verifyPermission() {
 
 export function loadShops({
   radius,
-  latitude,
-  longtitude,
   selectedCategory = null,
   selectedTag = null,
 }) {
@@ -82,6 +82,10 @@ export function loadShops({
     dispatch({ type: actions.READ_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
       try {
+        let location = await Location.getCurrentPositionAsync({});
+        let latitude = location.coords.latitude;
+        let longtitude = location.coords.longitude;
+        
         radius < 15 ? (limit = 0) : (limit = 100);
         const shops = await objectDataServices.geoReadObjects({
           l: { latitude, longtitude },

@@ -56,7 +56,7 @@ class index extends Component {
       if (permissions.location !== "granted") {
         if (permissions.location.permissions.location.foregroundGranted === undefined) {
           alert("Permission to access location is necessary");
-          this.handleRefresh();
+          // this.handleRefresh();
         } else if (permissions.location.permissions.location.foregroundGranted === true) {
           this.handleRefresh();
         }
@@ -68,12 +68,8 @@ class index extends Component {
     const { categories } = this.props;
     let filteredCategories = categories.filter((category) => category.title !== "All");
 
-    let location = await Location.getCurrentPositionAsync({});
-
     await this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
-      latitude: location.coords.latitude,
-      longtitude: location.coords.longitude,
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
@@ -94,13 +90,13 @@ class index extends Component {
     // const readLoading = this.props.bookmarkState.readLoading;
 
     // if no shop in the radius, call handleRefresh read again by increase radiusAddition state
-    if (currentShop.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
+    /* if (currentShop.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
       if (prevState.radiusAddition === this.state.radiusAddition) {
         this.setState({ radiusAddition: this.state.radiusAddition * 3 });
       }
       this.handleRefresh();
     }
-
+ */
     // if get shop in the radius, reset the radiusAddition to 1 for read next time
     if (prevProps.shopState.shops !== currentShop && currentShop.length > 0) {
       this.setState({ radiusAddition: 1 });
