@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     minHeight: (windowWidth / 800) * 400,
     maxHeight: (windowWidth / 800) * 400,
     width: "100%",
-    borderRadius: 50,
+    borderRadius: 25,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

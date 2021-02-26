@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     shadowColor: "grey",
     shadowOffset: { width: 0, height: 1 },
-    borderWidth: 0.5,
     // borderWidth: 1,
     shadowOpacity: 1,
     shadowRadius: 2.22,
@@ -17,7 +16,6 @@ const styles = StyleSheet.create({
     // top: 40,
     // left: 30,
     // marginHorizontal: 30,
-    backgroundColor: "#d9d9d9",
     marginVertical: 3,
   },
 });

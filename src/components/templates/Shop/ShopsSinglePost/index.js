@@ -52,26 +52,24 @@ const ShopsSinglePost = ({
                     p: {
                       fontFamily: "HorizontalRounded",
                       padding: 0,
-                      fontSize: Platform.isPad ? windowWidth / 30 : 10,
-                      lineHeight: Platform.isPad ? 0 : 10,
+                      fontSize: Platform.isPad ? windowWidth / 30 : 17,
                     },
                     ol: {
                       padding: 0,
                       // marginBottom: 30,
                       margin: 0,
-                      fontSize: Platform.isPad ? windowWidth / 20 : 10,
+                      fontSize: Platform.isPad ? windowWidth / 30 : 17,
                     },
                     li: {
                       padding: 0,
                       margin: 0,
                       marginTop: 3,
-                      fontSize: Platform.isPad ? windowWidth / 20 : 10,
+                      fontSize: Platform.isPad ? windowWidth / 30 : 17,
                     },
                     ul: {
                       padding: 0,
                       margin: 0,
-                      fontSize: Platform.isPad ? windowWidth / 20 : 10,
-                      lineHeight: 5,
+                      fontSize: Platform.isPad ? windowWidth / 30 : 17,
                     },
                   }}
                   style={styles.singlePostTitle}

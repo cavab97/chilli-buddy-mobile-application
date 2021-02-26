@@ -151,7 +151,7 @@ class index extends Component {
     const { post, readPostLoading, promotions, readPromotionLoading } = this.props;
     // console.log("posts.id");
 
-    let icon = [];
+    let icon;
     let postImage = [];
     if (shop.logo.length === 0 || shop.logo == undefined) icon = require("@assets/logo.png");
     else icon = { uri: shop.logo[0] };
