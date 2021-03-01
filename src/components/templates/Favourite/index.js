@@ -5,6 +5,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { CustomNavBar } from "@components/organisms/CustomNavBar";
 import Modal from "react-native-modal";
 
+import { Platform } from "react-native";
+
 import {
   ActivityIndicator,
   Icon as Icon2,
@@ -110,19 +112,20 @@ function PromotionItem({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.cardContainer}>
-        <View style={{ width: "35%" }}>
+        <View style={{ width: "37%" }}>
           <CardSection style={styles.imageContainer}>
             <Image style={image} resizeMode="cover" source={cover} />
           </CardSection>
         </View>
         <View
           style={{
-            width: "65%",
+            width: "63%",
             height: 100,
             flex: 1,
             flexDirection: "column",
             justifyContent: "space-between",
             paddingBottom: 10,
+            paddingLeft: Platform.isPad ? 0 : 7,
           }}
         >
           <CardSection style={styles.textContainer}>

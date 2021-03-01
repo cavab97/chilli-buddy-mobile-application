@@ -217,7 +217,6 @@ class index extends Component {
     index = categories.findIndex((category) => {
       return category.id === selectedCategory;
     });
-    // console.log(index);
     return index;
   }
   scrollToItem() {
@@ -230,6 +229,7 @@ class index extends Component {
     let filteredCategories = categories.filter((category) => category.title !== "All");
 
     this.flatListRef = value;
+    // console.log(this.flatListRef);
 
     /* if (this.flatListRef !== null) {
       let filteredCategories = categories.filter((category) => category.title !== "All");

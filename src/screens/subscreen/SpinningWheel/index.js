@@ -139,7 +139,7 @@ class index extends Component {
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/localcuisine.png");
 
           break;
-        case "Beverage 饮料店":
+        case "Beverage 饮料":
           element.icon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddySpinningWheelV2/beverage.png");
 
           break;

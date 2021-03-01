@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   imageTopStyle: {
     width: "100%",
-    height: "100%",
+    height: Platform.isPad ? "100.5%" : "100%",
     alignSelf: "center",
     // borderLeftColor: "white",
     // borderRightColor: "black",

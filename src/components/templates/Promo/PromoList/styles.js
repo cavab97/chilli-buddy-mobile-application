@@ -2,10 +2,6 @@ import { StyleSheet, ColorPropType, Platform } from "react-native";
 import { Colors, Mixins } from "../../../../settings/styles/theme";
 
 const styles = StyleSheet.create({
-  image: {
-    width: "100%",
-    height: 250,
-  },
   emptySection: {
     alignContent: "center",
     alignItems: "center",
@@ -45,8 +41,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   image: {
-    width: "100%",
-    height: 100,
+    width: Platform.isPad ? "100%" : 125,
+    height: Platform.isPad ? 100 : 95,
     borderRadius: 20,
   },
   emptyHeartIcon: {
@@ -147,14 +143,16 @@ const styles = StyleSheet.create({
     height: 15,
     width: 15,
     marginRight: 5,
+    paddingLeft: Platform.isPad ? 0 : 7,
   },
   detail: {
     fontSize: 12,
     color: Colors.GREY,
     fontFamily: "HorizontalRounded",
+    paddingLeft: Platform.isPad ? 0 : 7,
   },
   descriptionContainer: {
-    paddingHorizontal: 8,
+    paddingHorizontal: Platform.isPad ? 8 : 15,
     paddingVertical: 0,
     borderBottomWidth: 0,
     alignItems: "center",
@@ -165,12 +163,16 @@ const styles = StyleSheet.create({
     fontFamily: "HorizontalRounded",
     flex: 1,
     flexWrap: "wrap",
+    paddingLeft: Platform.isPad ? 0 : 7,
   },
   subtitle: {
     fontSize: 12,
     fontFamily: "HorizontalRounded",
     flex: 1,
     flexWrap: "wrap",
+    paddingLeft: Platform.isPad ? 0 : 7,
+
+    // backgroundColor: "red",
   },
   favouriteIcon: {
     width: 20,
@@ -208,39 +210,42 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   leftCardContainer: {
-    width: "35%",
+    width: "37%",
+    // backgroundColor: "yellow",
   },
   rightCardContainer: {
-    width: "65%",
-    height: 100,
+    width: "63%",
+    height: Platform.isPad ? 100 : 95,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
     paddingBottom: 10,
+    // backgroundColor: "yellow",
+    paddingLeft: Platform.isPad ? 0 : 5,
   },
   button: {
-    shadowColor: Colors.GREY, 
-    shadowOffset: { 
-        height: 0, 
-        width: 0 
-    }, 
+    shadowColor: Colors.GREY,
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
     shadowOpacity: 0.4,
-    shadowRadius: 1.5, 
+    shadowRadius: 1.5,
     backgroundColor: Colors.WHITE,
-    elevation: 2,  
+    elevation: 2,
     borderRadius: 30,
     paddingVertical: 8,
     paddingHorizontal: 15,
     marginRight: 10,
     marginVertical: 8,
-    flexDirection: 'row',
-    justifyContent: 'center', 
-    alignItems: 'center'
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   iconButton: {
-    fontFamily: 'HorizontalRounded', 
-    paddingRight: 5
-  }
+    fontFamily: "HorizontalRounded",
+    paddingRight: 5,
+  },
 });
 
 export default styles;

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 200,
+    height: Platform.isPad ? 400 : Platform.OS === "ios" ? 210 : 200,
     borderRadius: 20,
   },
   textContainer: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     fontFamily: "HorizontalRounded",
   },
   detail: {

@@ -178,7 +178,6 @@ class index extends Component {
   onPostPress = async (item) => {
     //const promoId = this.props.promotions[0].id;
     this.setState({ isOpenPost: !this.state.isOpenPost });
-    // console.log(item.shop);
     Actions.ShopsSinglePost({
       postId: item.id,
       distance: item.distance,
@@ -191,7 +190,6 @@ class index extends Component {
 
     shops.forEach((shop) => {
       if (shop.id === shopId) {
-        //favouriteId = favourite.id;
         shopInfo = shop;
       }
     });
@@ -263,7 +261,7 @@ class index extends Component {
 
     const shareOptions = {
       // url: promotion.facebookUrl,
-      url: "https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en",
+      // url: "https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en",
 
       title: item.title,
       // message: item.description.replace(regex, ""), dataSource.websiteUrl
@@ -273,7 +271,7 @@ class index extends Component {
             item.title +
             " Promotion at" +
             item.shop.displayTitle +
-            ", FacebookLink :" +
+            ", Facebook Link :" +
             "https://" +
             item.shop.facebookUrl
           : item.shop.websiteUrl != null
@@ -281,7 +279,7 @@ class index extends Component {
             item.title +
             " Promotion at " +
             item.shop.displayTitle +
-            ", FacebookLink :" +
+            ", Facebook Link :" +
             "https://" +
             item.shop.websiteUrl
           : "Now " +

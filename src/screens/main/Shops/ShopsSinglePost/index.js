@@ -86,7 +86,6 @@ class index extends Component {
   onPostPressed() {
     // const location = this.props.promotion.promotion.shop.l;
     // this.calculateDistance(location);
-    //console.log(promo.promotion.shop.id)
   }
   find_dimensions = (layout) => {
     const { x, y, width, height } = layout;
@@ -96,14 +95,12 @@ class index extends Component {
   onShare(item) {
     // const { settingInfo } = this.props;
     // const { fbPost, title, message } = settingInfo.share;
-    // console.log("item.websiteUrl");
 
-    console.log(item.shop.displayTitle);
     const regex = /(<([^>]+)>)/gi;
     // console.log(item.shop.websiteUrl);
     const shareOptions = {
       // url: promotion.facebookUrl,
-      url: "https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en",
+      url: "https://chillibuddy.com/",
 
       title: item.title,
       // message: item.description.replace(regex, ""), dataSource.websiteUrl
@@ -113,7 +110,7 @@ class index extends Component {
             item.title +
             " Promotion at" +
             item.shop.displayTitle +
-            " , Visit Us FacebookLink :" +
+            " , Visit Us Facebook Link :" +
             "https://" +
             item.shop.facebookUrl
           : item.shop.websiteUrl != null
@@ -121,7 +118,7 @@ class index extends Component {
             item.title +
             " Promotion at " +
             item.shop.displayTitle +
-            ",Visit Us FacebookLink :" +
+            ",Visit Us Facebook Link :" +
             "https://" +
             item.shop.websiteUrl
           : "Now " +
@@ -136,28 +133,21 @@ class index extends Component {
     Share.share(shareOptions)
       .then(({ action, activityType }) => {
         if (action === Share.dismissedAction) {
-          // console.log("Share dismissed");
         } else {
           setTimeout(() => {
             this.setState({ invited: true });
-            // console.log("Share successfuld");
           }, 3000);
         }
       })
       .catch((error) => this.setState({ result: "error: " + error.message }));
-
-    // console.log(item);
   }
 
   render() {
     const { post, readPostLoading } = this.props;
     const { shop, readLoading } = this.props.shopState;
 
-    // console.log("posts.id");
-
     let icon;
     let postImage = [];
-    // console.log(post.shop);
     if (post.shop.logo.length === 0 || post.shop.logo == undefined) {
       if (shop.logo == undefined || shop.logo.length === 0) {
         icon = require("@assets/logo.png");

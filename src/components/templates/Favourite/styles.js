@@ -2,10 +2,6 @@ import { StyleSheet, ColorPropType, Platform } from "react-native";
 import { Colors, Mixins } from "../../../settings/styles/theme";
 
 const styles = StyleSheet.create({
-  image: {
-    width: "100%",
-    height: 250,
-  },
   shopImage: {
     width: "100%",
     height: 200,
@@ -45,8 +41,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   image: {
-    width: "100%",
-    height: 100,
+    width: Platform.isPad ? "100%" : 125,
+    height: Platform.isPad ? 100 : 95,
     borderRadius: 20,
   },
   emptyHeartIcon: {
@@ -163,7 +159,7 @@ const styles = StyleSheet.create({
     fontFamily: "HorizontalRounded",
   },
   descriptionContainer: {
-    paddingHorizontal: 8,
+    paddingHorizontal: Platform.isPad ? 8 : 15,
     paddingVertical: 0,
     borderBottomWidth: 0,
     alignItems: "center",
@@ -174,12 +170,14 @@ const styles = StyleSheet.create({
     fontFamily: "HorizontalRounded",
     flex: 1,
     flexWrap: "wrap",
+    paddingLeft: Platform.isPad ? 0 : 7,
   },
   subtitle: {
     fontSize: 12,
     fontFamily: "HorizontalRounded",
     flex: 1,
     flexWrap: "wrap",
+    paddingLeft: Platform.isPad ? 0 : 7,
   },
   favouriteIcon: {
     width: 20,
