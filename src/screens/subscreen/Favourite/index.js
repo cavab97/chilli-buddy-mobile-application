@@ -126,7 +126,6 @@ class index extends Component {
   //   });
   // };
   onMerchantPressed = async (item) => {
-    console.log(item);
     Actions.SingleMerchant({
       shopId: item.id,
       distance: item.distance,

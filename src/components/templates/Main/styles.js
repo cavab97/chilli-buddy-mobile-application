@@ -564,6 +564,13 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     textAlign: "center",
   },
+  floatingCheckInTitleOff: {
+    fontSize: Platform.isPad ? windowWidth / 35 : 12,
+    fontFamily: "HorizontalRounded",
+    color: "#fff",
+    paddingTop: 3,
+    textAlign: "center",
+  },
   quarterInnerBox: {
     marginTop: 0,
     backgroundColor: Colors.RED,

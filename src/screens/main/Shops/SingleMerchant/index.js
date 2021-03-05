@@ -53,7 +53,13 @@ class index extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
+    await this.props.loadShops({
+      radius: RADIUS * this.state.radiusAddition,
+      selectedCategory: null,
+      selectedTag: null,
+      // limit: this.state.limit,
+    });
     const shopId = this.props.shopId;
     // this.props.readSingleFavourite(shopId);
     //let favourite = this.lookingForFavourite({ shopId });
@@ -80,7 +86,7 @@ class index extends Component {
       }
       this.setState({ getLocationLoading: false });
     });
-  }
+  };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     /* if (
@@ -222,7 +228,7 @@ class index extends Component {
     const isFavourite = !item;
     this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
-    console.log(isFavourite);
+    // console.log(isFavourite);
     if (favouriteId === null) {
       const data = { shopId, isFavourite };
       await this.props.submitToBackend(data, "create");

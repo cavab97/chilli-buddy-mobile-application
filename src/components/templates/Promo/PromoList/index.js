@@ -18,9 +18,20 @@ import { CustomNavBar } from "@components/organisms/CustomNavBar";
 import { SwipeableModal } from "@components/organisms/SwipeableModal";
 import { SingleMerchantPromo } from "../SingleMerchantPromo";
 import Icon from "react-native-vector-icons/AntDesign";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 const windowWidth = Dimensions.get("window").width;
 
-function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance, name, shopName }) {
+function Item({
+  picture = [],
+  onPress,
+  onBookmarkPressed,
+  gotBookmark,
+  distance,
+  name,
+  shopName,
+  category,
+}) {
   const { image, detail, title, subtitle, bookmarkIcon } = styles;
 
   let cover = "";
@@ -52,6 +63,13 @@ function Item({ picture = [], onPress, onBookmarkPressed, gotBookmark, distance,
               </Text>
             </CardSection>
             <CardSection style={styles.descriptionContainer}>
+              {/* <Text style={detail}>{category}</Text>
+              <MaterialCommunityIcons
+                name="checkbox-blank-circle"
+                size={5}
+                color="#979797"
+                style={{ marginHorizontal: 8 }}
+              /> */}
               <Image source={distanceIcon} style={styles.distanceIcon} />
               <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")}km away</Text>
               <View style={bookmarkIcon}>
@@ -261,6 +279,7 @@ const PromoList = ({
             index={index}
             readBookmark={readBookmark}
             submitLoading={submitLoading}
+            category={item.category}
           />
         )}
         keyExtractor={(item) => item.id}

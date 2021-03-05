@@ -74,8 +74,6 @@ export function verifyPermission() {
 
 export function loadShops({ radius, selectedCategory = null, selectedTag = null }) {
   let limit = 0;
-  console.log("radius");
-  console.log(selectedCategory);
   return (dispatch, getState) => {
     dispatch({ type: actions.READ_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
@@ -277,9 +275,7 @@ export function onFavouriteClick(shopId) {
       //try {
       const shops = getState().Shops.shops;
       let isFavourited = null;
-      console.log("shops");
 
-      console.log(shops);
       const newShops = shops.map((shop) => {
         if (shop.id === shopId) {
           shop.isFavourite = !shop.isFavourite;

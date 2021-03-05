@@ -84,6 +84,7 @@ function Category({ id, title, onCategoryChange, selectedCategory, indexing, len
   ) {
     return <View style={{ marginRight: 50, width: 100 }} />;
   } else {
+    // console.log(selectedCategory);
     return (
       <TouchableOpacity
         style={selectedCategory === id ? styles.cardSelected : styles.card}

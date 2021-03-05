@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import { SpinningWheel } from "@components/templates";
 import { Animated } from "react-native";
+import { toggleCategory } from "@redux/shops/action";
 
 import styles from "./styles";
 
@@ -68,6 +69,7 @@ class index extends Component {
   }
   //done
   onPressRandomCategory(category) {
+    this.props.toggleCategory(category.id);
     Actions.Shops({
       selectedCategory: category,
       selectedCategoryId: this.returnSpecificCategory(category.id),
@@ -174,8 +176,6 @@ class index extends Component {
     return randomCategory;
   }
   returnSpecificCategory(selectedCategory) {
-    // console.log(category);
-    // console.log(categories[0].id);
     // const { selectedCategory } = this.props.shopState;
 
     const { categories } = this.props;
@@ -184,6 +184,7 @@ class index extends Component {
     index = categories.findIndex((category) => {
       return category.id === selectedCategory;
     });
+
     return index;
   }
 
@@ -211,4 +212,4 @@ const mapStatetoprops = (state) => {
   return { categories, shopState };
 };
 
-export default connect(mapStatetoprops, {})(index);
+export default connect(mapStatetoprops, { toggleCategory })(index);

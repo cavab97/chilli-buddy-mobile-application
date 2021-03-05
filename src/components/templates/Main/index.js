@@ -43,6 +43,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { CustomIcon } from "@components/atoms/index";
 import Constants from "expo-constants";
 
+const windowWidth = Dimensions.get("window").width;
+
 const AdvertisementPopUp = ({
   isAdvertisementModelShow,
   onCloseAdvertisementModal,
@@ -339,7 +341,7 @@ export default ({
   const shopsIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/shop_Icon.png");
   const salesIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/sale_Icon.png");
   const spinWheel = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/spinWheel_Icon.png");
-  const checkIn = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/checkIn_Icon.png");
+  const checkIn = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/checkIn_Icon_unopened.png");
   const hotPickIcon = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/fireHotText_Icon.png");
 
   let { width } = Dimensions.get("window");
@@ -515,14 +517,41 @@ export default ({
               <Text style={styles.floatingCheckInTitle}>Spin Me</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.QuarterContainer1}
+              style={{
+                backgroundColor: "#a7a7a7",
+                width: windowWidth / 5,
+                height: windowWidth / 6,
+                alignItems: "center",
+                borderWidth: 0.1,
+                borderRadius: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                shadowColor: "#f5f5f5",
+                shadowRadius: 0.5,
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 0.1,
+                shadowRadius: 2,
+                elevation: 1,
+              }}
               onPress={onCheckInPressed}
               activeOpacity={1}
+              disabled={true}
             >
-              <View style={styles.quarterInnerBox}>
+              <View
+                style={{
+                  marginTop: 0,
+                  backgroundColor: "#fff",
+                  width: "75%",
+                  alignItems: "center",
+                  height: "60%",
+                  borderRadius: 10,
+                }}
+              >
                 <Image source={checkIn} transition={false} style={styles.quarterIcon} />
               </View>
-              <Text style={styles.floatingCheckInTitle}>Check In</Text>
+              <Text style={styles.floatingCheckInTitleOff}>Check In</Text>
             </TouchableOpacity>
           </View>
 

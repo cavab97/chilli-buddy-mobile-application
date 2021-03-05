@@ -9,7 +9,7 @@ const initialState = {
   tags: {},
   categories: {},
 
-  selectedCategory: null,
+  selectedCategory: "1607328160755",
   selectedTag: null,
   currentFavourite: false,
   favouriteControl: false,
@@ -181,9 +181,9 @@ const shopsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         shops: payload.data.shops,
-        shop: payload.data.shop !== null ? payload.data.shop : state.shop
+        shop: payload.data.shop !== null ? payload.data.shop : state.shop,
       };
-      
+
     case actions.TOGGLE_SHOP_SINGLEMERCHANT_FAVOURITE:
       return {
         ...state,

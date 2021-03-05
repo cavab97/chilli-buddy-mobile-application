@@ -53,9 +53,9 @@ class index extends Component {
   }
 
   componentDidMount = async () => {
-    console.log("this.props.messages.value");
+    // console.log("this.props.messages.value");
 
-    console.log(this.props.messages.value);
+    // console.log(this.props.messages.value);
 
     let category = [];
     let tags = [];

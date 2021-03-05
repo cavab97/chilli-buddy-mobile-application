@@ -39,7 +39,7 @@ class index extends Component {
       isRefreshing: false,
       tags: props.tags,
       categories: props.categories,
-      selectedCategory: "1607328160755",
+      selectedCategory: props.selectedCategory,
       selectedTag: "All", //default all tag selected
       // limit: 10,
     };
@@ -73,6 +73,14 @@ class index extends Component {
   };
 
   handleRefresh = async () => {
+    const { selectedCategory } = this.props.shopState;
+    // console.log("handleRefreshSelectedCategory");
+    // console.log(selectedCategory);
+    // console.log("this.props.selectedCategory");
+    // console.log(this.props.selectedCategory);
+    // console.log("this.state.selectedCategory");
+    // console.log(this.state.selectedCategory);
+
     const { categories } = this.props;
     let filteredCategories = categories.filter((category) => category.title !== "All");
     await this.props.loadShops({
@@ -83,7 +91,7 @@ class index extends Component {
     });
 
     if (this.props.selectedCategory) {
-      await this.props.toggleCategory(this.props.selectedCategory);
+      await this.props.toggleCategory(this.state.selectedCategory);
     } else {
       await this.props.toggleCategory(filteredCategories[0].id);
     }
@@ -161,8 +169,7 @@ class index extends Component {
 
   onCategorySelected = async (id = null) => {
     this.setState({ selectedCategory: id, selectedTag: "All" });
-    console.log("id");
-    console.log(this.state.selectedCategory);
+
     await this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
       selectedCategory: id,
@@ -264,7 +271,6 @@ class index extends Component {
       selectedTag,
       loading,
     } = this.props.shopState;
-    // console.log(this.props.selectedCategory);
 
     const { categories, tags } = this.props;
 
@@ -272,6 +278,8 @@ class index extends Component {
     let filteredCategories;
     let selectedCategoryTag;
     let filteredTags = [];
+    // console.log("shops");
+    // console.log(shops.length);
 
     // Get Shop Category
 
@@ -283,14 +291,21 @@ class index extends Component {
 
     // Remove all category
     filteredCategories = categories.filter((category) => category.title !== "All");
-
+    // console.log("filteredCategories");
+    // console.log(filteredCategories);
     // On toggle category get category shop
     selectedCategory
       ? (filteredShop = shops.filter((shop) => shop.categories.includes(selectedCategory) === true))
       : (filteredShop = shops.filter(
           (shop) => shop.categories.includes(filteredCategories[0].id) === true
         ));
+    // console.log(filteredShop.length);
 
+    // selectedCategory ? console.log("true") : console.log("false");
+    // console.log("filteredShop");
+    // console.log(filteredShop);
+
+    // console.log(selectedCategory);
     // On toggle favourite get favourite shop
     favouriteControl
       ? (filteredShop = filteredShop.filter((shop) => shop.isFavourite === true))
@@ -301,14 +316,13 @@ class index extends Component {
         ? filteredShop
         : (filteredShop = filteredShop.filter((shop) => shop.tags.includes(selectedTag) === true))
       : filteredShop;
-
     if (selectedCategory) {
       selectedCategoryTag = filteredCategories.filter(
         (category) => category.id === selectedCategory
       );
-
+      // console.log("selectedCategoryTag");
+      // console.log(selectedCategoryTag);
       selectedCategoryTag = selectedCategoryTag[0].tags;
-
       tags.forEach((tag) =>
         selectedCategoryTag.forEach((categoryTag) => {
           if (tag.id === categoryTag) {
@@ -322,7 +336,7 @@ class index extends Component {
     // console.log(categories[0]);
     // console.log(filteredCategories.length);
     // console.log(
-    this.swap(filteredCategories, 2, 10);
+    // this.swap(filteredCategories, 2, 10);
     // );
 
     return (
@@ -362,6 +376,7 @@ const mapStateToProps = (state) => {
   const { shops } = state.Shops;
   const favouriteState = state.Favourite;
   const shopState = state.Shops;
+  const selectedCategory = state.Shops.selectedCategory;
 
   return {
     categories,
@@ -372,6 +387,7 @@ const mapStateToProps = (state) => {
     shops,
     favouriteState,
     shopState,
+    selectedCategory,
   };
 };
 
