@@ -16,7 +16,10 @@ import {
 } from "@redux/routeTicket/action";
 
 import { loadShopsPromo, togglePromotionModal, listenToRecord } from "@redux/promo/action";
-
+import {
+  toggleSearchMessage as listenShopMessage,
+  toggleSearchMessageMain,
+} from "@redux/search/action";
 import clone from "clone";
 import { lessThan } from "react-native-reanimated";
 import { Animated } from "react-native";
@@ -112,7 +115,7 @@ class index extends Component {
 
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
-    console.log("j");
+    // console.log("j");
 
     const filteredDatasource = this.filteredDatasource();
     // console.log(filteredDatasource[index]);
@@ -285,6 +288,20 @@ class index extends Component {
     });
   };
 
+  searchFilterFunction = (value) => {
+    this.props.listenShopMessage({ value });
+    // this.setState({ data: value });
+    // console.log(this.state.data);
+  };
+  // getValue() {
+  //   newData = this.state.categories.filter((item) => {
+  //     const itemData = `${item.title.toUpperCase()}`;
+  //     const textData = this.state.data.toUpperCase();
+  //     return itemData.indexOf(textData) > -1;
+  //   });
+  //   this.setState({ data: newData });
+  // }
+
   // //Pass category
   // passCategory() {
   //   let dataSource2 = [];
@@ -362,6 +379,14 @@ class index extends Component {
   //   });
   //   return dataSource2;
   // }
+  onPressSearch() {
+    this.props.toggleSearchMessageMain();
+    Actions.SearchScreen();
+  }
+  onPressSearchButton() {
+    this.props.toggleSearchMessageMain();
+    Actions.SearchScreen();
+  }
 
   render() {
     const {
@@ -378,14 +403,7 @@ class index extends Component {
       posts,
     } = this.props;
     // console.log(posts);
-    let {
-      user,
-      notifications,
-      ownRewards,
-      photo,
-      readLoadingNotification,
-      readLoadingReward,
-    } = this.props;
+    let { user } = this.props;
 
     const {
       readLoading,
@@ -396,6 +414,9 @@ class index extends Component {
       promotion,
     } = this.props.promotionState;
 
+    const { messages, mainScreenMessage } = this.props.searchState;
+    // console.log("mainScreenMessage");
+    // console.log(mainScreenMessage);
     const readFail =
       readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
 
@@ -413,6 +434,7 @@ class index extends Component {
       }
     });
 
+    // console.log(this.state.categories);
     //Get random pop up ads
     var randomAdPic = filteredAdPic[Math.floor(this.state.randomNumber * filteredAdPic.length)];
 
@@ -491,6 +513,13 @@ class index extends Component {
         onPromoPressed={this.onPromoPressed.bind(this)}
         onPromoPressedClose={this.onPromoPressedClose.bind(this)}
         onCarouselPressed={this.onCarouselPressed.bind(this)}
+        categories={this.props.categories}
+        searchFilterFunction={this.searchFilterFunction.bind(this)}
+        // data={this.state.data}
+        value={messages}
+        onPressSearch={this.onPressSearch.bind(this)}
+        onPressSearchButton={this.onPressSearchButton.bind(this)}
+        mainScreenMessageBoolean={mainScreenMessage}
       />
     );
   }
@@ -520,6 +549,9 @@ const mapStateToProps = (state) => {
 
   const posts = state.ShopPostMain.posts;
 
+  const { shops } = state.Shops;
+  const searchState = state.Search;
+
   // console.log(posts[5].coverPhoto);
 
   return {
@@ -541,6 +573,7 @@ const mapStateToProps = (state) => {
     user,
     promotionState,
     posts,
+    searchState,
   };
 };
 
@@ -558,4 +591,6 @@ export default connect(mapStateToProps, {
   readShopPostMain,
   togglePromotionModal,
   listenToRecord,
+  listenShopMessage,
+  toggleSearchMessageMain,
 })(index);

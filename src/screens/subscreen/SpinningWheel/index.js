@@ -68,7 +68,10 @@ class index extends Component {
   }
   //done
   onPressRandomCategory(category) {
-    Actions.Shops({ selectedCategory: category });
+    Actions.Shops({
+      selectedCategory: category,
+      selectedCategoryId: this.returnSpecificCategory(category.id),
+    });
   }
   //Pass category
   passCategory() {
@@ -170,6 +173,19 @@ class index extends Component {
 
     return randomCategory;
   }
+  returnSpecificCategory(selectedCategory) {
+    // console.log(category);
+    // console.log(categories[0].id);
+    // const { selectedCategory } = this.props.shopState;
+
+    const { categories } = this.props;
+    let index;
+
+    index = categories.findIndex((category) => {
+      return category.id === selectedCategory;
+    });
+    return index;
+  }
 
   render() {
     return (
@@ -190,8 +206,9 @@ class index extends Component {
 
 const mapStatetoprops = (state) => {
   const { categories } = state.Settings;
+  const shopState = state.Shops;
 
-  return { categories };
+  return { categories, shopState };
 };
 
 export default connect(mapStatetoprops, {})(index);

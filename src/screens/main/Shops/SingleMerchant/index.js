@@ -10,6 +10,7 @@ import {
   removeListenerToRecord as removeListenerFromDatabase,
   verifyPermission,
   onFavouriteClick,
+  loadShops,
 } from "@redux/shops/action";
 
 import { readObjects as readShopPost } from "@redux/shopPost/action";
@@ -35,11 +36,14 @@ import {
   readFromDatabase,
   updateIsFavourite,
 } from "@redux/favourite/action";
+const RADIUS = 50;
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      radiusAddition: 1,
+
       isOpenPost: false,
       viewHeight: 0,
       calculatedDistance: 0,
@@ -200,26 +204,25 @@ class index extends Component {
   lookingForFavourite({ shopId } = null) {
     const favourites = this.props.favouriteState.favourites;
 
-    let favouriteInfo = null;
+    let favouriteId = null;
 
     favourites.forEach((favourite) => {
       if (favourite.shopIds[0] === shopId) {
         //favouriteId = favourite.id;
-        favouriteInfo = favourite;
+        favouriteId = favourite.id;
       }
     });
-    return favouriteInfo;
+    return favouriteId;
   }
 
   onFavouritePressed = async (item) => {
     this.setState({ isFavourite: !this.state.isFavourite });
     const shopId = this.props.shopId;
     const favouriteId = this.lookingForFavourite({ shopId });
-    const isFavourite = !item.isFavourite;
-
+    const isFavourite = !item;
     this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
-
+    console.log(isFavourite);
     if (favouriteId === null) {
       const data = { shopId, isFavourite };
       await this.props.submitToBackend(data, "create");
@@ -423,4 +426,5 @@ export default connect(mapStateToProps, {
   submitToBackend,
   updateIsFavourite,
   onFavouriteClick,
+  loadShops,
 })(index);

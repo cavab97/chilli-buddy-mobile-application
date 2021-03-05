@@ -14,7 +14,7 @@ import {
 
 import ContentLoader, { Rect } from "react-content-loader/native";
 
-import { NotFoundFooter, CardSection } from "@components/molecules";
+import { NotFoundFooter, CardSection, renderFooterButton } from "@components/molecules";
 
 import { CategoryList } from "@components/organisms/CategoryList";
 
@@ -93,8 +93,7 @@ function Item({
 
 const ShopList = ({
   handleRefresh,
-  handleLoadMore,
-  filterData,
+  // handleLoadMore,
   renderFooter,
   onMerchantPressed,
   onFavouritePressed,
@@ -115,7 +114,7 @@ const ShopList = ({
   scrollToItem,
   flatListRef,
   returnFlatlistMyRef,
-  setFlatListRef,
+  // setFlatListRef,
 }) => {
   const filterIcon = require("../../../../assets/icons/filter.png");
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
@@ -187,7 +186,7 @@ const ShopList = ({
             scrollToItem={scrollToItem}
             flatListRef={flatListRef}
             returnFlatlistMyRef={returnFlatlistMyRef}
-            setFlatListRef={setFlatListRef}
+            // setFlatListRef={setFlatListRef}
           />
         </View>
 
@@ -213,8 +212,8 @@ const ShopList = ({
           keyExtractor={(item) => item.id}
           onRefresh={handleRefresh}
           refreshing={false}
-          onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.5}
+          // onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.4}
           ListFooterComponent={
             shopData.length === 0 && !loading && <NotFoundFooter message="No shop found" />
           }

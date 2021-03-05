@@ -6,6 +6,7 @@ import Shops from "../screens/main/Shops";
 import Promo from "../screens/main/Promo";
 import Profile from "../screens/main/Profile";
 import SpinningWheel from "../screens/subscreen/SpinningWheel";
+import SearchScreen from "../screens/subscreen/SearchScreen";
 
 import RouteGroups from "../screens/main/RouteGroups";
 
@@ -102,6 +103,17 @@ const routes = ({ isLoggedIn, isBooted, forceUpdate }) => {
           // title="dsdsdsds"
           titleStyle={styles.title}
           navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0, marginLeft: 5 }}
+        />
+      </Stack>
+
+      <Stack key="SearchScreen">
+        <Scene
+          key="SearchScreen"
+          component={SearchScreen}
+          // title="dsdsdsds"
+          titleStyle={styles.title}
+          navigationBarStyle={{ borderBottomColor: "transparent", elevation: 0, marginLeft: 5 }}
+          hideNavBar={true}
         />
       </Stack>
 

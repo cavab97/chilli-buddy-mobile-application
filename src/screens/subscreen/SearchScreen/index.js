@@ -4,11 +4,25 @@ import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
 import { getDistance } from "geolib";
 
-import { verifyPermission, loadBookmark } from "@redux/bookmark/action";
-import { update, submitToBackend } from "@redux/bookmark/action";
+import {
+  verifyPermission,
+  loadBookmark,
+  updateIsBookmark,
+  update,
+  submitToBackend,
+} from "@redux/bookmark/action";
 import { listenToRecord, onBookmarkClick, togglePromotionModal } from "@redux/promo/action";
 
-import { loadShops, onFavouriteClick } from "@redux/shops/action";
+import { onFavouriteClick, loadShops } from "@redux/shops/action";
+import {
+  loadSearchShops,
+  loadShopsPromo,
+  onPromoSpecificClick,
+  onShopSpecificClick,
+  toggleSearchMessage as listenShopMessage,
+  toggleSearchMessageMain,
+} from "@redux/search/action";
+
 import {
   update as updateToBackendShop,
   submitToBackend as submitToBackendShop,
@@ -18,7 +32,7 @@ import {
   loadFavourite,
 } from "@redux/favourite/action";
 
-import { FavouriteList } from "@components/templates";
+import { SearchScreen } from "@components/templates";
 
 const RADIUS = 50;
 
@@ -26,17 +40,44 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tags: props.tags,
       categories: props.categories,
       radiusAddition: 1,
       selectedCategory: { id: "", tags: ["All"], title: "All" },
       selectedTag: "All", //default all tag selected
       readLoading: true,
+      dataSearch: "null",
+      category: "null",
+      tags: "null",
     };
     this.handleRefresh = this.handleRefresh.bind(this);
   }
 
   componentDidMount = async () => {
+    console.log("this.props.messages.value");
+
+    console.log(this.props.messages.value);
+
+    let category = [];
+    let tags = [];
+    for (let i = 0; i < this.props.categories.length; i++) {
+      if (
+        this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
+      ) {
+        category.push(this.props.categories[i].id);
+        this.setState({ category: category });
+      }
+    }
+
+    for (let i = 0; i < this.props.tags.length; i++) {
+      if (this.props.tags[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())) {
+        tags.push(this.props.tags[i].id);
+        this.setState({ tags: tags });
+      }
+    }
+    this.setState({
+      dataSearch: this.props.messages.value === undefined ? "null" : this.props.messages.value,
+    });
+
     this.props.verifyPermission().then((permissions) => {
       this.props.verifyPermission().then((permissions) => {
         if (permissions.location !== "granted") {
@@ -86,13 +127,6 @@ class index extends Component {
 
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
-    await this.props.loadBookmark({
-      radius: RADIUS * this.state.radiusAddition,
-      latitude: location.coords.latitude,
-      longtitude: location.coords.longitude,
-      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
-      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
-    });
 
     await this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
@@ -100,33 +134,43 @@ class index extends Component {
       selectedTag: null,
       // limit: this.state.limit,
     });
+
+    await this.props.loadSearchShops({
+      radius: RADIUS * this.state.radiusAddition,
+      selectedCategory: this.state.category,
+      shopName: this.state.dataSearch,
+      selectedTag: this.state.tags,
+    });
+
+    await this.props.loadShopsPromo({
+      radius: RADIUS * this.state.radiusAddition,
+      selectedCategory: this.state.category,
+      shopName: this.state.dataSearch,
+      selectedTag: this.state.tags,
+    });
+
+    // await this.props.loadFavourite({
+    //   radius: RADIUS * this.state.radiusAddition,
+    //   latitude: location.coords.latitude,
+    //   longtitude: location.coords.longitude,
+    //   selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+    //   selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+    // });
+    await this.props.loadBookmark({
+      radius: RADIUS * this.state.radiusAddition,
+      latitude: location.coords.latitude,
+      longtitude: location.coords.longitude,
+      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+    });
     //await this.props.readFromDatabase();
 
     this.setState({ readLoading: false });
   };
 
-  // onMerchantPressed = async (item) => {
-  //   // console.log(item);
-  //   let destinationLocation = item.l;
-  //   var distance;
-  //   let location = await Location.getCurrentPositionAsync({});
-  //   distance =
-  //     getDistance(
-  //       { latitude: destinationLocation.U, longitude: destinationLocation.k },
-  //       {
-  //         latitude: location.coords.latitude,
-  //         longitude: location.coords.longitude,
-  //       }
-  //     ) / 1000;
-
-  //   Actions.SingleMerchant({
-  //     shopId: item.id,
-  //     distance: distance,
-  //     categoryName: item.category,
-  //   });
-  // };
   onMerchantPressed = async (item) => {
-    console.log(item);
+    // console.log(item.categories[0]);
+    // console.log(this.props.categories);
     Actions.SingleMerchant({
       shopId: item.id,
       distance: item.distance,
@@ -146,16 +190,18 @@ class index extends Component {
     return bookmarkId;
   }
 
-  onBookmarkPressed = async (item) => {
-    const click = item.isBookmark;
-    item.isBookmark = !click;
-
-    const shopId = item.promotion.shop.id;
-    const promoId = item.promotion.id;
+  onPromoFavouritePressed = async (item) => {
+    const shopId = item.shop.id;
+    const promoId = item.id;
     const bookmarkId = this.lookingForBookmark({ promoId });
-    const isBookmark = item.isBookmark;
-    this.props.onBookmarkClick(promoId, isBookmark);
+    this.props.onPromoSpecificClick(promoId);
 
+    const isBookmark = item.isBookmark;
+
+    this.props.onBookmarkClick(promoId);
+    this.props.updateIsBookmark(promoId);
+    /* console.log("bookmark" + JSON.stringify(this.props.bookmarkState.bookmarks));
+    console.log("promotion" + JSON.stringify(this.props.promotionState.promo)); */
     if (bookmarkId === null) {
       const data = { shopId, promoId, isBookmark };
       await this.props.submitToBackend(data, "create");
@@ -170,6 +216,7 @@ class index extends Component {
   }
 
   onBackPressed() {
+    this.props.toggleSearchMessageMain();
     Actions.pop("Favourite");
   }
 
@@ -188,12 +235,12 @@ class index extends Component {
 
   onFavouritePressed = async (item) => {
     const shopId = item.id;
-
     const favouriteId = this.lookingForFavourite({ shopId });
     const isFavourite = !item.isFavourite;
-
+    this.props.onShopSpecificClick(shopId);
     this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
+    // console.log(item);
 
     if (favouriteId === null) {
       const data = { shopId, isFavourite };
@@ -235,53 +282,114 @@ class index extends Component {
   }
 
   onPromoPressed(item) {
-    this.props.listenToRecord({ promoId: item.promotion.id });
+    this.props.listenToRecord({ promoId: item.id });
     this.props.togglePromotionModal();
   }
+  searchFilterFunction = (value) => {
+    this.setState({ dataSearch: value });
+    this.props.listenShopMessage({ value });
+  };
+  searchButtonClick = async () => {
+    let category = [];
+    let tags = [];
+    for (let i = 0; i < this.props.categories.length; i++) {
+      if (
+        this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
+      ) {
+        category.push(this.props.categories[i].id);
+        this.setState({ category: category });
+      }
+    }
+
+    for (let i = 0; i < this.props.tags.length; i++) {
+      if (this.props.tags[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())) {
+        tags.push(this.props.tags[i].id);
+        this.setState({ tags: tags });
+      }
+    }
+    await this.props.loadSearchShops({
+      radius: RADIUS * this.state.radiusAddition,
+      selectedCategory: category.length > 0 ? category : null,
+      shopName: this.state.dataSearch,
+      selectedTag: tags.length > 0 ? tags : null,
+    });
+  };
+
+  searchButtonClickPromo = async () => {
+    let category = [];
+    let tags = [];
+    for (let i = 0; i < this.props.categories.length; i++) {
+      if (
+        this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
+      ) {
+        category.push(this.props.categories[i].id);
+        this.setState({ category: category });
+      }
+    }
+
+    for (let i = 0; i < this.props.tags.length; i++) {
+      if (this.props.tags[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())) {
+        tags.push(this.props.tags[i].id);
+        this.setState({ tags: tags });
+      }
+    }
+    await this.props.loadShopsPromo({
+      radius: RADIUS * this.state.radiusAddition,
+      selectedCategory: category.length > 0 ? category : null,
+      shopName: this.state.dataSearch,
+      selectedTag: tags.length > 0 ? tags : null,
+    });
+  };
 
   render() {
-    const { promotion, promotionModalVisible } = this.props.promotionState;
-
+    const { promotion, promotionModalVisible, bookmarkControl } = this.props.promotionState;
     const readBookmark = this.props.bookmarkState.readBookmark;
     const submitLoading = this.props.bookmarkState.submitLoading;
     const bookmarks = this.props.bookmarkState.bookmarks;
     const { categories, tags } = this.props;
 
-    const { selectedTab } = this.props.favouriteState;
-    const { shops } = this.props.shopState;
+    const { selectedTab, favourites } = this.props.favouriteState;
+
+    //shop
+
+    const { shops, promos } = this.props.searchState;
 
     let isBookmark = [];
-    let activeBookmarks = [];
+    let searchShops = [];
     let isFavourite = [];
-    let activeFavourites = [];
-
-    bookmarks.forEach((bookmark) => {
-      if (bookmark.isBookmark === true) {
-        activeBookmarks.push(bookmark);
-      }
-    });
-
-    activeBookmarks.forEach((bookmark) => {});
+    let activeShops = [];
+    let filteredPromotion;
     shops.map((shop) => {
       let shopCategory = categories.filter((category) => category.id === shop.categories[0]);
 
       shopCategory ? (shop.category = shopCategory[0].title) : "";
     });
 
-    shops.forEach((favourite) => {
-      // console.log(favourite.shop.displayTitle);
-
-      if (favourite.isFavourite === true) {
-        activeFavourites.push(favourite);
+    shops.forEach((bookmark) => {
+      if (bookmark.isBookmark === true) {
+        searchShops.push(bookmark);
       }
     });
 
-    activeFavourites.forEach((favourite) => {
-      isFavourite.push(favourite.isFavourite);
+    searchShops.forEach((bookmark) => {
+      isBookmark.push(bookmark.isBookmark);
     });
-    // console.log(activeFavourites);
+    // bookmarkControl
+    //   ? (filteredPromotion = promo.filter((promotion) => promotion.isBookmark === true))
+    //   : filteredPromotion;
+    // console.log(shops);
 
-    // activeFavourites.map((favourite) => {
+    // shops.forEach((favourite) => {
+    //   if (favourite.isFavourite === true) {
+    //     activeShops.push(favourite);
+    //   }
+    // });
+
+    // activeShops.forEach((favourite) => {
+    //   isFavourite.push(favourite.isFavourite);
+    // });
+
+    // activeShops.map((favourite) => {
     //   let favouriteCategory = categories.filter(
     //     (category) => category.id === favourite.shop.categories[0]
     //   );
@@ -291,18 +399,18 @@ class index extends Component {
     // });
 
     return (
-      <FavouriteList
+      <SearchScreen
         readBookmark={readBookmark}
         readLoading={this.state.readLoading}
         submitLoading={submitLoading}
-        dataSource={activeBookmarks}
-        shopData={activeFavourites}
+        dataSource={promos}
+        shopData={shops}
         selectedTab={selectedTab}
         promotion={promotion}
         promotionModal={promotionModalVisible}
         handleRefresh={this.handleRefresh.bind(this)}
         onMerchantPressed={this.onMerchantPressed.bind(this)}
-        onBookmarkPressed={this.onBookmarkPressed.bind(this)}
+        onPromoFavouritePressed={this.onPromoFavouritePressed.bind(this)}
         onBackPressed={this.onBackPressed.bind(this)}
         onPromoPressedClose={this.onPromoPressedClose.bind(this)}
         onPromoPressed={this.onPromoPressed.bind(this)}
@@ -310,6 +418,10 @@ class index extends Component {
         onToggleTab={this.onToggleTab.bind(this)}
         onFavouritePressed={this.onFavouritePressed.bind(this)}
         // toggleFavourite={this.onFavouriteFiltered.bind(this)}
+        searchFilterFunction={this.searchFilterFunction.bind(this)}
+        searchButtonClick={this.searchButtonClick.bind(this)}
+        searchButtonClickPromo={this.searchButtonClickPromo.bind(this)}
+        mainScreenMessage={this.props.mainScreenMessage}
       />
     );
   }
@@ -322,6 +434,10 @@ const mapStateToProps = (state) => {
   const bookmarkState = state.Bookmark;
   const favouriteState = state.Favourite;
   const shopState = state.Shops;
+  const searchState = state.Search;
+  const { messages, mainScreenMessage } = state.Search;
+
+  // const shopState = state.Shops;
 
   return {
     categories,
@@ -331,6 +447,9 @@ const mapStateToProps = (state) => {
     bookmarkState,
     favouriteState,
     shopState,
+    searchState,
+    messages,
+    mainScreenMessage,
   };
 };
 
@@ -341,7 +460,7 @@ export default connect(mapStateToProps, {
   update,
   submitToBackend,
   onFavouriteClick,
-  loadShops,
+  loadSearchShops,
   updateToBackendShop,
   submitToBackendShop,
   readFromDatabase,
@@ -350,4 +469,11 @@ export default connect(mapStateToProps, {
   listenToRecord,
   toggleTab,
   loadFavourite,
+  updateIsBookmark,
+  loadShopsPromo,
+  loadShops,
+  onPromoSpecificClick,
+  onShopSpecificClick,
+  listenShopMessage,
+  toggleSearchMessageMain,
 })(index);

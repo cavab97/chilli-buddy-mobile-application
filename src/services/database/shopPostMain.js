@@ -30,6 +30,7 @@ export function readObjects() {
 
         // temp = QuerySnapshot.filter((snapshot) => snapshot.data().d.endTime <= adsEnd);
         QuerySnapshot.forEach((snapshot) => {
+          // console.log();
           const data = {
             ...snapshot.data(),
             ...snapshot.data().d,

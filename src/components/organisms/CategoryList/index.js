@@ -1,8 +1,8 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, FlatList } from "react-native";
 
 import { Text, TouchableOpacity, View, Image, SrollView } from "../../atoms";
-import { SwiperFlatList } from "react-native-swiper-flatlist";
+// import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 import ContentLoader, { Rect } from "react-content-loader/native";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -110,7 +110,7 @@ const CategoryList = ({
   onCategoryChange,
   selectedCategory,
   returnSpecificCategory,
-  setFlatListRef,
+  // setFlatListRef,
 }) => {
   // setTimeout(() => {
   //   this.flatListRef.scrollToIndex({
@@ -134,12 +134,12 @@ const CategoryList = ({
   // getItemLayout = (data, index) => ({ length: 20, offset: 100 * index, index });
 
   return (
-    <SwiperFlatList
+    <FlatList
       data={categories}
       /* ref={(ref) => {
         this.flatListRef = ref;
       }} */
-      ref={setFlatListRef}
+      // ref={setFlatListRef}
       renderItem={({ item, index }) => (
         <Category
           id={item.id}
@@ -151,9 +151,8 @@ const CategoryList = ({
           selectedCategory={selectedCategory}
         />
       )}
-      //   horizontal
-      //   showsHorizontalScrollIndicator={false}
-
+      horizontal
+      showsHorizontalScrollIndicator={false}
       keyExtractor={(item) => item.id}
     />
   );

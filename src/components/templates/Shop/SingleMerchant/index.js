@@ -197,7 +197,7 @@ const SingleMerchant = ({
               }}
             >
               <TouchableOpacity //uncomment social media icon
-                onPress={() => onFavouriteClick(dataSource.id)}
+                onPress={() => onFavouriteClick(isFavourite)}
               >
                 <Image
                   source={isFavourite ? filledHeartIcon : fillLessLove}

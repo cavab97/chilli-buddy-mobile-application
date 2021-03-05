@@ -36,3 +36,4 @@ export * from "./Voucher/SingleVoucherRedeem";
 export * from "./Voucher/SingleVoucherErrorModal";
 
 export * from "./SpinningWheel";
+export * from "./SearchScreen";

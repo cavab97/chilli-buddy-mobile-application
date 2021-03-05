@@ -10,11 +10,17 @@ const SearchBar = (props) => {
       <TextInput
         placeholder={props.placeholder}
         keyboardShouldPersistTaps
-        onChangeText={props.onChangeText}
+        onChangeText={props.searchFilterFunction}
         placeholderTextColor={"#f7d0d0"}
         style={styles.innerContainer}
+        name="search"
+        // value={props.data}
       />
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={
+          props.mainScreenMessageBoolean ? props.searchButtonClick : props.onPressSearchButton
+        }
+      >
         <Image
           style={styles.searchIcon}
           source={require("../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/Search_Icon.png")}

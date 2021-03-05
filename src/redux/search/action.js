@@ -11,9 +11,9 @@ import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
 
 import { permissionsRegistration, LOCATION } from "../../marslab-library-react-native/utils/system";
-import { shopDataServices as objectDataServices } from "../../services/database";
+import { shopSearchDataServices as objectDataServices } from "../../services/database";
 
-const type = "shop";
+const type = "search";
 
 const actions = {
   PERMISSION_VERIFICATION: type + "PERMISSION_VERIFICATION",
@@ -32,8 +32,15 @@ const actions = {
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
   READ_RECORD_ERROR: type + "READ_RECORD_ERROR",
 
-  TOGGLE_SHOP_FAVOURITE: type + "TOGGLE_SHOP_FAVOURITE",
-  TOGGLE_SHOP_FAVOURITE_ERROR: type + "TOGGLE_SHOP_FAVOURITE_ERROR",
+  TOGGLE_SEARCH_PROMO_SHOP_FAVOURITE: type + "TOGGLE_SEARCH_PROMO_SHOP_FAVOURITE",
+  TOGGLE_SEARCH_PROMO_SHOP_FAVOURITE_ERROR: type + "TOGGLE_SEARCH_PROMO_SHOP_FAVOURITE_ERROR",
+
+  TOGGLE_SEARCH_SHOP_FAVOURITE: type + "TOGGLE_SEARCH_SHOP_FAVOURITE",
+  TOGGLE_SEARCH_SHOP_FAVOURITE_ERROR: type + "TOGGLE_SEARCH_SHOP_FAVOURITE_ERROR",
+
+  TOGGLE_SEARCH_SHOP_MESSAGES: type + "TOGGLE_SEARCH_SHOP_MESSAGES",
+  TOGGLE_SEARCH_SHOP_MESSAGES_BUTTON: type + "TOGGLE_SEARCH_SHOP_MESSAGES_BUTTON",
+
   TOGGLE_CATEGORY: type + "TOGGLE_CATEGORY",
   TOGGLE_FAVOURITE: type + "TOGGLE_FAVOURITE",
   TOGGLE_TAG: type + "TOGGLE_TAG",
@@ -72,10 +79,14 @@ export function verifyPermission() {
   };
 }
 
-export function loadShops({ radius, selectedCategory = null, selectedTag = null }) {
+export function loadSearchShops({
+  radius,
+  selectedCategory = null,
+  selectedTag = null,
+  shopName = null,
+  address = null,
+}) {
   let limit = 0;
-  console.log("radius");
-  console.log(selectedCategory);
   return (dispatch, getState) => {
     dispatch({ type: actions.READ_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
@@ -84,18 +95,19 @@ export function loadShops({ radius, selectedCategory = null, selectedTag = null 
         let latitude = location.coords.latitude;
         let longtitude = location.coords.longitude;
 
-        radius > 35 ? (limit = 0) : (limit = 100);
+        radius < 35 ? (limit = 0) : (limit = 200);
         const shops = await objectDataServices.geoReadObjects({
           l: { latitude, longtitude },
           radius,
           limit,
           selectedCategory,
           selectedTag,
+          shopName,
+          address,
         });
 
         const { uid } = getState().Auth.user;
         const { favourites } = getState().Favourite;
-
         shops.map((shop) => {
           const isFavourite = favourites.filter((favourite) => {
             return favourite.shopIds[0] === shop.id;
@@ -127,89 +139,45 @@ export function loadShops({ radius, selectedCategory = null, selectedTag = null 
   };
 }
 
-/* export function loadShops({ radius, latitude, longtitude, selectedCategory }) {
+export function loadShopsPromo({
+  radius,
+  selectedCategory = null,
+  selectedTag = null,
+  shopName = null,
+}) {
   let limit = 0;
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({ type: actions.READ_FROM_DATABASE });
-    return new Promise((resolve, reject) => {
-      radius < 15 ? (limit = 0) : (limit = 100);
-      selectedCategory !== null &&
-        geoCollectionReference
-          .where("categories", "array-contains-any", [selectedCategory])
-          .where("deleted.at", "==", null)
-          .limit(limit)
-          .near({
-            center: new firebase.firestore.GeoPoint(latitude, longtitude),
-            radius: radius,
-          })
-          .get()
-          .then((snapshot) => {
-            let Data = [];
-
-            snapshot.forEach(function (doc) {
-              if (doc.data().deleted.at === null) {
-                Data.push({ ...doc, id: doc.id });
-              }
-            });
-
-            Data.sort((a, b) => a.distance - b.distance);
-
-            Data = Data.map((item) => {
-              return { ...item.data(), distance: item.distance, id: item.id };
-            });
-            resolve(Data);
-            dispatch({ type: actions.READ_FROM_DATABASE_SUCCESS });
-          })
-          .catch((error) => {
-            console.log(error);
-            dispatch({ type: actions.READ_FROM_DATABASE_ERROR });
-
-            reject(error);
-          });
-
-      selectedCategory === null &&
-        geoCollectionReference
-          .limit(limit)
-          .where("deleted.at", "==", null)
-          .near({
-            center: new firebase.firestore.GeoPoint(latitude, longtitude),
-            radius: radius,
-          })
-          .get()
-          .then((snapshot) => {
-            var Data = [];
-
-            snapshot.forEach(function (doc) {
-              //console.log(doc.data().displayName, doc.data().deleted_at)
-              //   if (doc.data().deleted.at === null) {
-              Data.push({ ...doc, id: doc.id });
-              //   }
-            });
-
-            Data.sort((a, b) => a.distance - b.distance);
-
-            Data = Data.map((item) => {
-              return { ...item.data(), distance: item.distance, id: item.id };
-            });
-            resolve(Data);
-            dispatch({ type: actions.READ_FROM_DATABASE_SUCCESS });
-          })
-          .catch((error) => {
-            console.log(error);
-            dispatch({ type: actions.READ_FROM_DATABASE_ERROR });
-
-            reject(error);
-          });
-    });
-  };
-}
- */
-export function readFromDatabase(groupId) {
-  return (dispatch) => {
-    dispatch({ type: actions.READ_PROMO_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
       try {
-        const promotions = await objectDataServices.readObjects(groupId);
+        let location = await Location.getCurrentPositionAsync({});
+        let latitude = location.coords.latitude;
+        let longtitude = location.coords.longitude;
+        radius < 15 ? (limit = 0) : (limit = 100);
+        const promotions = await objectDataServices.ReadObjects({
+          l: { latitude, longtitude },
+          radius,
+          limit,
+          selectedCategory,
+          selectedTag,
+          shopName,
+        });
+        const { uid } = getState().Auth.user;
+        const { bookmarks } = getState().Bookmark;
+        // console.log("bookMarks");
+        // console.log(bookmarks);
+
+        promotions.map((promotion) => {
+          const isBookmark = bookmarks.filter((bookmark) => {
+            return bookmark.promotion.id === promotion.id;
+          });
+
+          if (isBookmark.length > 0) {
+            promotion.isBookmark = isBookmark[0].isBookmark;
+          } else {
+            promotion.isBookmark = false;
+          }
+        });
         resolve(promotions);
         dispatch({
           type: actions.READ_PROMO_FROM_DATABASE_SUCCESS,
@@ -226,18 +194,6 @@ export function readFromDatabase(groupId) {
     });
   };
 }
-
-// data.map((shop) => {
-//   const isFavourite = favourites.filter((favourite) => {
-//     return favourite.shopIds[0] === shop.id;
-//   });
-
-//   if (isFavourite.length > 0) {
-//     shop.isFavourite = isFavourite[0].isFavourite;
-//   } else {
-//     shop.isFavourite = false;
-//   }
-// });
 
 export function listenToRecord({ shopId = null }) {
   return (dispatch) => {
@@ -271,35 +227,64 @@ export function removeListenerToRecord() {
   };
 }
 
-export function onFavouriteClick(shopId) {
+export function onPromoSpecificClick(shopId) {
   return (dispatch, getState) => {
     return new Promise(async (resolve, reject) => {
-      //try {
-      const shops = getState().Shops.shops;
-      let isFavourited = null;
-      console.log("shops");
+      try {
+        const promos = getState().Search.promos;
 
-      console.log(shops);
-      const newShops = shops.map((shop) => {
-        if (shop.id === shopId) {
-          shop.isFavourite = !shop.isFavourite;
-          isFavourited = shop;
-        }
-        return shop;
-      });
-      resolve(newShops, isFavourited);
-      const data = { shops: newShops, shop: isFavourited };
-      dispatch({
-        type: actions.TOGGLE_SHOP_FAVOURITE,
-        payload: { data },
-      }); /* 
+        let isFavourited = null;
+        const newShops = promos.map((shop) => {
+          if (shop.id === shopId) {
+            shop.isBookmark = !shop.isBookmark;
+            isFavourited = shop;
+          }
+          return shop;
+        });
+        resolve(newShops, isFavourited);
+        const data = { promos: newShops, promo: isFavourited };
+        dispatch({
+          type: actions.TOGGLE_SEARCH_PROMO_SHOP_FAVOURITE,
+          payload: { data },
+        });
       } catch (error) {
         console.log(error);
         dispatch({
-          type: actions.TOGGLE_SHOP_FAVOURITE_ERROR,
+          type: actions.TOGGLE_SEARCH_PROMO_SHOP_FAVOURITE_ERROR,
           payload: { error },
         });
-      } */
+      }
+    });
+  };
+}
+
+export function onShopSpecificClick(shopId) {
+  return (dispatch, getState) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const shops = getState().Search.shops;
+
+        let isFavourited = null;
+        const newShops = shops.map((shop) => {
+          if (shop.id === shopId) {
+            shop.isFavourite = !shop.isFavourite;
+            isFavourited = shop;
+          }
+          return shop;
+        });
+        resolve(newShops, isFavourited);
+        const data = { shops: newShops, shop: isFavourited };
+        dispatch({
+          type: actions.TOGGLE_SEARCH_SHOP_FAVOURITE,
+          payload: { data },
+        });
+      } catch (error) {
+        console.log(error);
+        dispatch({
+          type: actions.TOGGLE_SEARCH_SHOP_FAVOURITE_ERROR,
+          payload: { error },
+        });
+      }
     });
   };
 }
@@ -308,6 +293,18 @@ export const toggleCategory = (data = null) => {
   return {
     type: actions.TOGGLE_CATEGORY,
     payload: { data },
+  };
+};
+
+export const toggleSearchMessage = (data = null) => {
+  return {
+    type: actions.TOGGLE_SEARCH_SHOP_MESSAGES,
+    payload: { data },
+  };
+};
+export const toggleSearchMessageMain = () => {
+  return {
+    type: actions.TOGGLE_SEARCH_SHOP_MESSAGES_BUTTON,
   };
 };
 

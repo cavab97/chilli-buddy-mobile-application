@@ -30,8 +30,11 @@ export function listenObject({ objectId = null, updateListener = () => {} }) {
 export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag }) {
   return new Promise((resolve, reject) => {
     let databaseRef = database.geoReadTable({ ref: `${objectName}Packaging0` });
+
     if (selectedCategory)
-      databaseRef = databaseRef.where("shop.categories", "array-contains-any", [selectedCategory]);
+      databaseRef = databaseRef.where("categories", "array-contains-any", [selectedCategory]);
+    // console.log("limit");
+    // console.log(limit);
 
     databaseRef
       .where("deleted.at", "==", null)
@@ -42,6 +45,7 @@ export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag
       })
       .get()
       .then((QuerySnapshot) => {
+        // console.log(QuerySnapshot.size);
         const result = [];
         QuerySnapshot.forEach((snapshot) => {
           const data = {
@@ -50,7 +54,6 @@ export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag
             distance: snapshot.distance,
           };
           const parent = database.processData({ data });
-
           const processedData = { ...parent };
 
           if (selectedTag) {

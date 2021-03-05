@@ -11,6 +11,7 @@ export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag
       ref: `${userName}Packaging0/${groupId}/${objectName}Packaging0`,
     });
     // if (selectedCategory)
+    console.log(groupId);
     //   databaseRef = databaseRef.where("shop.categories", "array-contains-any", [selectedCategory]);
     databaseRef
       .where("isFavourite", "==", true)
@@ -32,7 +33,6 @@ export function geoReadObjects({ l, radius, limit, selectedCategory, selectedTag
           const parent = database.processData({ data });
 
           const processedData = { ...parent };
-
           if (selectedTag) {
             const isValidData = processedData.shop.tags.filter((data) => data === selectedTag);
 

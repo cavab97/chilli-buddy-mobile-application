@@ -17,8 +17,9 @@ import {
   View,
   Text,
 } from "@components/atoms";
+// import { Card, CardSection, SearchBar } from "../../molecules";
 
-import { Card, CardSection } from "@components/molecules";
+import { Card, CardSection, SearchBar } from "@components/molecules";
 import { SingleMerchantPromo } from "../Promo/SingleMerchantPromo";
 
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -91,7 +92,7 @@ function ShopItem({
 function PromotionItem({
   picture = [],
   onPress,
-  onBookmarkPressed,
+  onPromoFavouritePressed,
   gotBookmark,
   readBookmark,
   submitLoading,
@@ -145,7 +146,7 @@ function PromotionItem({
                 Just {+(Math.round(distance + "e+2") + "e-2")}km away
               </Text>
               <View style={styles.bookmarkIcon}>
-                <TouchableOpacity onPress={onBookmarkPressed}>
+                <TouchableOpacity onPress={onPromoFavouritePressed}>
                   <Image
                     source={gotBookmark ? filledHeartIcon : emptyHeartIcon}
                     style={styles.favouriteIcon}
@@ -160,13 +161,13 @@ function PromotionItem({
   );
 }
 
-const FavouriteList = ({
+const SearchScreen = ({
   readBookmark,
   submitLoading,
   dataSource,
   handleRefresh,
   onMerchantPressed,
-  onBookmarkPressed,
+  onPromoFavouritePressed,
   loading,
   readLoading,
   onBackPressed,
@@ -182,6 +183,10 @@ const FavouriteList = ({
   onFavouritePressed,
   onToggleTab,
   shopData,
+  searchButtonClick,
+  searchButtonClickPromo,
+  searchFilterFunction,
+  mainScreenMessage,
 }) => {
   return (
     <View style={{ flex: 1 /*height: 100%*/ }}>
@@ -202,12 +207,19 @@ const FavouriteList = ({
         onPromoPressedClose={onPromoPressedClose}
       />
 
-      <View style={styles.promoTitleContainer}>
+      {/* <View style={styles.promoTitleContainer}>
         <Text style={styles.pageTitle}>Favourite</Text>
+      </View> */}
+
+      {/* <Text style={styles.topSubText}>{!selectedTab ? "Shops" : "Promotions"}</Text> */}
+      <View style={styles.SecondSection}>
+        <SearchBar
+          placeholder={"Search"}
+          searchFilterFunction={searchFilterFunction}
+          searchButtonClick={!selectedTab ? searchButtonClick : searchButtonClickPromo}
+          mainScreenMessageBoolean={mainScreenMessage}
+        />
       </View>
-
-      <Text style={styles.topSubText}>{!selectedTab ? "Shops" : "Promotions"}</Text>
-
       {!selectedTab ? (
         <FlatList
           data={shopData}
@@ -233,7 +245,7 @@ const FavouriteList = ({
           onEndReachedThreshold={0.5}
           ListFooterComponent={
             shopData.length === 0 ? (
-              <NotFoundFooter message="No favourite shops found" />
+              <NotFoundFooter message="No shops found" />
             ) : (
               <View style={{ paddingBottom: 30 }} />
             )
@@ -246,12 +258,12 @@ const FavouriteList = ({
           renderItem={({ item, index }) => (
             <PromotionItem
               onPress={() => onPromoPressed(item)}
-              onBookmarkPressed={() => onBookmarkPressed(item)}
-              name={item.promotion.title}
-              picture={item.promotion.coverPhotos}
+              onPromoFavouritePressed={() => onPromoFavouritePressed(item)}
+              name={item.title}
+              picture={item.coverPhotos}
               distance={item.distance}
               promoID={item.id}
-              shopName={item.promotion.shop.displayTitle}
+              shopName={item.shop.displayTitle}
               gotBookmark={item.isBookmark} //{gotBookmark}
               index={index}
               readBookmark={readBookmark}
@@ -262,7 +274,7 @@ const FavouriteList = ({
           onRefresh={handleRefresh}
           refreshing={false}
           ListFooterComponent={
-            dataSource.length === 0 && <NotFoundFooter message="No favourite promotions found" />
+            dataSource.length === 0 && <NotFoundFooter message="No promotions found" />
           }
           style={styles.flatList}
         />
@@ -271,4 +283,4 @@ const FavouriteList = ({
   );
 };
 
-export { FavouriteList };
+export { SearchScreen };

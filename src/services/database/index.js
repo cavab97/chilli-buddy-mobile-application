@@ -21,6 +21,8 @@ import * as checkInDataServices from "./checkIn";
 import * as favouriteDataServices from "./favourite";
 import * as shopPostMainDataServices from "./shopPostMain";
 
+import * as shopSearchDataServices from "./search";
+
 export {
   advertisementDataServices,
   settingsDataServices,
@@ -39,4 +41,5 @@ export {
   voucherDataServices,
   favouriteDataServices,
   shopPostMainDataServices,
+  shopSearchDataServices,
 };

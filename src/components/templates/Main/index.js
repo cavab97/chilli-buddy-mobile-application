@@ -8,8 +8,9 @@ import { Actions } from "react-native-router-flux";
 import { Video } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { ImageInfo, SearchBar } from "../../molecules";
+import { ImageInfo } from "../../molecules";
 import { SingleMerchantPromo } from "../../templates/Promo/SingleMerchantPromo";
+import { SearchFlatList } from "../../organisms/SearchFlatList";
 
 //import WheelOfFortune from "react-native-wheel-of-fortune";
 
@@ -28,7 +29,7 @@ import {
   Icon as Icon2,
 } from "../../atoms";
 
-import { Card, CardSection } from "../../molecules";
+import { Card, CardSection, SearchBar } from "../../molecules";
 
 import { InfoBox } from "@components/organisms/InfoBox";
 
@@ -169,6 +170,11 @@ export default ({
   onCarouselPressed,
   onPromoPressed,
   onPromoPressedClose,
+  categories,
+  searchFilterFunction,
+  onPressSearch,
+  onPressSearchButton,
+  mainScreenMessageBoolean,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -402,8 +408,8 @@ export default ({
           </View>
 
           {/* The Second screen Row */}
-          {/* <View style={styles.SecondSection}>
-            <SearchBar
+          <TouchableOpacity style={styles.SecondSection} onPress={onPressSearch}>
+            {/* <SearchBar
               placeholder="Search"
               lightTheme={true}
               searchIcon={true}
@@ -411,9 +417,20 @@ export default ({
               inputContainerStyle={styles.searchBarInputStyles}
               placeholderTextColor="#f7d0d0"
               round={true}
+            /> */}
+            {/* <SearchFlatList
+              data={data}
+              searchFilterFunction={searchFilterFunction}
+              placeholder={"Search"}
+              value={value}
+            /> */}
+            <SearchBar
+              placeholder={"Search"}
+              onPressSearchButton={onPressSearchButton}
+              mainScreenMessageBoolean={mainScreenMessageBoolean}
+              searchFilterFunction={searchFilterFunction}
             />
-            <SearchBar placeholder="Search" />
-          </View> */}
+          </TouchableOpacity>
 
           {/* The Third screen Row */}
           <View style={styles.thirdSection}>

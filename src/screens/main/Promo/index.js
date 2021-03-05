@@ -4,9 +4,9 @@ import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
 import { getDistance } from "geolib";
 
-import { 
-  verifyPermission, 
-  loadShopsPromo, 
+import {
+  verifyPermission,
+  loadShopsPromo,
   onBookmarkClick,
   toggleSwipeable,
   toggleCategoryModal,
@@ -17,7 +17,7 @@ import {
   toggleBookmark,
   toggleTag,
   toggleRemoveCategory,
-  toggleRemoveTag
+  toggleRemoveTag,
 } from "@redux/promo/action";
 
 import {
@@ -25,6 +25,7 @@ import {
   submitToBackend,
   readFromDatabase,
   updateIsBookmark,
+  loadBookmark,
 } from "@redux/bookmark/action";
 
 import { PromoList } from "@components/templates";
@@ -94,6 +95,13 @@ class index extends Component {
 
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
+    await this.props.loadBookmark({
+      radius: RADIUS * this.state.radiusAddition,
+      latitude: location.coords.latitude,
+      longtitude: location.coords.longitude,
+      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+    });
     await this.props.loadShopsPromo({
       radius: RADIUS * this.state.radiusAddition,
       latitude: location.coords.latitude,
@@ -109,13 +117,13 @@ class index extends Component {
   }
 
   onPromoPressedClose() {
-    this.props.togglePromotionModal()
+    this.props.togglePromotionModal();
   }
 
   onPromoPressed(item) {
     //Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
-    this.props.listenToRecord({ promoId: item.id })
-    this.props.togglePromotionModal()
+    this.props.listenToRecord({ promoId: item.id });
+    this.props.togglePromotionModal();
   }
 
   onCategoryChange = (value) => {
@@ -127,14 +135,14 @@ class index extends Component {
     this.setState({ selectedTag: value });
     this.handleRefresh();
   };
-  
+
   onCategoryPressed = () => {
-    this.props.toggleCategoryModal()
-  }
+    this.props.toggleCategoryModal();
+  };
 
   onTagPressed = () => {
-    this.props.toggleTagModal()
-  }
+    this.props.toggleTagModal();
+  };
 
   lookingForBookmark({ promoId } = null) {
     const bookmarks = this.props.bookmarks;
@@ -149,6 +157,7 @@ class index extends Component {
   }
 
   onBookmarkPressed = async (item) => {
+    // console.log(item);
     const shopId = item.shop.id;
     const promoId = item.id;
     const bookmarkId = this.lookingForBookmark({ promoId });
@@ -175,11 +184,11 @@ class index extends Component {
   }
 
   onCategoryRemove(type) {
-    switch(type){
-      case 'category':
+    switch (type) {
+      case "category":
         this.props.toggleRemoveCategory();
         break;
-      case 'tag':
+      case "tag":
         this.props.toggleRemoveTag();
         break;
       default:
@@ -219,10 +228,10 @@ class index extends Component {
   };
 
   render() {
-    const { 
-      readLoading, 
-      promo, 
-      bookmark, 
+    const {
+      readLoading,
+      promo,
+      bookmark,
       promotion,
       swipeable,
       bookmarkControl,
@@ -230,10 +239,10 @@ class index extends Component {
       tagModalVisible,
       promotionModalVisible,
       selectedCategory,
-      selectedTag
+      selectedTag,
     } = this.props.promotionState;
 
-    const { categories, tags } = this.props
+    const { categories, tags } = this.props;
 
     const readBookmark = this.props.bookmarkState.readLoading;
     const submitLoading = this.props.bookmarkState.submitLoading;
@@ -244,37 +253,43 @@ class index extends Component {
     let selectedCategoryTag;
 
     filteredCategories = categories.filter((category) => category.title !== "All");
-    
+
     // Get Shop Category
     promo.map((promotion) => {
-      let promotionCategory = categories.filter((category) => category.id === promotion.shop.categories[0]);
+      let promotionCategory = categories.filter(
+        (category) => category.id === promotion.shop.categories[0]
+      );
 
       promotionCategory ? (promotion.category = promotionCategory[0].title) : "";
     });
 
     // On toggle category get category from promotion shop
     selectedCategory
-      ? (filteredPromotion = promo.filter((promotion) => promotion.shop.categories.includes(selectedCategory)))
-      : filteredPromotion = promo;
+      ? (filteredPromotion = promo.filter((promotion) =>
+          promotion.shop.categories.includes(selectedCategory)
+        ))
+      : (filteredPromotion = promo);
 
     // On toggle tag get tag from promotion shop
-    selectedTag ?
-      selectedTag === 'All' 
+    selectedTag
+      ? selectedTag === "All"
         ? filteredPromotion
-        : (filteredPromotion = filteredPromotion.filter((promotion) => promotion.shop.tags.includes(selectedTag) === true))
+        : (filteredPromotion = filteredPromotion.filter(
+            (promotion) => promotion.shop.tags.includes(selectedTag) === true
+          ))
       : filteredPromotion;
 
     // On toggle bookmark get bookmark promotion
     bookmarkControl
       ? (filteredPromotion = filteredPromotion.filter((promotion) => promotion.isBookmark === true))
       : filteredPromotion;
-    
+
     if (selectedCategory) {
       selectedCategoryTag = filteredCategories.filter(
         (category) => category.id === selectedCategory
       );
 
-      selectedCategoryTag = selectedCategoryTag[0].tags
+      selectedCategoryTag = selectedCategoryTag[0].tags;
 
       tags.forEach((tag) =>
         selectedCategoryTag.forEach((categoryTag) => {
@@ -336,6 +351,7 @@ export default connect(mapStateToProps, {
   onBookmarkClick,
   updateIsBookmark,
   toggleCategoryModal,
+  loadBookmark,
   toggleTagModal,
   togglePromotionModal,
   listenToRecord,
@@ -347,5 +363,5 @@ export default connect(mapStateToProps, {
   toggleSwipeable,
   toggleBookmark,
   toggleRemoveCategory,
-  toggleRemoveTag
+  toggleRemoveTag,
 })(index);

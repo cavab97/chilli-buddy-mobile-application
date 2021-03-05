@@ -20,7 +20,7 @@ import {
 
 import { ShopList } from "@components/templates";
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 5;
 const RADIUS = 50;
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,28 +34,28 @@ class index extends Component {
       data: [],
       dataSource: [],
       filteredData: [],
-      page: 0,
+      page: 1,
       // isLoading:false,
       isRefreshing: false,
       tags: props.tags,
       categories: props.categories,
-      selectedCategory: { id: "", tags: ["All"], title: "All" },
+      selectedCategory: "1607328160755",
       selectedTag: "All", //default all tag selected
+      // limit: 10,
     };
     //this.onSubscribePressed = this.onSubscribePressed.bind(this);
-    this.handleLoadMore = this.handleLoadMore.bind(this);
+    // this.handleLoadMore = this.handleLoadMore.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
     //this.renderFooter = this.renderFooter.bind(this);
-    this.filterData = this.filterData.bind(this);
+    // this.filterData = this.filterData.bind(this);
   }
 
   // old ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidMount = async () => {
-    //this.handleRefresh();
-    // this.myRef.scrollToIndex({ index: 20 });
-    // setTimeout(() => {
-    // }, 1000);
-    // this.scrollToItem();
+    console.log("componentDidMount");
+
+    const { categories } = this.props;
+    const selectedID = this.props.selectedCategoryId;
 
     this.props.verifyPermission().then((permissions) => {
       if (permissions.location !== "granted") {
@@ -67,20 +67,23 @@ class index extends Component {
         }
       } else this.handleRefresh();
     });
+    if (selectedID) {
+      this.swap(categories, 0, selectedID);
+    }
   };
 
   handleRefresh = async () => {
     const { categories } = this.props;
     let filteredCategories = categories.filter((category) => category.title !== "All");
-
     await this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
-      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+      selectedCategory: this.state.selectedCategory,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+      // limit: this.state.limit,
     });
 
     if (this.props.selectedCategory) {
-      await this.props.toggleCategory(this.props.selectedCategory.id);
+      await this.props.toggleCategory(this.props.selectedCategory);
     } else {
       await this.props.toggleCategory(filteredCategories[0].id);
     }
@@ -90,8 +93,8 @@ class index extends Component {
   componentDidUpdate(prevProps, prevState) {
     const currentShop = this.props.shopState.shops;
     const readError = this.props.shopState.readError;
-    const { selectedCategory } = this.props.shopState;
-    const { categories } = this.props;
+    // const { selectedCategory } = this.props.shopState;
+    // const { categories } = this.props;
     // const readLoading = this.props.bookmarkState.readLoading;
 
     // if no shop in the radius, call handleRefresh read again by increase radiusAddition state
@@ -110,54 +113,63 @@ class index extends Component {
       alert(readError);
     }
 
-    if (this.flatListRef !== null && this.flatListRef !== undefined) {
-      let filteredCategories = categories.filter((category) => category.title !== "All");
+    // if (this.flatListRef !== null && this.flatListRef !== undefined) {
+    //   let filteredCategories = categories.filter((category) => category.title !== "All");
 
-      this.flatListRef.scrollToIndex({
-        animated: false,
-        index:
-          this.returnSpecificCategory(filteredCategories, selectedCategory) === -1
-            ? 0
-            : this.returnSpecificCategory(filteredCategories, selectedCategory),
-      });
-    }
+    //   this.flatListRef.scrollToIndex({
+    //     animated: false,
+    //     index:
+    //       this.returnSpecificCategory(filteredCategories, selectedCategory) === -1
+    //         ? 0
+    //         : this.returnSpecificCategory(filteredCategories, selectedCategory),
+    //   });
+    // }
   }
 
-  handleLoadMore() {
-    //this.setState({isLoading:true})
-    const { page, data } = this.state;
-    const start = page * ITEMS_PER_PAGE;
-    const end = (page + 1) * ITEMS_PER_PAGE;
+  // handleLoadMore() {
+  //   console.log("triggerrrr");
+  //   //this.setState({isLoading:true})
+  //   const { page, data } = this.state;
+  //   const start = page * ITEMS_PER_PAGE;
+  //   const end = (page + 1) * ITEMS_PER_PAGE;
 
-    const newData = this.state.filteredData.slice(start, end); // here, we will receive next batch of the items
-    this.setState({ data: [...data, ...newData], page: page + 1 }); // here we are appending new batch to existing batch
-  }
+  //   const newData = this.state.filteredData.slice(start, end); // here, we will receive next batch of the items
+  //   this.setState({ data: [...data, ...newData], page: page + 1 }); // here we are appending new batch to existing batch
+  // }
 
-  filterData() {
-    const filteredData =
-      this.state.selectedTag !== "All"
-        ? this.state.dataSource.filter((item) => {
-            return item.tags
-              .map((tag) => {
-                return tag;
-              })
-              .includes(this.state.selectedTag);
-          })
-        : this.state.dataSource;
-    const dataDisplay = [];
-    filteredData.map((data) => {
-      dataDisplay.push({
-        ...data,
-        //subscribed: this.props.subscribedList.includes(data.id)
-      });
+  // filterData() {
+  //   const filteredData =
+  //     this.state.selectedTag !== "All"
+  //       ? this.state.dataSource.filter((item) => {
+  //           return item.tags
+  //             .map((tag) => {
+  //               return tag;
+  //             })
+  //             .includes(this.state.selectedTag);
+  //         })
+  //       : this.state.dataSource;
+  //   const dataDisplay = [];
+  //   filteredData.map((data) => {
+  //     dataDisplay.push({
+  //       ...data,
+  //       //subscribed: this.props.subscribedList.includes(data.id)
+  //     });
+  //   });
+  //   this.setState({ filteredData: dataDisplay, page: 1, data: [] });
+  //   this.handleLoadMore();
+  // }
+
+  onCategorySelected = async (id = null) => {
+    this.setState({ selectedCategory: id, selectedTag: "All" });
+    console.log("id");
+    console.log(this.state.selectedCategory);
+    await this.props.loadShops({
+      radius: RADIUS * this.state.radiusAddition,
+      selectedCategory: id,
+      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    this.setState({ filteredData: dataDisplay, page: 0, data: [] });
-    this.handleLoadMore();
-  }
-
-  onCategorySelected(id = null) {
     this.props.toggleCategory(id);
-  }
+  };
 
   onFavouriteFiltered() {
     this.props.toggleFavourite();
@@ -170,11 +182,6 @@ class index extends Component {
       categoryName: item.category,
     });
   }
-
-  onCategoryChange = (value) => {
-    this.setState({ selectedCategory: value, selectedTag: "All" });
-    this.handleRefresh();
-  };
 
   onTagChange = (tag) => {
     this.props.toggleTag(tag.id);
@@ -200,7 +207,7 @@ class index extends Component {
 
     this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
-
+    // console.log(item.isFavourite);
     if (favouriteId === null) {
       const data = { shopId, isFavourite };
       await this.props.submitToBackend(data, "create");
@@ -222,26 +229,32 @@ class index extends Component {
   scrollToItem() {
     this.myRef.current.scrollToIndex({ animated: true, index: 20 });
   }
+  swap(input, index_A, index_B) {
+    let temp = input[index_A];
 
-  setFlatListRef = (value) => {
-    const { categories, selectedCategory } = this.props;
+    input[index_A] = input[index_B];
+    input[index_B] = temp;
+  }
 
-    let filteredCategories = categories.filter((category) => category.title !== "All");
+  // setFlatListRef = (value) => {
+  //   const { categories, selectedCategory } = this.props;
 
-    this.flatListRef = value;
-    // console.log(this.flatListRef);
+  //   let filteredCategories = categories.filter((category) => category.title !== "All");
+  //   console.log(value);
+  //   this.flatListRef = value;
+  //   // console.log(this.flatListRef);
 
-    /* if (this.flatListRef !== null) {
-      let filteredCategories = categories.filter((category) => category.title !== "All");
-      this.flatListRef.scrollToIndex({
-        animated: false,
-        index:
-          this.returnSpecificCategory(filteredCategories, selectedCategory) === -1
-            ? 0
-            : this.returnSpecificCategory(filteredCategories, selectedCategory)
-      });
-    } */
-  };
+  //   /* if (this.flatListRef !== null) {
+  //     let filteredCategories = categories.filter((category) => category.title !== "All");
+  //     this.flatListRef.scrollToIndex({
+  //       animated: false,
+  //       index:
+  //         this.returnSpecificCategory(filteredCategories, selectedCategory) === -1
+  //           ? 0
+  //           : this.returnSpecificCategory(filteredCategories, selectedCategory)
+  //     });
+  //   } */
+  // };
 
   render() {
     const {
@@ -251,6 +264,7 @@ class index extends Component {
       selectedTag,
       loading,
     } = this.props.shopState;
+    // console.log(this.props.selectedCategory);
 
     const { categories, tags } = this.props;
 
@@ -260,6 +274,7 @@ class index extends Component {
     let filteredTags = [];
 
     // Get Shop Category
+
     shops.map((shop) => {
       let shopCategory = categories.filter((category) => category.id === shop.categories[0]);
 
@@ -303,13 +318,18 @@ class index extends Component {
       );
     }
 
-    filteredCategories.push(categories[0]);
+    // filteredCategories.push(this.state.selectedCategory);
+    // console.log(categories[0]);
+    // console.log(filteredCategories.length);
+    // console.log(
+    this.swap(filteredCategories, 2, 10);
+    // );
 
     return (
       <ShopList
         handleRefresh={this.handleRefresh.bind(this)}
-        handleLoadMore={this.handleLoadMore.bind(this)}
-        filterData={this.filterData.bind(this)}
+        // handleLoadMore={this.handleLoadMore.bind(this)}
+        // filterData={this.filterData.bind(this)}
         //renderFooter={this.renderFooter.bind(this)}
         onFavouritePressed={this.onFavouritePressed.bind(this)}
         onMerchantPressed={this.onMerchantPressed.bind(this)}
@@ -328,7 +348,7 @@ class index extends Component {
         returnSpecificCategory={this.returnSpecificCategory.bind(this)}
         scrollToItem={this.scrollToItem.bind(this)}
         myRef={this.myRef}
-        setFlatListRef={this.setFlatListRef.bind(this)}
+        // setFlatListRef={this.setFlatListRef.bind(this)}
         //displayCategory={this.props.selectedCategory ? "" : this.props.selectedCategory.id}
       />
     );

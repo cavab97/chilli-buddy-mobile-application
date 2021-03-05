@@ -145,7 +145,8 @@ export function submitToBackend(data, actionName) {
     dispatch({ type: actions.SUBMIT_TO_BACKEND });
     return new Promise(async (resolve, reject) => {
       let result = {};
-
+      console.log("data.isBookmark");
+      console.log(data.isBookmark);
       try {
         switch (actionName) {
           case "create":
