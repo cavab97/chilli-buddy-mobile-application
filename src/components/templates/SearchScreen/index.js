@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { CustomNavBar } from "@components/organisms/CustomNavBar";
 import Modal from "react-native-modal";
 
-import { Platform } from "react-native";
+import { Platform, Dimensions } from "react-native";
 
 import {
   ActivityIndicator,
@@ -21,9 +21,11 @@ import {
 
 import { Card, CardSection, SearchBar } from "@components/molecules";
 import { SingleMerchantPromo } from "../Promo/SingleMerchantPromo";
+import ContentLoader, { Rect } from "react-content-loader/native";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NotFoundFooter } from "@components/molecules/index";
+const windowWidth = Dimensions.get("window").width;
 
 function ShopItem({
   name,
@@ -51,7 +53,7 @@ function ShopItem({
   const promotionTag = require("../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/promotions.png");
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} activeOpacity={1}>
       <View style={styles.shopCardContainer}>
         <CardSection style={styles.imageContainer}>
           <Image style={shopImage} resizeMode="cover" source={cover} />
@@ -72,7 +74,7 @@ function ShopItem({
           <Image source={distanceIcon} style={styles.distanceIcon} />
           <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")} Km away</Text>
           <View style={{ position: "absolute", right: 5, bottom: 0 }}>
-            <TouchableOpacity onPress={onFavouritePress}>
+            <TouchableOpacity onPress={onFavouritePress} activeOpacity={1}>
               <Image
                 source={isFavourite ? filledHeartIcon : emptyHeartIcon}
                 style={styles.favouriteIcon}
@@ -81,9 +83,9 @@ function ShopItem({
           </View>
         </CardSection>
 
-        <TouchableOpacity style={profile}>
+        <View style={profile}>
           {isPromote === true && <Image source={promotionTag} style={styles.promotionWrapper} />}
-        </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -111,7 +113,7 @@ function PromotionItem({
   const filledHeartIcon = require("../../../assets/icons/filledHeart.png");
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} activeOpacity={1}>
       <View style={styles.cardContainer}>
         <View style={{ width: "37%" }}>
           <CardSection style={styles.imageContainer}>
@@ -146,7 +148,7 @@ function PromotionItem({
                 Just {+(Math.round(distance + "e+2") + "e-2")}km away
               </Text>
               <View style={styles.bookmarkIcon}>
-                <TouchableOpacity onPress={onPromoFavouritePressed}>
+                <TouchableOpacity onPress={onPromoFavouritePressed} activeOpacity={1}>
                   <Image
                     source={gotBookmark ? filledHeartIcon : emptyHeartIcon}
                     style={styles.favouriteIcon}
@@ -187,6 +189,7 @@ const SearchScreen = ({
   searchButtonClickPromo,
   searchFilterFunction,
   mainScreenMessage,
+  dataSearch,
 }) => {
   return (
     <View style={{ flex: 1 /*height: 100%*/ }}>
@@ -199,18 +202,15 @@ const SearchScreen = ({
         selectedButton1={!selectedTab}
         selectedButton2={selectedTab}
       />
-
       <SingleMerchantPromo
         promotionModal={promotionModal}
         dataSource={promotion}
         onCarouselPressed={onCarouselPressed}
         onPromoPressedClose={onPromoPressedClose}
       />
-
       {/* <View style={styles.promoTitleContainer}>
         <Text style={styles.pageTitle}>Favourite</Text>
       </View> */}
-
       {/* <Text style={styles.topSubText}>{!selectedTab ? "Shops" : "Promotions"}</Text> */}
       <View style={styles.SecondSection}>
         <SearchBar
@@ -218,9 +218,28 @@ const SearchScreen = ({
           searchFilterFunction={searchFilterFunction}
           searchButtonClick={!selectedTab ? searchButtonClick : searchButtonClickPromo}
           mainScreenMessageBoolean={mainScreenMessage}
+          loading={loading}
+          dataSearch={dataSearch}
+          readLoading={readLoading}
         />
       </View>
-      {!selectedTab ? (
+      {readLoading || loading ? (
+        <View>
+          <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
+            {/* <Rect x={windowWidth / 1.2} y="15" rx="10" ry="10" width="35" height="40" />
+            <Rect x={windowWidth / 1.4} y="15" rx="10" ry="10" width="35" height="40" /> */}
+            {/* 
+            <Rect x="20" y="130" rx="20" ry="20" width="20%" height="100" />
+            <Rect x="110" y="130" rx="20" ry="20" width="20%" height="100" />
+            <Rect x="200" y="130" rx="20" ry="20" width="20%" height="100" />
+            <Rect x="290" y="130" rx="20" ry="20" width="20%" height="100" /> */}
+
+            <Rect x="20" y="15" rx="10" ry="10" width="90%" height="175" />
+            <Rect x="20" y="215" rx="10" ry="10" width="90%" height="175" />
+            <Rect x="20" y="415" rx="10" ry="10" width="90%" height="175" />
+          </ContentLoader>
+        </View>
+      ) : !selectedTab ? (
         <FlatList
           data={shopData}
           renderItem={({ item, index }) => (

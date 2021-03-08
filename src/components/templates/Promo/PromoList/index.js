@@ -43,7 +43,7 @@ function Item({
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} activeOpacity={1}>
       <View style={styles.cardContainer}>
         <View style={styles.leftCardContainer}>
           <CardSection style={styles.imageContainer}>
@@ -73,7 +73,7 @@ function Item({
               <Image source={distanceIcon} style={styles.distanceIcon} />
               <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")}km away</Text>
               <View style={bookmarkIcon}>
-                <TouchableOpacity onPress={onBookmarkPressed}>
+                <TouchableOpacity onPress={onBookmarkPressed} activeOpacity={1}>
                   <Image
                     source={gotBookmark ? filledHeartIcon : emptyHeartIcon}
                     style={styles.favouriteIcon}
@@ -90,6 +90,7 @@ function Item({
 
 const PromoList = ({
   loading,
+  readLoading,
   readBookmark,
   submitLoading,
   dataSource,
@@ -129,173 +130,171 @@ const PromoList = ({
   let categoryType = "category";
   let tagType = "tag";
   // console.log(loading);
-  // if (loading) {
-  //   return (
-  //     <View>
-  //       <CustomNavBar
-  //         textOne="Category"
-  //         textTwo="Tags"
-  //         onPressBack={onBackPressed}
-  //         onPressButton1={onCategoryPressed}
-  //         onPressButton2={onTagPressed}
-  //         selectedButton1={categoryModal}
-  //         selectedButton2={tagModal}
-  //       />
-  //       <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
-  //         <Rect x="20" y="105" rx="10" ry="10" width="30%" height="50" />
-  //         <Rect x={windowWidth / 1.3} y="105" rx="10" ry="10" width="15%" height="50" />
+  if (loading || readLoading) {
+    return (
+      <View>
+        <CustomNavBar onPressBack={onBackPressed} />
+        <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
+          <Rect x="20" y="10" rx="10" ry="10" width="30%" height="50" />
+          <Rect x={windowWidth / 1.3} y="10" rx="10" ry="10" width="15%" height="50" />
 
-  //         {/* <Rect x={windowWidth / 1.3} y="65" rx="10" ry="10" width="70" height="30" />
-  //       <Rect x={windowWidth / 1.8} y="65" rx="10" ry="10" width="70" height="30" /> */}
+          {/* <Rect x={windowWidth / 1.3} y="65" rx="10" ry="10" width="70" height="30" />
+        <Rect x={windowWidth / 1.8} y="65" rx="10" ry="10" width="70" height="30" /> */}
 
-  //         {/* <Rect x="20" y="130" rx="20" ry="20" width="20%" height="100" />
-  //       <Rect x="110" y="130" rx="20" ry="20" width="20%" height="100" />
-  //       <Rect x="200" y="130" rx="20" ry="20" width="20%" height="100" />
-  //       <Rect x="290" y="130" rx="20" ry="20" width="20%" height="100" /> */}
+          {/* <Rect x="20" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="110" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="200" y="130" rx="20" ry="20" width="20%" height="100" />
+        <Rect x="290" y="130" rx="20" ry="20" width="20%" height="100" /> */}
 
-  //         <Rect x="20" y="190" rx="10" ry="10" width="30%" height="110" />
-  //         <Rect x="160" y="190" rx="10" ry="10" width="50%" height="15" />
-  //         <Rect x="160" y="220" rx="10" ry="10" width="30%" height="15" />
-  //         <Rect x="160" y="250" rx="10" ry="10" width="30%" height="15" />
-  //         <Rect x="160" y="280" rx="10" ry="10" width="50%" height="15" />
+          <Rect x="20" y="70" rx="10" ry="10" width="30%" height="110" />
+          <Rect x="160" y="70" rx="10" ry="10" width="50%" height="15" />
+          <Rect x="160" y="100" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="130" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="160" rx="10" ry="10" width="50%" height="15" />
 
-  //         <Rect x="20" y="310" rx="10" ry="10" width="30%" height="110" />
+          <Rect x="20" y="190" rx="10" ry="10" width="30%" height="110" />
+          <Rect x="160" y="190" rx="10" ry="10" width="50%" height="15" />
+          <Rect x="160" y="220" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="250" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="280" rx="10" ry="10" width="50%" height="15" />
 
-  //         <Rect x="160" y="310" rx="10" ry="10" width="50%" height="15" />
-  //         <Rect x="160" y="340" rx="10" ry="10" width="30%" height="15" />
-  //         <Rect x="160" y="370" rx="10" ry="10" width="30%" height="15" />
-  //         <Rect x="160" y="400" rx="10" ry="10" width="50%" height="15" />
+          <Rect x="20" y="310" rx="10" ry="10" width="30%" height="110" />
 
-  //         <Rect x="20" y="430" rx="10" ry="10" width="30%" height="110" />
+          <Rect x="160" y="310" rx="10" ry="10" width="50%" height="15" />
+          <Rect x="160" y="340" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="370" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="400" rx="10" ry="10" width="50%" height="15" />
 
-  //         <Rect x="160" y="430" rx="10" ry="10" width="50%" height="15" />
-  //         <Rect x="160" y="460" rx="10" ry="10" width="30%" height="15" />
-  //         <Rect x="160" y="490" rx="10" ry="10" width="30%" height="15" />
-  //         <Rect x="160" y="520" rx="10" ry="10" width="50%" height="15" />
+          <Rect x="20" y="430" rx="10" ry="10" width="30%" height="110" />
 
-  //         <Rect x="20" y="550" rx="10" ry="10" width="30%" height="110" />
+          <Rect x="160" y="430" rx="10" ry="10" width="50%" height="15" />
+          <Rect x="160" y="460" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="490" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="520" rx="10" ry="10" width="50%" height="15" />
 
-  //         <Rect x="160" y="550" rx="10" ry="10" width="50%" height="15" />
-  //         <Rect x="160" y="580" rx="10" ry="10" width="30%" height="15" />
-  //         <Rect x="160" y="610" rx="10" ry="10" width="30%" height="15" />
-  //         <Rect x="160" y="640" rx="10" ry="10" width="50%" height="15" />
+          <Rect x="20" y="550" rx="10" ry="10" width="30%" height="110" />
 
-  //         <Rect x="20" y="670" rx="10" ry="10" width="30%" height="110" />
+          <Rect x="160" y="550" rx="10" ry="10" width="50%" height="15" />
+          <Rect x="160" y="580" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="610" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="640" rx="10" ry="10" width="50%" height="15" />
 
-  //         <Rect x="160" y="670" rx="10" ry="10" width="50%" height="15" />
-  //         <Rect x="160" y="700" rx="10" ry="10" width="30%" height="15" />
-  //         <Rect x="160" y="730" rx="10" ry="10" width="30%" height="15" />
-  //       </ContentLoader>
-  //     </View>
-  //   );
-  // } else
-  return (
-    <View style={{ flex: 1 }}>
-      <CustomNavBar
-        textOne="Category"
-        textTwo="Tags"
-        onPressBack={onBackPressed}
-        onPressButton1={onCategoryPressed}
-        onPressButton2={onTagPressed}
-        selectedButton1={categoryModal}
-        selectedButton2={tagModal}
-      />
+          <Rect x="20" y="670" rx="10" ry="10" width="30%" height="110" />
 
-      <SwipeableModal
-        modalVisible={categoryModal}
-        dataSource={categories}
-        modalTitle="Category"
-        type="category"
-        full={false}
-        onSwipeComplete={onCategoryPressed}
-        onBackDropPressed={onCategoryPressed}
-        selectedCategory={selectedCategory}
-        onPress={onCategoryChange}
-      />
-
-      <SwipeableModal
-        modalVisible={tagModal}
-        dataSource={tags}
-        modalTitle="Tags"
-        type="tag"
-        full={false}
-        onSwipeComplete={onTagPressed}
-        selectedTag={selectedTag}
-        onPress={onTagChange}
-        selectedCategory={selectedTag}
-        onBackDropPressed={onTagPressed}
-      />
-
-      <SingleMerchantPromo
-        promotionModal={promotionModal}
-        dataSource={promotion}
-        onCarouselPressed={onCarouselPressed}
-        onPromoPressedClose={onPromoPressedClose}
-      />
-
-      <View style={styles.promoTitleContainer}>
-        <Text style={styles.pageTitle}>Promotions</Text>
-
-        <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={toggleBookmark}>
-            <Image
-              source={bookmark ? filledHeartIcon : emptyHeartIcon}
-              style={styles.emptyHeartIcon}
-            />
-          </TouchableOpacity>
-        </View>
+          <Rect x="160" y="670" rx="10" ry="10" width="50%" height="15" />
+          <Rect x="160" y="700" rx="10" ry="10" width="30%" height="15" />
+          <Rect x="160" y="730" rx="10" ry="10" width="30%" height="15" />
+        </ContentLoader>
       </View>
-      {selectedCategory && (
-        <View style={styles.categoryContainer}>
-          <View style={styles.button} key={selectedCategory}>
-            <Text style={styles.iconButton}>{selectedCategoryTitle}</Text>
-            <TouchableOpacity onPress={() => onCategoryRemove(categoryType)}>
-              <Icon name="close" size={16} color="#909090" />
+    );
+  } else
+    return (
+      <View style={{ flex: 1 }}>
+        <CustomNavBar
+          textOne="Category"
+          textTwo="Tags"
+          onPressBack={onBackPressed}
+          onPressButton1={onCategoryPressed}
+          onPressButton2={onTagPressed}
+          selectedButton1={categoryModal}
+          selectedButton2={tagModal}
+        />
+
+        <SwipeableModal
+          modalVisible={categoryModal}
+          dataSource={categories}
+          modalTitle="Category"
+          type="category"
+          full={false}
+          onSwipeComplete={onCategoryPressed}
+          onBackDropPressed={onCategoryPressed}
+          selectedCategory={selectedCategory}
+          onPress={onCategoryChange}
+        />
+
+        <SwipeableModal
+          modalVisible={tagModal}
+          dataSource={tags}
+          modalTitle="Tags"
+          type="tag"
+          full={false}
+          onSwipeComplete={onTagPressed}
+          selectedTag={selectedTag}
+          onPress={onTagChange}
+          selectedCategory={selectedTag}
+          onBackDropPressed={onTagPressed}
+        />
+
+        <SingleMerchantPromo
+          promotionModal={promotionModal}
+          dataSource={promotion}
+          onCarouselPressed={onCarouselPressed}
+          onPromoPressedClose={onPromoPressedClose}
+        />
+
+        <View style={styles.promoTitleContainer}>
+          <Text style={styles.pageTitle}>Promotions</Text>
+
+          <View style={styles.iconContainer}>
+            <TouchableOpacity onPress={toggleBookmark} activeOpacity={1}>
+              <Image
+                source={bookmark ? filledHeartIcon : emptyHeartIcon}
+                style={styles.emptyHeartIcon}
+              />
             </TouchableOpacity>
           </View>
-          {selectedTag && (
-            <View style={styles.button} key={selectedTag}>
-              <Text style={styles.iconButton}>{selectedTagTitle}</Text>
-              <TouchableOpacity onPress={() => onCategoryRemove(tagType)}>
+        </View>
+        {selectedCategory && (
+          <View style={styles.categoryContainer}>
+            <View style={styles.button} key={selectedCategory}>
+              <Text style={styles.iconButton}>{selectedCategoryTitle}</Text>
+              <TouchableOpacity onPress={() => onCategoryRemove(categoryType)} activeOpacity={1}>
                 <Icon name="close" size={16} color="#909090" />
               </TouchableOpacity>
             </View>
-          )}
-        </View>
-      )}
-
-      <FlatList
-        data={dataSource}
-        renderItem={({ item, index }) => (
-          <Item
-            onPress={() => onPromoPressed(item)}
-            onBookmarkPressed={() => onBookmarkPressed(item)}
-            name={item.title}
-            picture={item.coverPhotos}
-            distance={item.distance}
-            promoID={item.id}
-            shopName={item.shop.displayTitle}
-            gotBookmark={item.isBookmark} //{gotBookmark}
-            index={index}
-            readBookmark={readBookmark}
-            submitLoading={submitLoading}
-            category={item.category}
-          />
+            {selectedTag && (
+              <View style={styles.button} key={selectedTag}>
+                <Text style={styles.iconButton}>{selectedTagTitle}</Text>
+                <TouchableOpacity onPress={() => onCategoryRemove(tagType)} activeOpacity={1}>
+                  <Icon name="close" size={16} color="#909090" />
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
         )}
-        keyExtractor={(item) => item.id}
-        onRefresh={handleRefresh}
-        refreshing={loading}
-        ListFooterComponent={
-          dataSource.length === 0 && !loading ? (
-            <NotFoundFooter message="No promotion found" />
-          ) : (
-            <View style={{ paddingBottom: 40 }} />
-          )
-        }
-        style={styles.flatList}
-      />
-    </View>
-  );
+
+        <FlatList
+          data={dataSource}
+          renderItem={({ item, index }) => (
+            <Item
+              onPress={() => onPromoPressed(item)}
+              onBookmarkPressed={() => onBookmarkPressed(item)}
+              name={item.title}
+              picture={item.coverPhotos}
+              distance={item.distance}
+              promoID={item.id}
+              shopName={item.shop.displayTitle}
+              gotBookmark={item.isBookmark} //{gotBookmark}
+              index={index}
+              readBookmark={readBookmark}
+              submitLoading={submitLoading}
+              category={item.category}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          onRefresh={handleRefresh}
+          refreshing={loading}
+          ListFooterComponent={
+            dataSource.length === 0 && !loading ? (
+              <NotFoundFooter message="No promotion found" />
+            ) : (
+              <View style={{ paddingBottom: 40 }} />
+            )
+          }
+          style={styles.flatList}
+        />
+      </View>
+    );
 };
 
 export { PromoList };

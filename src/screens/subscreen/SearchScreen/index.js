@@ -53,10 +53,6 @@ class index extends Component {
   }
 
   componentDidMount = async () => {
-    // console.log("this.props.messages.value");
-
-    // console.log(this.props.messages.value);
-
     let category = [];
     let tags = [];
     for (let i = 0; i < this.props.categories.length; i++) {
@@ -67,7 +63,6 @@ class index extends Component {
         this.setState({ category: category });
       }
     }
-
     for (let i = 0; i < this.props.tags.length; i++) {
       if (this.props.tags[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())) {
         tags.push(this.props.tags[i].id);
@@ -83,7 +78,6 @@ class index extends Component {
         if (permissions.location !== "granted") {
           if (permissions.location.permissions.location.foregroundGranted === undefined) {
             alert("Permission to access location is necessary");
-            this.handleRefresh();
           } else if (permissions.location.permissions.location.foregroundGranted === true) {
             this.handleRefresh();
           }
@@ -95,9 +89,8 @@ class index extends Component {
   componentDidUpdate(prevProps, prevState) {
     const currentPromo = this.props.promotionState.promo;
     const readError = this.props.promotionState.readError;
-    const submitLoading = this.props.bookmarkState.submitLoading;
-    const readBookmark = this.props.bookmarkState.readBookmark;
 
+    console.log("componentDidUpdate(prevProps, prevState)");
     // if no promo in the radius, call handleRefresh read again by increase radiusAddition state
     if (currentPromo.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
       if (prevState.radiusAddition === this.state.radiusAddition) {
@@ -105,8 +98,6 @@ class index extends Component {
       }
       this.handleRefresh();
     }
-
-    // if get promo in the radius, reset the radiusAddition to 1 for read next time
     if (prevProps.promotionState.promo !== currentPromo && currentPromo.length > 0) {
       this.setState({ radiusAddition: 1 });
     }
@@ -114,39 +105,39 @@ class index extends Component {
     if (prevProps.promotionState.readError !== readError && readError !== false) {
       alert(readError);
     }
-
-    // if (
-    //   prevProps.bookmarkState.submitLoading &&
-    //   !submitLoading
-    //   //&&
-    //   //prevProps.bookmarkState.readBookmark != readBookmark
-    // ) {
-    //   this.handleRefresh();
-    // }
   }
 
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
-
-    await this.props.loadShops({
+    const loadShops = this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
       selectedCategory: null,
       selectedTag: null,
       // limit: this.state.limit,
     });
 
-    await this.props.loadSearchShops({
+    const loadSearchShop = this.props.loadSearchShops({
       radius: RADIUS * this.state.radiusAddition,
       selectedCategory: this.state.category,
       shopName: this.state.dataSearch,
       selectedTag: this.state.tags,
     });
 
-    await this.props.loadShopsPromo({
+    const loadShopsPromo = this.props.loadShopsPromo({
       radius: RADIUS * this.state.radiusAddition,
       selectedCategory: this.state.category,
       shopName: this.state.dataSearch,
       selectedTag: this.state.tags,
+    });
+    const loadBookmark = this.props.loadBookmark({
+      radius: RADIUS * this.state.radiusAddition,
+      latitude: location.coords.latitude,
+      longtitude: location.coords.longitude,
+      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
+      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+    });
+    Promise.all([loadSearchShop, loadShopsPromo, loadBookmark, loadShops]).then((values) => {
+      this.setState({ readLoading: false });
     });
 
     // await this.props.loadFavourite({
@@ -156,16 +147,8 @@ class index extends Component {
     //   selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
     //   selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     // });
-    await this.props.loadBookmark({
-      radius: RADIUS * this.state.radiusAddition,
-      latitude: location.coords.latitude,
-      longtitude: location.coords.longitude,
-      selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
-      selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
-    });
-    //await this.props.readFromDatabase();
 
-    this.setState({ readLoading: false });
+    //await this.props.readFromDatabase();
   };
 
   onMerchantPressed = async (item) => {
@@ -217,7 +200,8 @@ class index extends Component {
 
   onBackPressed() {
     this.props.toggleSearchMessageMain();
-    Actions.pop("Favourite");
+    Actions.pop("SearchScreen");
+    this.props.listenShopMessage({ value: "null" });
   }
 
   lookingForFavourite({ shopId } = null) {
@@ -290,6 +274,7 @@ class index extends Component {
     this.props.listenShopMessage({ value });
   };
   searchButtonClick = async () => {
+    console.log("clicked");
     let category = [];
     let tags = [];
     for (let i = 0; i < this.props.categories.length; i++) {
@@ -422,6 +407,8 @@ class index extends Component {
         searchButtonClick={this.searchButtonClick.bind(this)}
         searchButtonClickPromo={this.searchButtonClickPromo.bind(this)}
         mainScreenMessage={this.props.mainScreenMessage}
+        loading={this.props.loading}
+        dataSearch={this.state.dataSearch}
       />
     );
   }
@@ -435,7 +422,7 @@ const mapStateToProps = (state) => {
   const favouriteState = state.Favourite;
   const shopState = state.Shops;
   const searchState = state.Search;
-  const { messages, mainScreenMessage } = state.Search;
+  const { messages, mainScreenMessage, loading } = state.Search;
 
   // const shopState = state.Shops;
 
@@ -450,6 +437,7 @@ const mapStateToProps = (state) => {
     searchState,
     messages,
     mainScreenMessage,
+    loading,
   };
 };
 

@@ -9,7 +9,7 @@ const initialState = {
   tags: {},
   categories: {},
 
-  selectedCategory: "1607328160755",
+  selectedCategory: null,
   selectedTag: null,
   currentFavourite: false,
   favouriteControl: false,

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import MainTemplate from "@components/templates/Main";
 import { Actions } from "react-native-router-flux";
-import { readAllFromDatabase as readAllRoute } from "@redux/route/action";
 import { readFromDatabase as readAdvertisements, toggleModal } from "@redux/advertisement/action";
 import { readInfo as readSettingInfo, toggleSpinningWheelModal } from "@redux/settings/action";
 import { verifyPermission, loadShops } from "@redux/shops/action";
@@ -10,16 +9,17 @@ import { readObjects as readShopPostMain } from "@redux/shopPostMain/action";
 import * as Location from "expo-location";
 import { getDistance } from "geolib";
 
-import {
-  listenFromDatabase as listenToRouteTickets,
-  removeListenerFromDatabase as removeListenerFromRouteTickets,
-} from "@redux/routeTicket/action";
+// import {
+//   listenFromDatabase as listenToRouteTickets,
+//   removeListenerFromDatabase as removeListenerFromRouteTickets,
+// } from "@redux/routeTicket/action";
 
 import { loadShopsPromo, togglePromotionModal, listenToRecord } from "@redux/promo/action";
 import {
   toggleSearchMessage as listenShopMessage,
   toggleSearchMessageMain,
 } from "@redux/search/action";
+
 import clone from "clone";
 import { lessThan } from "react-native-reanimated";
 import { Animated } from "react-native";
@@ -46,12 +46,12 @@ class index extends Component {
       selectedCategory: { id: "", tags: ["All"], title: "All" },
       selectedTag: "All",
       radiusAddition: 1,
+      distance: 0,
     };
   }
 
   componentDidMount() {
-    this.props.listenToRouteTickets();
-    this.props.readAllRoute();
+    // this.props.listenToRouteTickets();
     this.props.readAdvertisements();
     this.props.readSettingInfo();
     this.handleRefresh();
@@ -59,7 +59,7 @@ class index extends Component {
   }
 
   componentWillUnmount() {
-    this.props.removeListenerFromRouteTickets();
+    // this.props.removeListenerFromRouteTickets();
   }
 
   // onPressCardChallenge(id) {
@@ -69,16 +69,26 @@ class index extends Component {
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
     this.setState({ refreshing: true });
-    await this.props.readAdvertisements();
-    await this.props.readSettingInfo();
-    await this.props.loadShopsPromo({
+
+    const readAdvertisements = this.props.readAdvertisements();
+    const readSettingInfo = this.props.readSettingInfo();
+    const loadShopsPromo = this.props.loadShopsPromo({
       radius: RADIUS * this.state.radiusAddition,
       latitude: location.coords.latitude,
       longtitude: location.coords.longitude,
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    this.setState({ refreshing: false });
+    const loadShops = this.props.loadShops({
+      radius: RADIUS * this.state.radiusAddition,
+      selectedCategory: null,
+      selectedTag: null,
+      // limit: this.state.limit,
+    });
+
+    Promise.all([readAdvertisements, readSettingInfo, loadShopsPromo, loadShops]).then((values) => {
+      this.setState({ refreshing: false });
+    });
 
     //await this.props.readFromDatabase();
   };
@@ -94,6 +104,7 @@ class index extends Component {
     Actions.CheckIn();
   }
   onShopsPressed() {
+    console.log("clicked shop");
     Actions.Shops();
   }
   onPromotionsPressed() {
@@ -108,6 +119,11 @@ class index extends Component {
   }
 
   onPromoPressed(item) {
+    // console.log("item.distance");
+
+    // console.log(item.distance);
+    this.setState({ distance: item.distance });
+
     //Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
     this.props.listenToRecord({ promoId: item.id });
     this.props.togglePromotionModal();
@@ -116,6 +132,7 @@ class index extends Component {
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
     // console.log("j");
+    // console.log(index);
 
     const filteredDatasource = this.filteredDatasource();
     // console.log(filteredDatasource[index]);
@@ -140,15 +157,17 @@ class index extends Component {
   }
 
   onPressPopUp(getShopId) {
+    console.log("getShopId");
+
     console.log(getShopId);
     Actions.SingleMerchant({ shopId: getShopId });
     this.setState({ isAdvertisementModelShow: false });
   }
 
   // Close advertisement modal
-  onCloseAdvertisementModal() {
+  onCloseAdvertisementModal = async () => {
     this.setState({ isAdvertisementModelShow: false });
-  }
+  };
 
   //Filtered Data Source from empty shopId and empty cover pic
   filteredDatasource() {
@@ -262,31 +281,32 @@ class index extends Component {
   }
 
   onCarouselPressed() {
-    const location = this.props.promotionState.promotion.shop.l;
-    this.calculateDistance(location);
-    this.props.togglePromotionModal();
-  }
-
-  calculateDistance = async (destinationLocation) => {
+    // const location = this.props.promotionState.promotion.shop.l;
+    // this.calculateDistance(location);
     const promo = this.props.promotionState;
 
-    var distance;
-    let location = await Location.getCurrentPositionAsync({});
-    distance =
-      getDistance(
-        { latitude: destinationLocation.U, longitude: destinationLocation.k },
-        {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        }
-      ) / 1000;
-
+    this.props.togglePromotionModal();
     Actions.SingleMerchant({
       shopId: promo.promotion.shop.id,
-      distance: distance,
-      calculatedDistance: distance,
+      distance: this.state.distance,
+      calculatedDistance: this.state.distance,
     });
-  };
+  }
+
+  // calculateDistance = async (destinationLocation) => {
+
+  //   var distance;
+  //   let location = await Location.getCurrentPositionAsync({});
+  //   distance =
+  //     getDistance(
+  //       { latitude: destinationLocation.U, longitude: destinationLocation.k },
+  //       {
+  //         latitude: location.coords.latitude,
+  //         longitude: location.coords.longitude,
+  //       }
+  //     ) / 1000;
+
+  // };
 
   searchFilterFunction = (value) => {
     this.props.listenShopMessage({ value });
@@ -414,9 +434,8 @@ class index extends Component {
       promotion,
     } = this.props.promotionState;
 
-    const { messages, mainScreenMessage } = this.props.searchState;
-    // console.log("mainScreenMessage");
-    // console.log(mainScreenMessage);
+    const { messages, mainScreenMessage, loading } = this.props.searchState;
+
     const readFail =
       readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
 
@@ -516,10 +535,11 @@ class index extends Component {
         categories={this.props.categories}
         searchFilterFunction={this.searchFilterFunction.bind(this)}
         // data={this.state.data}
-        value={messages}
+        dataSearch={messages.value}
         onPressSearch={this.onPressSearch.bind(this)}
         onPressSearchButton={this.onPressSearchButton.bind(this)}
         mainScreenMessageBoolean={mainScreenMessage}
+        loading={loading}
       />
     );
   }
@@ -578,9 +598,8 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  listenToRouteTickets,
-  removeListenerFromRouteTickets,
-  readAllRoute,
+  // listenToRouteTickets,
+  // removeListenerFromRouteTickets,
   readAdvertisements,
   toggleModal,
   verifyPermission,

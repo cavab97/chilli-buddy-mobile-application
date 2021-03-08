@@ -19,6 +19,7 @@ import {
   toggleRemoveCategory,
   toggleRemoveTag,
 } from "@redux/promo/action";
+import { loadShopsPromo as loadShopsPromoSearch, onPromoSpecificClick } from "@redux/search/action";
 
 import {
   update,
@@ -27,6 +28,7 @@ import {
   updateIsBookmark,
   loadBookmark,
 } from "@redux/bookmark/action";
+import { loadShops } from "@redux/shops/action";
 
 import { PromoList } from "@components/templates";
 
@@ -41,6 +43,8 @@ class index extends Component {
       radiusAddition: 1,
       selectedCategory: { id: "", tags: ["All"], title: "All" },
       selectedTag: "All", //default all tag selected
+      readLoading: true,
+      distance: 0,
     };
     this.handleRefresh = this.handleRefresh.bind(this);
   }
@@ -95,36 +99,56 @@ class index extends Component {
 
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
-    await this.props.loadBookmark({
+    const loadBookmark = this.props.loadBookmark({
       radius: RADIUS * this.state.radiusAddition,
       latitude: location.coords.latitude,
       longtitude: location.coords.longitude,
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    await this.props.loadShopsPromo({
+    const loadShopsPromo = this.props.loadShopsPromo({
       radius: RADIUS * this.state.radiusAddition,
       latitude: location.coords.latitude,
       longtitude: location.coords.longitude,
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
+    });
+
+    const loadShopsPromoSearch = this.props.loadShopsPromoSearch({
+      radius: RADIUS * this.state.radiusAddition,
+      selectedCategory: "null",
+      shopName: "null",
+      selectedTag: "null",
     });
     //await this.props.readFromDatabase();
+    Promise.all([loadShopsPromo, loadBookmark, loadShopsPromoSearch]).then((values) => {
+      this.setState({ readLoading: false });
+    });
   };
 
   onBackPressed() {
-    Actions.MainScreen();
+    Actions.pop("Promo");
+
+    // Actions.MainScreen();
   }
 
   onPromoPressedClose() {
     this.props.togglePromotionModal();
   }
 
-  onPromoPressed(item) {
+  onPromoPressed = async (item) => {
     //Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
-    this.props.listenToRecord({ promoId: item.id });
+    // await this.props.loadShops({
+    //   radius: RADIUS * this.state.radiusAddition,
+    //   selectedCategory: null,
+    //   selectedTag: null,
+    //   // limit: this.state.limit,
+    // });
+    this.setState({ distance: item.distance });
+
     this.props.togglePromotionModal();
-  }
+    this.props.listenToRecord({ promoId: item.id });
+  };
 
   onCategoryChange = (value) => {
     this.setState({ selectedCategory: value, selectedTag: "All" });
@@ -164,6 +188,7 @@ class index extends Component {
     const isBookmark = !item.isBookmark;
     this.props.onBookmarkClick(promoId);
     this.props.updateIsBookmark(promoId);
+    this.props.onPromoSpecificClick(promoId);
     /* console.log("bookmark" + JSON.stringify(this.props.bookmarkState.bookmarks));
     console.log("promotion" + JSON.stringify(this.props.promotionState.promo)); */
     if (bookmarkId === null) {
@@ -201,31 +226,35 @@ class index extends Component {
   }
 
   onCarouselPressed() {
-    const location = this.props.promotionState.promotion.shop.l;
-    this.calculateDistance(location);
+    console.log("onCarouselPressed");
+    const promo = this.props.promotionState;
+
+    // const location = this.props.promotionState.promotion.shop.l;
+    // this.calculateDistance(location);
+    Actions.SingleMerchant({
+      shopId: promo.promotion.shop.id,
+      distance: this.state.distance,
+      calculatedDistance: this.state.distance,
+    });
     this.props.togglePromotionModal();
   }
 
-  calculateDistance = async (destinationLocation) => {
-    const promo = this.props.promotionState;
+  // calculateDistance = async (destinationLocation) => {
+  //   console.log("destinationLocation");
+  //   console.log(destinationLocation);
 
-    var distance;
-    let location = await Location.getCurrentPositionAsync({});
-    distance =
-      getDistance(
-        { latitude: destinationLocation.U, longitude: destinationLocation.k },
-        {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        }
-      ) / 1000;
+  //   var distance;
+  //   let location = await Location.getCurrentPositionAsync({});
+  //   distance =
+  //     getDistance(
+  //       { latitude: destinationLocation.U, longitude: destinationLocation.k },
+  //       {
+  //         latitude: location.coords.latitude,
+  //         longitude: location.coords.longitude,
+  //       }
+  //     ) / 1000;
 
-    Actions.SingleMerchant({
-      shopId: promo.promotion.shop.id,
-      distance: distance,
-      calculatedDistance: distance,
-    });
-  };
+  // };
 
   render() {
     const {
@@ -251,16 +280,49 @@ class index extends Component {
     let filteredCategories;
     let filteredTags = [];
     let selectedCategoryTag;
+    let filterCurrentCategories = [];
+    let promotionCategory;
 
     filteredCategories = categories.filter((category) => category.title !== "All");
 
+    // console.log("filteredCategories");
+    // console.log(filteredCategories);
+
     // Get Shop Category
+    // for (let i = 0; i < filteredCategories.length; i++) {
+    //   for (let k = 0; k < promo.length; k++) {
+    //     if (filteredCategories[i].id === promo[k].shop.categories[0]) {
+    //       filterCurrentCategories = filteredCategories;
+    //       console.log(filteredCategories[i].title);
+    //     }
+    //   }
+    // }
+    // console.log("filterCurrentCategories");
+
+    // console.log(filterCurrentCategories);
+    let tempCategory = [];
+    let delDuplicateCategory;
+
     promo.map((promotion) => {
-      let promotionCategory = categories.filter(
+      tempCategory.push(promotion.shop.categories[0]);
+      // tempCategory = promotion.shop.categories[0];
+      delDuplicateCategory = [...new Set(tempCategory)];
+
+      promotionCategory = categories.filter(
         (category) => category.id === promotion.shop.categories[0]
       );
 
       promotionCategory ? (promotion.category = promotionCategory[0].title) : "";
+      // filterCurrentCategories = promotionCategory;
+    });
+    delDuplicateCategory.map((c) => {
+      for (let i = 0; i < filteredCategories.length; i++) {
+        if (c === filteredCategories[i].id) {
+          // console.log("here");
+          filterCurrentCategories.push(filteredCategories[i]);
+        }
+      }
+      // filteredCategories = categories.filter((category) => category.id.includes(c));
     });
 
     // On toggle category get category from promotion shop
@@ -303,6 +365,7 @@ class index extends Component {
     return (
       <PromoList
         loading={readLoading}
+        readLoading={this.state.readLoading}
         readBookmark={readBookmark}
         submitLoading={submitLoading}
         dataSource={filteredPromotion}
@@ -310,7 +373,7 @@ class index extends Component {
         categoryModal={categoryModalVisible}
         allCategory={categories}
         allTag={tags}
-        categories={filteredCategories}
+        categories={filterCurrentCategories}
         selectedCategoryTitle={selectedCategoryTag && selectedCategoryTag.title}
         promotion={promotion}
         promotionModal={promotionModalVisible}
@@ -364,4 +427,7 @@ export default connect(mapStateToProps, {
   toggleBookmark,
   toggleRemoveCategory,
   toggleRemoveTag,
+  loadShops,
+  loadShopsPromoSearch,
+  onPromoSpecificClick,
 })(index);

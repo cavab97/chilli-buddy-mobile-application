@@ -147,7 +147,7 @@ export function loadShopsPromo({
 }) {
   let limit = 0;
   return (dispatch, getState) => {
-    dispatch({ type: actions.READ_FROM_DATABASE });
+    dispatch({ type: actions.READ_PROMO_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {
       try {
         let location = await Location.getCurrentPositionAsync({});

@@ -190,6 +190,7 @@ const ShopsSinglePost = ({
           <TouchableOpacity
             style={styles.shareContainer}
             onPress={SharePress.bind(this, shopPosts)}
+            activeOpacity={1}
           >
             <Text style={styles.shareText}>Share</Text>
             <Image style={styles.shareIcon} source={shareIcon} />

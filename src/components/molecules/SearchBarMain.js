@@ -7,7 +7,7 @@ const numColumns = 5;
 
 const size = Dimensions.get("window").width / numColumns;
 
-const SearchBar = (props) => {
+const SearchBarMain = (props) => {
   // console.log(props.mainScreenMessageBoolean);
   return (
     <View style={styles.searchBarStyle}>
@@ -21,7 +21,7 @@ const SearchBar = (props) => {
         value={props.dataSearch === "null" ? "" : props.dataSearch}
       />
       <TouchableOpacity
-        onPress={props.searchButtonClick}
+        onPress={props.onPressSearchButton}
         // activeOpacity={1}
       >
         <Image
@@ -87,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { SearchBar };
+export { SearchBarMain };

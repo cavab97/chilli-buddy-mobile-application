@@ -17,6 +17,7 @@ import {
   readFromDatabase,
   updateIsFavourite,
 } from "@redux/favourite/action";
+import { onShopSpecificClick } from "@redux/search/action";
 
 import { ShopList } from "@components/templates";
 
@@ -83,19 +84,26 @@ class index extends Component {
 
     const { categories } = this.props;
     let filteredCategories = categories.filter((category) => category.title !== "All");
-    await this.props.loadShops({
+    const loadShops = this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
       selectedCategory: this.state.selectedCategory,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
       // limit: this.state.limit,
     });
+    const readFromDatabase = this.props.readFromDatabase();
 
     if (this.props.selectedCategory) {
-      await this.props.toggleCategory(this.state.selectedCategory);
+      if (this.state.selectedCategory === null) {
+        await this.props.toggleCategory(this.props.selectedCategory);
+      } else {
+        await this.props.toggleCategory(this.state.selectedCategory);
+      }
     } else {
       await this.props.toggleCategory(filteredCategories[0].id);
     }
-    //await this.props.readFromDatabase();
+    Promise.all([readFromDatabase, loadShops]).then((values) => {
+      // this.setState({ readLoading: false });
+    });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -133,6 +141,15 @@ class index extends Component {
     //   });
     // }
   }
+
+  // componentWillUnmount = async () => {
+  //   await this.props.loadShops({
+  //     radius: RADIUS * this.state.radiusAddition,
+  //     selectedCategory: null,
+  //     selectedTag: null,
+  //     // limit: this.state.limit,
+  //   });
+  // };
 
   // handleLoadMore() {
   //   console.log("triggerrrr");
@@ -212,6 +229,7 @@ class index extends Component {
     const favouriteId = this.lookingForFavourite({ shopId });
     const isFavourite = !item.isFavourite;
 
+    this.props.onShopSpecificClick(shopId);
     this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
     // console.log(item.isFavourite);
@@ -279,7 +297,10 @@ class index extends Component {
     let selectedCategoryTag;
     let filteredTags = [];
     // console.log("shops");
-    // console.log(shops.length);
+    // console.log(shops.length);"
+    // console.log(" const { categories, tags } = this.props;");
+
+    // console.log(tags);
 
     // Get Shop Category
 
@@ -311,18 +332,29 @@ class index extends Component {
       ? (filteredShop = filteredShop.filter((shop) => shop.isFavourite === true))
       : filteredShop;
 
+    filteredCategories;
+
     selectedTag
       ? selectedTag === "All"
         ? filteredShop
         : (filteredShop = filteredShop.filter((shop) => shop.tags.includes(selectedTag) === true))
       : filteredShop;
+
+    // selectedTag
+    //   ? selectedTag === "All"
+    //     ? console.log("first")
+    //     : console.log("second")
+    //   : console.log("thrid");
+
     if (selectedCategory) {
       selectedCategoryTag = filteredCategories.filter(
         (category) => category.id === selectedCategory
       );
-      // console.log("selectedCategoryTag");
-      // console.log(selectedCategoryTag);
+
       selectedCategoryTag = selectedCategoryTag[0].tags;
+      // console.log("tags");
+
+      // console.log(tags);
       tags.forEach((tag) =>
         selectedCategoryTag.forEach((categoryTag) => {
           if (tag.id === categoryTag) {
@@ -402,6 +434,7 @@ export default connect(mapStateToProps, {
   submitToBackend,
   readFromDatabase,
   updateIsFavourite,
+  onShopSpecificClick,
 })(index);
 
 /* handleRefresh = async () => {

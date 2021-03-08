@@ -36,6 +36,8 @@ import {
   readFromDatabase,
   updateIsFavourite,
 } from "@redux/favourite/action";
+
+import { loadSearchShops, onShopSpecificClick } from "@redux/search/action";
 const RADIUS = 50;
 
 class index extends Component {
@@ -54,12 +56,12 @@ class index extends Component {
   }
 
   componentDidMount = async () => {
-    await this.props.loadShops({
-      radius: RADIUS * this.state.radiusAddition,
-      selectedCategory: null,
-      selectedTag: null,
-      // limit: this.state.limit,
-    });
+    // await this.props.loadShops({
+    //   radius: RADIUS * this.state.radiusAddition,
+    //   selectedCategory: null,
+    //   selectedTag: null,
+    //   // limit: this.state.limit,
+    // });
     const shopId = this.props.shopId;
     // this.props.readSingleFavourite(shopId);
     //let favourite = this.lookingForFavourite({ shopId });
@@ -108,29 +110,29 @@ class index extends Component {
     this.props.removeListenerFromDatabase();
   }
 
-  //Calculate distance from logitude and latitude
-  calculateDistance = async (destinationLocation) => {
-    try {
-      var distance;
-      var location = this.state.location;
+  // //Calculate distance from logitude and latitude
+  // calculateDistance = async (destinationLocation) => {
+  //   try {
+  //     var distance;
+  //     var location = this.state.location;
 
-      // if (location == null) {
-      //   return;
-      // }
+  //     // if (location == null) {
+  //     //   return;
+  //     // }
 
-      distance =
-        getDistance(
-          { latitude: destinationLocation.U, longitude: destinationLocation.k },
-          {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          }
-        ) / 1000;
-      this.setState({ calculatedDistance: distance });
-    } catch (e) {
-      this.setState({ locationLoading: false });
-    }
-  };
+  //     distance =
+  //       getDistance(
+  //         { latitude: destinationLocation.U, longitude: destinationLocation.k },
+  //         {
+  //           latitude: location.coords.latitude,
+  //           longitude: location.coords.longitude,
+  //         }
+  //       ) / 1000;
+  //     this.setState({ calculatedDistance: distance });
+  //   } catch (e) {
+  //     this.setState({ locationLoading: false });
+  //   }
+  // };
 
   renderOperatingHour() {
     const { subIconDetail, operatingContainer } = styles;
@@ -228,6 +230,8 @@ class index extends Component {
     const isFavourite = !item;
     this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
+    this.props.onShopSpecificClick(shopId);
+
     // console.log(isFavourite);
     if (favouriteId === null) {
       const data = { shopId, isFavourite };
@@ -433,4 +437,6 @@ export default connect(mapStateToProps, {
   updateIsFavourite,
   onFavouriteClick,
   loadShops,
+  loadSearchShops,
+  onShopSpecificClick,
 })(index);

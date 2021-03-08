@@ -5,9 +5,6 @@ import { TouchableHighlight, TouchableOpacity, TouchableNativeFeedback } from "r
 import ContentLoader, { Rect } from "react-content-loader/native";
 import moment from "moment";
 import { StyleSheet, Dimensions } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { CheckInButton } from "../../molecules";
 
 import styles from "./styles";
 // import SkeletonContent from 'react-native-skeleton-content';

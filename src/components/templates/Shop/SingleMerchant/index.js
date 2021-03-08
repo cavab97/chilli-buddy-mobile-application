@@ -91,7 +91,6 @@ const SingleMerchant = ({
     subContainer1,
     imageTopStyle,
   } = styles;
-
   return (
     <ScrollView scrollIndicatorInsets={{ right: 0.1 }}>
       <View style={posterArea}>
@@ -550,7 +549,7 @@ const SingleMerchant = ({
                 data={promotions}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
-                  <TouchableOpacity onPress={onPromoPressed.bind(this, item)}>
+                  <TouchableOpacity onPress={onPromoPressed.bind(this, item)} activeOpacity={1}>
                     <Card
                       key={item.id}
                       style={index === 0 ? firstPromoteCardStyle : promoteCardStyle}

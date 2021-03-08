@@ -23,6 +23,7 @@ import { SingleMerchantPromo } from "../Promo/SingleMerchantPromo";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NotFoundFooter } from "@components/molecules/index";
+import ContentLoader, { Rect } from "react-content-loader/native";
 
 function ShopItem({
   name,
@@ -110,7 +111,7 @@ function PromotionItem({
   const filledHeartIcon = require("../../../assets/icons/filledHeart.png");
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} activeOpacity={1}>
       <View style={styles.cardContainer}>
         <View style={{ width: "37%" }}>
           <CardSection style={styles.imageContainer}>
@@ -183,92 +184,113 @@ const FavouriteList = ({
   onToggleTab,
   shopData,
 }) => {
-  return (
-    <View style={{ flex: 1 /*height: 100%*/ }}>
-      <CustomNavBar
-        textOne="Shops"
-        textTwo="Promotions"
-        onPressBack={onBackPressed}
-        onPressButton1={onToggleTab}
-        onPressButton2={onToggleTab}
-        selectedButton1={!selectedTab}
-        selectedButton2={selectedTab}
-      />
+  if (readLoading) {
+    return (
+      <View>
+        <CustomNavBar onPressBack={onBackPressed} />
 
-      <SingleMerchantPromo
-        promotionModal={promotionModal}
-        dataSource={promotion}
-        onCarouselPressed={onCarouselPressed}
-        onPromoPressedClose={onPromoPressedClose}
-      />
+        <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
+          {/* <Rect x={windowWidth / 1.2} y="15" rx="10" ry="10" width="35" height="40" />
+            <Rect x={windowWidth / 1.4} y="15" rx="10" ry="10" width="35" height="40" /> */}
+          {/* 
+            <Rect x="20" y="130" rx="20" ry="20" width="20%" height="100" />
+            <Rect x="110" y="130" rx="20" ry="20" width="20%" height="100" />
+            <Rect x="200" y="130" rx="20" ry="20" width="20%" height="100" />
+            <Rect x="290" y="130" rx="20" ry="20" width="20%" height="100" /> */}
 
-      <View style={styles.promoTitleContainer}>
-        <Text style={styles.pageTitle}>Favourite</Text>
+          <Rect x="20" y="15" rx="10" ry="10" width="90%" height="175" />
+          <Rect x="20" y="215" rx="10" ry="10" width="90%" height="175" />
+          <Rect x="20" y="415" rx="10" ry="10" width="90%" height="175" />
+        </ContentLoader>
       </View>
-
-      <Text style={styles.topSubText}>{!selectedTab ? "Shops" : "Promotions"}</Text>
-
-      {!selectedTab ? (
-        <FlatList
-          data={shopData}
-          renderItem={({ item, index }) => (
-            <ShopItem
-              onPress={() => onMerchantPressed(item)}
-              onFavouritePress={() => onFavouritePressed(item)}
-              name={item.displayTitle}
-              logo={item.logo}
-              picture={item.images}
-              address={item.address}
-              category={item.category}
-              distance={item.distance}
-              index={index}
-              isFavourite={item.isFavourite}
-              isPromote={item.isPromote}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          onRefresh={handleRefresh}
-          refreshing={readLoading}
-          showsVerticalScrollIndicator={false}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={
-            shopData.length === 0 ? (
-              <NotFoundFooter message="No favourite shops found" />
-            ) : (
-              <View style={{ paddingBottom: 30 }} />
-            )
-          }
-          style={styles.flatList}
+    );
+  } else
+    return (
+      <View style={{ flex: 1 /*height: 100%*/ }}>
+        <CustomNavBar
+          textOne="Shops"
+          textTwo="Promotions"
+          onPressBack={onBackPressed}
+          onPressButton1={onToggleTab}
+          onPressButton2={onToggleTab}
+          selectedButton1={!selectedTab}
+          selectedButton2={selectedTab}
         />
-      ) : (
-        <FlatList
-          data={dataSource}
-          renderItem={({ item, index }) => (
-            <PromotionItem
-              onPress={() => onPromoPressed(item)}
-              onBookmarkPressed={() => onBookmarkPressed(item)}
-              name={item.promotion.title}
-              picture={item.promotion.coverPhotos}
-              distance={item.distance}
-              promoID={item.id}
-              shopName={item.promotion.shop.displayTitle}
-              gotBookmark={item.isBookmark} //{gotBookmark}
-              index={index}
-              readBookmark={readBookmark}
-              submitLoading={submitLoading}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          onRefresh={handleRefresh}
-          refreshing={false}
-          ListFooterComponent={
-            dataSource.length === 0 && <NotFoundFooter message="No favourite promotions found" />
-          }
-          style={styles.flatList}
+
+        <SingleMerchantPromo
+          promotionModal={promotionModal}
+          dataSource={promotion}
+          onCarouselPressed={onCarouselPressed}
+          onPromoPressedClose={onPromoPressedClose}
         />
-      )}
-    </View>
-  );
+
+        <View style={styles.promoTitleContainer}>
+          <Text style={styles.pageTitle}>Favourite</Text>
+        </View>
+
+        <Text style={styles.topSubText}>{!selectedTab ? "Shops" : "Promotions"}</Text>
+
+        {!selectedTab ? (
+          <FlatList
+            data={shopData}
+            renderItem={({ item, index }) => (
+              <ShopItem
+                onPress={() => onMerchantPressed(item)}
+                onFavouritePress={() => onFavouritePressed(item)}
+                name={item.displayTitle}
+                logo={item.logo}
+                picture={item.images}
+                address={item.address}
+                category={item.category}
+                distance={item.distance}
+                index={index}
+                isFavourite={item.isFavourite}
+                isPromote={item.isPromote}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+            onRefresh={handleRefresh}
+            refreshing={readLoading}
+            showsVerticalScrollIndicator={false}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={
+              shopData.length === 0 ? (
+                <NotFoundFooter message="No favourite shops found" />
+              ) : (
+                <View style={{ paddingBottom: 30 }} />
+              )
+            }
+            style={styles.flatList}
+          />
+        ) : (
+          <FlatList
+            data={dataSource}
+            renderItem={({ item, index }) => (
+              <PromotionItem
+                onPress={() => onPromoPressed(item)}
+                onBookmarkPressed={() => onBookmarkPressed(item)}
+                name={item.promotion.title}
+                picture={item.promotion.coverPhotos}
+                distance={item.distance}
+                promoID={item.id}
+                shopName={item.promotion.shop.displayTitle}
+                gotBookmark={item.isBookmark} //{gotBookmark}
+                index={index}
+                readBookmark={readBookmark}
+                submitLoading={submitLoading}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+            onRefresh={handleRefresh}
+            refreshing={false}
+            ListFooterComponent={
+              dataSource.length === 0 && <NotFoundFooter message="No favourite promotions found" />
+            }
+            style={styles.flatList}
+          />
+        )}
+      </View>
+    );
 };
 
 export { FavouriteList };

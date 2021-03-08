@@ -12,6 +12,8 @@ export * from "./TACTextInput";
 export * from "./RedeemButton";
 export * from "./CheckInButton";
 export * from "./SearchBar";
+export * from "./SearchBarMain";
+
 export * from "./SearchFlatList";
 export * from "./NotFoundFooter";
 export * from "./renderFooterButton";

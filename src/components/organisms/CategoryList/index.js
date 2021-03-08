@@ -89,6 +89,7 @@ function Category({ id, title, onCategoryChange, selectedCategory, indexing, len
       <TouchableOpacity
         style={selectedCategory === id ? styles.cardSelected : styles.card}
         onPress={() => onCategoryChange(id)}
+        activeOpacity={1}
       >
         <View style={styles.iconContainer}>
           <Image source={icon} style={styles.icon} />

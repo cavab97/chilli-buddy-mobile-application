@@ -53,7 +53,7 @@ function Item({
   const promotionTag = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddyMainScreenIconV2/promotions.png");
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} activeOpacity={1}>
       <View style={styles.cardContainer}>
         <CardSection style={styles.imageContainer}>
           <Image style={image} resizeMode="cover" source={cover} />
@@ -74,7 +74,7 @@ function Item({
           <Image source={distanceIcon} style={styles.distanceIcon} />
           <Text style={detail}>Just {+(Math.round(distance + "e+2") + "e-2")} Km away</Text>
           <View style={{ position: "absolute", right: 5, bottom: 0 }}>
-            <TouchableOpacity onPress={onFavouritePress}>
+            <TouchableOpacity onPress={onFavouritePress} activeOpacity={1}>
               <Image
                 source={isFavourite ? filledHeartIcon : emptyHeartIcon}
                 style={styles.favouriteIcon}
@@ -119,7 +119,9 @@ const ShopList = ({
   const filterIcon = require("../../../../assets/icons/filter.png");
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
+  // console.log("ssssssssssss");
 
+  // console.log(tags);
   if (loading) {
     return (
       <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
@@ -150,7 +152,7 @@ const ShopList = ({
           <Text style={styles.pageTitle}>Shops</Text>
 
           <View style={styles.iconContainer}>
-            <TouchableOpacity onPress={toggleFavourite}>
+            <TouchableOpacity onPress={toggleFavourite} activeOpacity={1}>
               <Image
                 source={favourite ? filledHeartIcon : emptyHeartIcon}
                 style={styles.emptyHeartIcon}
@@ -177,7 +179,7 @@ const ShopList = ({
           <Text style={styles.categoryTitle}>Category</Text>
         </View>
 
-        <View style={{ paddingLeft: 15 }}>
+        <View>
           <CategoryList
             categories={categories}
             onCategoryChange={onCategoryChange}

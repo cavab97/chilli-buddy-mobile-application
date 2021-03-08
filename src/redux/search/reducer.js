@@ -9,6 +9,7 @@ const initialState = {
   mainScreenMessage: false,
 
   loading: false,
+  loading2: false,
   tags: {},
   categories: {},
 
@@ -168,12 +169,14 @@ const searchReducer = (state = initialState, { type, payload }) => {
       };
 
     case actions.READ_FROM_DATABASE:
+      console.log("READ_FROM_DATABASE");
       return {
         ...state,
         loading: true,
       };
 
     case actions.READ_FROM_DATABASE_SUCCESS:
+      console.log("READ_FROM_DATABASE_SUCCESS");
       return {
         ...state,
         loading: false,
@@ -187,12 +190,15 @@ const searchReducer = (state = initialState, { type, payload }) => {
       };
 
     case actions.READ_PROMO_FROM_DATABASE:
+      console.log("READ_PROMO_FROM_DATABASE");
       return {
         ...state,
         loading: true,
       };
 
     case actions.READ_PROMO_FROM_DATABASE_SUCCESS:
+      console.log("READ_PROMO_FROM_DATABASE_SUCCESS");
+
       return {
         ...state,
         loading: false,
@@ -267,8 +273,6 @@ const searchReducer = (state = initialState, { type, payload }) => {
         messages: payload.data,
       };
     case actions.TOGGLE_SEARCH_SHOP_MESSAGES_BUTTON:
-      console.log("mainScreenMessageeeeeeeeeeeeee");
-
       return {
         ...state,
         mainScreenMessage: !state.mainScreenMessage,

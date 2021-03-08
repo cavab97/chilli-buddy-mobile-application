@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./styles";
-import { Platform, Dimensions, Animated } from "react-native";
+import { Platform, Dimensions } from "react-native";
 import { Colors } from "../../../settings/styles/theme";
 
 import { Actions } from "react-native-router-flux";
@@ -29,17 +29,13 @@ import {
   Icon as Icon2,
 } from "../../atoms";
 
-import { Card, CardSection, SearchBar } from "../../molecules";
+import { Card, CardSection, SearchBarMain } from "../../molecules";
 
 import { InfoBox } from "@components/organisms/InfoBox";
 
-import { SmallCardList } from "../../organisms/SmallCardList";
-
 import { ImageSwiper } from "../../organisms/ImageSwiper";
-import { SpinningWheel } from "../../organisms/SpinningWheel";
 
 import ContentLoader, { Rect } from "react-content-loader/native";
-import Icon from "react-native-vector-icons/Ionicons";
 import { CustomIcon } from "@components/atoms/index";
 import Constants from "expo-constants";
 
@@ -177,6 +173,8 @@ export default ({
   onPressSearch,
   onPressSearchButton,
   mainScreenMessageBoolean,
+  loading,
+  dataSearch,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -354,7 +352,7 @@ export default ({
     <View>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
-        //refresh main page function
+        keyboardShouldPersistTaps={"always"} //refresh main page function
         //refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
       >
         <View style={styles.container}>
@@ -426,11 +424,13 @@ export default ({
               placeholder={"Search"}
               value={value}
             /> */}
-            <SearchBar
+            <SearchBarMain
               placeholder={"Search"}
               onPressSearchButton={onPressSearchButton}
               mainScreenMessageBoolean={mainScreenMessageBoolean}
               searchFilterFunction={searchFilterFunction}
+              loading={loading}
+              dataSearch={dataSearch}
             />
           </TouchableOpacity>
 

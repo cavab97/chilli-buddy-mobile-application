@@ -62,7 +62,10 @@ const SpinningWheel = ({
             <View>
               <View style={styles.spinningWheelImage}>
                 <Animated.View style={{ opacity: fadeResult }}>
-                  <TouchableOpacity onPress={() => onPressRandomCategory(randomCategory)}>
+                  <TouchableOpacity
+                    onPress={() => onPressRandomCategory(randomCategory)}
+                    activeOpacity={1}
+                  >
                     <Animated.Image
                       style={{ width, height: width * 1, alignSelf: "center" }}
                       source={resultImage}
@@ -120,6 +123,7 @@ const SpinningWheel = ({
             style={spinStatus ? styles.categoriesButton : styles.categoriesButton}
             onPress={spinningWheel}
             disabled={spinStatus}
+            activeOpacity={1}
           >
             <Text style={styles.buttonText}>
               {spinStatus ? "Spinning..." : randomCategory ? "Spin Again" : "Start"}

@@ -18,6 +18,13 @@ import {
   loadFavourite,
 } from "@redux/favourite/action";
 
+import {
+  loadSearchShops,
+  loadShopsPromo,
+  onPromoSpecificClick,
+  onShopSpecificClick,
+} from "@redux/search/action";
+
 import { FavouriteList } from "@components/templates";
 
 const RADIUS = 50;
@@ -86,7 +93,7 @@ class index extends Component {
 
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
-    await this.props.loadBookmark({
+    const loadBookmark = this.props.loadBookmark({
       radius: RADIUS * this.state.radiusAddition,
       latitude: location.coords.latitude,
       longtitude: location.coords.longitude,
@@ -94,15 +101,33 @@ class index extends Component {
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
 
-    await this.props.loadShops({
+    const loadShops = this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
       selectedCategory: null,
       selectedTag: null,
       // limit: this.state.limit,
     });
-    //await this.props.readFromDatabase();
+    const readFromDatabase = this.props.readFromDatabase();
 
-    this.setState({ readLoading: false });
+    const loadSearchShop = this.props.loadSearchShops({
+      radius: RADIUS * this.state.radiusAddition,
+      selectedCategory: "null",
+      shopName: "null",
+      selectedTag: "null",
+    });
+
+    const loadShopsPromo = this.props.loadShopsPromo({
+      radius: RADIUS * this.state.radiusAddition,
+      selectedCategory: "null",
+      shopName: "null",
+      selectedTag: "null",
+    });
+
+    Promise.all([readFromDatabase, loadBookmark, loadShops, loadShopsPromo, loadSearchShop]).then(
+      (values) => {
+        this.setState({ readLoading: false });
+      }
+    );
   };
 
   // onMerchantPressed = async (item) => {
@@ -154,6 +179,7 @@ class index extends Component {
     const bookmarkId = this.lookingForBookmark({ promoId });
     const isBookmark = item.isBookmark;
     this.props.onBookmarkClick(promoId, isBookmark);
+    this.props.onPromoSpecificClick(promoId);
 
     if (bookmarkId === null) {
       const data = { shopId, promoId, isBookmark };
@@ -193,6 +219,7 @@ class index extends Component {
 
     this.props.onFavouriteClick(shopId);
     this.props.updateIsFavourite(shopId);
+    this.props.onShopSpecificClick(shopId);
 
     if (favouriteId === null) {
       const data = { shopId, isFavourite };
@@ -349,4 +376,8 @@ export default connect(mapStateToProps, {
   listenToRecord,
   toggleTab,
   loadFavourite,
+  onShopSpecificClick,
+  onPromoSpecificClick,
+  loadShopsPromo,
+  loadSearchShops,
 })(index);
