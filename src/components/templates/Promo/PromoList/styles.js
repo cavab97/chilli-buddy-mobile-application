@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   image: {
-    width: Platform.isPad ? "100%" : 125,
+    width: Platform.isPad ? "100%" : "100%",
     height: Platform.isPad ? 100 : 95,
     borderRadius: 20,
   },
