@@ -252,6 +252,7 @@ const PromoList = ({
                 <Icon name="close" size={16} color="#909090" />
               </TouchableOpacity>
             </View>
+
             {selectedTag && (
               <View style={styles.button} key={selectedTag}>
                 <Text style={styles.iconButton}>{selectedTagTitle}</Text>

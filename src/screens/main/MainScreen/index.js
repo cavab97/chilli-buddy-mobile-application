@@ -8,6 +8,7 @@ import { verifyPermission, loadShops } from "@redux/shops/action";
 import { readObjects as readShopPostMain } from "@redux/shopPostMain/action";
 import * as Location from "expo-location";
 import { getDistance } from "geolib";
+import { AsyncStorage } from "react-native";
 
 // import {
 //   listenFromDatabase as listenToRouteTickets,
@@ -18,11 +19,12 @@ import { loadShopsPromo, togglePromotionModal, listenToRecord } from "@redux/pro
 import {
   toggleSearchMessage as listenShopMessage,
   toggleSearchMessageMain,
+  searchHistory,
 } from "@redux/search/action";
 
 import clone from "clone";
 import { lessThan } from "react-native-reanimated";
-import { Animated } from "react-native";
+import { Animated, Image } from "react-native";
 const RADIUS = 50;
 
 class index extends Component {
@@ -47,6 +49,8 @@ class index extends Component {
       selectedTag: "All",
       radiusAddition: 1,
       distance: 0,
+      messagesValue: "",
+      // isFocused: false,
     };
   }
 
@@ -57,14 +61,6 @@ class index extends Component {
     this.handleRefresh();
     this.props.readShopPostMain();
   }
-
-  componentWillUnmount() {
-    // this.props.removeListenerFromRouteTickets();
-  }
-
-  // onPressCardChallenge(id) {
-  //   Actions.Route({ routeId: id });
-  // }
 
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
@@ -85,8 +81,19 @@ class index extends Component {
       selectedTag: null,
       // limit: this.state.limit,
     });
+    // console.log("    const searchHistory = this.props.searchHistory(null, )   ");
+    // const searchHistory = this.props.searchHistory(null, "read");
+    // const { historySearchStore } = this.props.searchState;
 
-    Promise.all([readAdvertisements, readSettingInfo, loadShopsPromo, loadShops]).then((values) => {
+    // alert(historySearchStore);
+
+    Promise.all([
+      readAdvertisements,
+      readSettingInfo,
+      loadShopsPromo,
+      loadShops,
+      // searchHistory,
+    ]).then((values) => {
       this.setState({ refreshing: false });
     });
 
@@ -104,7 +111,7 @@ class index extends Component {
     Actions.CheckIn();
   }
   onShopsPressed() {
-    console.log("clicked shop");
+    // console.log("clicked shop");
     Actions.Shops();
   }
   onPromotionsPressed() {
@@ -157,9 +164,6 @@ class index extends Component {
   }
 
   onPressPopUp(getShopId) {
-    console.log("getShopId");
-
-    console.log(getShopId);
     Actions.SingleMerchant({ shopId: getShopId });
     this.setState({ isAdvertisementModelShow: false });
   }
@@ -173,12 +177,10 @@ class index extends Component {
   filteredDatasource() {
     const advertisements = this.props.advertisements;
     const posts = this.props.posts;
-    // console.log(posts[0].d.shop.id);
-    // console.log(posts[0].coverPhoto);
+
     let dataSourceAds = [];
     //Map image URL and Shop ID to array
     dataSourceAds = posts.map((item) => {
-      // console.log(item.d.coverPhoto);
       return {
         imageUri: item.coverPhoto[0],
         shopId: item.id,
@@ -310,7 +312,7 @@ class index extends Component {
 
   searchFilterFunction = (value) => {
     this.props.listenShopMessage({ value });
-    // this.setState({ data: value });
+    this.setState({ messagesValue: value });
     // console.log(this.state.data);
   };
   // getValue() {
@@ -400,14 +402,31 @@ class index extends Component {
   //   return dataSource2;
   // }
   onPressSearch() {
-    this.props.toggleSearchMessageMain();
-    Actions.SearchScreen();
-  }
-  onPressSearchButton() {
-    this.props.toggleSearchMessageMain();
-    Actions.SearchScreen();
-  }
+    // this.props.searchHistory(this.state.messagesValue, "create");
+    // alert(historySearchStore);
 
+    // }
+    this.props.toggleSearchMessageMain();
+    Actions.SearchScreen();
+  }
+  onPressSearchButton = async () => {
+    // this.props.searchHistory(this.state.messagesValue, "remove");
+
+    // const { historySearchStore } = this.props.searchState;
+
+    // alert(historySearchStore);
+
+    this.props.toggleSearchMessageMain();
+    Actions.SearchScreen();
+  };
+  // handleInputFocus = (uri) => this.setState({ isFocused: true });
+  // ImageSize(uri) {
+  //   Image.getSize(uri).then((size) => {
+  //     // size.height
+  //     // size.width
+  //     console.log(size);
+  //   });
+  // }
   render() {
     const {
       allRoutes,
@@ -435,6 +454,7 @@ class index extends Component {
     } = this.props.promotionState;
 
     const { messages, mainScreenMessage, loading } = this.props.searchState;
+    // const { historySearchStore } = this.props.searchState;
 
     const readFail =
       readErrorRoute || readErrorRouteTicket || readErrorAdvertisement || readErrorHeaderImages;
@@ -474,6 +494,9 @@ class index extends Component {
     const noImageAdvertisement = require("../../../assets/gogogain/pinpng.com-camera-drawing-png-1886718.png");
     const casualImage = require("../../../assets/gogogain/Mascot-C.png");
     const luxuryImage = require("../../../assets/gogogain/Mascot-L.png");
+    // console.log("isFocused");
+
+    // console.log(this.state.isFocused);
 
     return (
       <MainTemplate
@@ -540,6 +563,9 @@ class index extends Component {
         onPressSearchButton={this.onPressSearchButton.bind(this)}
         mainScreenMessageBoolean={mainScreenMessage}
         loading={loading}
+        // handleInputFocus={this.handleInputFocus.bind(this)}
+        // isFocused={this.state.isFocused}
+        // historySearchStore={historySearchStore}
       />
     );
   }
@@ -612,4 +638,5 @@ export default connect(mapStateToProps, {
   listenToRecord,
   listenShopMessage,
   toggleSearchMessageMain,
+  searchHistory,
 })(index);

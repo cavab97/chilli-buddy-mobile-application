@@ -9,9 +9,12 @@ import {
 import { Actions } from "react-native-router-flux";
 
 import * as Location from "expo-location";
+import { AsyncStorage } from "react-native";
 
 import { permissionsRegistration, LOCATION } from "../../marslab-library-react-native/utils/system";
 import { shopSearchDataServices as objectDataServices } from "../../services/database";
+let temp = [];
+temp.length = 5;
 
 const type = "search";
 
@@ -44,6 +47,12 @@ const actions = {
   TOGGLE_CATEGORY: type + "TOGGLE_CATEGORY",
   TOGGLE_FAVOURITE: type + "TOGGLE_FAVOURITE",
   TOGGLE_TAG: type + "TOGGLE_TAG",
+
+  READ_SEARCH_HISTORY: type + "READ_SEARCH_HISTORY",
+  READ_SEARCH_HISTORY_SUCCESS: type + "READ_SEARCH_HISTORY_SUCCESS",
+  READ_SEARCH_HISTORY_ERROR: type + "READ_SEARCH_HISTORY_ERROR",
+
+  REMOVE_SEARCH_HISTORY_SUCCESS: type + "REMOVE_SEARCH_HISTORY_SUCCESS",
 };
 
 const { firestore } = firebase;
@@ -318,6 +327,84 @@ export const toggleTag = (data = null) => {
   return {
     type: actions.TOGGLE_TAG,
     payload: { data },
+  };
+};
+
+export const searchHistory = (value, actionName) => {
+  let result = {};
+  const key = "searchHistory";
+  return (dispatch, getState) => {
+    dispatch({ type: actions.READ_SEARCH_HISTORY });
+    return new Promise(async (resolve, reject) => {
+      try {
+        const historySearchStore = getState().Search.historySearchStore;
+
+        switch (actionName) {
+          case "create":
+            try {
+              if (historySearchStore === null) {
+                temp.push(value);
+              } else {
+                temp = [...historySearchStore, value];
+              }
+              // temp.concat(value);
+              // historySearchStore.concat(value);
+              console.log("historySearchStore");
+              console.log(historySearchStore);
+              console.log("temp");
+              console.log(temp);
+              AsyncStorage.setItem(key, JSON.stringify(temp));
+              // console.log("datAsyncStoragea");
+              result = historySearchStore;
+            } catch (error) {
+              console.log(error);
+              alert(error);
+            }
+            break;
+          case "read":
+            await AsyncStorage.getItem(key).then((data) => {
+              // console.log("data");
+              let tempArray = JSON.parse(data);
+              console.log("tempArray");
+              console.log(tempArray);
+
+              resolve(tempArray);
+              result = tempArray;
+            });
+            break;
+          case "clear":
+            await AsyncStorage.getItem(key).then((data) => {
+              // console.log("data");
+              temp = data;
+              resolve(temp);
+              result = temp;
+            });
+            break;
+          case "remove":
+            await AsyncStorage.removeItem(key).then((data) => {
+              console.log("REMOVE_SEARCH_HISTORY_SUCCESS");
+              const status = "Remove Data Success";
+              resolve(status);
+              dispatch({
+                type: actions.REMOVE_SEARCH_HISTORY_SUCCESS,
+                payload: { data: data },
+              });
+            });
+            break;
+        }
+        dispatch({
+          type: actions.READ_SEARCH_HISTORY_SUCCESS,
+          payload: { data: result },
+        });
+      } catch (error) {
+        console.log(error);
+        reject(error);
+        dispatch({
+          type: actions.READ_SEARCH_HISTORY_ERROR,
+          payload: { error },
+        });
+      }
+    });
   };
 };
 

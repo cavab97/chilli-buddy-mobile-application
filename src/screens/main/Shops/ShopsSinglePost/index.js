@@ -15,9 +15,6 @@ import { readObjects as readShopPost, readObject as readSinglePost } from "@redu
 
 import { ShopsSinglePost } from "@components/templates";
 
-const windowHeight = Dimensions.get("window").height;
-const windowWidth = Dimensions.get("window").width;
-
 class index extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +30,9 @@ class index extends Component {
     // this.props.readShopPost(shopId);
     await this.props.readSinglePost(postId);
 
-    await this.props.listenFromDatabase({ shopId });
+    // if (shopId) {
+    //   await this.props.listenFromDatabase({ shopId });
+    // }
 
     this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
@@ -142,6 +141,11 @@ class index extends Component {
       .catch((error) => this.setState({ result: "error: " + error.message }));
   }
 
+  // ImageSize(uri) {
+  //   Image.getSize(uri, (width, height) => {
+  //     this.setState({ imgWidth: width, imgHeight: height });
+  //   });
+  // }
   render() {
     const { post, readPostLoading } = this.props;
     const { shop, readLoading } = this.props.shopState;
@@ -182,6 +186,7 @@ class index extends Component {
         icon={icon}
         find_dimensions={this.find_dimensions}
         SharePress={this.onShare.bind(this)}
+        // ImageSize={this.ImageSize.bind(this)}
       />
     );
   }

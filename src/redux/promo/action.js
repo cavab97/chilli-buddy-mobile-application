@@ -15,16 +15,16 @@ const actions = {
   READ_FROM_DATABASE_ERROR: type + "READ_FROM_DATABASE_ERROR",
 
   TOGGLE_PROMO_BOOKMARK: type + "TOGGLE_PROMO_BOOKMARK",
-  TOGGLE_SWIPEABLE: type + 'TOGGLE_SWIPEABLE',
-  TOGGLE_CATEGORY_MODAL: type + 'TOGGLE_CATEGORY_MODAL',
-  TOGGLE_TAG_MODAL: type + 'TOGGLE_TAG_MODAL',
-  TOGGLE_PROMOTION_MODAL: type + 'TOGGLE_PROMOTION_MODAL',
+  TOGGLE_SWIPEABLE: type + "TOGGLE_SWIPEABLE",
+  TOGGLE_CATEGORY_MODAL: type + "TOGGLE_CATEGORY_MODAL",
+  TOGGLE_TAG_MODAL: type + "TOGGLE_TAG_MODAL",
+  TOGGLE_PROMOTION_MODAL: type + "TOGGLE_PROMOTION_MODAL",
 
-  TOGGLE_CATEGORY: type + 'TOGGLE_CATEGORY',
-  TOGGLE_TAG: type + 'TOGGLE_TAG',
-  TOGGLE_BOOKMARK: type + 'TOGGLE_BOOKMARK',
-  TOGGLE_REMOVE_CATEGORY: type + 'TOGGLE_REMOVE_CATEGORY',
-  TOGGLE_REMOVE_TAG: type + 'TOGGLE_REMOVE_TAG',
+  TOGGLE_CATEGORY: type + "TOGGLE_CATEGORY",
+  TOGGLE_TAG: type + "TOGGLE_TAG",
+  TOGGLE_BOOKMARK: type + "TOGGLE_BOOKMARK",
+  TOGGLE_REMOVE_CATEGORY: type + "TOGGLE_REMOVE_CATEGORY",
+  TOGGLE_REMOVE_TAG: type + "TOGGLE_REMOVE_TAG",
 
   READ_RECORD: type + "READ_RECORD",
   READ_RECORD_SUCCESS: type + "READ_RECORD_SUCCESS",
@@ -167,52 +167,52 @@ export const toggleSwipeable = () => {
 
 export const toggleCategoryModal = () => {
   return {
-    type: actions.TOGGLE_CATEGORY_MODAL
-  }
-}
+    type: actions.TOGGLE_CATEGORY_MODAL,
+  };
+};
 
 export const toggleCategory = (data = null) => {
-  return{
+  return {
     type: actions.TOGGLE_CATEGORY,
-    payload: { data }
-  }
-}
+    payload: { data },
+  };
+};
 
 export const toggleTagModal = () => {
   return {
-    type: actions.TOGGLE_TAG_MODAL
-  }
-}
+    type: actions.TOGGLE_TAG_MODAL,
+  };
+};
 
 export const toggleTag = (data = null) => {
-  return{
+  return {
     type: actions.TOGGLE_TAG,
-    payload: { data }
-  }
-}
+    payload: { data },
+  };
+};
 
 export const togglePromotionModal = () => {
   return {
-    type: actions.TOGGLE_PROMOTION_MODAL
-  }
-}
+    type: actions.TOGGLE_PROMOTION_MODAL,
+  };
+};
 
 export const toggleBookmark = () => {
   return {
-    type: actions.TOGGLE_BOOKMARK
-  }
-}
+    type: actions.TOGGLE_BOOKMARK,
+  };
+};
 
 export const toggleRemoveCategory = () => {
   return {
     type: actions.TOGGLE_REMOVE_CATEGORY,
-  }
-}
+  };
+};
 
 export const toggleRemoveTag = () => {
   return {
     type: actions.TOGGLE_REMOVE_TAG,
-  }
-}
+  };
+};
 
 export default actions;

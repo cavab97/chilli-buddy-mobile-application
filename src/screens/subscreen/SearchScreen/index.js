@@ -21,6 +21,7 @@ import {
   onShopSpecificClick,
   toggleSearchMessage as listenShopMessage,
   toggleSearchMessageMain,
+  // searchHistory,
 } from "@redux/search/action";
 
 import {
@@ -90,7 +91,6 @@ class index extends Component {
     const currentPromo = this.props.promotionState.promo;
     const readError = this.props.promotionState.readError;
 
-    console.log("componentDidUpdate(prevProps, prevState)");
     // if no promo in the radius, call handleRefresh read again by increase radiusAddition state
     if (currentPromo.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
       if (prevState.radiusAddition === this.state.radiusAddition) {
@@ -136,6 +136,8 @@ class index extends Component {
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
+    // const searchHistory = this.props.searchHistory(null, "read");
+
     Promise.all([loadSearchShop, loadShopsPromo, loadBookmark, loadShops]).then((values) => {
       this.setState({ readLoading: false });
     });
@@ -464,4 +466,5 @@ export default connect(mapStateToProps, {
   onShopSpecificClick,
   listenShopMessage,
   toggleSearchMessageMain,
+  // searchHistory,
 })(index);

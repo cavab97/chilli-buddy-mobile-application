@@ -58,7 +58,7 @@ export function verifyPermission() {
 }
 
 export function readFromDatabase() {
-  console.log("readFromDatabase11111111");
+  // console.log("readFromDatabase11111111");
   return (dispatch, getState) => {
     dispatch({ type: actions.READ_FROM_DATABASE });
     return new Promise(async (resolve, reject) => {

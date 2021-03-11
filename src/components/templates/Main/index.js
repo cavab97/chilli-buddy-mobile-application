@@ -175,6 +175,7 @@ export default ({
   mainScreenMessageBoolean,
   loading,
   dataSearch,
+  // handleInputFocus,
 }) => {
   const DATA = [];
   const DATA2 = [];
@@ -418,12 +419,7 @@ export default ({
               placeholderTextColor="#f7d0d0"
               round={true}
             /> */}
-            {/* <SearchFlatList
-              data={data}
-              searchFilterFunction={searchFilterFunction}
-              placeholder={"Search"}
-              value={value}
-            /> */}
+
             <SearchBarMain
               placeholder={"Search"}
               onPressSearchButton={onPressSearchButton}
@@ -431,8 +427,15 @@ export default ({
               searchFilterFunction={searchFilterFunction}
               loading={loading}
               dataSearch={dataSearch}
+              // handleInputFocus={handleInputFocus}
             />
           </TouchableOpacity>
+          {/* <SearchFlatList
+            data={historySearchStore}
+            searchFilterFunction={searchFilterFunction}
+            placeholder={"Search"}
+            isFocused={isFocused}
+          /> */}
 
           {/* The Third screen Row */}
           <View style={styles.thirdSection}>

@@ -179,7 +179,7 @@ const ShopList = ({
           <Text style={styles.categoryTitle}>Category</Text>
         </View>
 
-        <View>
+        <View style={{ padding: 15 }}>
           <CategoryList
             categories={categories}
             onCategoryChange={onCategoryChange}

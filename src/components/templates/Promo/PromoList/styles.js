@@ -16,10 +16,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   categoryContainer: {
+    // flex: 1,
     flexDirection: "row",
-    width: "90%",
+    width: "100%",
     paddingTop: 10,
     alignSelf: "center",
+    justifyContent: "flex-start",
+    flexWrap: "wrap",
+    paddingHorizontal: 15,
   },
   iconContainer: {
     flexDirection: "row",
@@ -241,10 +245,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    // width: "90%",
   },
   iconButton: {
     fontFamily: "HorizontalRounded",
-    paddingRight: 5,
+    // paddingRight: 5,
+    // fontSize: 12,
   },
 });
 
