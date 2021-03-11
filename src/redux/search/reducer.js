@@ -1,4 +1,5 @@
 import actions from "./action";
+import { storeData } from "../../marslab-library-react-native/utils/common";
 
 const initialState = {
   permissionVerificationLoading: false,
@@ -18,6 +19,8 @@ const initialState = {
   currentFavourite: false,
   favouriteControl: false,
   favouriteError: false,
+  historySearchStore: [],
+  status: null,
 
   readLoading: false,
   readError: false,
@@ -232,6 +235,37 @@ const searchReducer = (state = initialState, { type, payload }) => {
         readError: payload.error,
       };
 
+    case actions.READ_SEARCH_HISTORY:
+      return {
+        ...state,
+        readLoading: true,
+        readError: false,
+      };
+
+    case actions.READ_SEARCH_HISTORY_SUCCESS:
+      return {
+        ...state,
+        readLoading: false,
+        historySearchStore: payload.data,
+      };
+
+    case actions.READ_SEARCH_HISTORY_ERROR:
+      return {
+        ...state,
+        readLoading: false,
+        readError: payload.error,
+      };
+
+    case actions.REMOVE_SEARCH_HISTORY_SUCCESS:
+      console.log("REMOVE_SEARCH_HISTORY_SUCCESS");
+
+      console.log(payload.data);
+      return {
+        ...state,
+        readLoading: false,
+        historySearchStore: payload.data,
+      };
+
     case actions.TOGGLE_SEARCH_PROMO_SHOP_FAVOURITE:
       return {
         ...state,
@@ -240,7 +274,6 @@ const searchReducer = (state = initialState, { type, payload }) => {
       };
 
     case actions.TOGGLE_SEARCH_PROMO_SHOP_FAVOURITE_ERROR:
-      console.log(payload.data);
       return {
         ...state,
         favouriteError: payload.data,
