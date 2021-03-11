@@ -27,7 +27,10 @@ const ImageGenerator = ({ rowData }) => {
             // marginVertical: 3,
           }}
         /> */}
-        <AutoImage mainAxisSize={dimensions / 1.2} source={{ uri: rowData[i] }} />
+        <AutoImage
+          mainAxisSize={Platform.OS == "ios" ? dimensions / 1.24 : dimensions / 1.3}
+          source={{ uri: rowData[i] }}
+        />
       </View>
     );
   }
