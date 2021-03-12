@@ -30,6 +30,7 @@ const ShopsSinglePost = ({
   catchCondition,
   find_dimensions = () => {},
   SharePress,
+  onPostLogoPressed,
 }) => {
   const PostList = ({ data }) => {
     if (data.length !== 0) {
@@ -179,10 +180,10 @@ const ShopsSinglePost = ({
     return (
       <ScrollView style={styles.outPostContainer} showsVerticalScrollIndicator={false}>
         <View style={styles.postsTopRow}>
-          <View style={styles.logoPositionInModal}>
+          <TouchableOpacity style={styles.logoPositionInModal} onPress={onPostLogoPressed}>
             <Image style={styles.logo} source={icon} />
             {/* <Image source={} style={} resizeMode={"cover"} /> */}
-          </View>
+          </TouchableOpacity>
           <View style={styles.postsTopRowNameContainer}>
             <Text style={styles.ShopPostTopTitle}>{shopPosts.shop.displayTitle}</Text>
             <Text style={styles.ShopPostSubTitle}>{catchCondition}</Text>

@@ -14,6 +14,7 @@ import {
 import { readObjects as readShopPost, readObject as readSinglePost } from "@redux/shopPost/action";
 
 import { ShopsSinglePost } from "@components/templates";
+import { getDistance } from "geolib";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
@@ -33,7 +34,7 @@ class index extends Component {
     // this.props.readShopPost(shopId);
     await this.props.readSinglePost(postId);
 
-    await this.props.listenFromDatabase({ shopId });
+    // await this.props.listenFromDatabase({ shopId });
 
     this.props.verifyPermission().then(async (permissions) => {
       if (permissions.location !== "granted") {
@@ -83,10 +84,30 @@ class index extends Component {
     return returnTime;
   }
 
-  onPostPressed() {
+  calculateDistance = async (destinationLocation) => {
+    var distance;
+    let location = await Location.getCurrentPositionAsync({});
+    distance =
+      getDistance(
+        { latitude: destinationLocation.U, longitude: destinationLocation.k },
+        {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }
+      ) / 1000;
+
+    return distance;
+  };
+
+  onPostLogoPressed = async () => {
+    const { post } = this.props;
+    let distance = await this.calculateDistance(post.l);
+
+    // console.log(post);
     // const location = this.props.promotion.promotion.shop.l;
-    // this.calculateDistance(location);
-  }
+    Actions.pop();
+    Actions.SingleMerchant({ shopId: post.shopIds[0], distance: distance });
+  };
   find_dimensions = (layout) => {
     const { x, y, width, height } = layout;
     // this.setState({ viewHeight: height });
@@ -182,6 +203,7 @@ class index extends Component {
         icon={icon}
         find_dimensions={this.find_dimensions}
         SharePress={this.onShare.bind(this)}
+        onPostLogoPressed={this.onPostLogoPressed.bind(this)}
       />
     );
   }
