@@ -18,9 +18,9 @@ const styles = StyleSheet.create({
   categoryContainer: {
     // flex: 1,
     flexDirection: "row",
-    width: "100%",
+    // width: "100%",
     paddingTop: 10,
-    alignSelf: "center",
+    // alignSelf: "center",
     justifyContent: "flex-start",
     flexWrap: "wrap",
     paddingHorizontal: 15,

@@ -286,7 +286,6 @@ class index extends Component {
     // const location = this.props.promotionState.promotion.shop.l;
     // this.calculateDistance(location);
     const promo = this.props.promotionState;
-
     this.props.togglePromotionModal();
     Actions.SingleMerchant({
       shopId: promo.promotion.shop.id,
