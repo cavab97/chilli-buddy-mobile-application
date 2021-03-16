@@ -41,7 +41,7 @@ export function geoReadObjects({
       ref: `${objectName}Packaging0`,
     });
     console.log(selectedCategory);
-    if (selectedCategory !== "null") {
+    if (selectedCategory !== "null" || selectedCategory.toLowerCase() == "near me") {
       if (selectedCategory)
         databaseRef = databaseRef.where("categories", "array-contains-any", selectedCategory);
     }
@@ -69,33 +69,37 @@ export function geoReadObjects({
           // console.log(selectedCategory);
           const processedData = { ...parent };
           // console.log(processedData);
-          if (
-            processedData.address.country.toLowerCase().includes(shopName.toLowerCase()) ||
-            processedData.address.line1.toLowerCase().includes(shopName.toLowerCase()) ||
-            processedData.address.line2.toLowerCase().includes(shopName.toLowerCase()) ||
-            processedData.address.postcode.toLowerCase().includes(shopName.toLowerCase()) ||
-            processedData.address.state.toLowerCase().includes(shopName.toLowerCase()) ||
-            processedData.displayTitle.toLowerCase().includes(shopName.toLowerCase())
-          ) {
+          if (selectedCategory.toLowerCase() == "near me" || shopName.toLowerCase() == "near me") {
             result.push(processedData);
-          }
-          if (selectedCategory !== null) {
-            if (selectedCategory.length > 0) {
-              for (let i = 0; i < selectedCategory.length; i++) {
-                if (processedData.categories[0].includes(selectedCategory[i])) {
-                  result.push(processedData);
+          } else {
+            if (
+              processedData.address.country.toLowerCase().includes(shopName.toLowerCase()) ||
+              processedData.address.line1.toLowerCase().includes(shopName.toLowerCase()) ||
+              processedData.address.line2.toLowerCase().includes(shopName.toLowerCase()) ||
+              processedData.address.postcode.toLowerCase().includes(shopName.toLowerCase()) ||
+              processedData.address.state.toLowerCase().includes(shopName.toLowerCase()) ||
+              processedData.displayTitle.toLowerCase().includes(shopName.toLowerCase())
+            ) {
+              result.push(processedData);
+            }
+            if (selectedCategory !== null) {
+              if (selectedCategory.length > 0) {
+                for (let i = 0; i < selectedCategory.length; i++) {
+                  if (processedData.categories[0].includes(selectedCategory[i])) {
+                    result.push(processedData);
+                  }
                 }
               }
             }
-          }
 
-          // console.log(processedData.tags);
-          if (selectedTag !== null) {
-            if (processedData.tags.length > 1) {
-              for (let i = 0; i < processedData.tags.length; i++) {
-                for (let k = 0; k < selectedTag.length; k++) {
-                  if (processedData.tags[i] === selectedTag[k]) {
-                    result.push(processedData);
+            // console.log(processedData.tags);
+            if (selectedTag !== null) {
+              if (processedData.tags.length > 1) {
+                for (let i = 0; i < processedData.tags.length; i++) {
+                  for (let k = 0; k < selectedTag.length; k++) {
+                    if (processedData.tags[i] === selectedTag[k]) {
+                      result.push(processedData);
+                    }
                   }
                 }
               }

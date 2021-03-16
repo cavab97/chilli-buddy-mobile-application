@@ -1,21 +1,25 @@
 import React from "react";
 import styles from "./styles";
 
-import { Dimensions, Platform } from "react-native";
+import { Dimensions, Platform, Animated } from "react-native";
+// import { GestureHandler } from "expo";
+// const { PinchGestureHandler } = GestureHandler;
+import GestureHandler, { PinchGestureHandler } from "react-native-gesture-handler";
 
 import {
   View,
-  Image,
   Text,
   ScrollView,
   CustomIcon,
   Modal,
   Carousel,
   TouchableOpacity,
+  Image,
 } from "@components/atoms";
 
 import moment from "moment";
 import ContentLoader, { Rect } from "react-content-loader/native";
+// import Image from "react-native-transformable-image";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
@@ -48,6 +52,40 @@ const SingleMerchantPromo = ({
 
   const startDate = moment(dataSource.startTime).format("DD-MM-YYYY");
   const endDate = moment(dataSource.endTime).format("DD-MM-YYYY");
+  // logOutZoomState = (event, gestureState, zoomableViewEventObject) => {
+  //   console.log("");
+  //   console.log("");
+  //   console.log("-------------");
+  //   console.log("Event: ", event);
+  //   console.log("GestureState: ", gestureState);
+  //   console.log("ZoomableEventObject: ", zoomableViewEventObject);
+  //   console.log("");
+  //   console.log(
+  //     `Zoomed from ${zoomableViewEventObject.lastZoomLevel} to  ${zoomableViewEventObject.zoomLevel}`
+  //   );
+  // };
+  // scale = new Animated.Value(1);
+  // onZoomEventFunction = Animated.event(
+  //   [
+  //     {
+  //       nativeEvent: { scale: this.scale },
+  //     },
+  //   ],
+  //   {
+  //     useNativeDriver: true,
+  //   }
+  // );
+
+  // onZoomStateChangeFunction = (event) => {
+  //   console.log(event.nativeEvent);
+  //   if (event.nativeEvent.oldState === GestureHandler.State.ACTIVE) {
+  //     Animated.spring(this.scale, {
+  //       toValue: 1,
+  //       useNativeDriver: true,
+  //       bounciness: 1,
+  //     }).start();
+  //   }
+  // };
 
   return (
     <Modal transparent={true} visible={promotionModal} onBackdropPress={onClose}>
@@ -72,13 +110,50 @@ const SingleMerchantPromo = ({
                 return (
                   <TouchableOpacity onPress={onCarouselPressed}>
                     {dataSource.images.length > 0 ? (
-                      <Image source={{ uri: item }} style={adsImageStyle} resizeMode={"cover"} />
+                      // <ImageZoom
+                      //   cropWidth={800}
+                      //   cropHeight={Dimensions.get("window").height}
+                      //   // imageWidth={400}
+                      //   // imageHeight={500}
+                      //   onClick={onCarouselPressed}
+                      //   // minScale={100}
+                      // >
+                      // <ImageModal
+                      //   swipeToDismiss={false}
+                      //   resizeMode="cover"
+                      //   style={adsImageStyle}
+                      //   source={{
+                      //     uri: item,
+                      //   }}
+                      //   onTap={onCarouselPressed}
+                      // />
+                      // <ReactNativeZoomableView
+                      //   maxZoom={1.5}
+                      //   minZoom={0.5}
+                      //   zoomStep={0.5}
+                      //   initialZoom={1}
+                      //   bindToBorders={true}
+                      //   // onZoomAfter={this.logOutZoomState}
+                      //   style={adsImageStyle}
+                      // >
+                      // <PinchGestureHandler
+                      //   onGestureEvent={this.onZoomEventFunction}
+                      //   onHandlerStateChange={this.onZoomStateChangeFunction}
+                      // >
+                      //   <Animated.Image
+                      //     // style={{
+                      //     //   width: windowWidth,
+                      //     //   height: 530,
+                      //     //   transform: [{ scale: this.scale }],
+                      //     // }}
+                      //     style={[styles.adsImageStyle, { transform: [{ scale: this.scale }] }]}
+                      //     source={{ uri: item }}
+                      //     resizeMode="cover"
+                      //   />
+                      // </PinchGestureHandler>
+                      <Image source={{ uri: item }} resizeMode="cover" style={adsImageStyle} />
                     ) : (
-                      <Image
-                        source={noImage}
-                        style={adsImageStyle}
-                        //resizeMode={"cover"}
-                      />
+                      <Image source={noImage} style={adsImageStyle} resizeMode={"cover"} />
                     )}
                   </TouchableOpacity>
                 );
@@ -96,7 +171,7 @@ const SingleMerchantPromo = ({
                 Valid from {startDate} to {endDate}
               </Text>
             </View>
-            <Text style={caption}>slide for more</Text>
+            {dataSource.images.length > 1 ? <Text style={caption}>slide for more</Text> : <View />}
           </View>
         </View>
       )}

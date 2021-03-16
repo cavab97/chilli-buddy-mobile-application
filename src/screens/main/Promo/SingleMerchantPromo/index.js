@@ -40,7 +40,7 @@ class index extends Component {
 
   calculateDistance = async (destinationLocation) => {
     const promo = this.props.promotion;
-    
+
     var distance;
     let location = await Location.getCurrentPositionAsync({});
     distance =
