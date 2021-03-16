@@ -104,8 +104,8 @@ class index extends Component {
 
     // console.log(post);
     // const location = this.props.promotion.promotion.shop.l;
-    Actions.pop();
-    Actions.SingleMerchant({ shopId: post.shopIds[0], distance: distance });
+    await Actions.SingleMerchant({ shopId: post.shopIds[0], distance: distance });
+    // Actions.pop();
   };
   find_dimensions = (layout) => {
     const { x, y, width, height } = layout;

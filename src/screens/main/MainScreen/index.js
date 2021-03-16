@@ -144,6 +144,7 @@ class index extends Component {
     this.setState({ isAdvertisementModelShow: false });
   };
 
+  //Filtered Data Source from empty shopId and empty cover pic
   filteredDatasource() {
     const advertisements = this.props.advertisements;
     const posts = this.props.posts;

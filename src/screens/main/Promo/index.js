@@ -302,28 +302,28 @@ class index extends Component {
     // console.log(filterCurrentCategories);
     let tempCategory = [];
     let delDuplicateCategory;
+    if (promo.length > 0) {
+      promo.map((promotion) => {
+        tempCategory.push(promotion.shop.categories[0]);
+        // tempCategory = promotion.shop.categories[0];
+        delDuplicateCategory = [...new Set(tempCategory)];
 
-    promo.map((promotion) => {
-      tempCategory.push(promotion.shop.categories[0]);
-      // tempCategory = promotion.shop.categories[0];
-      delDuplicateCategory = [...new Set(tempCategory)];
+        promotionCategory = categories.filter(
+          (category) => category.id === promotion.shop.categories[0]
+        );
 
-      promotionCategory = categories.filter(
-        (category) => category.id === promotion.shop.categories[0]
-      );
-
-      promotionCategory ? (promotion.category = promotionCategory[0].title) : "";
-      // filterCurrentCategories = promotionCategory;
-    });
-    delDuplicateCategory.map((c) => {
-      for (let i = 0; i < filteredCategories.length; i++) {
-        if (c === filteredCategories[i].id) {
-          // console.log("here");
-          filterCurrentCategories.push(filteredCategories[i]);
+        promotionCategory ? (promotion.category = promotionCategory[0].title) : "";
+      });
+    }
+    if (delDuplicateCategory.length > 0) {
+      delDuplicateCategory.map((c) => {
+        for (let i = 0; i < filteredCategories.length; i++) {
+          if (c === filteredCategories[i].id) {
+            filterCurrentCategories.push(filteredCategories[i]);
+          }
         }
-      }
-      // filteredCategories = categories.filter((category) => category.id.includes(c));
-    });
+      });
+    }
 
     // On toggle category get category from promotion shop
     selectedCategory
