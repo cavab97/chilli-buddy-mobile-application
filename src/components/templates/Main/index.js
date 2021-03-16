@@ -408,7 +408,7 @@ export default ({
           </View>
 
           {/* The Second screen Row */}
-          <TouchableOpacity style={styles.SecondSection} onPress={onPressSearch}>
+          <View style={styles.SecondSection}>
             {/* <SearchBar
               placeholder="Search"
               lightTheme={true}
@@ -432,7 +432,7 @@ export default ({
               loading={loading}
               dataSearch={dataSearch}
             />
-          </TouchableOpacity>
+          </View>
 
           {/* The Third screen Row */}
           <View style={styles.thirdSection}>
