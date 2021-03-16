@@ -409,7 +409,7 @@ export default ({
           </View>
 
           {/* The Second screen Row */}
-          <TouchableOpacity style={styles.SecondSection} onPress={onPressSearch}>
+          <View style={styles.SecondSection}>
             {/* <SearchBar
               placeholder="Search"
               lightTheme={true}
@@ -429,13 +429,7 @@ export default ({
               dataSearch={dataSearch}
               // handleInputFocus={handleInputFocus}
             />
-          </TouchableOpacity>
-          {/* <SearchFlatList
-            data={historySearchStore}
-            searchFilterFunction={searchFilterFunction}
-            placeholder={"Search"}
-            isFocused={isFocused}
-          /> */}
+          </View>
 
           {/* The Third screen Row */}
           <View style={styles.thirdSection}>

@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@dudigital/react-native-zoomable-view": "^1.0.16",
     "@react-native-community/art": "^1.2.0",
     "@react-native-community/cli": "^3.0.4",
     "@react-native-community/netinfo": "^5.9.9",

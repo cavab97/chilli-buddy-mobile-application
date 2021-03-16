@@ -10,11 +10,6 @@ import * as Location from "expo-location";
 import { getDistance } from "geolib";
 import { AsyncStorage } from "react-native";
 
-// import {
-//   listenFromDatabase as listenToRouteTickets,
-//   removeListenerFromDatabase as removeListenerFromRouteTickets,
-// } from "@redux/routeTicket/action";
-
 import { loadShopsPromo, togglePromotionModal, listenToRecord } from "@redux/promo/action";
 import {
   toggleSearchMessage as listenShopMessage,
@@ -79,25 +74,11 @@ class index extends Component {
       radius: RADIUS * this.state.radiusAddition,
       selectedCategory: null,
       selectedTag: null,
-      // limit: this.state.limit,
     });
-    // console.log("    const searchHistory = this.props.searchHistory(null, )   ");
-    // const searchHistory = this.props.searchHistory(null, "read");
-    // const { historySearchStore } = this.props.searchState;
 
-    // alert(historySearchStore);
-
-    Promise.all([
-      readAdvertisements,
-      readSettingInfo,
-      loadShopsPromo,
-      loadShops,
-      // searchHistory,
-    ]).then((values) => {
+    Promise.all([readAdvertisements, readSettingInfo, loadShopsPromo, loadShops]).then((values) => {
       this.setState({ refreshing: false });
     });
-
-    //await this.props.readFromDatabase();
   };
 
   handleVideoRef = (component) => {
@@ -111,7 +92,6 @@ class index extends Component {
     Actions.CheckIn();
   }
   onShopsPressed() {
-    // console.log("clicked shop");
     Actions.Shops();
   }
   onPromotionsPressed() {
@@ -120,27 +100,19 @@ class index extends Component {
   onProfilePressed() {
     Actions.Profile();
   }
-  //open spinning wheel screen
   onOpenSpinningWheel() {
     Actions.SpinningWheel();
   }
 
   onPromoPressed(item) {
-    // console.log("item.distance");
-
-    // console.log(item.distance);
     this.setState({ distance: item.distance });
 
-    //Actions.SingleMerchantPromo({ promoId: item.id, distance: item.distance });
     this.props.listenToRecord({ promoId: item.id });
     this.props.togglePromotionModal();
   }
 
   // View shop from clicking image swiper advertisements
   onPressViewShop(index) {
-    // console.log("j");
-    // console.log(index);
-
     const filteredDatasource = this.filteredDatasource();
     // console.log(filteredDatasource[index]);
 
@@ -155,7 +127,6 @@ class index extends Component {
       distance: filteredDatasource[index].distance,
       categoryName: filteredDatasource[index].category,
     });
-    // Actions.SingleMerchant({ shopId: filteredDatasource[index].shopId });
   }
 
   //close pop up from header
@@ -177,7 +148,6 @@ class index extends Component {
   filteredDatasource() {
     const advertisements = this.props.advertisements;
     const posts = this.props.posts;
-
     let dataSourceAds = [];
     //Map image URL and Shop ID to array
     dataSourceAds = posts.map((item) => {
