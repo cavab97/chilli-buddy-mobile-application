@@ -10,7 +10,6 @@ import VideoPlayer from "expo-video-player";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ImageInfo } from "../../molecules";
 import { SingleMerchantPromo } from "../../templates/Promo/SingleMerchantPromo";
-import { SearchFlatList } from "../../organisms/SearchFlatList";
 
 //import WheelOfFortune from "react-native-wheel-of-fortune";
 
@@ -29,7 +28,7 @@ import {
   Icon as Icon2,
 } from "../../atoms";
 
-import { Card, CardSection, SearchBarMain } from "../../molecules";
+import { Card, CardSection, SearchBarMain, SearchFlatList } from "../../molecules";
 
 import { InfoBox } from "@components/organisms/InfoBox";
 
@@ -335,7 +334,7 @@ export default ({
       </TouchableOpacity>
     );
   }
-  const { displayName, email, phoneNumber, photoURL } = user;
+  const { photoURL } = user;
 
   const wheelImage = require("../../../assets/categoryWheel.png");
   const resultImage = require("../../../assets/categoryResult.png");
@@ -411,7 +410,7 @@ export default ({
           </View>
 
           {/* The Second screen Row */}
-          <TouchableOpacity style={styles.SecondSection} onPress={onPressSearch}>
+          <View style={styles.SecondSection}>
             {/* <SearchBar
               placeholder="Search"
               lightTheme={true}
@@ -429,15 +428,8 @@ export default ({
               searchFilterFunction={searchFilterFunction}
               loading={loading}
               dataSearch={dataSearch}
-              handleInputFocus={handleInputFocus}
             />
-          </TouchableOpacity>
-          {/* <SearchFlatList
-            data={historySearchStore}
-            searchFilterFunction={searchFilterFunction}
-            placeholder={"Search"}
-            isFocused={isFocused}
-          /> */}
+          </View>
 
           {/* The Third screen Row */}
           <View style={styles.thirdSection}>

@@ -21,6 +21,7 @@ import {
   onShopSpecificClick,
   toggleSearchMessage as listenShopMessage,
   toggleSearchMessageMain,
+  searchHistory,
 } from "@redux/search/action";
 
 import {
@@ -48,6 +49,7 @@ class index extends Component {
       dataSearch: "null",
       category: "null",
       tags: "null",
+      isFocused: false,
     };
     this.handleRefresh = this.handleRefresh.bind(this);
   }
@@ -90,7 +92,7 @@ class index extends Component {
     const currentPromo = this.props.promotionState.promo;
     const readError = this.props.promotionState.readError;
 
-    console.log("componentDidUpdate(prevProps, prevState)");
+    // console.log("componentDidUpdate(prevProps, prevState)");
     // if no promo in the radius, call handleRefresh read again by increase radiusAddition state
     if (currentPromo.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
       if (prevState.radiusAddition === this.state.radiusAddition) {
@@ -109,6 +111,28 @@ class index extends Component {
 
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
+    const searchHistory = this.props.searchHistory(null, "read");
+
+    let category = [];
+    let tags = [];
+    this.props.searchHistory(this.state.dataSearch, "create");
+
+    for (let i = 0; i < this.props.categories.length; i++) {
+      if (
+        this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
+      ) {
+        category.push(this.props.categories[i].id);
+        this.setState({ category: category });
+      }
+    }
+
+    for (let i = 0; i < this.props.tags.length; i++) {
+      if (this.props.tags[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())) {
+        tags.push(this.props.tags[i].id);
+        this.setState({ tags: tags });
+      }
+    }
+
     const loadShops = this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
       selectedCategory: null,
@@ -118,9 +142,9 @@ class index extends Component {
 
     const loadSearchShop = this.props.loadSearchShops({
       radius: RADIUS * this.state.radiusAddition,
-      selectedCategory: this.state.category,
+      selectedCategory: category.length > 0 ? category : null,
       shopName: this.state.dataSearch,
-      selectedTag: this.state.tags,
+      selectedTag: tags.length > 0 ? tags : null,
     });
 
     const loadShopsPromo = this.props.loadShopsPromo({
@@ -136,9 +160,11 @@ class index extends Component {
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    Promise.all([loadSearchShop, loadShopsPromo, loadBookmark, loadShops]).then((values) => {
-      this.setState({ readLoading: false });
-    });
+    Promise.all([loadSearchShop, loadShopsPromo, loadBookmark, loadShops, searchHistory]).then(
+      (values) => {
+        this.setState({ readLoading: false });
+      }
+    );
 
     // await this.props.loadFavourite({
     //   radius: RADIUS * this.state.radiusAddition,
@@ -277,6 +303,8 @@ class index extends Component {
     console.log("clicked");
     let category = [];
     let tags = [];
+    this.props.searchHistory(this.state.dataSearch, "create");
+
     for (let i = 0; i < this.props.categories.length; i++) {
       if (
         this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
@@ -303,6 +331,8 @@ class index extends Component {
   searchButtonClickPromo = async () => {
     let category = [];
     let tags = [];
+    this.props.searchHistory(this.state.dataSearch, "create");
+
     for (let i = 0; i < this.props.categories.length; i++) {
       if (
         this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
@@ -325,6 +355,23 @@ class index extends Component {
       selectedTag: tags.length > 0 ? tags : null,
     });
   };
+  handleInputFocus = (uri) => this.setState({ isFocused: true });
+
+  removeAllPress() {
+    console.log("clearAllPress");
+    this.props.searchHistory("clear", "clear");
+  }
+  specificMarkPress(item) {
+    console.log("specificMarkPress");
+    console.log(item.id);
+    this.props.searchHistory(item.id, "remove");
+  }
+  selectHistory(item) {
+    console.log("specificHistoryPress");
+    this.setState({
+      dataSearch: item,
+    });
+  }
 
   render() {
     const { promotion, promotionModalVisible, bookmarkControl } = this.props.promotionState;
@@ -337,7 +384,7 @@ class index extends Component {
 
     //shop
 
-    const { shops, promos } = this.props.searchState;
+    const { shops, promos, historySearchStore } = this.props.searchState;
 
     let isBookmark = [];
     let searchShops = [];
@@ -409,6 +456,12 @@ class index extends Component {
         mainScreenMessage={this.props.mainScreenMessage}
         loading={this.props.loading}
         dataSearch={this.state.dataSearch}
+        handleInputFocus={this.handleInputFocus.bind(this)}
+        isFocused={this.state.isFocused}
+        historySearchStore={historySearchStore}
+        specificMarkPress={this.specificMarkPress.bind(this)}
+        removeAllPress={this.removeAllPress.bind(this)}
+        selectHistory={this.selectHistory.bind(this)}
       />
     );
   }
@@ -464,4 +517,5 @@ export default connect(mapStateToProps, {
   onShopSpecificClick,
   listenShopMessage,
   toggleSearchMessageMain,
+  searchHistory,
 })(index);

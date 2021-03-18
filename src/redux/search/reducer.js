@@ -259,11 +259,10 @@ const searchReducer = (state = initialState, { type, payload }) => {
     case actions.REMOVE_SEARCH_HISTORY_SUCCESS:
       console.log("REMOVE_SEARCH_HISTORY_SUCCESS");
 
-      console.log(payload.data);
       return {
         ...state,
         readLoading: false,
-        historySearchStore: payload.data,
+        historySearchStore: [],
       };
 
     case actions.TOGGLE_SEARCH_PROMO_SHOP_FAVOURITE:

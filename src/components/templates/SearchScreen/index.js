@@ -19,7 +19,7 @@ import {
 } from "@components/atoms";
 // import { Card, CardSection, SearchBar } from "../../molecules";
 
-import { Card, CardSection, SearchBar } from "@components/molecules";
+import { Card, CardSection, SearchBar, SearchFlatList } from "@components/molecules";
 import { SingleMerchantPromo } from "../Promo/SingleMerchantPromo";
 import ContentLoader, { Rect } from "react-content-loader/native";
 
@@ -190,6 +190,12 @@ const SearchScreen = ({
   searchFilterFunction,
   mainScreenMessage,
   dataSearch,
+  handleInputFocus,
+  isFocused,
+  historySearchStore,
+  specificMarkPress,
+  removeAllPress,
+  selectHistory,
 }) => {
   return (
     <View style={{ flex: 1 /*height: 100%*/ }}>
@@ -221,7 +227,33 @@ const SearchScreen = ({
           loading={loading}
           dataSearch={dataSearch}
           readLoading={readLoading}
+          handleInputFocus={handleInputFocus}
         />
+      </View>
+      <View style={{ marginHorizontal: 20 }}>
+        {
+          (console.log("isFocused"),
+          console.log(isFocused),
+          console.log("shopData.length === 0"),
+          console.log(shopData.length === 0),
+          console.log("readLoading"),
+          console.log(readLoading),
+          console.log("loading"),
+          console.log(loading),
+          console.log("dataSource.length === 0"),
+          console.log(dataSource.length === 0))
+        }
+        {(isFocused && shopData.length === 0 && !readLoading && !loading && !selectedTab) ||
+        (isFocused && dataSource.length === 0 && !readLoading && !loading && selectedTab) ? (
+          <SearchFlatList
+            historySearchStore={historySearchStore}
+            specificMarkPress={specificMarkPress}
+            removeAllPress={removeAllPress}
+            selectHistory={selectHistory}
+          />
+        ) : (
+          <View />
+        )}
       </View>
       {readLoading || loading ? (
         <View>

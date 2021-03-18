@@ -409,9 +409,7 @@ class index extends Component {
   onPressSearchButton = async () => {
     this.props.searchHistory(this.state.messagesValue, "create");
 
-    const { historySearchStore } = this.props.searchState;
-
-    alert(historySearchStore);
+    // alert(historySearchStore);
 
     this.props.toggleSearchMessageMain();
     Actions.SearchScreen();

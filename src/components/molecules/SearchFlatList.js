@@ -1,69 +1,167 @@
-// import { TouchableOpacity } from "@components/atoms/index";
-// import React, { PureComponent } from "react";
-// import { StyleSheet, Dimensions, List, FlatList, ListItem } from "react-native";
-// import { Image, View, TextInput } from "../atoms";
-// const windowWidth = Dimensions.get("window").width;
+import React, { PureComponent } from "react";
+import { StyleSheet, Dimensions, List, FlatList } from "react-native";
 
-// const SearchFlatList = (props) => {
-//   return (
-//     <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-//       <FlatList
-//         data={props.data}
-//         renderItem={({ item }) => (
-//           <ListItem
-//             // roundAvatar
-//             title={item.title}
-//             // subtitle={item.email}
-//             // avatar={{ uri: item.picture.thumbnail }}
-//             // containerStyle={{ borderBottomWidth: 0 }}
-//           />
-//         )}
-//         keyExtractor={(item) => item.title}
-//         // ItemSeparatorComponent={this.renderSeparator}
-//         // ListHeaderComponent={this.renderHeader}
-//       />
-//     </List>
-//   );
-// };
+import { ListItem } from "react-native-elements";
 
-// const styles = StyleSheet.create({
-//   searchIcon: {
-//     width: 70,
-//     height: 70,
-//     aspectRatio: 120 / 130,
-//     right: 0,
-//     bottom: 0,
-//     alignSelf: "flex-end",
-//   },
-//   searchBarStyle: {
-//     backgroundColor: "#FFF",
-//     // borderWidth: 1, //no effect
-//     borderRadius: 25,
-//     shadowColor: "#000",
-//     shadowRadius: 1.22,
-//     shadowOffset: { width: 0, height: 0 },
-//     shadowOpacity: 0.1,
-//     shadowRadius: 2,
-//     elevation: 4,
-//     flexDirection: "row",
-//     alignItems: "center",
-//     height: 40,
-//     // justifyContent: "space-between",
+import { Image, View, TextInput, Text } from "../atoms";
+import { TouchableOpacity } from "@components/atoms/index";
+import { Colors } from "../../settings/styles/theme";
 
-//     flex: 1,
-//     // alignSelf: "flex-end",
-//   },
-//   innerContainer: {
-//     marginLeft: 20,
-//     // marginRight: 10,
-//     // height: 50,
-//     // borderColor: "#86d972",
-//     // borderWidth: 1,
-//     paddingLeft: 5,
-//     paddingRight: 10,
-//     // alignSelf: "flex-end",
-//     width: "77%",
-//   },
-// });
+const windowWidth = Dimensions.get("window").width;
+const clock = require("../../assets/chilliBuddy2.0Icon/chilliBuddySearchIcon/clock.png");
 
-// export { SearchBar };
+const SearchFlatList = (props) => {
+  let data;
+  // const data = [
+  //   { id: "1", title: "First item" },
+  //   { id: "2", title: "Second item" },
+  //   { id: "3", title: "Third item" },
+  //   { id: "4", title: "Fourth item" },
+  // ];
+  console.log(" props.historySearchStore");
+
+  console.log(Object.keys(props.historySearchStore).length === 0);
+  if (Object.keys(props.historySearchStore).length > 0) {
+    data = props.historySearchStore.map(function (item, index) {
+      return {
+        title: item,
+        id: index,
+      };
+    });
+  } else {
+    data = [];
+  }
+  console.log("props.historySearchStore");
+
+  console.log(data.length);
+  if (data.length !== 0) {
+    return (
+      <View style={styles.mainView}>
+        {/* <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}> */}
+        <View style={styles.historyFirstRow}>
+          <Text style={styles.historyTitle}>History</Text>
+          <TouchableOpacity onPress={props.removeAllPress}>
+            <Text style={styles.clearAllTitle}>Clear All</Text>
+          </TouchableOpacity>
+        </View>
+
+        <FlatList
+          data={data}
+          renderItem={({ item }) => (
+            // <ListItem
+            // roundAvatar
+            // title={
+            <View style={styles.historyDetail}>
+              <Image source={clock} transition={false} style={styles.smallClock} />
+              <TouchableOpacity
+                style={styles.titleView}
+                onPress={() => props.selectHistory(item.title)}
+              >
+                <Text style={styles.subtitleFood}>{item.title}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.ErrorView}
+                onPress={() => props.specificMarkPress(item)}
+              >
+                <Text style={styles.subtitleError}>x</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+          // ItemSeparatorComponent={this.renderSeparator}
+          // ListHeaderComponent={this.renderHeader}
+        />
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.mainView}>
+        {/* <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}> */}
+        <View style={styles.historyFirstRow}>
+          <Text style={styles.historyTitle}>History</Text>
+          <TouchableOpacity>
+            <Text style={styles.clearAllTitle}>Clear All</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+};
+
+const styles = StyleSheet.create({
+  searchIcon: {
+    width: 70,
+    height: 70,
+    aspectRatio: 120 / 130,
+    right: 0,
+    bottom: 0,
+    alignSelf: "flex-end",
+  },
+  searchBarStyle: {
+    backgroundColor: "#FFF",
+    borderRadius: 25,
+    shadowColor: "#000",
+    shadowRadius: 1.22,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 4,
+    flexDirection: "row",
+    alignItems: "center",
+    height: 40,
+    flex: 1,
+  },
+  innerContainer: {
+    marginLeft: 20,
+    paddingLeft: 5,
+    paddingRight: 10,
+    width: "77%",
+  },
+  mainView: { position: "relative" },
+  titleView: {
+    height: 25,
+    width: "80%",
+  },
+  ErrorView: {
+    height: 25,
+  },
+  subtitleFood: {
+    fontSize: 15,
+  },
+  clearAllTitle: {
+    color: "red",
+    fontFamily: "HorizontalRounded",
+    color: Colors.RED,
+  },
+  historyFirstRow: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    paddingBottom: 10,
+    paddingTop: 10,
+  },
+  historyTitle: {
+    color: "black",
+    fontFamily: "HorizontalRounded",
+    fontSize: 20,
+  },
+  historyDetail: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    paddingHorizontal: 12,
+    marginTop: 10,
+  },
+  smallClock: {
+    width: 20,
+    height: 19,
+    resizeMode: "contain",
+  },
+  subtitleError: {
+    width: 20,
+    height: 20,
+    textAlign: "center",
+    fontSize: 20,
+    color: "grey",
+  },
+});
+
+export { SearchFlatList };

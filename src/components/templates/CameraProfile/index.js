@@ -35,8 +35,8 @@ const CameraProfile = ({
   triggerLoading,
   selectImage,
   // setCameraReady, //front camera
-  // ratio,
-  // imagePadding,
+  ratio,
+  imagePadding,
 }) => {
   if (hasPermission === null) {
     return <View />;
@@ -131,13 +131,13 @@ const CameraProfile = ({
     return (
       <View style={styles.container}>
         <Camera
-          //style={[styles.container, { marginTop: imagePadding, marginBottom: imagePadding }]} //front camera
-          style={styles.container}
+          style={[styles.container, { marginTop: imagePadding, marginBottom: imagePadding }]} //front camera
+          // style={styles.container}
           type={cameraType}
           ref={cameraConfig}
           //autoFocus={"on"}
           //focusDepth={1}     front camera
-          //ratio={ratio}
+          ratio={ratio}
           //onCameraReady={setCameraReady}
         >
           <View style={styles.cameraContainer}>
@@ -149,14 +149,14 @@ const CameraProfile = ({
                 iconColor="white"
                 onPress={onPress}
               />
-              {/* <IconButton            //front camera
+              <IconButton //front camera
                 iconContainer={styles.rotateIconContainer}
                 iconName="md-sync"
                 iconSize={40}
                 iconColor="white"
                 onPress={changeCamera}
                 //loading={takePictureLoading}
-              /> */}
+              />
               <View style={styles.imagePickerIcon}>
                 <IconButton
                   iconName="ios-folder-open"

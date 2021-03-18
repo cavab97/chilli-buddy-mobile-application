@@ -85,10 +85,11 @@ function Category({ id, title, onCategoryChange, selectedCategory, indexing, len
     return <View style={{ marginRight: 50, width: 100 }} />;
   } else {
     // console.log(selectedCategory);
+    // console.log(indexing);
     return (
       <TouchableOpacity
         style={selectedCategory === id ? styles.cardSelected : styles.card}
-        onPress={() => onCategoryChange(id)}
+        onPress={() => onCategoryChange(id, indexing)}
         activeOpacity={1}
       >
         <View style={styles.iconContainer}>
@@ -112,6 +113,7 @@ const CategoryList = ({
   onCategoryChange,
   selectedCategory,
   returnSpecificCategory,
+  categoryIndex,
   // setFlatListRef,
 }) => {
   // setTimeout(() => {
@@ -134,6 +136,7 @@ const CategoryList = ({
   }, 1); */
 
   // getItemLayout = (data, index) => ({ length: 20, offset: 100 * index, index });
+  getItemLayout = (data, index) => ({ length: 20, offset: 85 * index, index });
 
   return (
     <FlatList
@@ -142,6 +145,9 @@ const CategoryList = ({
         this.flatListRef = ref;
       }} */
       // ref={setFlatListRef}
+      // ref={(ref) => { this.flatListRef = ref; }}
+      getItemLayout={getItemLayout}
+      initialScrollIndex={categoryIndex}
       renderItem={({ item, index }) => (
         <Category
           id={item.id}
@@ -156,6 +162,7 @@ const CategoryList = ({
       horizontal
       showsHorizontalScrollIndicator={false}
       keyExtractor={(item) => item.id}
+      // getItemLayout={this.getItemLayout}
     />
   );
 };

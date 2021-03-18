@@ -19,6 +19,7 @@ const SearchBar = (props) => {
         style={styles.innerContainer}
         name="search"
         value={props.dataSearch === "null" ? "" : props.dataSearch}
+        onFocus={props.handleInputFocus}
       />
       <TouchableOpacity
         onPress={props.searchButtonClick}

@@ -114,6 +114,7 @@ const ShopList = ({
   scrollToItem,
   flatListRef,
   returnFlatlistMyRef,
+  categoryIndex,
   // setFlatListRef,
 }) => {
   const filterIcon = require("../../../../assets/icons/filter.png");
@@ -188,6 +189,7 @@ const ShopList = ({
             scrollToItem={scrollToItem}
             flatListRef={flatListRef}
             returnFlatlistMyRef={returnFlatlistMyRef}
+            categoryIndex={categoryIndex}
             // setFlatListRef={setFlatListRef}
           />
         </View>
