@@ -6,10 +6,12 @@ import styles from "./styles";
 import { Button, Overlay, Text, View } from "../../atoms";
 
 import { IconButton, ImageInfo } from "../../molecules";
+import { Dimensions } from "react-native";
 
 import { Colors } from "../../../settings/styles";
 
 import { Camera } from "expo-camera";
+const { height, width } = Dimensions.get("window");
 
 const CameraProfile = ({
   hasPermission,
@@ -139,7 +141,7 @@ const CameraProfile = ({
           focusDepth={1}
           front
           camera
-          ratio={ratio}
+          ratio={height / width + ""}
           onCameraReady={setCameraReady}
         />
         {/* <View style={styles.cameraContainer}> */}

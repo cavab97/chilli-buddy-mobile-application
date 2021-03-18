@@ -300,7 +300,7 @@ class index extends Component {
     this.props.listenShopMessage({ value });
   };
   searchButtonClick = async () => {
-    console.log("clicked");
+    // console.log("clicked");
     let category = [];
     let tags = [];
     this.props.searchHistory(this.state.dataSearch, "create");
@@ -358,16 +358,16 @@ class index extends Component {
   handleInputFocus = (uri) => this.setState({ isFocused: true });
 
   removeAllPress() {
-    console.log("clearAllPress");
+    // console.log("clearAllPress");
     this.props.searchHistory("clear", "clear");
   }
   specificMarkPress(item) {
-    console.log("specificMarkPress");
-    console.log(item.id);
+    // console.log("specificMarkPress");
+    // console.log(item.id);
     this.props.searchHistory(item.id, "remove");
   }
   selectHistory(item) {
-    console.log("specificHistoryPress");
+    // console.log("specificHistoryPress");
     this.setState({
       dataSearch: item,
     });

@@ -78,34 +78,33 @@ function Category({ id, title, onCategoryChange, selectedCategory, indexing, len
       break;
   }
 
-  if (
-    (title === "All" && Platform.OS === "android") ||
-    (title === "All" && Platform.OS === "ios")
-  ) {
-    return <View style={{ marginRight: 50, width: 100 }} />;
-  } else {
-    // console.log(selectedCategory);
-    // console.log(indexing);
-    return (
-      <TouchableOpacity
-        style={selectedCategory === id ? styles.cardSelected : styles.card}
-        onPress={() => onCategoryChange(id, indexing)}
-        activeOpacity={1}
-      >
-        <View style={styles.iconContainer}>
-          <Image source={icon} style={styles.icon} />
-        </View>
-        <View>
-          <Text
-            style={selectedCategory === id ? styles.titleSelected : styles.title}
-            numberOfLines={3}
-          >
-            {arrangedCategoryTitle}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
+  // if (
+  //   (title === "All" && Platform.OS === "android") ||
+  //   (title === "All" && Platform.OS === "ios")
+  // ) {
+  //   return <View style={{ marginRight: 50, width: 100 }} />;
+  // } else {
+  // console.log(selectedCategory);
+  // console.log(indexing);
+  return (
+    <TouchableOpacity
+      style={selectedCategory === id ? styles.cardSelected : styles.card}
+      onPress={() => onCategoryChange(id, indexing)}
+      activeOpacity={1}
+    >
+      <View style={styles.iconContainer}>
+        <Image source={icon} style={styles.icon} />
+      </View>
+      <View>
+        <Text
+          style={selectedCategory === id ? styles.titleSelected : styles.title}
+          numberOfLines={3}
+        >
+          {arrangedCategoryTitle}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
 }
 
 const CategoryList = ({

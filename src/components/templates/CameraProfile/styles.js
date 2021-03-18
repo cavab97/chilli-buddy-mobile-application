@@ -3,7 +3,7 @@ import { Colors } from "../../../settings/styles";
 const styles = {
   container: {
     // flex: 1,
-    height: 500,
+    height: "90%",
   },
   cameraContainer: {
     flex: 1,

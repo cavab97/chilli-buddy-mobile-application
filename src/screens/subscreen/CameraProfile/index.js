@@ -19,7 +19,7 @@ class index extends Component {
     super(props);
     this.state = {
       hasPermission: null,
-      type: Camera.Constants.Type.back,
+      cameraType: Camera.Constants.Type.back,
       uri: null,
       progressVisible: false,
       triggerLoading: false,
@@ -82,6 +82,7 @@ class index extends Component {
   componentWillUnmount() {}
 
   handleCameraType = () => {
+    console.log("handleCameraType");
     const { cameraType } = this.state;
 
     this.setState({

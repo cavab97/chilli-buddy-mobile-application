@@ -198,7 +198,7 @@ const SearchScreen = ({
   selectHistory,
 }) => {
   return (
-    <View style={{ flex: 1 /*height: 100%*/ }}>
+    <View style={{ flex: 1 /*height: 100%*/ }} keyboardShouldPersistTaps={"always"}>
       <CustomNavBar
         textOne="Shops"
         textTwo="Promotions"
@@ -231,7 +231,7 @@ const SearchScreen = ({
         />
       </View>
       <View style={{ marginHorizontal: 20 }}>
-        {
+        {/* {
           (console.log("isFocused"),
           console.log(isFocused),
           console.log("shopData.length === 0"),
@@ -242,7 +242,7 @@ const SearchScreen = ({
           console.log(loading),
           console.log("dataSource.length === 0"),
           console.log(dataSource.length === 0))
-        }
+        } */}
         {(isFocused && shopData.length === 0 && !readLoading && !loading && !selectedTab) ||
         (isFocused && dataSource.length === 0 && !readLoading && !loading && selectedTab) ? (
           <SearchFlatList
