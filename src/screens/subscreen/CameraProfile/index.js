@@ -215,7 +215,7 @@ class index extends Component {
         onRetakePress={this.onRetakePress.bind(this)}
         changeCamera={this.handleCameraType.bind(this)} //front camera
         ratio={this.state.ratio}
-        // setCameraReady={this.setCameraReady.bind(this)}
+        setCameraReady={this.setCameraReady.bind(this)}
         imagePadding={this.state.imagePadding}
         onUploadPress={this.uploadImage.bind(this)}
         errorHeader="Error"

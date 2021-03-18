@@ -2,12 +2,14 @@ import { Colors } from "../../../settings/styles";
 
 const styles = {
   container: {
-    flex: 1,
+    // flex: 1,
+    height: 500,
   },
   cameraContainer: {
     flex: 1,
     justifyContent: "flex-end",
     margin: 30,
+    top: 0,
   },
   iconContainer: {
     alignSelf: "center",
@@ -93,9 +95,23 @@ const styles = {
     textAlign: "center",
   },
   imagePickerIcon: {
-    position: "absolute",
-    right: 0,
-    bottom: 7, //front camera need delete this
+    // position: "absolute",
+    // right: 0,
+    // bottom: 2, //front camera need delete this
+  },
+  imageChangerIcon: {
+    // position: "absolute",
+    // bottom: 2, //front camera need delete this
+    // left: 0,
+  },
+  imageClickIcon: {
+    // position: "absolute",
+  },
+  imageOptionContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 30,
+    // backgroundColor: "yellow",
   },
 };
 

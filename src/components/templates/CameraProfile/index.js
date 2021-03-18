@@ -34,7 +34,7 @@ const CameraProfile = ({
   changeCamera,
   triggerLoading,
   selectImage,
-  // setCameraReady, //front camera
+  setCameraReady, //front camera
   ratio,
   imagePadding,
 }) => {
@@ -135,40 +135,45 @@ const CameraProfile = ({
           // style={styles.container}
           type={cameraType}
           ref={cameraConfig}
-          //autoFocus={"on"}
-          //focusDepth={1}     front camera
+          autoFocus={"on"}
+          focusDepth={1}
+          front
+          camera
           ratio={ratio}
-          //onCameraReady={setCameraReady}
-        >
-          <View style={styles.cameraContainer}>
-            <View styles={{ flexDirection: "row", justifyContent: "center" }}>
-              <IconButton
-                iconContainer={styles.iconContainer}
-                iconName="ios-camera"
-                iconSize={48}
-                iconColor="white"
-                onPress={onPress}
-              />
-              <IconButton //front camera
-                iconContainer={styles.rotateIconContainer}
-                iconName="md-sync"
-                iconSize={40}
-                iconColor="white"
-                onPress={changeCamera}
-                //loading={takePictureLoading}
-              />
-              <View style={styles.imagePickerIcon}>
-                <IconButton
-                  iconName="ios-folder-open"
-                  iconSize={38}
-                  iconColor="white"
-                  onPress={selectImage}
-                />
-              </View>
-            </View>
-          </View>
-        </Camera>
+          onCameraReady={setCameraReady}
+        />
+        {/* <View style={styles.cameraContainer}> */}
+        <View style={styles.imageOptionContainer}>
+          {/* <View style={styles.imageChangerIcon}> */}
+          <IconButton //front camera
+            // iconContainer={styles.rotateIconContainer}
+            iconName="md-sync"
+            iconSize={40}
+            iconColor="grey"
+            onPress={changeCamera}
+            //loading={takePictureLoading}
+          />
+          {/* </View> */}
+          {/* <View style={styles.imageClickIcon}> */}
+          <IconButton
+            // iconContainer={styles.iconContainer}
+            iconName="ios-camera"
+            iconSize={48}
+            iconColor="grey"
+            onPress={onPress}
+          />
+          {/* </View> */}
+          {/* <View style={styles.imagePickerIcon}> */}
+          <IconButton
+            iconName="ios-folder-open"
+            iconSize={38}
+            iconColor="grey"
+            onPress={selectImage}
+          />
+        </View>
       </View>
+      // </View>
+      // </View>
     );
   }
 };
