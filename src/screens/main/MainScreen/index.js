@@ -410,9 +410,15 @@ class index extends Component {
     this.props.searchHistory(this.state.messagesValue, "create");
 
     // alert(historySearchStore);
-
+    // Actions.ShopsSinglePost({
+    //   postId: item.id,
+    //   distance: item.distance,
+    //   categoryName: item.category,
+    // });
     this.props.toggleSearchMessageMain();
-    Actions.SearchScreen();
+    Actions.SearchScreen({
+      mainMessage: this.state.messagesValue,
+    });
   };
   handleInputFocus = (uri) => this.setState({ isFocused: true });
   // ImageSize(uri) {

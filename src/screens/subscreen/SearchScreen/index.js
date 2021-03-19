@@ -57,6 +57,9 @@ class index extends Component {
   componentDidMount = async () => {
     let category = [];
     let tags = [];
+
+    await this.setState({ dataSearch: this.props.mainMessage });
+
     for (let i = 0; i < this.props.categories.length; i++) {
       if (
         this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
