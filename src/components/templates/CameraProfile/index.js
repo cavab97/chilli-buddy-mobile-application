@@ -6,10 +6,12 @@ import styles from "./styles";
 import { Button, Overlay, Text, View } from "../../atoms";
 
 import { IconButton, ImageInfo } from "../../molecules";
+import { Dimensions } from "react-native";
 
 import { Colors } from "../../../settings/styles";
 
 import { Camera } from "expo-camera";
+const { height, width } = Dimensions.get("window");
 
 const CameraProfile = ({
   hasPermission,
@@ -34,9 +36,9 @@ const CameraProfile = ({
   changeCamera,
   triggerLoading,
   selectImage,
-  // setCameraReady, //front camera
-  // ratio,
-  // imagePadding,
+  setCameraReady, //front camera
+  ratio,
+  imagePadding,
 }) => {
   if (hasPermission === null) {
     return <View />;
@@ -131,44 +133,49 @@ const CameraProfile = ({
     return (
       <View style={styles.container}>
         <Camera
-          //style={[styles.container, { marginTop: imagePadding, marginBottom: imagePadding }]} //front camera
-          style={styles.container}
+          style={[styles.container, { marginTop: imagePadding, marginBottom: imagePadding }]} //front camera
+          // style={styles.container}
           type={cameraType}
           ref={cameraConfig}
-          //autoFocus={"on"}
-          //focusDepth={1}     front camera
-          //ratio={ratio}
-          //onCameraReady={setCameraReady}
-        >
-          <View style={styles.cameraContainer}>
-            <View styles={{ flexDirection: "row", justifyContent: "center" }}>
-              <IconButton
-                iconContainer={styles.iconContainer}
-                iconName="ios-camera"
-                iconSize={48}
-                iconColor="white"
-                onPress={onPress}
-              />
-              {/* <IconButton            //front camera
-                iconContainer={styles.rotateIconContainer}
-                iconName="md-sync"
-                iconSize={40}
-                iconColor="white"
-                onPress={changeCamera}
-                //loading={takePictureLoading}
-              /> */}
-              <View style={styles.imagePickerIcon}>
-                <IconButton
-                  iconName="ios-folder-open"
-                  iconSize={38}
-                  iconColor="white"
-                  onPress={selectImage}
-                />
-              </View>
-            </View>
-          </View>
-        </Camera>
+          autoFocus={"on"}
+          focusDepth={1}
+          front
+          camera
+          ratio={height / width + ""}
+          onCameraReady={setCameraReady}
+        />
+        {/* <View style={styles.cameraContainer}> */}
+        <View style={styles.imageOptionContainer}>
+          {/* <View style={styles.imageChangerIcon}> */}
+          <IconButton //front camera
+            // iconContainer={styles.rotateIconContainer}
+            iconName="md-sync"
+            iconSize={40}
+            iconColor="grey"
+            onPress={changeCamera}
+            //loading={takePictureLoading}
+          />
+          {/* </View> */}
+          {/* <View style={styles.imageClickIcon}> */}
+          <IconButton
+            // iconContainer={styles.iconContainer}
+            iconName="ios-camera"
+            iconSize={48}
+            iconColor="grey"
+            onPress={onPress}
+          />
+          {/* </View> */}
+          {/* <View style={styles.imagePickerIcon}> */}
+          <IconButton
+            iconName="ios-folder-open"
+            iconSize={38}
+            iconColor="grey"
+            onPress={selectImage}
+          />
+        </View>
       </View>
+      // </View>
+      // </View>
     );
   }
 };

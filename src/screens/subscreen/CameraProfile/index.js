@@ -19,7 +19,7 @@ class index extends Component {
     super(props);
     this.state = {
       hasPermission: null,
-      type: Camera.Constants.Type.back,
+      cameraType: Camera.Constants.Type.back,
       uri: null,
       progressVisible: false,
       triggerLoading: false,
@@ -82,6 +82,7 @@ class index extends Component {
   componentWillUnmount() {}
 
   handleCameraType = () => {
+    console.log("handleCameraType");
     const { cameraType } = this.state;
 
     this.setState({
@@ -213,10 +214,10 @@ class index extends Component {
         uri={this.state.uri}
         uploadProgress={this.props.uploadImageProgress}
         onRetakePress={this.onRetakePress.bind(this)}
-        // changeCamera={this.handleCameraType.bind(this)}  //front camera
-        // ratio={this.state.ratio}
-        // setCameraReady={this.setCameraReady.bind(this)}
-        // imagePadding={this.state.imagePadding}
+        changeCamera={this.handleCameraType.bind(this)} //front camera
+        ratio={this.state.ratio}
+        setCameraReady={this.setCameraReady.bind(this)}
+        imagePadding={this.state.imagePadding}
         onUploadPress={this.uploadImage.bind(this)}
         errorHeader="Error"
         errorRedirectMessage="Please try again later."

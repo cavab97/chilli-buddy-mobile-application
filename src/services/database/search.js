@@ -40,7 +40,7 @@ export function geoReadObjects({
     let databaseRef = database.geoReadTable({
       ref: `${objectName}Packaging0`,
     });
-    console.log(selectedCategory);
+
     if (selectedCategory !== "null" || selectedCategory.toLowerCase() == "near me") {
       if (selectedCategory)
         databaseRef = databaseRef.where("categories", "array-contains-any", selectedCategory);
@@ -68,8 +68,8 @@ export function geoReadObjects({
           const parent = database.processData({ data });
           // console.log(selectedCategory);
           const processedData = { ...parent };
-          // console.log(processedData);
-          if (selectedCategory.toLowerCase() == "near me" || shopName.toLowerCase() == "near me") {
+
+          if (shopName.toLowerCase() === "near me") {
             result.push(processedData);
           } else {
             if (

@@ -10,7 +10,6 @@ import VideoPlayer from "expo-video-player";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ImageInfo } from "../../molecules";
 import { SingleMerchantPromo } from "../../templates/Promo/SingleMerchantPromo";
-import { SearchFlatList } from "../../organisms/SearchFlatList";
 
 //import WheelOfFortune from "react-native-wheel-of-fortune";
 
@@ -29,7 +28,7 @@ import {
   Icon as Icon2,
 } from "../../atoms";
 
-import { Card, CardSection, SearchBarMain } from "../../molecules";
+import { Card, CardSection, SearchBarMain, SearchFlatList } from "../../molecules";
 
 import { InfoBox } from "@components/organisms/InfoBox";
 
@@ -333,7 +332,7 @@ export default ({
       </TouchableOpacity>
     );
   }
-  const { displayName, email, phoneNumber, photoURL } = user;
+  const { photoURL } = user;
 
   const wheelImage = require("../../../assets/categoryWheel.png");
   const resultImage = require("../../../assets/categoryResult.png");

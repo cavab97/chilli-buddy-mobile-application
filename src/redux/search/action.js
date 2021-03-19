@@ -342,20 +342,37 @@ export const searchHistory = (value, actionName) => {
         switch (actionName) {
           case "create":
             try {
-              if (historySearchStore === null) {
+              if (historySearchStore === null || historySearchStore === undefined) {
+                // console.log("1st");
                 temp.push(value);
+              } else if (Object.keys(historySearchStore).length === 0) {
+                // console.log("2nd");
+                // console.log(historySearchStore);
+                temp = [value];
               } else {
+                // console.log("3rd");
+                // console.log(historySearchStore);
                 temp = [...historySearchStore, value];
               }
               // temp.concat(value);
               // historySearchStore.concat(value);
               console.log("historySearchStore");
               console.log(historySearchStore);
-              console.log("temp");
-              console.log(temp);
-              AsyncStorage.setItem(key, JSON.stringify(temp));
-              // console.log("datAsyncStoragea");
-              result = historySearchStore;
+              // console.log("temp");
+              if (temp.length > 5) {
+                let filtered = temp.slice(1);
+                AsyncStorage.setItem(key, JSON.stringify(filtered));
+                // console.log("datAsyncStoragea");
+                result = filtered;
+              } else {
+                let filtered = temp;
+
+                AsyncStorage.setItem(key, JSON.stringify(filtered));
+                // console.log("datAsyncStoragea");
+                result = filtered;
+              }
+              // console.log(temp);
+              // console.log(temp.length);
             } catch (error) {
               console.log(error);
               alert(error);
@@ -365,29 +382,37 @@ export const searchHistory = (value, actionName) => {
             await AsyncStorage.getItem(key).then((data) => {
               // console.log("data");
               let tempArray = JSON.parse(data);
-              console.log("tempArray");
-              console.log(tempArray);
+              // console.log("tempArray");
+              // console.log(tempArray);
 
               resolve(tempArray);
               result = tempArray;
             });
             break;
-          case "clear":
-            await AsyncStorage.getItem(key).then((data) => {
-              // console.log("data");
-              temp = data;
-              resolve(temp);
-              result = temp;
-            });
-            break;
           case "remove":
+            // await AsyncStorage.getItem(key).then((data) => {
+            //   // console.log("data");
+            //   temp = data;
+            //   resolve(temp);
+            //   result = temp;
+            // });
+            // let filtered = historySearchStore.filter(prod, (index) => index !== value);
+            let filtered = historySearchStore.filter((item, index) => index !== value);
+
+            console.log("filtered remove specific");
+            console.log(filtered);
+            // let filtered = temp.slice(1);
+            AsyncStorage.setItem(key, JSON.stringify(filtered));
+            // console.log("datAsyncStoragea");
+            result = filtered;
+            break;
+          case "clear":
             await AsyncStorage.removeItem(key).then((data) => {
               console.log("REMOVE_SEARCH_HISTORY_SUCCESS");
               const status = "Remove Data Success";
               resolve(status);
               dispatch({
                 type: actions.REMOVE_SEARCH_HISTORY_SUCCESS,
-                payload: { data: data },
               });
             });
             break;

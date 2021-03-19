@@ -597,6 +597,8 @@ const styles = StyleSheet.create({
     borderRadius: 80,
     borderWidth: 1,
     borderColor: "white",
+    overflow: "hidden",
+    resizeMode: "cover",
   },
   image: {
     flex: 1,

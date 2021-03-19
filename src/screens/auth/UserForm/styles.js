@@ -16,7 +16,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GRAY_DARK, //delete this at profile picture
     height: 100,
     width: 100,
-    borderRadius: 60,
+    borderRadius: 100,
+    resizeMode: "cover",
+    overflow: "hidden",
     //borderRadius: 150,  uncomment this at profile picture
   },
   ProfileContatiner: {

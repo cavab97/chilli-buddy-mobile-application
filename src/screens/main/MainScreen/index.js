@@ -75,8 +75,16 @@ class index extends Component {
       selectedCategory: null,
       selectedTag: null,
     });
+    // console.log("    const searchHistory = this.props.searchHistory(null, )   ");
+    const searchHistory = this.props.searchHistory(null, "read");
 
-    Promise.all([readAdvertisements, readSettingInfo, loadShopsPromo, loadShops]).then((values) => {
+    Promise.all([
+      readAdvertisements,
+      readSettingInfo,
+      loadShopsPromo,
+      loadShops,
+      searchHistory,
+    ]).then((values) => {
       this.setState({ refreshing: false });
     });
   };
@@ -92,6 +100,7 @@ class index extends Component {
     Actions.CheckIn();
   }
   onShopsPressed() {
+    // console.log("clicked shop");
     Actions.Shops();
   }
   onPromotionsPressed() {
@@ -380,16 +389,20 @@ class index extends Component {
     Actions.SearchScreen();
   }
   onPressSearchButton = async () => {
-    // this.props.searchHistory(this.state.messagesValue, "remove");
-
-    // const { historySearchStore } = this.props.searchState;
+    this.props.searchHistory(this.state.messagesValue, "create");
 
     // alert(historySearchStore);
-
+    // Actions.ShopsSinglePost({
+    //   postId: item.id,
+    //   distance: item.distance,
+    //   categoryName: item.category,
+    // });
     this.props.toggleSearchMessageMain();
-    Actions.SearchScreen();
+    Actions.SearchScreen({
+      mainMessage: this.state.messagesValue,
+    });
   };
-  // handleInputFocus = (uri) => this.setState({ isFocused: true });
+  handleInputFocus = (uri) => this.setState({ isFocused: true });
   // ImageSize(uri) {
   //   Image.getSize(uri).then((size) => {
   //     // size.height
