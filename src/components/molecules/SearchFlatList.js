@@ -20,14 +20,22 @@ const SearchFlatList = (props) => {
   // ];
   console.log(" props.historySearchStore");
 
-  console.log(Object.keys(props.historySearchStore).length === 0);
-  if (Object.keys(props.historySearchStore).length > 0) {
-    data = props.historySearchStore.map(function (item, index) {
-      return {
-        title: item,
-        id: index,
-      };
-    });
+  // console.log(Object.keys(props.historySearchStore).length === 0);
+  if (props.historySearchStore !== null) {
+    if (props.historySearchStore !== undefined) {
+      if (Object.keys(props.historySearchStore).length > 0) {
+        data = props.historySearchStore.map(function (item, index) {
+          return {
+            title: item,
+            id: index,
+          };
+        });
+      } else {
+        data = [];
+      }
+    } else {
+      data = [];
+    }
   } else {
     data = [];
   }
@@ -48,9 +56,6 @@ const SearchFlatList = (props) => {
         <FlatList
           data={data}
           renderItem={({ item }) => (
-            // <ListItem
-            // roundAvatar
-            // title={
             <View style={styles.historyDetail}>
               <Image source={clock} transition={false} style={styles.smallClock} />
               <TouchableOpacity
@@ -68,8 +73,6 @@ const SearchFlatList = (props) => {
             </View>
           )}
           keyExtractor={(item) => item.id}
-          // ItemSeparatorComponent={this.renderSeparator}
-          // ListHeaderComponent={this.renderHeader}
         />
       </View>
     );
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     width: "77%",
   },
-  mainView: { position: "relative" },
+  // mainView: { po },
   titleView: {
     height: 25,
     width: "80%",

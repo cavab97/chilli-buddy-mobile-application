@@ -1,12 +1,5 @@
 import firebase from "firebase";
-import {
-  GeoCollectionReference,
-  GeoFirestore,
-  GeoQuery,
-  GeoQuerySnapshot,
-  encodeGeohash,
-} from "geofirestore";
-import { Actions } from "react-native-router-flux";
+import { GeoFirestore } from "geofirestore";
 
 import * as Location from "expo-location";
 import { AsyncStorage } from "react-native";
@@ -342,49 +335,40 @@ export const searchHistory = (value, actionName) => {
         switch (actionName) {
           case "create":
             try {
-              if (historySearchStore === null || historySearchStore === undefined) {
-                // console.log("1st");
-                temp.push(value);
-              } else if (Object.keys(historySearchStore).length === 0) {
-                // console.log("2nd");
-                // console.log(historySearchStore);
-                temp = [value];
-              } else {
-                // console.log("3rd");
-                // console.log(historySearchStore);
-                temp = [...historySearchStore, value];
+              if (value.length !== 0) {
+                console.log("trigger here");
+                if (historySearchStore === null || historySearchStore === undefined) {
+                  console.log("1st");
+                  temp.push(value);
+                } else if (Object.keys(historySearchStore).length === 0) {
+                  console.log("2nd");
+                  temp = [value];
+                } else if (value !== "null") {
+                  console.log("3rd");
+                  temp = [...historySearchStore, value];
+                } else {
+                  temp = [...historySearchStore];
+                }
               }
-              // temp.concat(value);
-              // historySearchStore.concat(value);
-              console.log("historySearchStore");
-              console.log(historySearchStore);
-              // console.log("temp");
+
               if (temp.length > 5) {
                 let filtered = temp.slice(1);
                 AsyncStorage.setItem(key, JSON.stringify(filtered));
-                // console.log("datAsyncStoragea");
                 result = filtered;
-              } else {
+              } else if (value.length !== 0) {
                 let filtered = temp;
 
                 AsyncStorage.setItem(key, JSON.stringify(filtered));
-                // console.log("datAsyncStoragea");
                 result = filtered;
               }
-              // console.log(temp);
-              // console.log(temp.length);
             } catch (error) {
               console.log(error);
-              alert(error);
+              // alert(error);
             }
             break;
           case "read":
             await AsyncStorage.getItem(key).then((data) => {
-              // console.log("data");
               let tempArray = JSON.parse(data);
-              // console.log("tempArray");
-              // console.log(tempArray);
-
               resolve(tempArray);
               result = tempArray;
             });

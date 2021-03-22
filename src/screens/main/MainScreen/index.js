@@ -51,6 +51,7 @@ class index extends Component {
 
   componentDidMount() {
     // this.props.listenToRouteTickets();
+    console.log("componentDidMountdasdasdddadsadas");
     this.props.readAdvertisements();
     this.props.readSettingInfo();
     this.handleRefresh();
@@ -390,7 +391,8 @@ class index extends Component {
   }
   onPressSearchButton = async () => {
     this.props.searchHistory(this.state.messagesValue, "create");
-
+    console.log("this.state.messagesValue");
+    console.log(this.state.messagesValue);
     // alert(historySearchStore);
     // Actions.ShopsSinglePost({
     //   postId: item.id,
@@ -398,9 +400,11 @@ class index extends Component {
     //   categoryName: item.category,
     // });
     this.props.toggleSearchMessageMain();
-    Actions.SearchScreen({
+
+    await Actions.SearchScreen({
       mainMessage: this.state.messagesValue,
     });
+    this.setState({ messagesValue: "" });
   };
   handleInputFocus = (uri) => this.setState({ isFocused: true });
   // ImageSize(uri) {

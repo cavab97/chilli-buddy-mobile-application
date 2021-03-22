@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { CustomNavBar } from "@components/organisms/CustomNavBar";
 import Modal from "react-native-modal";
 
-import { Platform, Dimensions } from "react-native";
+import { Platform, Dimensions, SafeAreaView } from "react-native";
 
 import {
   ActivityIndicator,
@@ -243,8 +243,8 @@ const SearchScreen = ({
           console.log("dataSource.length === 0"),
           console.log(dataSource.length === 0))
         } */}
-        {(isFocused && shopData.length === 0 && !readLoading && !loading && !selectedTab) ||
-        (isFocused && dataSource.length === 0 && !readLoading && !loading && selectedTab) ? (
+        {(isFocused && !readLoading && !loading && !selectedTab) ||
+        (isFocused && !readLoading && !loading && selectedTab) ? (
           <SearchFlatList
             historySearchStore={historySearchStore}
             specificMarkPress={specificMarkPress}
@@ -258,77 +258,73 @@ const SearchScreen = ({
       {readLoading || loading ? (
         <View>
           <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
-            {/* <Rect x={windowWidth / 1.2} y="15" rx="10" ry="10" width="35" height="40" />
-            <Rect x={windowWidth / 1.4} y="15" rx="10" ry="10" width="35" height="40" /> */}
-            {/* 
-            <Rect x="20" y="130" rx="20" ry="20" width="20%" height="100" />
-            <Rect x="110" y="130" rx="20" ry="20" width="20%" height="100" />
-            <Rect x="200" y="130" rx="20" ry="20" width="20%" height="100" />
-            <Rect x="290" y="130" rx="20" ry="20" width="20%" height="100" /> */}
-
             <Rect x="20" y="15" rx="10" ry="10" width="90%" height="175" />
             <Rect x="20" y="215" rx="10" ry="10" width="90%" height="175" />
             <Rect x="20" y="415" rx="10" ry="10" width="90%" height="175" />
           </ContentLoader>
         </View>
-      ) : !selectedTab ? (
-        <FlatList
-          data={shopData}
-          renderItem={({ item, index }) => (
-            <ShopItem
-              onPress={() => onMerchantPressed(item)}
-              onFavouritePress={() => onFavouritePressed(item)}
-              name={item.displayTitle}
-              logo={item.logo}
-              picture={item.images}
-              address={item.address}
-              category={item.category}
-              distance={item.distance}
-              index={index}
-              isFavourite={item.isFavourite}
-              isPromote={item.isPromote}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          onRefresh={handleRefresh}
-          refreshing={readLoading}
-          showsVerticalScrollIndicator={false}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={
-            shopData.length === 0 ? (
-              <NotFoundFooter message="No shops found" />
-            ) : (
-              <View style={{ paddingBottom: 30 }} />
-            )
-          }
-          style={styles.flatList}
-        />
+      ) : !isFocused ? (
+        !selectedTab ? (
+          <FlatList
+            data={shopData}
+            renderItem={({ item, index }) => (
+              <ShopItem
+                onPress={() => onMerchantPressed(item)}
+                onFavouritePress={() => onFavouritePressed(item)}
+                name={item.displayTitle}
+                logo={item.logo}
+                picture={item.images}
+                address={item.address}
+                category={item.category}
+                distance={item.distance}
+                index={index}
+                isFavourite={item.isFavourite}
+                isPromote={item.isPromote}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+            onRefresh={handleRefresh}
+            refreshing={readLoading}
+            showsVerticalScrollIndicator={false}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={
+              shopData.length === 0 ? (
+                <NotFoundFooter message="No shops found" />
+              ) : (
+                <View style={{ paddingBottom: 30 }} />
+              )
+            }
+            style={styles.flatList}
+          />
+        ) : (
+          <FlatList
+            data={dataSource}
+            renderItem={({ item, index }) => (
+              <PromotionItem
+                onPress={() => onPromoPressed(item)}
+                onPromoFavouritePressed={() => onPromoFavouritePressed(item)}
+                name={item.title}
+                picture={item.coverPhotos}
+                distance={item.distance}
+                promoID={item.id}
+                shopName={item.shop.displayTitle}
+                gotBookmark={item.isBookmark} //{gotBookmark}
+                index={index}
+                readBookmark={readBookmark}
+                submitLoading={submitLoading}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+            onRefresh={handleRefresh}
+            refreshing={false}
+            ListFooterComponent={
+              dataSource.length === 0 && <NotFoundFooter message="No promotions found" />
+            }
+            style={styles.flatList}
+          />
+        )
       ) : (
-        <FlatList
-          data={dataSource}
-          renderItem={({ item, index }) => (
-            <PromotionItem
-              onPress={() => onPromoPressed(item)}
-              onPromoFavouritePressed={() => onPromoFavouritePressed(item)}
-              name={item.title}
-              picture={item.coverPhotos}
-              distance={item.distance}
-              promoID={item.id}
-              shopName={item.shop.displayTitle}
-              gotBookmark={item.isBookmark} //{gotBookmark}
-              index={index}
-              readBookmark={readBookmark}
-              submitLoading={submitLoading}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          onRefresh={handleRefresh}
-          refreshing={false}
-          ListFooterComponent={
-            dataSource.length === 0 && <NotFoundFooter message="No promotions found" />
-          }
-          style={styles.flatList}
-        />
+        <View />
       )}
     </View>
   );

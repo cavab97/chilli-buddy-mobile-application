@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Keyboard } from "react-native";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
@@ -168,16 +169,6 @@ class index extends Component {
         this.setState({ readLoading: false });
       }
     );
-
-    // await this.props.loadFavourite({
-    //   radius: RADIUS * this.state.radiusAddition,
-    //   latitude: location.coords.latitude,
-    //   longtitude: location.coords.longitude,
-    //   selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
-    //   selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
-    // });
-
-    //await this.props.readFromDatabase();
   };
 
   onMerchantPressed = async (item) => {
@@ -307,6 +298,7 @@ class index extends Component {
     let category = [];
     let tags = [];
     this.props.searchHistory(this.state.dataSearch, "create");
+    Keyboard.dismiss();
 
     for (let i = 0; i < this.props.categories.length; i++) {
       if (
@@ -329,6 +321,7 @@ class index extends Component {
       shopName: this.state.dataSearch,
       selectedTag: tags.length > 0 ? tags : null,
     });
+    this.setState({ isFocused: false });
   };
 
   searchButtonClickPromo = async () => {
@@ -369,12 +362,19 @@ class index extends Component {
     // console.log(item.id);
     this.props.searchHistory(item.id, "remove");
   }
-  selectHistory(item) {
+  selectHistory = async (item) => {
     // console.log("specificHistoryPress");
-    this.setState({
+    const { selectedTab } = this.props.favouriteState;
+
+    await this.setState({
       dataSearch: item,
     });
-  }
+    if (!selectedTab) {
+      this.searchButtonClick();
+    } else {
+      this.searchButtonClickPromo();
+    }
+  };
 
   render() {
     const { promotion, promotionModalVisible, bookmarkControl } = this.props.promotionState;
@@ -382,18 +382,25 @@ class index extends Component {
     const submitLoading = this.props.bookmarkState.submitLoading;
     const bookmarks = this.props.bookmarkState.bookmarks;
     const { categories, tags } = this.props;
+    let newArr;
 
     const { selectedTab, favourites } = this.props.favouriteState;
 
     //shop
 
     const { shops, promos, historySearchStore } = this.props.searchState;
-
+    // console.log("RENDER_historySearchStore.length");
+    // let result = mydata.ArrayBotones.filter(t=>t.descripcion === 'Impacto');
+    // console.log(historySearchStore);
+    if (historySearchStore !== undefined) {
+      if (historySearchStore !== null)
+        if (Object.keys(historySearchStore).length > 0) {
+          newArr = historySearchStore.filter((obj) => obj !== null);
+        }
+    }
     let isBookmark = [];
     let searchShops = [];
-    let isFavourite = [];
-    let activeShops = [];
-    let filteredPromotion;
+
     shops.map((shop) => {
       let shopCategory = categories.filter((category) => category.id === shop.categories[0]);
 
@@ -432,7 +439,8 @@ class index extends Component {
     //   favouriteCategory ? (favourite.shop.category = favouriteCategory[0].title) : "";
     //   favourite.distance = favouriteDistance;
     // });
-
+    console.log("this.state.isFocused");
+    console.log(this.state.isFocused);
     return (
       <SearchScreen
         readBookmark={readBookmark}
@@ -461,7 +469,7 @@ class index extends Component {
         dataSearch={this.state.dataSearch}
         handleInputFocus={this.handleInputFocus.bind(this)}
         isFocused={this.state.isFocused}
-        historySearchStore={historySearchStore}
+        historySearchStore={newArr}
         specificMarkPress={this.specificMarkPress.bind(this)}
         removeAllPress={this.removeAllPress.bind(this)}
         selectHistory={this.selectHistory.bind(this)}
