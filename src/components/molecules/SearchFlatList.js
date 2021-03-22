@@ -15,7 +15,7 @@ const SearchFlatList = (props) => {
   //   { id: "3", title: "Third item" },
   //   { id: "4", title: "Fourth item" },
   // ];
-  console.log(" props.historySearchStore");
+  // console.log(" props.historySearchStore");
 
   // console.log(Object.keys(props.historySearchStore).length === 0);
   if (props.historySearchStore !== null) {
@@ -36,8 +36,8 @@ const SearchFlatList = (props) => {
   } else {
     data = [];
   }
-  console.log("props.historySearchStore");
-  console.log(data);
+  // console.log("props.historySearchStore");
+  // console.log(data);
   // for (let i = 0; 4 < data.length; i++) {
   //   data[i].title.toLowerCase().include(props.dataSearch.toLowerCase());
   // }

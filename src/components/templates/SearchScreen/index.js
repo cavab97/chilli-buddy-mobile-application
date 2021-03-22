@@ -123,7 +123,7 @@ function PromotionItem({
         <View
           style={{
             width: "63%",
-            height: 100,
+            height: Platform.isPad ? 200 : 95,
             flex: 1,
             flexDirection: "column",
             justifyContent: "space-between",
@@ -259,9 +259,38 @@ const SearchScreen = ({
       {readLoading || loading ? (
         <View>
           <ContentLoader speed={1} width={"100%"} height={"100%"} backgroundColor="#d9d9d9">
-            <Rect x="20" y="15" rx="10" ry="10" width="90%" height="175" />
-            <Rect x="20" y="215" rx="10" ry="10" width="90%" height="175" />
-            <Rect x="20" y="415" rx="10" ry="10" width="90%" height="175" />
+            <Rect
+              x="20"
+              y="15"
+              rx="10"
+              ry="10"
+              width={Platform.isPad ? "95%" : "90%"}
+              height="175"
+            />
+            <Rect
+              x="20"
+              y="215"
+              rx="10"
+              ry="10"
+              width={Platform.isPad ? "95%" : "90%"}
+              height="175"
+            />
+            <Rect
+              x="20"
+              y="415"
+              rx="10"
+              ry="10"
+              width={Platform.isPad ? "95%" : "90%"}
+              height="175"
+            />
+            <Rect
+              x="20"
+              y="615"
+              rx="10"
+              ry="10"
+              width={Platform.isPad ? "95%" : "90%"}
+              height="175"
+            />
           </ContentLoader>
         </View>
       ) : !isFocused ? (

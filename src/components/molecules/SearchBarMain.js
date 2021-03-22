@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     alignSelf: "flex-end",
+    left: Platform.isPad ? 90 : 10,
   },
   searchBarStyle: {
     backgroundColor: "#FFF",

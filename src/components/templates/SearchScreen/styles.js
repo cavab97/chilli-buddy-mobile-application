@@ -4,7 +4,7 @@ import { Colors, Mixins } from "../../../settings/styles/theme";
 const styles = StyleSheet.create({
   shopImage: {
     width: "100%",
-    height: 200,
+    height: Platform.isPad ? 350 : 200,
     borderRadius: 20,
   },
   emptySection: {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: Platform.isPad ? "100%" : "100%",
-    height: Platform.isPad ? 100 : 95,
+    height: Platform.isPad ? 200 : 95,
     borderRadius: 20,
   },
   emptyHeartIcon: {
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   detail: {
-    fontSize: 12,
+    fontSize: Platform.isPad ? 20 : 12,
     color: Colors.GREY,
     fontFamily: "HorizontalRounded",
   },
@@ -166,14 +166,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   title: {
-    fontSize: 16,
+    fontSize: Platform.isPad ? 30 : 16,
     fontFamily: "HorizontalRounded",
     flex: 1,
     flexWrap: "wrap",
     paddingLeft: Platform.isPad ? 0 : 7,
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: Platform.isPad ? 25 : 16,
     fontFamily: "HorizontalRounded",
     flex: 1,
     flexWrap: "wrap",

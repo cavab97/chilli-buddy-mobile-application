@@ -97,7 +97,7 @@ export function loadSearchShops({
         let latitude = location.coords.latitude;
         let longtitude = location.coords.longitude;
 
-        radius < 35 ? (limit = 0) : (limit = 200);
+        radius < 35 ? (limit = 0) : (limit = 250);
         const shops = await objectDataServices.geoReadObjects({
           l: { latitude, longtitude },
           radius,
@@ -374,20 +374,9 @@ export const searchHistory = (value, actionName) => {
             });
             break;
           case "remove":
-            // await AsyncStorage.getItem(key).then((data) => {
-            //   // console.log("data");
-            //   temp = data;
-            //   resolve(temp);
-            //   result = temp;
-            // });
-            // let filtered = historySearchStore.filter(prod, (index) => index !== value);
             let filtered = historySearchStore.filter((item, index) => index !== value);
 
-            // console.log("filtered remove specific");
-            // console.log(filtered);
-            // let filtered = temp.slice(1);
             AsyncStorage.setItem(key, JSON.stringify(filtered));
-            // console.log("datAsyncStoragea");
             result = filtered;
             break;
           case "clear":
@@ -396,9 +385,6 @@ export const searchHistory = (value, actionName) => {
               const status = "Remove Data Success";
               resolve(status);
               result = [];
-              // dispatch({
-              //   type: actions.REMOVE_SEARCH_HISTORY_SUCCESS,
-              // });
             });
             break;
         }

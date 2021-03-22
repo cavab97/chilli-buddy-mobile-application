@@ -40,16 +40,18 @@ export function geoReadObjects({
     let databaseRef = database.geoReadTable({
       ref: `${objectName}Packaging0`,
     });
-    // console.log(selectedCategory)
-  try {
-    if (selectedCategory !== "null" || selectedCategory.toLowerCase() == "near me") {
-      if (selectedCategory)
-        databaseRef = databaseRef.where("categories", "array-contains-any", selectedCategory);
+    try {
+      if (selectedCategory !== "null" || selectedCategory.toLowerCase() == "near me") {
+        if (selectedCategory)
+          databaseRef = databaseRef.where("categories", "array-contains-any", selectedCategory);
+      } else {
+        databaseRef = databaseRef.whereEqualTo("displayTitle", shopName);
+      }
+    } catch (error) {
+      console.log(error);
+      selectedCategory = "null";
     }
-  } catch (error) {
-    selectedCategory="null"
-  }
-    
+
     databaseRef
       .where("deleted.at", "==", null)
       .limit(limit)

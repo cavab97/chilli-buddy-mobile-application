@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: Platform.isPad ? "100%" : "100%",
-    height: Platform.isPad ? 100 : 95,
+    height: Platform.isPad ? 200 : 95,
     borderRadius: 20,
   },
   emptyHeartIcon: {
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     paddingLeft: Platform.isPad ? 0 : 7,
   },
   detail: {
-    fontSize: 12,
+    fontSize: Platform.isPad ? 20 : 12,
     color: Colors.GREY,
     fontFamily: "HorizontalRounded",
     paddingLeft: Platform.isPad ? 0 : 7,
@@ -163,14 +163,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   title: {
-    fontSize: 16,
+    fontSize: Platform.isPad ? 30 : 16,
     fontFamily: "HorizontalRounded",
     flex: 1,
     flexWrap: "wrap",
     paddingLeft: Platform.isPad ? 0 : 7,
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: Platform.isPad ? 25 : 12,
     fontFamily: "HorizontalRounded",
     flex: 1,
     flexWrap: "wrap",
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   },
   rightCardContainer: {
     width: "63%",
-    height: Platform.isPad ? 100 : 95,
+    height: Platform.isPad ? 200 : 95,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
