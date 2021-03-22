@@ -60,7 +60,7 @@ const SearchFlatList = (props) => {
         </View>
 
         <FlatList
-          data={matches}
+          data={matches.length < 1 && data.length !== 0 ? data : matches}
           renderItem={({ item }) => (
             <View style={styles.historyDetail}>
               <Image source={clock} transition={false} style={styles.smallClock} />
