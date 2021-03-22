@@ -1,8 +1,5 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, Dimensions, List, FlatList } from "react-native";
-
-import { ListItem } from "react-native-elements";
-
 import { Image, View, TextInput, Text } from "../atoms";
 import { TouchableOpacity } from "@components/atoms/index";
 import { Colors } from "../../settings/styles/theme";
@@ -24,10 +21,10 @@ const SearchFlatList = (props) => {
   if (props.historySearchStore !== null) {
     if (props.historySearchStore !== undefined) {
       if (Object.keys(props.historySearchStore).length > 0) {
-        data = props.historySearchStore.map(function (item, index) {
+        data = props.historySearchStore.reverse().map(function (item, index) {
           return {
             title: item,
-            id: index,
+            id: props.historySearchStore.length - 1 - index,
           };
         });
       } else {
@@ -39,14 +36,14 @@ const SearchFlatList = (props) => {
   } else {
     data = [];
   }
-  // console.log("props.historySearchStore");
-  // console.log(data);
+  console.log("props.historySearchStore");
+  console.log(data);
   // for (let i = 0; 4 < data.length; i++) {
   //   data[i].title.toLowerCase().include(props.dataSearch.toLowerCase());
   // }
 
   // data.title.toLowerCase().include(props.dataSearch.toLowerCase());
-  let matches = data.filter((v) => v.title.toLowerCase().includes(props.dataSearch.toLowerCase()));
+  // let matches = data.filter((v) => v.title.toLowerCase().includes(props.dataSearch.toLowerCase()));
 
   if (data.length !== 0) {
     return (
@@ -60,7 +57,7 @@ const SearchFlatList = (props) => {
         </View>
 
         <FlatList
-          data={matches.length < 1 && data.length !== 0 ? data : matches}
+          data={data}
           renderItem={({ item }) => (
             <View style={styles.historyDetail}>
               <Image source={clock} transition={false} style={styles.smallClock} />

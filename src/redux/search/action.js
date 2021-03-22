@@ -336,15 +336,15 @@ export const searchHistory = (value, actionName) => {
           case "create":
             try {
               if (value.length !== 0) {
-                console.log("trigger here");
+                // console.log("trigger here");
                 if (historySearchStore === null || historySearchStore === undefined) {
-                  console.log("1st");
+                  // console.log("1st");
                   temp.push(value);
                 } else if (Object.keys(historySearchStore).length === 0) {
-                  console.log("2nd");
+                  // console.log("2nd");
                   temp = [value];
                 } else if (value !== "null") {
-                  console.log("3rd");
+                  // console.log("3rd");
                   temp = [...historySearchStore, value];
                 } else {
                   temp = [...historySearchStore];
@@ -383,8 +383,8 @@ export const searchHistory = (value, actionName) => {
             // let filtered = historySearchStore.filter(prod, (index) => index !== value);
             let filtered = historySearchStore.filter((item, index) => index !== value);
 
-            console.log("filtered remove specific");
-            console.log(filtered);
+            // console.log("filtered remove specific");
+            // console.log(filtered);
             // let filtered = temp.slice(1);
             AsyncStorage.setItem(key, JSON.stringify(filtered));
             // console.log("datAsyncStoragea");
