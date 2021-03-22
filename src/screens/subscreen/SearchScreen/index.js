@@ -328,6 +328,7 @@ class index extends Component {
     let category = [];
     let tags = [];
     this.props.searchHistory(this.state.dataSearch, "create");
+    Keyboard.dismiss();
 
     for (let i = 0; i < this.props.categories.length; i++) {
       if (
@@ -350,20 +351,17 @@ class index extends Component {
       shopName: this.state.dataSearch,
       selectedTag: tags.length > 0 ? tags : null,
     });
+    this.setState({ isFocused: false });
   };
   handleInputFocus = (uri) => this.setState({ isFocused: true });
 
   removeAllPress() {
-    // console.log("clearAllPress");
     this.props.searchHistory("clear", "clear");
   }
   specificMarkPress(item) {
-    // console.log("specificMarkPress");
-    // console.log(item.id);
     this.props.searchHistory(item.id, "remove");
   }
   selectHistory = async (item) => {
-    // console.log("specificHistoryPress");
     const { selectedTab } = this.props.favouriteState;
 
     await this.setState({
@@ -439,8 +437,8 @@ class index extends Component {
     //   favouriteCategory ? (favourite.shop.category = favouriteCategory[0].title) : "";
     //   favourite.distance = favouriteDistance;
     // });
-    console.log("this.state.isFocused");
-    console.log(this.state.isFocused);
+    // console.log("this.state.isFocused");
+    // console.log(this.state.isFocused);
     return (
       <SearchScreen
         readBookmark={readBookmark}

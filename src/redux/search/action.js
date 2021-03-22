@@ -395,9 +395,10 @@ export const searchHistory = (value, actionName) => {
               console.log("REMOVE_SEARCH_HISTORY_SUCCESS");
               const status = "Remove Data Success";
               resolve(status);
-              dispatch({
-                type: actions.REMOVE_SEARCH_HISTORY_SUCCESS,
-              });
+              result = [];
+              // dispatch({
+              //   type: actions.REMOVE_SEARCH_HISTORY_SUCCESS,
+              // });
             });
             break;
         }

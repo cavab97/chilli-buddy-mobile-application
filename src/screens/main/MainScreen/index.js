@@ -7,8 +7,6 @@ import { readInfo as readSettingInfo, toggleSpinningWheelModal } from "@redux/se
 import { verifyPermission, loadShops } from "@redux/shops/action";
 import { readObjects as readShopPostMain } from "@redux/shopPostMain/action";
 import * as Location from "expo-location";
-import { getDistance } from "geolib";
-import { AsyncStorage } from "react-native";
 
 import { loadShopsPromo, togglePromotionModal, listenToRecord } from "@redux/promo/action";
 import {
@@ -17,8 +15,6 @@ import {
   searchHistory,
 } from "@redux/search/action";
 
-import clone from "clone";
-import { lessThan } from "react-native-reanimated";
 import { Animated, Image } from "react-native";
 const RADIUS = 50;
 
@@ -391,8 +387,8 @@ class index extends Component {
   }
   onPressSearchButton = async () => {
     this.props.searchHistory(this.state.messagesValue, "create");
-    console.log("this.state.messagesValue");
-    console.log(this.state.messagesValue);
+    // console.log("this.state.messagesValue");
+    // console.log(this.state.messagesValue);
     // alert(historySearchStore);
     // Actions.ShopsSinglePost({
     //   postId: item.id,

@@ -39,9 +39,15 @@ const SearchFlatList = (props) => {
   } else {
     data = [];
   }
-  console.log("props.historySearchStore");
+  // console.log("props.historySearchStore");
+  // console.log(data);
+  // for (let i = 0; 4 < data.length; i++) {
+  //   data[i].title.toLowerCase().include(props.dataSearch.toLowerCase());
+  // }
 
-  console.log(data.length);
+  // data.title.toLowerCase().include(props.dataSearch.toLowerCase());
+  let matches = data.filter((v) => v.title.toLowerCase().includes(props.dataSearch.toLowerCase()));
+
   if (data.length !== 0) {
     return (
       <View style={styles.mainView}>
@@ -54,7 +60,7 @@ const SearchFlatList = (props) => {
         </View>
 
         <FlatList
-          data={data}
+          data={matches}
           renderItem={({ item }) => (
             <View style={styles.historyDetail}>
               <Image source={clock} transition={false} style={styles.smallClock} />

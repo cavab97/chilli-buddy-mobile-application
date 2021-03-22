@@ -250,6 +250,7 @@ const SearchScreen = ({
             specificMarkPress={specificMarkPress}
             removeAllPress={removeAllPress}
             selectHistory={selectHistory}
+            dataSearch={dataSearch}
           />
         ) : (
           <View />
