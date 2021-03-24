@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Keyboard } from "react-native";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import * as Location from "expo-location";
@@ -21,7 +22,7 @@ import {
   onShopSpecificClick,
   toggleSearchMessage as listenShopMessage,
   toggleSearchMessageMain,
-  // searchHistory,
+  searchHistory,
 } from "@redux/search/action";
 
 import {
@@ -46,9 +47,10 @@ class index extends Component {
       selectedCategory: { id: "", tags: ["All"], title: "All" },
       selectedTag: "All", //default all tag selected
       readLoading: true,
-      dataSearch: "null",
+      dataSearch: "",
       category: "null",
       tags: "null",
+      isFocused: false,
     };
     this.handleRefresh = this.handleRefresh.bind(this);
   }
@@ -56,6 +58,9 @@ class index extends Component {
   componentDidMount = async () => {
     let category = [];
     let tags = [];
+    console.log("componentDidMount");
+    await this.setState({ dataSearch: this.props.mainMessage });
+    // console.log(this.state.dataSearch);
     for (let i = 0; i < this.props.categories.length; i++) {
       if (
         this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
@@ -71,7 +76,7 @@ class index extends Component {
       }
     }
     this.setState({
-      dataSearch: this.props.messages.value === undefined ? "null" : this.props.messages.value,
+      dataSearch: this.props.messages.value === undefined ? "" : this.props.messages.value,
     });
 
     this.props.verifyPermission().then((permissions) => {
@@ -91,6 +96,7 @@ class index extends Component {
     const currentPromo = this.props.promotionState.promo;
     const readError = this.props.promotionState.readError;
 
+    // console.log("componentDidUpdate(prevProps, prevState)");
     // if no promo in the radius, call handleRefresh read again by increase radiusAddition state
     if (currentPromo.length === 0 && RADIUS * this.state.radiusAddition < 1000) {
       if (prevState.radiusAddition === this.state.radiusAddition) {
@@ -109,6 +115,28 @@ class index extends Component {
 
   handleRefresh = async () => {
     let location = await Location.getCurrentPositionAsync({});
+    const searchHistory = this.props.searchHistory(null, "read");
+
+    let category = [];
+    let tags = [];
+    // this.props.searchHistory(this.state.dataSearch, "create");
+
+    for (let i = 0; i < this.props.categories.length; i++) {
+      if (
+        this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
+      ) {
+        category.push(this.props.categories[i].id);
+        this.setState({ category: category });
+      }
+    }
+
+    for (let i = 0; i < this.props.tags.length; i++) {
+      if (this.props.tags[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())) {
+        tags.push(this.props.tags[i].id);
+        this.setState({ tags: tags });
+      }
+    }
+
     const loadShops = this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
       selectedCategory: null,
@@ -118,9 +146,9 @@ class index extends Component {
 
     const loadSearchShop = this.props.loadSearchShops({
       radius: RADIUS * this.state.radiusAddition,
-      selectedCategory: this.state.category,
+      selectedCategory: category.length > 0 ? category : null,
       shopName: this.state.dataSearch,
-      selectedTag: this.state.tags,
+      selectedTag: tags.length > 0 ? tags : null,
     });
 
     const loadShopsPromo = this.props.loadShopsPromo({
@@ -136,21 +164,11 @@ class index extends Component {
       selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    // const searchHistory = this.props.searchHistory(null, "read");
-
-    Promise.all([loadSearchShop, loadShopsPromo, loadBookmark, loadShops]).then((values) => {
-      this.setState({ readLoading: false });
-    });
-
-    // await this.props.loadFavourite({
-    //   radius: RADIUS * this.state.radiusAddition,
-    //   latitude: location.coords.latitude,
-    //   longtitude: location.coords.longitude,
-    //   selectedCategory: this.state.selectedCategory.id ? this.state.selectedCategory.id : null,
-    //   selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
-    // });
-
-    //await this.props.readFromDatabase();
+    Promise.all([loadSearchShop, loadShopsPromo, loadBookmark, loadShops, searchHistory]).then(
+      (values) => {
+        this.setState({ readLoading: false });
+      }
+    );
   };
 
   onMerchantPressed = async (item) => {
@@ -202,7 +220,7 @@ class index extends Component {
 
   onBackPressed() {
     this.props.toggleSearchMessageMain();
-    Actions.pop("SearchScreen");
+    Actions.pop();
     this.props.listenShopMessage({ value: "null" });
   }
 
@@ -272,13 +290,25 @@ class index extends Component {
     this.props.togglePromotionModal();
   }
   searchFilterFunction = (value) => {
+    console.log("value");
+    console.log(value);
+
     this.setState({ dataSearch: value });
     this.props.listenShopMessage({ value });
   };
   searchButtonClick = async () => {
-    console.log("clicked");
+    // console.log("clicked");
     let category = [];
     let tags = [];
+    this.props.searchHistory(this.state.dataSearch, "create");
+    Keyboard.dismiss();
+    console.log("this.state.dataSearch");
+    console.log(this.state.dataSearch);
+    console.log(this.state.dataSearch === null);
+    console.log(this.state.dataSearch === "null");
+    console.log("this.props.messages.value");
+    console.log(this.props.messages.value);
+
     for (let i = 0; i < this.props.categories.length; i++) {
       if (
         this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
@@ -300,11 +330,15 @@ class index extends Component {
       shopName: this.state.dataSearch,
       selectedTag: tags.length > 0 ? tags : null,
     });
+    this.setState({ isFocused: false });
   };
 
   searchButtonClickPromo = async () => {
     let category = [];
     let tags = [];
+    this.props.searchHistory(this.state.dataSearch, "create");
+    Keyboard.dismiss();
+
     for (let i = 0; i < this.props.categories.length; i++) {
       if (
         this.props.categories[i].title.toLowerCase().includes(this.state.dataSearch.toLowerCase())
@@ -326,6 +360,31 @@ class index extends Component {
       shopName: this.state.dataSearch,
       selectedTag: tags.length > 0 ? tags : null,
     });
+    this.setState({ isFocused: false });
+  };
+  handleInputFocus = (uri) => this.setState({ isFocused: true });
+
+  removeAllPress() {
+    this.props.searchHistory("clear", "clear");
+  }
+  specificMarkPress(item) {
+    this.props.searchHistory(item.id, "remove");
+  }
+  backSearch() {
+    this.setState({ isFocused: false });
+    Keyboard.dismiss();
+  }
+  selectHistory = async (item) => {
+    const { selectedTab } = this.props.favouriteState;
+
+    await this.setState({
+      dataSearch: item,
+    });
+    if (!selectedTab) {
+      this.searchButtonClick();
+    } else {
+      this.searchButtonClickPromo();
+    }
   };
 
   render() {
@@ -334,18 +393,25 @@ class index extends Component {
     const submitLoading = this.props.bookmarkState.submitLoading;
     const bookmarks = this.props.bookmarkState.bookmarks;
     const { categories, tags } = this.props;
+    let newArr;
 
     const { selectedTab, favourites } = this.props.favouriteState;
 
     //shop
 
-    const { shops, promos } = this.props.searchState;
-
+    const { shops, promos, historySearchStore } = this.props.searchState;
+    // console.log("RENDER_historySearchStore.length");
+    // let result = mydata.ArrayBotones.filter(t=>t.descripcion === 'Impacto');
+    // console.log(historySearchStore);
+    if (historySearchStore !== undefined) {
+      if (historySearchStore !== null)
+        if (Object.keys(historySearchStore).length > 0) {
+          newArr = historySearchStore.filter((obj) => obj !== null);
+        }
+    }
     let isBookmark = [];
     let searchShops = [];
-    let isFavourite = [];
-    let activeShops = [];
-    let filteredPromotion;
+
     shops.map((shop) => {
       let shopCategory = categories.filter((category) => category.id === shop.categories[0]);
 
@@ -384,7 +450,8 @@ class index extends Component {
     //   favouriteCategory ? (favourite.shop.category = favouriteCategory[0].title) : "";
     //   favourite.distance = favouriteDistance;
     // });
-
+    // console.log("this.state.isFocused");
+    // console.log(this.state.isFocused);
     return (
       <SearchScreen
         readBookmark={readBookmark}
@@ -411,6 +478,13 @@ class index extends Component {
         mainScreenMessage={this.props.mainScreenMessage}
         loading={this.props.loading}
         dataSearch={this.state.dataSearch}
+        handleInputFocus={this.handleInputFocus.bind(this)}
+        isFocused={this.state.isFocused}
+        historySearchStore={newArr}
+        specificMarkPress={this.specificMarkPress.bind(this)}
+        removeAllPress={this.removeAllPress.bind(this)}
+        selectHistory={this.selectHistory.bind(this)}
+        backSearch={this.backSearch.bind(this)}
       />
     );
   }
@@ -466,5 +540,5 @@ export default connect(mapStateToProps, {
   onShopSpecificClick,
   listenShopMessage,
   toggleSearchMessageMain,
-  // searchHistory,
+  searchHistory,
 })(index);

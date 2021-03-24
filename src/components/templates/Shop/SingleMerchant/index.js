@@ -33,6 +33,7 @@ const webSite = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingle
 const distanceIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/Distance_Icon.png");
 const newsIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/news_Icon.png");
 const fillLessLove = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/favorLove_Icon.png");
+const mapSign = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySearchIcon/map.png");
 
 const filledHeartIcon = require("../../../../assets/chilliBuddy2.0Icon/chilliBuddySingleShopV2/filledHeart.png");
 
@@ -241,8 +242,9 @@ const SingleMerchant = ({
             </View>
 
             <View style={styles.FirstRow}>
-              <View style={styles.col}>
+              <View style={styles.colAddress}>
                 <Text style={styles.textLabel}> Address</Text>
+                <Image source={mapSign} style={styles.mapSignStyle} resizeMode={"cover"} />
               </View>
               <View style={styles.col2}>
                 {/* <Text style={styles.col2Text}>{tnc}</Text> */}

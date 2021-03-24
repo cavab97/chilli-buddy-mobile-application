@@ -1,6 +1,6 @@
 import { TouchableOpacity } from "@components/atoms/index";
 import React, { PureComponent } from "react";
-import { StyleSheet, Platform, Dimensions } from "react-native";
+import { StyleSheet, Platform, Dimensions, Keyboard } from "react-native";
 import { Image, View, TextInput } from "../atoms";
 import { ActivityIndicator } from "@components/atoms";
 const numColumns = 5;
@@ -11,6 +11,17 @@ const SearchBar = (props) => {
   // console.log(props.mainScreenMessageBoolean);
   return (
     <View style={styles.searchBarStyle}>
+      {props.isFocused ? (
+        <TouchableOpacity onPress={props.backSearch}>
+          <Image
+            style={styles.backIcon}
+            source={require("../../assets/chilliBuddy2.0Icon/chilliBuddySearchIcon/backSearch.png")}
+          />
+        </TouchableOpacity>
+      ) : (
+        <View />
+      )}
+
       <TextInput
         placeholder={props.placeholder}
         keyboardShouldPersistTaps
@@ -19,6 +30,7 @@ const SearchBar = (props) => {
         style={styles.innerContainer}
         name="search"
         value={props.dataSearch === "null" ? "" : props.dataSearch}
+        onFocus={props.handleInputFocus}
       />
       <TouchableOpacity
         onPress={props.searchButtonClick}
@@ -46,6 +58,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     alignSelf: "flex-end",
+    left: Platform.isPad ? 80 : 0,
   },
   searchBarStyle: {
     backgroundColor: "#FFF",
@@ -84,6 +97,15 @@ const styles = StyleSheet.create({
     top: Platform.isPad ? size / 3 : 28,
     position: "absolute",
     zIndex: 1,
+  },
+  backIcon: {
+    // width: "50%",
+    // height: "50%",
+    resizeMode: "contain",
+    width: 22,
+    height: 22,
+    aspectRatio: 120 / 130,
+    left: 5,
   },
 });
 

@@ -312,6 +312,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   col: { width: "35%", backgroundColor: "#fff" },
+  colAddress: { width: "35%", backgroundColor: "#fff", flexDirection: "row" },
+
   colSocialMedia: { width: "35%", backgroundColor: "#fff", marginTop: 8 },
 
   col2: { width: "55%", textAlign: "left" },
@@ -401,6 +403,12 @@ const styles = StyleSheet.create({
     marginRight: "10%",
     color: "grey",
     // backgroundColor: "yellow",
+  },
+  mapSignStyle: {
+    resizeMode: "contain",
+    width: 15,
+    height: 15,
+    top: 1,
   },
 });
 

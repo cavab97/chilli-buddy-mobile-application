@@ -31,6 +31,7 @@ class index extends Component {
     this.myRef = null;
 
     this.state = {
+      categoryIndex: 0,
       radiusAddition: 1,
       data: [],
       dataSource: [],
@@ -184,8 +185,8 @@ class index extends Component {
   //   this.handleLoadMore();
   // }
 
-  onCategorySelected = async (id = null) => {
-    this.setState({ selectedCategory: id, selectedTag: "All" });
+  onCategorySelected = async (id = null, indexing) => {
+    this.setState({ selectedCategory: id, selectedTag: "All", categoryIndex: indexing });
 
     await this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
@@ -394,6 +395,7 @@ class index extends Component {
         returnSpecificCategory={this.returnSpecificCategory.bind(this)}
         scrollToItem={this.scrollToItem.bind(this)}
         myRef={this.myRef}
+        categoryIndex={this.state.categoryIndex}
         // setFlatListRef={this.setFlatListRef.bind(this)}
         //displayCategory={this.props.selectedCategory ? "" : this.props.selectedCategory.id}
       />

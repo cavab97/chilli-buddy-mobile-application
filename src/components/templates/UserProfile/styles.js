@@ -355,6 +355,7 @@ const styles = StyleSheet.create({
     borderRadius: 80,
     borderWidth: 1,
     borderColor: "white",
+    overflow: "hidden",
   },
   scrollBox: {
     flex: 1,

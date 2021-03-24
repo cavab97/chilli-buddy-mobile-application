@@ -315,7 +315,6 @@ class index extends Component {
         promotionCategory ? (promotion.category = promotionCategory[0].title) : "";
       });
     }
-
     if (delDuplicateCategory !== undefined) {
       delDuplicateCategory.map((c) => {
         for (let i = 0; i < filteredCategories.length; i++) {

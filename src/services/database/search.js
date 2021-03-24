@@ -40,11 +40,16 @@ export function geoReadObjects({
     let databaseRef = database.geoReadTable({
       ref: `${objectName}Packaging0`,
     });
-    console.log(selectedCategory);
-    if (selectedCategory !== "null" || selectedCategory.toLowerCase() == "near me") {
-      if (selectedCategory)
-        databaseRef = databaseRef.where("categories", "array-contains-any", selectedCategory);
+    try {
+      if (selectedCategory !== "null") {
+        if (selectedCategory)
+          databaseRef = databaseRef.where("categories", "array-contains-any", selectedCategory);
+      }
+    } catch (error) {
+      console.log(error);
+      selectedCategory = "null";
     }
+
     databaseRef
       .where("deleted.at", "==", null)
       .limit(limit)
@@ -68,8 +73,13 @@ export function geoReadObjects({
           const parent = database.processData({ data });
           // console.log(selectedCategory);
           const processedData = { ...parent };
-          // console.log(processedData);
-          if (selectedCategory.toLowerCase() == "near me" || shopName.toLowerCase() == "near me") {
+
+          if (
+            shopName.toLowerCase() == "near me" ||
+            shopName.toLowerCase() == "" ||
+            shopName.toLowerCase() == "search nearby" ||
+            shopName.toLowerCase() == "null"
+          ) {
             result.push(processedData);
           } else {
             if (

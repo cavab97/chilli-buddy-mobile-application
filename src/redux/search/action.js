@@ -1,12 +1,5 @@
 import firebase from "firebase";
-import {
-  GeoCollectionReference,
-  GeoFirestore,
-  GeoQuery,
-  GeoQuerySnapshot,
-  encodeGeohash,
-} from "geofirestore";
-import { Actions } from "react-native-router-flux";
+import { GeoFirestore } from "geofirestore";
 
 import * as Location from "expo-location";
 import { AsyncStorage } from "react-native";
@@ -104,7 +97,13 @@ export function loadSearchShops({
         let latitude = location.coords.latitude;
         let longtitude = location.coords.longitude;
 
-        radius < 35 ? (limit = 0) : (limit = 200);
+        // radius < 35 ? (limit = 0) : (limit = 0);
+        shopName.toLowerCase() == "near me" ||
+        shopName.toLowerCase() == "" ||
+        shopName.toLowerCase() == "search nearby" ||
+        shopName.toLowerCase() == "null"
+          ? (limit = 25)
+          : (limit = 0);
         const shops = await objectDataServices.geoReadObjects({
           l: { latitude, longtitude },
           radius,
@@ -342,53 +341,56 @@ export const searchHistory = (value, actionName) => {
         switch (actionName) {
           case "create":
             try {
-              if (historySearchStore === null) {
-                temp.push(value);
-              } else {
-                temp = [...historySearchStore, value];
+              if (value.length !== 0) {
+                // console.log("trigger here");
+                if (historySearchStore === null || historySearchStore === undefined) {
+                  // console.log("1st");
+                  temp.push(value);
+                } else if (Object.keys(historySearchStore).length === 0) {
+                  // console.log("2nd");
+                  temp = [value];
+                } else if (value !== "null") {
+                  // console.log("3rd");
+                  temp = [...historySearchStore, value];
+                } else {
+                  temp = [...historySearchStore];
+                }
               }
-              // temp.concat(value);
-              // historySearchStore.concat(value);
-              console.log("historySearchStore");
-              console.log(historySearchStore);
-              console.log("temp");
-              console.log(temp);
-              AsyncStorage.setItem(key, JSON.stringify(temp));
-              // console.log("datAsyncStoragea");
-              result = historySearchStore;
+
+              if (temp.length > 5) {
+                let filtered = temp.slice(1);
+                AsyncStorage.setItem(key, JSON.stringify(filtered));
+                result = filtered;
+              } else if (value.length !== 0) {
+                let filtered = temp;
+
+                AsyncStorage.setItem(key, JSON.stringify(filtered));
+                result = filtered;
+              }
             } catch (error) {
               console.log(error);
-              alert(error);
+              // alert(error);
             }
             break;
           case "read":
             await AsyncStorage.getItem(key).then((data) => {
-              // console.log("data");
               let tempArray = JSON.parse(data);
-              console.log("tempArray");
-              console.log(tempArray);
-
               resolve(tempArray);
               result = tempArray;
             });
             break;
-          case "clear":
-            await AsyncStorage.getItem(key).then((data) => {
-              // console.log("data");
-              temp = data;
-              resolve(temp);
-              result = temp;
-            });
-            break;
           case "remove":
+            let filtered = historySearchStore.filter((item, index) => index !== value);
+
+            AsyncStorage.setItem(key, JSON.stringify(filtered));
+            result = filtered;
+            break;
+          case "clear":
             await AsyncStorage.removeItem(key).then((data) => {
               console.log("REMOVE_SEARCH_HISTORY_SUCCESS");
               const status = "Remove Data Success";
               resolve(status);
-              dispatch({
-                type: actions.REMOVE_SEARCH_HISTORY_SUCCESS,
-                payload: { data: data },
-              });
+              result = [];
             });
             break;
         }

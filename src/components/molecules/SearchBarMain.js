@@ -1,6 +1,6 @@
 import { TouchableOpacity } from "@components/atoms/index";
 import React, { PureComponent } from "react";
-import { StyleSheet, Platform, Dimensions } from "react-native";
+import { StyleSheet, Platform, Dimensions, List, FlatList, ListItem } from "react-native";
 
 import { Image, View, TextInput } from "../atoms";
 import { ActivityIndicator } from "@components/atoms";
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     alignSelf: "flex-end",
+    left: Platform.isPad ? 90 : 10,
   },
   searchBarStyle: {
     backgroundColor: "#FFF",

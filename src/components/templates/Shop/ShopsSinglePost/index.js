@@ -41,105 +41,105 @@ const ShopsSinglePost = ({
               find_dimensions(event.nativeEvent.layout);
             }}
           >
-            <ScrollView>
-              <View style={styles.singlePostContainer}>
-                <Text style={styles.singlePostTitle}>{data.title}</Text>
-                {/* <Text style={singlePostDescription}>{item.description}</Text> */}
-                {/* {console.log(item.id)} */}
-                {data.description == null ? (
-                  <Text
-                    style={{
-                      marginTop: 0,
-                      marginRight: "10%",
-                      fontFamily: "HorizontalRounded",
-                      color: "grey",
-                    }}
-                  >
-                    No Description Available
-                  </Text>
-                ) : data.description.charAt(0) != "<" ? (
-                  <Text
-                    style={{
-                      marginTop: 0,
-                      marginRight: "10%",
-                      fontFamily: "HorizontalRounded",
-                      color: "grey",
-                    }}
-                  >
-                    {data.description}
-                  </Text>
-                ) : (
-                  <HTML
-                    source={{ html: `<div>` + data.description + `</div>` }}
-                    baseFontStyle={{
-                      fontFamily: "HorizontalRounded",
-                      color: "grey",
-                      fontWeight: null,
-                      fontSize: Platform.isPad ? windowWidth / 30 : 17,
-                    }}
-                    tagsStyles={{
-                      p: {
-                        // fontFamily: "HorizontalRounded",
-                        padding: 0,
-                        fontSize: Platform.isPad ? windowWidth / 20 : 17,
-                      },
-                      ol: {
-                        padding: 0,
-                        // marginBottom: 30,
-                        margin: 0,
-                        fontSize: Platform.isPad ? windowWidth / 20 : 17,
-                        // fontFamily: "HorizontalRounded",
-                      },
-                      li: {
-                        padding: 0,
-                        margin: 0,
-                        marginTop: 3,
-                        fontSize: Platform.isPad ? windowWidth / 20 : 17,
-                        // fontFamily: "HorizontalRounded",
-                      },
-                      ul: {
-                        padding: 0,
-                        margin: 0,
-                        fontSize: Platform.isPad ? windowWidth / 20 : 17,
-                        // fontFamily: "HorizontalRounded",
-                      },
-                    }}
-                    style={styles.singlePostTitle}
+            <ScrollView style={styles.singlePostContainer}>
+              {/* <View style={styles.singlePostContainer}> */}
+              <Text style={styles.singlePostTitle}>{data.title}</Text>
+              {/* <Text style={singlePostDescription}>{item.description}</Text> */}
+              {/* {console.log(item.id)} */}
+              {data.description == null ? (
+                <Text
+                  style={{
+                    marginTop: 0,
+                    marginRight: "10%",
+                    fontFamily: "HorizontalRounded",
+                    color: "grey",
+                  }}
+                >
+                  No Description Available
+                </Text>
+              ) : data.description.charAt(0) != "<" ? (
+                <Text
+                  style={{
+                    marginTop: 0,
+                    marginRight: "10%",
+                    fontFamily: "HorizontalRounded",
+                    color: "grey",
+                  }}
+                >
+                  {data.description}
+                </Text>
+              ) : (
+                <HTML
+                  source={{ html: `<div>` + data.description + `</div>` }}
+                  baseFontStyle={{
+                    fontFamily: "HorizontalRounded",
+                    color: "grey",
+                    fontWeight: null,
+                    fontSize: Platform.isPad ? windowWidth / 30 : 17,
+                  }}
+                  tagsStyles={{
+                    p: {
+                      // fontFamily: "HorizontalRounded",
+                      padding: 0,
+                      fontSize: Platform.isPad ? windowWidth / 20 : 17,
+                    },
+                    ol: {
+                      padding: 0,
+                      // marginBottom: 30,
+                      margin: 0,
+                      fontSize: Platform.isPad ? windowWidth / 20 : 17,
+                      // fontFamily: "HorizontalRounded",
+                    },
+                    li: {
+                      padding: 0,
+                      margin: 0,
+                      marginTop: 3,
+                      fontSize: Platform.isPad ? windowWidth / 20 : 17,
+                      // fontFamily: "HorizontalRounded",
+                    },
+                    ul: {
+                      padding: 0,
+                      margin: 0,
+                      fontSize: Platform.isPad ? windowWidth / 20 : 17,
+                      // fontFamily: "HorizontalRounded",
+                    },
+                  }}
+                  style={styles.singlePostTitle}
 
-                    // alterData={alterData}
-                    // tagsStyles={
-                    //   ({
-                    //     p: {
-                    //       // padding: 0,
-                    //       // margin: 0,
-                    //     },
-                    // ol: {
-                    //   padding: 0,
-                    //   marginBottom: 30,
-                    //   margin: 0,
-                    // },
-                    // li: {
-                    //   padding: 0,
-                    //   margin: 0,
-                    // },
-                    // ul: {
-                    //   padding: 0,
-                    //   margin: 0,
-                    // },
-                    //   },
-                    //   styles.singlePostTitle)
-                    // }
-                  />
-                )}
+                  // alterData={alterData}
+                  // tagsStyles={
+                  //   ({
+                  //     p: {
+                  //       // padding: 0,
+                  //       // margin: 0,
+                  //     },
+                  // ol: {
+                  //   padding: 0,
+                  //   marginBottom: 30,
+                  //   margin: 0,
+                  // },
+                  // li: {
+                  //   padding: 0,
+                  //   margin: 0,
+                  // },
+                  // ul: {
+                  //   padding: 0,
+                  //   margin: 0,
+                  // },
+                  //   },
+                  //   styles.singlePostTitle)
+                  // }
+                />
+              )}
 
-                {data.images.length < 1 ? (
-                  <Image style={styles.chatBoxInnerImage} source={noImageV2} />
-                ) : (
-                  <ImageGenerator rowData={data.images} />
-                )}
+              {data.images.length < 1 ? (
+                <Image style={styles.chatBoxInnerImage} source={noImageV2} />
+              ) : (
+                <ImageGenerator rowData={data.images} />
+              )}
 
-                {/* <Text>create at: {item.created.at}</Text> */}
-              </View>
+              {/* <Text>create at: {item.created.at}</Text> */}
+              {/* </View> */}
             </ScrollView>
           </View>
         </ScrollView>
