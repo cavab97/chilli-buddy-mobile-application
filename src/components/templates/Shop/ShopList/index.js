@@ -95,6 +95,7 @@ function Item({
 const ShopList = ({
   handleRefresh,
   // handleLoadMore,
+  secondHandleRefresh,
   renderFooter,
   onMerchantPressed,
   onFavouritePressed,
@@ -116,15 +117,18 @@ const ShopList = ({
   flatListRef,
   returnFlatlistMyRef,
   categoryIndex,
+  firstLoading,
+  topLoading,
   // setFlatListRef,
 }) => {
   const filterIcon = require("../../../../assets/icons/filter.png");
   const emptyHeartIcon = require("../../../../assets/icons/emptyHeartRed.png");
   const filledHeartIcon = require("../../../../assets/icons/filledHeart.png");
   // console.log("ssssssssssss");
+  console.log("firstLoading");
 
-  // console.log(tags);
-  if (loading) {
+  console.log(firstLoading);
+  if (firstLoading && loading) {
     // if (true) {
     if (Platform.isPad) {
       return (
@@ -174,7 +178,7 @@ const ShopList = ({
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.shopContainer}
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={handleRefresh} />}
+        refreshControl={<RefreshControl refreshing={topLoading} onRefresh={secondHandleRefresh} />}
       >
         <View style={styles.shopTitleContainer}>
           <Text style={styles.pageTitle}>Shops</Text>
@@ -220,37 +224,51 @@ const ShopList = ({
             // setFlatListRef={setFlatListRef}
           />
         </View>
-
-        <FlatList
-          data={shopData}
-          renderItem={({ item, index }) => (
-            <Item
-              onPress={() => onMerchantPressed(item)}
-              onFavouritePress={() => onFavouritePressed(item)}
-              name={item.displayTitle}
-              item={item}
-              logo={item.logo}
-              picture={item.images}
-              address={item.address}
-              category={item.category}
-              distance={item.distance}
-              shopID={item.id}
-              index={index}
-              isFavourite={item.isFavourite}
-              isPromote={item.isPromote}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          onRefresh={handleRefresh}
-          refreshing={false}
-          // onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.4}
-          ListFooterComponent={
-            shopData.length === 0 && !loading && <NotFoundFooter message="No shop found" />
-          }
-          style={styles.flatList}
-          extraData={state}
-        />
+        {loading ? (
+          <ContentLoader
+            speed={0.5}
+            width={"100%"}
+            height={Platform.Platform === "IOS" ? "100%" : 400}
+            backgroundColor="#d9d9d9"
+          >
+            <Rect x="20" y="10" rx="10" ry="10" width="90%" height="175" />
+            <Rect x="20" y="210" rx="10" ry="10" width="90%" height="175" />
+            <Rect x="20" y="410" rx="10" ry="10" width="90%" height="175" />
+            {/* <Rect x="20" y="800" rx="10" ry="10" width="90%" height="175" /> */}
+          </ContentLoader>
+        ) : (
+          // <View style={{ height: 1000, backgroundColor: "black" }}></View>
+          <FlatList
+            data={shopData}
+            renderItem={({ item, index }) => (
+              <Item
+                onPress={() => onMerchantPressed(item)}
+                onFavouritePress={() => onFavouritePressed(item)}
+                name={item.displayTitle}
+                item={item}
+                logo={item.logo}
+                picture={item.images}
+                address={item.address}
+                category={item.category}
+                distance={item.distance}
+                shopID={item.id}
+                index={index}
+                isFavourite={item.isFavourite}
+                isPromote={item.isPromote}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+            onRefresh={handleRefresh}
+            refreshing={false}
+            // onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.4}
+            ListFooterComponent={
+              shopData.length === 0 && !loading && <NotFoundFooter message="No shop found" />
+            }
+            style={styles.flatList}
+            extraData={state}
+          />
+        )}
       </ScrollView>
     );
   }

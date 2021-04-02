@@ -43,6 +43,8 @@ class index extends Component {
       categories: props.categories,
       selectedCategory: props.selectedCategory,
       selectedTag: "All", //default all tag selected
+      firstLoading: true,
+      topLoading: false,
       // limit: 10,
     };
     //this.onSubscribePressed = this.onSubscribePressed.bind(this);
@@ -72,17 +74,11 @@ class index extends Component {
     if (selectedID) {
       this.swap(categories, 0, selectedID);
     }
+    this.setState({ firstLoading: false });
   };
 
   handleRefresh = async () => {
     const { selectedCategory } = this.props.shopState;
-    // console.log("handleRefreshSelectedCategory");
-    // console.log(selectedCategory);
-    // console.log("this.props.selectedCategory");
-    // console.log(this.props.selectedCategory);
-    // console.log("this.state.selectedCategory");
-    // console.log(this.state.selectedCategory);
-
     const { categories } = this.props;
     let filteredCategories = categories.filter((category) => category.title !== "All");
     const loadShops = this.props.loadShops({
@@ -103,7 +99,7 @@ class index extends Component {
       await this.props.toggleCategory(filteredCategories[0].id);
     }
     Promise.all([readFromDatabase, loadShops]).then((values) => {
-      // this.setState({ readLoading: false });
+      this.setState({ topLoading: false });
     });
   };
 
@@ -184,16 +180,21 @@ class index extends Component {
   //   this.setState({ filteredData: dataDisplay, page: 1, data: [] });
   //   this.handleLoadMore();
   // }
-
+  secondHandleRefresh = async () => {
+    this.setState({ topLoading: true });
+    console.log("first");
+    await this.handleRefresh();
+    console.log("second");
+  };
   onCategorySelected = async (id = null, indexing) => {
     this.setState({ selectedCategory: id, selectedTag: "All", categoryIndex: indexing });
+    this.props.toggleCategory(id);
 
     await this.props.loadShops({
       radius: RADIUS * this.state.radiusAddition,
       selectedCategory: id,
       selectedTag: this.state.selectedTag !== "All" ? this.state.selectedTag : null,
     });
-    this.props.toggleCategory(id);
   };
 
   onFavouriteFiltered() {
@@ -243,8 +244,6 @@ class index extends Component {
     }
   };
   returnSpecificCategory(categories, selectedCategory) {
-    // console.log(category);
-    // console.log(categories[0].id);
     let index;
 
     index = categories.findIndex((category) => {
@@ -297,11 +296,6 @@ class index extends Component {
     let filteredCategories;
     let selectedCategoryTag;
     let filteredTags = [];
-    // console.log("shops");
-    // console.log(shops.length);"
-    // console.log(" const { categories, tags } = this.props;");
-
-    // console.log(tags);
 
     // Get Shop Category
 
@@ -313,21 +307,13 @@ class index extends Component {
 
     // Remove all category
     filteredCategories = categories.filter((category) => category.title !== "All");
-    // console.log("filteredCategories");
-    // console.log(filteredCategories);
-    // On toggle category get category shop
+
     selectedCategory
       ? (filteredShop = shops.filter((shop) => shop.categories.includes(selectedCategory) === true))
       : (filteredShop = shops.filter(
           (shop) => shop.categories.includes(filteredCategories[0].id) === true
         ));
-    // console.log(filteredShop.length);
 
-    // selectedCategory ? console.log("true") : console.log("false");
-    // console.log("filteredShop");
-    // console.log(filteredShop);
-
-    // console.log(selectedCategory);
     // On toggle favourite get favourite shop
     favouriteControl
       ? (filteredShop = filteredShop.filter((shop) => shop.isFavourite === true))
@@ -353,9 +339,7 @@ class index extends Component {
       );
 
       selectedCategoryTag = selectedCategoryTag[0].tags;
-      // console.log("tags");
 
-      // console.log(tags);
       tags.forEach((tag) =>
         selectedCategoryTag.forEach((categoryTag) => {
           if (tag.id === categoryTag) {
@@ -375,6 +359,7 @@ class index extends Component {
     return (
       <ShopList
         handleRefresh={this.handleRefresh.bind(this)}
+        secondHandleRefresh={this.secondHandleRefresh.bind(this)}
         // handleLoadMore={this.handleLoadMore.bind(this)}
         // filterData={this.filterData.bind(this)}
         //renderFooter={this.renderFooter.bind(this)}
@@ -396,6 +381,8 @@ class index extends Component {
         scrollToItem={this.scrollToItem.bind(this)}
         myRef={this.myRef}
         categoryIndex={this.state.categoryIndex}
+        firstLoading={this.state.firstLoading}
+        topLoading={this.state.topLoading}
         // setFlatListRef={this.setFlatListRef.bind(this)}
         //displayCategory={this.props.selectedCategory ? "" : this.props.selectedCategory.id}
       />
